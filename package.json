@@ -1,0 +1,35 @@
+{
+  "name": "PostIt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start:dev": "nodemon ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricDav/PostIt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EricDav/PostIt/issues"
+  },
+  "homepage": "https://github.com/EricDav/PostIt#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "eslint": "^4.0.0",
+    "eslint-config": "^0.3.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "express": "^4.15.3",
+    "morgan": "^1.8.2",
+    "pg": "^6.2.4",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
