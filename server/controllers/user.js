@@ -1,5 +1,6 @@
-const User = require('../models').PostIt;
+const User = require('../models').PostIts;
 
+console.log(User);
 module.exports = {
   create(req, res) {
     return User
@@ -13,3 +14,4 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
 };
+

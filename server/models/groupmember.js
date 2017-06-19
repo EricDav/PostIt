@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const groupMember = sequelize.define('groupMember', {
+  const groupMember = sequelize.define('groupMembers', {
     memberUsername: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        groupMember.belongsToMany(models.group, {
+        groupMember.belongsTo(models.group, {
           foreignKey: 'groupId',
           onDelete: 'CASCADE',
         });

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const PostIt = sequelize.define('PostIt', {
+  const PostIt = sequelize.define('PostIts', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const groupPost = sequelize.define('groupPost', {
+  const groupPost = sequelize.define('groupPosts', {
     posterUsername: {
       type: DataTypes.STRING,
       allowNull: false,

@@ -22,9 +22,11 @@ module.exports = {
       groupId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
-        model: 'group',
-        key: 'userName',
-        as: 'groupId',
+        references: {
+          model: 'groups',
+          key: 'id',
+          as: 'groupId',
+        }
       },
     }),
 
