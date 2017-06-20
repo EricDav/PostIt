@@ -15,6 +15,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      groupId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      }
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -23,13 +27,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      postId: {
-        type: Sequelize.STRING,
+      groupId: {
+        type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
-        reference: {
-          model: 'group',
+        references: {
+          model: 'groups',
           key: 'id',
-          as: 'postId',
+          as: 'groupId',
         },
       },
     }),

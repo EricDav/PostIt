@@ -4,14 +4,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   }, {
     classMethods: {
-      associate: (models) => {
-        groupMember.belongsTo(models.group, {
-          foreignKey: 'groupId',
-          onDelete: 'CASCADE',
-        });
-      },
+      // associate: (models) => {
+      //   groupMember.belongsTo(models.group, {
+      //     foreignKey: 'groupId',
+      //     onDelete: 'CASCADE',
+      //   });
+      // },
     },
   });
   return groupMember;

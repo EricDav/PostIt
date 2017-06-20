@@ -7,15 +7,19 @@ module.exports = (sequelize, DataTypes) => {
     message: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     }
   }, {
     classMethods: {
-      associate: (models) => {
-        groupPost.belongsToMany(models.group, {
-          foreignKey: 'postId',
-          onDelete: 'CASCADE',
-        });
-      },
+      // associate: (models) => {
+      //   groupPost.belongsToMany(models.group, {
+      //     foreignKey: 'groupId',
+      //     onDelete: 'CASCADE',
+      //   });
+      // },
     },
   });
   return groupPost;

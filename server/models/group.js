@@ -16,13 +16,13 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'ownerUserName',
           onDelete: 'CASCADE',
         });
-        group.hasMany(models.groupMembers, {
+        group.hasMany(models.groupMember, {
           foreignKey: 'groupId',
           as: 'groupMembers',
         });
         group.hasMany(models.groupPost, {
-          foreignKey: 'postId',
-          as: 'groupPost',
+          foreignKey: 'groupId',
+          as: 'groupPosts',
         });
       },
     },
