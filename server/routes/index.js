@@ -1,7 +1,7 @@
-const userController = require('../controllers/user');
-const groupController = require('../controllers/grup');
-const groupMembersController = require('../controllers/groupMember');
-const groupPostsController = require('../controllers/grouPost');
+import userController from '../controllers/user';
+import groupController from '../controllers/grup';
+import groupMembersController from '../controllers/groupMember';
+import groupPostsController from '../controllers/grouPost';
 
 module.exports = (app) => {
   app.post('/api/group', groupController.create);

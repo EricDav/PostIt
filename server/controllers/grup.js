@@ -1,7 +1,6 @@
-const Group = require('../models').groups;
+import Group from '../models';
 
-console.log(Group);
-
+Group = Group.groups;
 module.exports = {
   create(req, res) {
     return Group

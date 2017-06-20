@@ -1,6 +1,6 @@
-const user = require('./user.js');
-const group = require('./grup.js');
-const groupMembers = require('./groupMember');
+import user from './user';
+import group from './grup';
+import groupMembers from './groupMember';
 
 module.exports = {
   user,

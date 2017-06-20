@@ -1,4 +1,6 @@
-const groupPost = require('../models').groupPosts;
+import groupPost from '../models';
+
+groupPost = groupPost.groupPosts;
 
 module.exports = {
   create(req, res) {

@@ -1,4 +1,6 @@
-const groupmember = require('../models').groupMembers;
+import groupmember from '../models';
+
+groupmember = groupmember.groupMembers;
 
 module.exports = {
   create(req, res) {

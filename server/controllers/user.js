@@ -1,6 +1,7 @@
-const User = require('../models').PostIts;
+import User from '../models';
 
-console.log(User);
+User = User.PostIts;
+
 module.exports = {
   create(req, res) {
     return User
