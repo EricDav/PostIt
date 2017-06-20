@@ -1,1 +1,1 @@
-//const alluser = require('../controllers/getAllusers');
+// const alluser = require('../controllers/getAllusers');
