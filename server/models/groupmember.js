@@ -10,12 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     classMethods: {
-      // associate: (models) => {
-      //   groupMember.belongsTo(models.group, {
-      //     foreignKey: 'groupId',
-      //     onDelete: 'CASCADE',
-      //   });
-      // },
     },
   });
   return groupMember;

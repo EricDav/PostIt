@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         PostIt.hasMany(models.group, {
-          foreingKey: 'ownerUserName',
-          as: 'group',
+          foreingKey: 'owner',
+          as: 'groups',
         });
       },
     },

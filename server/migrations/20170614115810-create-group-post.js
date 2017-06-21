@@ -24,13 +24,8 @@ module.exports = {
         type: Sequelize.DATE,
       },
       groupId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'groups',
-          key: 'id',
-          as: 'postId',
-        }
       },
     }),
   down: queryInterface => queryInterface.dropTable('groupPosts'),

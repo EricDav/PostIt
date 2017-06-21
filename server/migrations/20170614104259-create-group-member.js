@@ -7,6 +7,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      groupId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       memberUsername: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -18,15 +22,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-      },
-      groupId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'groups',
-          key: 'id',
-          as: 'groupId',
-        }
       },
     }),
 
