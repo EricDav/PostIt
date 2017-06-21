@@ -15,10 +15,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      groupId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      }
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -33,8 +29,8 @@ module.exports = {
         references: {
           model: 'groups',
           key: 'id',
-          as: 'groupId',
-        },
+          as: 'postId',
+        }
       },
     }),
   down: queryInterface => queryInterface.dropTable('groupPosts'),

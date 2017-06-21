@@ -1,6 +1,5 @@
 const User = require('../models').PostIts;
 
-console.log(User);
 module.exports = {
   create(req, res) {
     return User

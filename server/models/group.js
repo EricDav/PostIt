@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
           as: 'groupMembers',
         });
         group.hasMany(models.groupPost, {
-          foreignKey: 'groupId',
+          foreignKey: 'postId',
           as: 'groupPosts',
         });
       },

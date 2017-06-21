@@ -6,7 +6,7 @@ module.exports = {
       .create({
         message: req.body.message,
         posterUsername: req.body.posterUsername,
-        groupId: req.params.groupId,
+        postId: req.params.postId,
       })
       .then(Groupost => res.status(201).send(Groupost))
       .catch(error => res.status(400).send(error));
