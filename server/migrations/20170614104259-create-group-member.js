@@ -8,7 +8,11 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       memberUsername: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      groupId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {
@@ -18,15 +22,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-      },
-      groupId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'groups',
-          key: 'id',
-          as: 'groupId',
-        }
       },
     }),
 

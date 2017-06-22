@@ -1,10 +1,8 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models').PostIts;
 
-console.log(jwt);
-
 module.exports = {
-  findUser(req, res, next) {
+  findUser(req, res) {
     return User
       .findOne({ where: { userName: req.body.userName } })
       .then((user) => {
@@ -13,10 +11,8 @@ module.exports = {
         } else if (user.password !== req.body.password) {
           res.json({ success: false, message: 'Authentication failed. wrong username or password. wrong password' });
         } else {
-            console.log('yes');
           const token = jwt.sign({ user: user.id }, 'secret'
           );
-          console.log(token);
           res.json({
             success: true,
             message: 'Token generated successfully',

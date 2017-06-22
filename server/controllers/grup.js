@@ -8,6 +8,7 @@ module.exports = {
       .create({
         Name: req.body.Name,
         Description: req.body.Description,
+        ownerUserName: req.body.ownerUserName,
       })
       .then(grup => res.status(201).send(grup))
       .catch(error => res.status(400).send(error));

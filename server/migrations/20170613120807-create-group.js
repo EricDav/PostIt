@@ -24,15 +24,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      ownerUserName: {
-        type: Sequelize.STRING,
-        onDelete: 'CASCADE',
-        reference: {
-          model: 'PostIt',
-          key: 'userName',
-          as: 'ownerUserName',
-        },
-      },
+      // ownerUserName: {
+      //   type: Sequelize.STRING,
+      //   onDelete: 'CASCADE',
+      //   reference: {
+      //     model: 'PostIt',
+      //     key: 'userName',
+      //     as: 'ownerUserName',
+      //   },
+      // },
     }),
   down: queryInterface => queryInterface.dropTable('groups'),
 };

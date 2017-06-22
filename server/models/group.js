@@ -9,10 +9,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    ownerUserName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   }, {
     classMethods: {
       associate: (models) => {
-        group.belongsToMany(models.PostIt, {
+        group.belongsTo(models.PostIt, {
           foreignKey: 'ownerUserName',
           onDelete: 'CASCADE',
         });
@@ -20,10 +24,10 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'groupId',
           as: 'groupMembers',
         });
-        group.hasMany(models.groupPost, {
-          foreignKey: 'postId',
-          as: 'groupPosts',
-        });
+      //   group.hasMany(models.groupPost, {
+      //     foreignKey: 'postId',
+      //     as: 'groupPosts',
+      //   });
       },
     },
   });
