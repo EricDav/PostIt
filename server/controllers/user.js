@@ -12,5 +12,11 @@ module.exports = {
       .then(user => res.status(201).send(user))
       .catch(error => res.status(400).send(error));
   },
+  allUsers(req, res) {
+    return User
+      .all()
+      .then(user => res.status(201).send(user))
+      .catch(error => res.status(400).send(error));
+  }
 };
 

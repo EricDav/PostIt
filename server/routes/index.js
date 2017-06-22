@@ -6,6 +6,7 @@ const loginController = require('../controllers/login');
 const auth = require('../middlewares/auth');
 
 module.exports = (app) => {
+  app.get('/api/allusers', userController.allUsers);
   app.post('/api/group', groupController.create);
   app.post('/api/user/signup', userController.create);
   app.post('/api/group/:groupId/user', groupMembersController.create);
