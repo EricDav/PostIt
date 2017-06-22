@@ -1,6 +1,7 @@
-const groupPost = require('../models').groupPosts;
+import groupPost from '../models';
 
-module.exports = {
+groupPost = groupPost.groupPosts;
+const createGroupPost = {
   create(req, res) {
     return groupPost
       .create({
@@ -12,3 +13,4 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
 };
+export default createGroupPost;

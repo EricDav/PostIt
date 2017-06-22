@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+const groupPostModel = (sequelize, DataTypes) => {
   const groupPost = sequelize.define('groupPosts', {
     posterUsername: {
       type: DataTypes.STRING,
@@ -24,3 +24,4 @@ module.exports = (sequelize, DataTypes) => {
   });
   return groupPost;
 };
+export default groupPostModel;

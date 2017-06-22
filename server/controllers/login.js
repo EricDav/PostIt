@@ -1,7 +1,9 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models').PostIts;
+import jwt from 'jsonwebtoken';
+import User from '../models';
 
-module.exports = {
+User = User.PostIts;
+
+const logIn = {
   findUser(req, res) {
     return User
       .findOne({ where: { userName: req.body.userName } })
@@ -23,3 +25,4 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
 };
+export default logIn;

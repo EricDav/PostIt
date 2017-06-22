@@ -1,6 +1,7 @@
-const User = require('../models').PostIts;
+import User from '../models';
 
-module.exports = {
+User = User.PostIts;
+const createUser = {
   create(req, res) {
     return User
       .create({
@@ -19,3 +20,4 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   }
 };
+export default createUser;

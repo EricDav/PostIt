@@ -1,6 +1,8 @@
-const groupmember = require('../models').groupMembers;
+import groupmember from '../models';
 
-module.exports = {
+groupmember = groupmember.groupMembers;
+
+const createGroupMembers = {
   create(req, res) {
     return groupmember
       .create({
@@ -11,3 +13,5 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
 };
+
+export default createGroupMembers;

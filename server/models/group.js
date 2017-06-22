@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+const groupModel = (sequelize, DataTypes) => {
   const group = sequelize.define('groups', {
     Name: {
       type: DataTypes.STRING,
@@ -33,3 +33,5 @@ module.exports = (sequelize, DataTypes) => {
   });
   return group;
 };
+
+export default groupModel;

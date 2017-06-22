@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+const UserModel = (sequelize, DataTypes) => {
   const PostIt = sequelize.define('PostIts', {
     name: {
       type: DataTypes.STRING,
@@ -32,3 +32,4 @@ module.exports = (sequelize, DataTypes) => {
   });
   return PostIt;
 };
+export default UserModel;

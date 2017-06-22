@@ -1,6 +1,7 @@
-const Group = require('../models').groups;
+import Group from '../models';
 
-module.exports = {
+Group = Group.groups;
+const createGroups = {
   create(req, res) {
     return Group
       .create({
@@ -12,3 +13,4 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
 };
+export default createGroups;

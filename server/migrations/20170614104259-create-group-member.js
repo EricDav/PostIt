@@ -1,4 +1,4 @@
-module.exports = {
+const groupMemberMigration = {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable('groupMembers', {
       id: {
@@ -15,10 +15,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      groupId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -31,3 +27,4 @@ module.exports = {
 
   down: queryInterface => queryInterface.dropTable('groupMembers'),
 };
+export default groupMemberMigration;
