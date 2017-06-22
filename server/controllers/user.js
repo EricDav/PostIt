@@ -15,7 +15,7 @@ module.exports = {
   allUsers(req, res) {
     return User
       .all()
-      .then(alluser => res.status(200).send(alluser))
+      .then(user => res.status(201).send(user))
       .catch(error => res.status(400).send(error));
-  },
+  }
 };

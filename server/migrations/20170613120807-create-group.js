@@ -24,13 +24,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      owner: {
+      ownerUserName: {
         type: Sequelize.STRING,
         onDelete: 'CASCADE',
-        references: {
-          model: 'PostIts',
+        reference: {
+          model: 'PostIt',
           key: 'userName',
-          as: 'owner',
+          as: 'ownerUserName',
         },
       },
     }),

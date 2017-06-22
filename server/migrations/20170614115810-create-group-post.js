@@ -15,6 +15,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      postId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -22,10 +26,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-      },
-      groupId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
       },
     }),
   down: queryInterface => queryInterface.dropTable('groupPosts'),

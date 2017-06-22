@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     classMethods: {
+    //   associate: (models) => {
+    //     groupPost.belongsToMany(models.group, {
+    //       foreignKey: 'postId',
+    //       onDelete: 'CASCADE',
+    //     });
+    //   },
     },
   });
   return groupPost;

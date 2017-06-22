@@ -12,7 +12,11 @@ module.exports = {
         allowNull: false,
       },
       memberUsername: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      groupId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {

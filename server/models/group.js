@@ -9,17 +9,25 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    owner: {
+    ownerUserName: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
+    }
   }, {
     classMethods: {
       associate: (models) => {
-        group.belongsTo(models.PostIts, {
-          foreignKey: 'owner',
+        group.belongsTo(models.PostIt, {
+          foreignKey: 'ownerUserName',
           onDelete: 'CASCADE',
         });
+        group.hasMany(models.groupMember, {
+          foreignKey: 'groupId',
+          as: 'groupMembers',
+        });
+      //   group.hasMany(models.groupPost, {
+      //     foreignKey: 'postId',
+      //     as: 'groupPosts',
+      //   });
       },
     },
   });
