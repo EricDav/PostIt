@@ -1,4 +1,5 @@
 const Group = require('../models').groups;
+const groupMember = require('../models').groupmembers;
 
 module.exports = {
   create(req, res) {
