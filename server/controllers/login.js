@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken';
-import User from '../models';
+import db from '../models';
 
-User = User.PostIts;
+const User = db.PostIts;
 
 const logIn = {
   findUser(req, res) {
     return User
       .findOne({ where: { userName: req.body.userName } })
       .then((user) => {
-        if (user === null) {
+        if (!user) {
           res.json({ success: false, message: 'Authentication failed. wrong username or password. Can not find user' });
         } else if (user.password !== req.body.password) {
           res.json({ success: false, message: 'Authentication failed. wrong username or password. wrong password' });

@@ -1,6 +1,6 @@
-import groupPost from '../models';
+import db from '../models';
 
-groupPost = groupPost.groupPosts;
+const groupPost = db.groupPosts;
 const createGroupPost = {
   create(req, res) {
     return groupPost

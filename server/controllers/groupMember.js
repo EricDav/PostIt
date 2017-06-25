@@ -1,6 +1,6 @@
-import groupmember from '../models';
+import db from '../models';
 
-groupmember = groupmember.groupMembers;
+const groupmember = db.groupMembers;
 
 const createGroupMembers = {
   create(req, res) {

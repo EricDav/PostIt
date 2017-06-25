@@ -1,6 +1,6 @@
-import User from '../models';
+import db from '../models';
 
-User = User.PostIts;
+const User = db.PostIts;
 const createUser = {
   create(req, res) {
     return User

@@ -1,6 +1,6 @@
-import Group from '../models';
+import db from '../models';
 
-Group = Group.groups;
+const Group = db.groups;
 const createGroups = {
   create(req, res) {
     return Group
