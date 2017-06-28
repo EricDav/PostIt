@@ -4,7 +4,7 @@ import isText from '../helpers/isText';
 
 const User = db.PostIts;
 const userValidation = {
-  usernameValidation(req, res, next) {
+  basicValidation(req, res, next) {
     const nullValues = [];
     if (req.body.userName === null || req.body.userName === undefined) {
       nullValues.push('username');
@@ -24,10 +24,10 @@ const userValidation = {
       }
       const nullVal = nullValues.join();
       return res.status(404).json({ success: false, message: `${nullVal} can not be null. Enter the values of  ${nullVal}` });
-    } else if (req.body.email.slice(req.body.email.length - 4, req.body.email.length) !== '.com' || !(/[@]/.test(req.body.email))){
+    } else if (req.body.email.slice(req.body.email.length - 4, req.body.email.length) !== '.com' || !(/[@]/.test(req.body.email))) {
       if (req.body.email.slice(req.body.email.length - 4, req.body.email.length) !== '.com' &&
       /[@]/.test(req.body.email)) {
-        return res.status(404).json({ success: false, message: 'Not a valid email address. can not find the extension /'.com / ' ' });
+        return res.status(404).json({ success: false, message: 'Not a valid email address. can not find the extension .com ' });
       } else if (!(/[@]/.test(req.body.email)) && (req.body.email.length - 4, req.body.email.length) === '.com') {
         return res.status(404).json({ success: false, message: 'Not a valid email address. can not find @ ' });
       }
@@ -39,7 +39,10 @@ const userValidation = {
         return res.status(404).json({ success: false, message: 'Invalid username. username must contain an alphabet' });
       }
       return res.status(404).json({ success: false, message: 'Invalid username. You can only start a username with an alphabet' });
+    } else if (req.body.password.length < 9 || !(/[0-9]/.test(req.body.password) && /[a-z A-Z]/.test(req.body.password))) {
+      return res.status(404).json({ success: false, message: 'Weak password. Password should contain at least 8 characters including at least one number and alphabet' });
     }
+
     User
       .findOne(
         {

@@ -7,12 +7,13 @@ import loginController from '../controllers/login';
 import auth from '../middlewares/auth';
 import userValidator from '../middlewares/userValidation';
 import groupMessagesController from '../controllers/groupMessages';
+import groupValidator from '../middlewares/groupValidation';
 
 const app = express.Router();
 app.get('/api/allUsers', auth, userController.allUsers);
-app.post('/api/group', auth, groupController.create);
-app.post('/api/user/signup', userValidator.usernameValidation, userValidator.emailValidation, userController.create);
-app.post('/api/group/:groupId/user', groupMembersController.create);
+app.post('/api/group', auth, groupValidator.groupValidation, groupController.create);
+app.post('/api/user/signup', userValidator.basicValidation, userValidator.emailValidation, userController.create);
+app.post('/api/group/:groupId/user', auth, groupMembersController.create);
 app.post('/api/group/:postId/message', auth, groupPostsController.create);
 app.post('/api/user/signin', loginController.findUser);
 app.get('/api/group/:groupId/messages', groupMessagesController.getPosts);
