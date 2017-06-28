@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 const Group = require('../models').groups;
 const groupMember = require('../models').groupmembers;
+||||||| merged common ancestors
+const Group = require('../models').groups;
+=======
+import db from '../models';
+>>>>>>> test
 
-module.exports = {
+const Group = db.groups;
+const createGroups = {
   create(req, res) {
     return Group
       .create({
@@ -13,3 +20,4 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
 };
+export default createGroups;

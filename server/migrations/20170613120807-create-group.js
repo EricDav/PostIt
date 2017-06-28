@@ -1,4 +1,4 @@
-module.exports = {
+const groupMigration = {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable('groups', {
       id: {
@@ -36,3 +36,4 @@ module.exports = {
     }),
   down: queryInterface => queryInterface.dropTable('groups'),
 };
+export default groupMigration;

@@ -1,11 +1,16 @@
-const express = require('express');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
+import express from 'express';
+import logger from 'morgan';
+import winston from 'winston';
+import bodyParser from 'body-parser';
+import routes from './server/routes';
 
+const port = process.env.PORT || 8000;
 const app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-require('./server/routes')(app);
+app.use(routes);
 
-module.exports = app;
+app.listen(port, () => {
+  winston.info(`server started on ${port}`);
+});

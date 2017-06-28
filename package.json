@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start:dev": "nodemon ./bin/www",
+    "start": "nodemon --watch server --exec babel-node -- app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -12,14 +12,20 @@
     "url": "git+https://github.com/EricDav/PostIt.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alienyi David",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/EricDav/PostIt/issues"
   },
   "homepage": "https://github.com/EricDav/PostIt#readme",
   "dependencies": {
+    "babel-loader": "^7.1.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "body-parser": "^1.17.2",
+    "chai": "^4.0.2",
+    "chai-http": "^3.0.0",
+    "dotenv": "^4.0.0",
     "eslint": "^4.0.0",
     "eslint-config": "^0.3.0",
     "eslint-config-airbnb": "^15.0.1",
@@ -28,9 +34,12 @@
     "morgan": "^1.8.2",
     "pg": "^6.2.4",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.1.0"
+    "sequelize": "^4.1.0",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "babel-cli": "^6.24.1",
+    "nodemon": "^1.11.0",
+    "winston": "^2.3.1"
   }
 }

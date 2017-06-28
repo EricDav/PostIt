@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+const groupmemberModel = (sequelize, DataTypes) => {
   const groupMember = sequelize.define('groupMembers', {
     memberUsername: {
       type: DataTypes.STRING,
@@ -14,3 +14,4 @@ module.exports = (sequelize, DataTypes) => {
   });
   return groupMember;
 };
+export default groupmemberModel;

@@ -1,4 +1,4 @@
-module.exports = {
+const userMigration = {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable('PostIts', {
       id: {
@@ -41,3 +41,4 @@ module.exports = {
     queryInterface.dropTable('PostIts');
   }
 };
+export default userMigration;

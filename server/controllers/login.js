@@ -1,19 +1,27 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models').PostIts;
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import db from '../models';
 
-module.exports = {
+dotenv.load();
+const User = db.PostIts;
+const secret = process.env.secretKey;
+
+const logIn = {
   findUser(req, res) {
     return User
       .findOne({ where: { userName: req.body.userName } })
       .then((user) => {
-        if (user === null) {
-          res.json({ success: false, message: 'Authentication failed. wrong username or password. Can not find user' });
+        if (!user) {
+          res.status(404).json({ success: false, message: 'Authentication failed. wrong username or password.' });
         } else if (user.password !== req.body.password) {
-          res.json({ success: false, message: 'Authentication failed. wrong username or password. wrong password' });
+          res.status(404).json({ success: false, message: 'Authentication failed. wrong username or password.' });
         } else {
-          const token = jwt.sign({ user: user.id }, 'secret'
+          const token = jwt.sign(
+            { userId: user.id,
+              userName: user.userName
+            }, secret
           );
-          res.json({
+          res.status(201).json({
             success: true,
             message: 'Token generated successfully',
             Token: token
@@ -23,3 +31,4 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
 };
+export default logIn;
