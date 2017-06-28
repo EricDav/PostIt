@@ -1,5 +1,14 @@
 import jwt from 'jsonwebtoken';
 
+/**
+ * @param  {object} req
+ * @param  {object} res
+ * @param  {} next
+ * @description auntheticate user by checking if a user has a token or a valid token
+ * @return {object} success or failure message. success if user has a valid token,
+ * failure if user do not have a token or a valid token.
+ */
+
 const auth = (req, res, next) => {
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
   // decode token

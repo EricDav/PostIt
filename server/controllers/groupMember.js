@@ -1,8 +1,13 @@
 import db from '../models';
 
 const groupmember = db.groupMembers;
-
-const createGroupMembers = {
+/**
+ * @param  {object} req request coming from the client
+ * @param  {object} res response to the client
+ * @description Adds a member to a specify group.
+ * @return {object} 
+ */
+const AddMemberToAGroup = {
   create(req, res) {
     return groupmember
       .create({
@@ -14,4 +19,4 @@ const createGroupMembers = {
   },
 };
 
-export default createGroupMembers;
+export default AddMemberToAGroup;

@@ -1,3 +1,10 @@
+
+/**
+ * @param  {object} sequelize
+ * @param  {object} DataTypes
+ * @description creating model for group
+ * @return {object} group model
+ */
 const groupModel = (sequelize, DataTypes) => {
   const group = sequelize.define('groups', {
     Name: {
@@ -24,10 +31,6 @@ const groupModel = (sequelize, DataTypes) => {
           foreignKey: 'groupId',
           as: 'groupMembers',
         });
-      //   group.hasMany(models.groupPost, {
-      //     foreignKey: 'postId',
-      //     as: 'groupPosts',
-      //   });
       },
     },
   });

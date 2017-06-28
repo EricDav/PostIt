@@ -1,3 +1,9 @@
+/**
+ * @param  {object} sequelize
+ * @param  {object} DataTypes
+ * @description creating model for group members
+ * @return {object} group members model
+ */
 const groupmemberModel = (sequelize, DataTypes) => {
   const groupMember = sequelize.define('groupMembers', {
     memberUsername: {

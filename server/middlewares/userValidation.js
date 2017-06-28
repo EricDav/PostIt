@@ -3,6 +3,12 @@ import isDigit from '../helpers/isDigit';
 import isText from '../helpers/isText';
 
 const User = db.PostIts;
+/**
+   * @param  {object} req
+   * @param  {object} res
+   * @param  {} next
+   * @description validate inputs field for username, name, email and password
+   */
 const userValidation = {
   basicValidation(req, res, next) {
     const nullValues = [];

@@ -5,7 +5,12 @@ import db from '../models';
 dotenv.load();
 const User = db.PostIts;
 const secret = process.env.secretKey;
-
+/**
+ * @param  {object} req
+ * @param  {object} res
+ * @description Auntheticate user.
+ * @return {object} user information
+ */
 const logIn = {
   findUser(req, res) {
     return User

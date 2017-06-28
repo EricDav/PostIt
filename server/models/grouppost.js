@@ -1,3 +1,9 @@
+/**
+ * @param  {object} sequelize
+ * @param  {object} DataTypes
+ * @description creating model for group posts
+ * @return {object} group post model
+ */
 const groupPostModel = (sequelize, DataTypes) => {
   const groupPost = sequelize.define('groupPosts', {
     posterUsername: {
@@ -14,12 +20,6 @@ const groupPostModel = (sequelize, DataTypes) => {
     }
   }, {
     classMethods: {
-    //   associate: (models) => {
-    //     groupPost.belongsToMany(models.group, {
-    //       foreignKey: 'postId',
-    //       onDelete: 'CASCADE',
-    //     });
-    //   },
     },
   });
   return groupPost;

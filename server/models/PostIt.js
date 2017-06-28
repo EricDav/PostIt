@@ -1,3 +1,9 @@
+/**
+ * @param  {object} sequelize
+ * @param  {object} DataTypes
+ * @description creating model for users
+ * @return {object} user model
+ */
 const UserModel = (sequelize, DataTypes) => {
   const PostIt = sequelize.define('PostIts', {
     name: {

@@ -5,6 +5,11 @@ import db from '../models';
 dotenv.load();
 const secret = process.env.secretKey;
 const User = db.PostIts;
+/**
+ * @param  {object} req
+ * @param  {object} res
+ * @description create a user with name, username, email and password.
+ */
 const createUser = {
   create(req, res) {
     return User
@@ -28,6 +33,12 @@ const createUser = {
       })
       .catch(error => res.status(400).send(error));
   },
+  /**
+   * @param  {object} req
+   * @param  {object} res
+   * @description fetch all the users from database
+   * @return {array} all users in an array
+   */
   allUsers(req, res) {
     return User
       .all()
@@ -35,9 +46,4 @@ const createUser = {
       .catch(error => res.status(400).send(error));
   }
 };
-<<<<<<< HEAD
-
-||||||| merged common ancestors
-=======
 export default createUser;
->>>>>>> test

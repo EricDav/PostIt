@@ -1,6 +1,13 @@
 import db from '../models';
 
 const Groups = db.groups;
+/**
+ * @param  {object} req
+ * @param  {object} res
+ * @param  {} next
+ * @description validate for group creation by checking in if group name exist
+ * @return {object}
+ */
 const group = {
   groupValidation(req, res, next) {
     Groups
