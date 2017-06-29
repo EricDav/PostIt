@@ -1,16 +1,7 @@
-<<<<<<< HEAD
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import db from '../models';
-||||||| merged common ancestors
-const User = require('../models').PostIts;
-=======
-import User from '../models';
 
-User = User.PostIts;
->>>>>>> da9037e389e27eed866f5636f98c4b093c910a1c
-
-<<<<<<< HEAD
 dotenv.load();
 const secret = process.env.secretKey;
 const User = db.PostIts;
@@ -20,12 +11,6 @@ const User = db.PostIts;
  * @description create a user with name, username, email and password.
  */
 const createUser = {
-||||||| merged common ancestors
-console.log(User);
-module.exports = {
-=======
-module.exports = {
->>>>>>> da9037e389e27eed866f5636f98c4b093c910a1c
   create(req, res) {
     return User
       .create({

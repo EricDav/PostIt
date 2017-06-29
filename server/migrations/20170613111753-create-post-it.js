@@ -1,4 +1,4 @@
-const userMigration = {
+module.exports = {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable('PostIts', {
       id: {
@@ -19,7 +19,7 @@ const userMigration = {
       },
       password: {
         type: Sequelize.STRING,
-        unique: true,
+        unique: false,
         allowNull: false,
       },
       email: {
@@ -41,4 +41,3 @@ const userMigration = {
     queryInterface.dropTable('PostIts');
   }
 };
-export default userMigration;

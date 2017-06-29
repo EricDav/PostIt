@@ -17,21 +17,19 @@ const logIn = {
       .findOne({ where: { userName: req.body.userName } })
       .then((user) => {
         if (!user) {
-          res.status(404).json({ success: false, message: 'Authentication failed. wrong username or password.' });
+          return res.status(404).json({ success: false, message: 'Authentication failed. wrong username or password.' });
         } else if (user.password !== req.body.password) {
-          res.status(404).json({ success: false, message: 'Authentication failed. wrong username or password.' });
-        } else {
-          const token = jwt.sign(
-            { userId: user.id,
-              userName: user.userName
-            }, secret
-          );
-          res.status(201).json({
-            success: true,
-            message: 'Token generated successfully',
-            Token: token
-          });
+          return res.status(404).json({ success: false, message: 'Authentication failed. wrong username or password.' });
         }
+        const token = jwt.sign(
+          { userId: user.id
+          }, secret
+        );
+        res.status(201).json({
+          success: true,
+          message: 'Token generated successfully',
+          Token: token,
+        });
       })
       .catch(error => res.status(400).send(error));
   },

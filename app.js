@@ -14,3 +14,4 @@ app.use(routes);
 app.listen(port, () => {
   winston.info(`server started on ${port}`);
 });
+export default app;
