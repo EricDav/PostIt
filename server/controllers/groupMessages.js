@@ -5,7 +5,7 @@ const GrouPost = db.groupPosts;
  * @param  {object} req request coming from the client
  * @param  {object} res response to the client
  * @description get all posts that belong to a specify group.
- * @return {object} 
+ * @return {object}
  */
 const messages = {
   getPosts(req, res) {

@@ -5,7 +5,7 @@ const groupmember = db.groupMembers;
  * @param  {object} req request coming from the client
  * @param  {object} res response to the client
  * @description Adds a member to a specify group.
- * @return {object} 
+ * @return {object}
  */
 const AddMemberToAGroup = {
   create(req, res) {

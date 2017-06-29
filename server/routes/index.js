@@ -9,6 +9,7 @@ import userValidator from '../middlewares/userValidation';
 import groupMessagesController from '../controllers/groupMessages';
 import groupValidator from '../middlewares/groupValidation';
 
+
 const app = express.Router();
 app.get('/api/allUsers', auth, userController.allUsers);
 app.post('/api/group', auth, groupValidator.groupValidation, groupController.create);
