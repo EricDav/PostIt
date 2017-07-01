@@ -6,8 +6,8 @@
  */
 const groupmemberModel = (sequelize, DataTypes) => {
   const groupMember = sequelize.define('groupMembers', {
-    memberUsername: {
-      type: DataTypes.STRING,
+    memberId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     groupId: {

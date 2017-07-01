@@ -7,7 +7,9 @@
     "migrate": "sequelize db:migrate",
     "start": "nodemon --watch server --exec babel-node -- app.js",
     "test": "SET NODE_ENV=test&& mocha --timeout 40000 --compilers js:babel-core/register server/test ",
-    "tests": "NODE_ENV=test mocha --timeout 40000 --compilers js:babel-core/register server/test "
+    "tests": "NODE_ENV=test mocha --timeout 40000 --compilers js:babel-core/register server/test",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "coverage": "./node_modules/.bin/nyc --reporter=html --reporter=text mocha --reporter spec --timeout 40000 --compilers js:babel-core/register server/test"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
   "homepage": "https://github.com/EricDav/PostIt#readme",
   "dependencies": {
     "babel-core": "^6.25.0",
+    "babel-istanbul": "^0.12.2",
     "babel-loader": "^7.1.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
@@ -46,8 +49,11 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-istanbul": "^0.12.2",
     "babel-preset-es2015": "^6.24.1",
+    "istanbul": "^0.4.5",
     "nodemon": "^1.11.0",
+    "nyc": "^11.0.3",
     "winston": "^2.3.1"
   }
 }

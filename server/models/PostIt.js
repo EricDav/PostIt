@@ -18,7 +18,7 @@ const UserModel = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      unique: true,
+      unique: false,
       allowNull: false,
     },
     email: {
