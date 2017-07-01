@@ -29,7 +29,7 @@ const group = {
       })
       .catch(error => res.status(404).send(error));
   },
-  getGroupMessagesValidation(req, res, next) {
+  getGroupInformationValidation(req, res, next) {
     let check = false;
     return Groups
       .findOne({ where: { id: req.params.groupId } })
@@ -59,6 +59,27 @@ const group = {
             .catch(error => res.status(404).send(error));
         }
         next();
+      })
+      .catch(error => res.status(404).send(error));
+  },
+  deleteGroupValidation(req, res, next) {
+    console.log(req.headers.userName);
+    Groups
+      .findOne({ where: { id: req.params.groupId } })
+      .then((Group) => {
+        if (!Group) {
+          res.status(404).json({
+            success: false,
+            message: 'Group not found. Group does not exist or has been deleted'
+          });
+        } else if (Group.ownerUserName === req.body.userName) {
+          next();
+        } else {
+          res.status(401).json({
+            success: false,
+            message: 'You are not authorized to delete this group'
+          });
+        }
       })
       .catch(error => res.status(404).send(error));
   }

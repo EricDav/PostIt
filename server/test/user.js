@@ -117,9 +117,9 @@ describe('Authentication', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send(invalidUser)
-      .expect(404)
+      .expect(401)
       .end((err, res) => {
-        res.status.should.equal(404);
+        res.status.should.equal(401);
         res.body.message.should.equal('Authentication failed. wrong username or password.');
         done();
       });
@@ -132,17 +132,17 @@ describe('Authentication', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send(incorrectPassword)
-      .expect(409)
+      .expect(401)
       .end((err, res) => {
-        res.status.should.equal(409);
-        res.body.error.message.should.equal('Authentication failed. wrong username or password.');
+        res.status.should.equal(401);
+        res.body.message.should.equal('Authentication failed. wrong username or password.');
         done();
       });
   });
 
   it('allows a registered user to login successfully', (done) => {
     server
-      .post('/api/user/login')
+      .post('/api/user/signin')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
