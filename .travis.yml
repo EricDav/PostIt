@@ -3,8 +3,13 @@ node_js:
   - node
 script:
   - npm install
-  - gulp run-tests
-  - npm run dev
+  - npm run tests
+before_script:
+  - psql -c 'create database travis;' -U postgres
+after success:
+  - psql -c 'drop database travis;' -U postgres
+services:
+  - postgres sql
 exclude_paths:
   - coverage/
-  - dist/**/*
+  - dist/**/*  
