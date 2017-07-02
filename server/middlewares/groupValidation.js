@@ -32,7 +32,7 @@ const group = {
       .findOne({ where: { id: req.params.groupId } })
       .then((Group) => {
         if (!Group) {
-          res.status(404).json({
+          res.status(402).json({
             success: false,
             message: 'Group not found. Group  not created or has been deleted'
           });
@@ -42,7 +42,7 @@ const group = {
             .then((members) => {
               check = false;
               members.forEach((member) => {
-                if (member.memberId === Number(req.headers.id)) {
+                if (member.memberId === Number(req.decoded.user.id)) {
                   check = true;
                 }
               });

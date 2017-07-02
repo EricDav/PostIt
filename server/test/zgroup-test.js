@@ -3,9 +3,8 @@ import 'mocha';
 import 'chai';
 import should from 'should';
 import app from './../../app';
-//import { loginUser } from './../seeders/userSeeders';
-import { user, loginUser, invalidUser, incorrectPassword, invalidEmail } from '../seeders/userSeeders';
-import { groupDetails, updateInfo, noGrpName } from './../seeders/groupSeeders';
+import { loginUser } from './../seeders/userSeeders';
+import groupDetails from './../seeders/groupSeeders';
 
 const server = supertest.agent(app);
 let regUserData;
@@ -75,7 +74,7 @@ describe('Group Routes', () => {
       });
   });
 
-  it('allows a logged in user to get all the groups heh belongs to', (done) => {
+  it('allows a logged in user to get all the groups he/she belongs to', (done) => {
     server
       .get('/api/user/1/groups')
       .set('x-access-token', regUserData)

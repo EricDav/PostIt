@@ -1,11 +1,11 @@
-export const groupDetails = [{
+const groupDetails = [{
   Name: 'Mathematics World',
   Description: 'This is where Maths lives',
-  ownerUserName: 'Pythagoras'
+  ownerUserName: 'lolade'
 }, {
   Name: 'Learn Python',
   Description: 'Meet Python gurus',
-  ownerUserName: 'lolade'
+  ownerUserName: 'jide'
 }, {
   Name: 'Mathematics World',
   Description: 'We are mathematicians',
@@ -14,13 +14,5 @@ export const groupDetails = [{
 {
   Name: 'Java World',
   Description: 'We are android developers',
-  ownerUsername: 'Pythagoras' }];
-
-export const updateInfo = {
-  name: 'Learn Pythonic Python',
-  description: 'We speak the pythonic language',
-};
-
-export const noGrpName = {
-  description: 'For all Java lovers!',
-};
+  ownerUsername: 'bolu' }];
+export default groupDetails;

@@ -28,7 +28,7 @@ const AddMemberToAGroup = {
         });
         User
           .findAll({ where: { id: listOfIdsOfMembers } })
-          .then(groupUsers => res.status(200).send(groupUsers))
+          .then(groupUsers => res.status(201).send(groupUsers))
           .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(400).send(error));
@@ -50,7 +50,7 @@ const AddMemberToAGroup = {
                 listOfNonUsers.push(user);
               }
             });
-            res.status(200).send(listOfNonUsers);
+            res.status(201).send(listOfNonUsers);
           })
           .catch(error => res.status(400).send(error));
       })
