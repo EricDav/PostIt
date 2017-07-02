@@ -1,5 +1,7 @@
 # PostIt
 
+[![Coverage Status](https://coveralls.io/repos/github/EricDav/PostIt/badge.svg?branch=development)](https://coveralls.io/github/EricDav/PostIt?branch=development)  [![Build Status](https://travis-ci.org/EricDav/PostIt.svg?branch=development)](https://travis-ci.org/EricDav/PostIt)
+
 ## Introduction
 *  **`PostIt`** is a software that allows friends and colleagues create groups for              notification.
 *  It has the following features;
