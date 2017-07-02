@@ -56,7 +56,7 @@ describe('Group Routes', () => {
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.memberId.should.equal(3);
+        res.body.memberId.should.equal(4);
         done();
       });
   });
