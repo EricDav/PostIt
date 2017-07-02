@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for PostIt/server/models/groupmember.js</title>
+    <title>Code coverage report for PostIt/server/seeders/groupSeeders.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="..\..\..\prettify.css" />
     <link rel="stylesheet" href="..\..\..\base.css" />
@@ -16,7 +16,7 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="..\..\..\index.html">All files</a> / <a href="index.html">PostIt/server/models</a> groupmember.js
+      <a href="..\..\..\index.html">All files</a> / <a href="index.html">PostIt/server/seeders</a> groupSeeders.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
@@ -32,7 +32,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/1</span>
+        <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -66,22 +66,28 @@
 21
 22
 23
-24</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+24
+25
+26
+27</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -89,29 +95,32 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * @param  {object} sequelize
- * @param  {object} DataTypes
- * @description creating model for group members
- * @return {object} group members model
- */
-const groupmemberModel = (sequelize, DataTypes) =&gt; {
-  const groupMember = sequelize.define('groupMembers', {
-    memberId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    groupId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    }
-  }, {
-    classMethods: {
-    },
-  });
-  return groupMember;
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const groupDetails = [{
+  Name: 'Mathematics World',
+  Description: 'This is where Maths lives',
+  ownerUserName: 'Pythagoras'
+}, {
+  Name: 'Learn Python',
+  Description: 'Meet Python gurus',
+  ownerUserName: 'lolade'
+}, {
+  Name: 'Mathematics World',
+  Description: 'We are mathematicians',
+  ownerUsername: 'Pythagoras'
+},
+{
+  Name: 'Java World',
+  Description: 'We are android developers',
+  ownerUsername: 'Pythagoras' }];
+&nbsp;
+export const updateInfo = {
+  name: 'Learn Pythonic Python',
+  description: 'We speak the pythonic language',
 };
-export default groupmemberModel;
+&nbsp;
+export const noGrpName = {
+  description: 'For all Java lovers!',
+};
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->

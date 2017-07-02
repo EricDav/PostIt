@@ -107,6 +107,91 @@ describe('User Registration', () => {
         done();
       });
   });
+
+  it('disallows a new user to register if password is not up to eight characters', (done) => {
+    server
+      .post('/api/user/signup')
+      .set('Connection', 'keep alive')
+      .set('Content-Type', 'application/json')
+      .type('form')
+      .send(user[4])
+      .expect(404)
+      .end((err, res) => {
+        res.status.should.equal(404);
+        res.body.success.should.equal(false);
+        done();
+      });
+  });
+  it('disallows a new user to register if password does not contains at least a digit', (done) => {
+    server
+      .post('/api/user/signup')
+      .set('Connection', 'keep alive')
+      .set('Content-Type', 'application/json')
+      .type('form')
+      .send(user[5])
+      .expect(404)
+      .end((err, res) => {
+        res.status.should.equal(404);
+        res.body.success.should.equal(false);
+        done();
+      });
+  });
+  it('disallows a new user to register if password does not contain at least one alphabet', (done) => {
+    server
+      .post('/api/user/signup')
+      .set('Connection', 'keep alive')
+      .set('Content-Type', 'application/json')
+      .type('form')
+      .send(user[7])
+      .expect(404)
+      .end((err, res) => {
+        res.status.should.equal(404);
+        res.body.message.should.equal('Weak password. Password should contain at least 8 characters including at least one number and alphabet');
+        done();
+      });
+  });
+  it('disallows a new user to register with an Invalid userName', (done) => {
+    server
+      .post('/api/user/signup')
+      .set('Connection', 'keep alive')
+      .set('Content-Type', 'application/json')
+      .type('form')
+      .send(user[6])
+      .expect(404)
+      .end((err, res) => {
+        res.status.should.equal(404);
+        res.body.success.should.equal(false);
+        done();
+      });
+  });
+  it('disallows a new user to register without a username', (done) => {
+    server
+      .post('/api/user/signup')
+      .set('Connection', 'keep alive')
+      .set('Content-Type', 'application/json')
+      .type('form')
+      .send(user[8])
+      .expect(404)
+      .end((err, res) => {
+        res.status.should.equal(404);
+        res.body.success.should.equal(false);
+        done();
+      });
+  });
+  it('disallows a new user to register without a name', (done) => {
+    server
+      .post('/api/user/signup')
+      .set('Connection', 'keep alive')
+      .set('Content-Type', 'application/json')
+      .type('form')
+      .send(user[9])
+      .expect(404)
+      .end((err, res) => {
+        res.status.should.equal(404);
+        res.body.success.should.equal(false);
+        done();
+      });
+  });
 });
 
 describe('Authentication', () => {
@@ -150,7 +235,7 @@ describe('Authentication', () => {
       .expect(200)
       .end((err, res) => {
         res.status.should.equal(200);
-        res.body.user.should.equal('lolade');
+        res.body.message.should.equal('Token generated successfully');
         done();
       });
   });

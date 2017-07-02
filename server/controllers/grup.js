@@ -15,9 +15,20 @@ const createGroups = {
       .create({
         Name: req.body.Name,
         Description: req.body.Description,
-        ownerUserName: req.body.ownerUserName,
+        ownerUserName: req.decoded.user.userName,
       })
-      .then(grup => res.status(201).send(grup))
+      .then((grup) => {
+        members
+          .create({
+            groupId: grup.id,
+            memberId: req.decoded.user.id
+          })
+          .then(member => res.status(201).json({
+            success: true,
+            message: `Group created successfully by a user with ${member.memberId}`
+          }))
+          .catch(error => res.status(404).send(error));
+      })
       .catch(error => res.status(400).send(error));
   },
   Delete(req, res) {

@@ -22,7 +22,7 @@ const logIn = {
           return res.status(401).json({ success: false, message: 'Authentication failed. wrong username or password.' });
         }
         const token = jwt.sign(
-          { userId: user.id
+          { user
           }, secret
         );
         res.status(200).json({

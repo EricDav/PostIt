@@ -1,4 +1,8 @@
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.load();
+const secret = process.env.secretKey;
 
 /**
  * @param  {object} req
@@ -14,9 +18,9 @@ const auth = (req, res, next) => {
   // decode token
   if (token) {
     // verifies secret and checks exp
-    jwt.verify(token, 'secret', (err, decoded) => {
+    jwt.verify(token, secret, (err, decoded) => {
       if (err) {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });
+        return res.status(403).json({ success: false, message: 'Failed to authenticate token.' });
       }
       // if everything is good, save to request for use in other routes
       req.decoded = decoded;

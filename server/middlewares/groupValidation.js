@@ -13,12 +13,9 @@ const group = {
   groupValidation(req, res, next) {
     Groups
       .findOne({
-        where: {
-          Name: req.body.Name
-        }
-      })
+        where: { Name: req.body.Name } })
       .then((Group) => {
-        if (!Group) {
+        if (Group === null) {
           next();
         } else {
           return res.status(409).json({
@@ -63,7 +60,6 @@ const group = {
       .catch(error => res.status(404).send(error));
   },
   deleteGroupValidation(req, res, next) {
-    console.log(req.headers.userName);
     Groups
       .findOne({ where: { id: req.params.groupId } })
       .then((Group) => {
@@ -72,7 +68,7 @@ const group = {
             success: false,
             message: 'Group not found. Group does not exist or has been deleted'
           });
-        } else if (Group.ownerUserName === req.body.userName) {
+        } else if (Group.ownerUserName === req.decoded.user.userName) {
           next();
         } else {
           res.status(401).json({

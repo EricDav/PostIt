@@ -18,6 +18,34 @@ export const user = [{
   password: 'jide0534eds',
   email: 'jide05@yahoo.com',
   name: 'jide adebayo'
+}, {
+  userName: 'Pythag',
+  password: 'David65',
+  email: 'david@gmail.com',
+  name: 'Alienyi David'
+}, {
+  userName: 'Pythagoras',
+  password: 'Davidghfrdstr',
+  email: 'david@gmail.com',
+  name: 'Alienyi David'
+}, {
+  userName: '12345',
+  password: 'David19632ght',
+  email: 'david@gmail.com',
+  name: 'Alienyi Daniel'
+}, {
+  userName: 'Pythagoras',
+  password: '67854321319632',
+  email: 'david@gmail.com',
+  name: 'Alienyi David'
+}, {
+  password: 'David19632',
+  email: 'david@gmail.com',
+  name: 'Alienyi David'
+}, {
+  userName: 'Pythagoras',
+  password: 'David19632',
+  email: 'david@gmail.com'
 }];
 
 export const loginUser = [{
