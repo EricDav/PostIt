@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">97.5% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>32/32</span>
+        <span class='fraction'>39/40</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>10/10</span>
+        <span class='fraction'>14/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">97.5% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>32/32</span>
+        <span class='fraction'>39/40</span>
       </div>
     </div>
   </div>
@@ -222,7 +222,8 @@
 177
 178
 179
-180</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+180
+181</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -281,7 +282,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -301,6 +302,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -308,6 +311,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -315,16 +325,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -455,12 +457,12 @@ describe('Group Routes', () =&gt; {
       .set('x-access-token', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(members[2])
+      .send(members[3])
       .expect(201)
       .end((err, res) =&gt; {
         res.status.should.equal(201);
         res.body.memberId.should.equal(3);
-        done();
+<span class="cstat-no" title="statement not covered" >        done();</span>
       });
   });
 &nbsp;
@@ -480,44 +482,45 @@ describe('Group Routes', () =&gt; {
       });
   });
 &nbsp;
-//   it('disallows a logged in user to create a group with an existing name', (done) =&gt; {
+  it('allows a logged in user to view all the members of a group he/she belongs to', (done) =&gt; {
+    server
+      .get('/api/group/2/members')
+      .set('Connection', 'keep alive')
+      .set('x-access-token', regUserData)
+      .set('Content-Type', 'application/json')
+      .type('form')
+      .expect(201)
+      .end((err, res) =&gt; {
+        res.status.should.equal(201);
+        done();
+      });
+  });
+&nbsp;
+  it('allows a logged in user to view all the members he/she can add to a group', (done) =&gt; {
+    server
+      .get('/api/group/2/nonMembers')
+      .set('Connection', 'keep alive')
+      .set('x-access-token', regUserData)
+      .set('Content-Type', 'application/json')
+      .type('form')
+      .expect(201)
+      .end((err, res) =&gt; {
+        res.status.should.equal(201);
+        done();
+      });
+  });
+&nbsp;
+//   it('disallows a logged in user to view all the members of a group he/she does not belongs to', (done) =&gt; {
 //     server
-//       .post('/api/group')
+//       .get('/api/group/2/members')
 //       .set('Connection', 'keep alive')
 //       .set('x-access-token', regUserData)
 //       .set('Content-Type', 'application/json')
 //       .type('form')
-//       .send(groupDetails[2])
-//       .expect(409)
+//       .expect(401)
 //       .end((err, res) =&gt; {
-//         res.status.should.equal(409);
-//         res.body.success.should.equal(false);
-//         done();
-//       });
-//   });
-&nbsp;
-//   it('allows a logged in user to get all the groups heh belongs to', (done) =&gt; {
-//     server
-//       .get('/api/user/1/groups')
-//       .set('x-access-token', regUserData)
-//       .expect(200)
-//       .end((err, res) =&gt; {
-//         res.status.should.equal(200);
-//         done();
-//       });
-//   });
-&nbsp;
-//   it('disallows a user to create a new group without a token', (done) =&gt; {
-//     server
-//       .post('/api/group')
-//       .set('Connection', 'keep alive')
-//       .set('Content-Type', 'application/json')
-//       .type('form')
-//       .send(groupDetails[0])
-//       .expect(403)
-//       .end((err, res) =&gt; {
-//         res.status.should.equal(403);
-//         res.body.message.should.equal('No token provided.');
+//         res.status.should.equal(401);
+//         res.body.message.should.equal('You are not a member of this group, so you can not view group data');
 //         done();
 //       });
 //   });
@@ -586,7 +589,7 @@ describe('Group Routes', () =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Jul 02 2017 13:22:52 GMT-0700 (Pacific Daylight Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Jul 02 2017 15:56:39 GMT-0700 (Pacific Daylight Time)
 </div>
 </div>
 <script src="..\..\..\prettify.js"></script>

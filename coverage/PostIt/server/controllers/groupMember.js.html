@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">22.22% </span>
+        <span class="strong">81.48% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>6/27</span>
+        <span class='fraction'>22/27</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">12.5% </span>
+        <span class="strong">68.75% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/16</span>
+        <span class='fraction'>11/16</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">22.22% </span>
+        <span class="strong">81.48% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/27</span>
+        <span class='fraction'>22/27</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -125,38 +125,38 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -175,7 +175,7 @@ const User = db.PostIts;
  * @description Adds a member to a specify group.
  * @return {object}
  */
-const AddMemberToAGroup = <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >{</span></span>
+const AddMemberToAGroup = {
   create(req, res) {
     return groupmember
       .create({
@@ -186,38 +186,38 @@ const AddMemberToAGroup = <span class="fstat-no" title="function not covered" ><
       .catch(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >error =&gt; res.status(400).send(error));</span></span>
   },
   getGroupmMembers(req, res) {
-    c</span>onst listOfIdsOfMembers = <span class="cstat-no" title="statement not covered" >[];
-<span class="cstat-no" title="statement not covered" >    return groupmember</span>
+    const listOfIdsOfMembers = [];
+    return groupmember
       .findAll({ where: { groupId: req.params.groupId } })
-      .then(<span class="fstat-no" title="function not covered" >(</span>Groupmembers) =&gt; {
-<span class="cstat-no" title="statement not covered" >        Groupmembers.forEach(<span class="fstat-no" title="function not covered" >(</span>users) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >          listOfIdsOfMembers.push(users.memberId);</span>
+      .then((Groupmembers) =&gt; {
+        Groupmembers.forEach((users) =&gt; {
+          listOfIdsOfMembers.push(users.memberId);
         });
-<span class="cstat-no" title="statement not covered" >        User</span>
+        User
           .findAll({ where: { id: listOfIdsOfMembers } })
-          .then(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >groupUsers =&gt; res.status(200).send(groupUsers))</span></span>
+          .then(groupUsers =&gt; res.status(201).send(groupUsers))
           .catch(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >error =&gt; res.status(400).send(error));</span></span>
       })
       .catch(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >error =&gt; res.status(400).send(error));</span></span>
   },
   getNonGroupmMembers(req, res) {
-    c</span>onst listOfIdsOfMembers = <span class="cstat-no" title="statement not covered" >[];
-    c</span>onst listOfNonUsers = <span class="cstat-no" title="statement not covered" >[];
-<span class="cstat-no" title="statement not covered" >    return groupmember</span>
+    const listOfIdsOfMembers = [];
+    const listOfNonUsers = [];
+    return groupmember
       .findAll({ where: { groupId: req.params.groupId } })
-      .then(<span class="fstat-no" title="function not covered" >(</span>Groupmembers) =&gt; {
-<span class="cstat-no" title="statement not covered" >        Groupmembers.forEach(<span class="fstat-no" title="function not covered" >(</span>users) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >          listOfIdsOfMembers.push(users.memberId);</span>
+      .then((Groupmembers) =&gt; {
+        Groupmembers.forEach((users) =&gt; {
+          listOfIdsOfMembers.push(users.memberId);
         });
-<span class="cstat-no" title="statement not covered" >        User</span>
+        User
           .all()
-          .then(<span class="fstat-no" title="function not covered" >(</span>users) =&gt; {
-<span class="cstat-no" title="statement not covered" >            users.forEach(<span class="fstat-no" title="function not covered" >(</span>user) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >              if (!listOfIdsOfMembers.includes(user.id)) {</span>
-<span class="cstat-no" title="statement not covered" >                listOfNonUsers.push(user);</span>
+          .then((users) =&gt; {
+            users.forEach((user) =&gt; {
+              if (!listOfIdsOfMembers.includes(user.id)) {
+                listOfNonUsers.push(user);
               }
             });
-<span class="cstat-no" title="statement not covered" >            res.status(200).send(listOfNonUsers);</span>
+            res.status(201).send(listOfNonUsers);
           })
           .catch(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >error =&gt; res.status(400).send(error));</span></span>
       })
@@ -232,7 +232,7 @@ export default AddMemberToAGroup;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Jul 02 2017 13:22:52 GMT-0700 (Pacific Daylight Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Jul 02 2017 15:56:39 GMT-0700 (Pacific Daylight Time)
 </div>
 </div>
 <script src="..\..\..\prettify.js"></script>

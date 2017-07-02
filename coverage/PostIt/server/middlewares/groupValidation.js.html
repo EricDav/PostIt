@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">43.33% </span>
+        <span class="strong">76.67% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>13/30</span>
+        <span class='fraction'>23/30</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">41.67% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>5/12</span>
+        <span class='fraction'>9/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">33.33% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>4/12</span>
+        <span class='fraction'>8/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">43.33% </span>
+        <span class="strong">76.67% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>13/30</span>
+        <span class='fraction'>23/30</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -155,35 +155,35 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -220,7 +220,7 @@ const groupMembers = db.groupMembers;
  * @description validate for group creation by checking in if group name exist
  * @return {object}
  */
-const group = <span class="fstat-no" title="function not covered" >{</span>
+const group = {
   groupValidation(req, res, next) {
     Groups
       .findOne({
@@ -238,26 +238,26 @@ const group = <span class="fstat-no" title="function not covered" >{</span>
       .catch(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >error =&gt; res.status(404).send(error));</span></span>
   },
   getGroupInformationValidation(req, res, next) {
-    l</span>et check = <span class="cstat-no" title="statement not covered" >false;
-<span class="cstat-no" title="statement not covered" >    return Groups</span>
+    let check = false;
+    return Groups
       .findOne({ where: { id: req.params.groupId } })
-      .then(<span class="fstat-no" title="function not covered" >(</span>Group) =&gt; {
-<span class="cstat-no" title="statement not covered" >        if (!Group) {</span>
-<span class="cstat-no" title="statement not covered" >          res.status(404).json({</span>
+      .then((Group) =&gt; {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!Group) {
+<span class="cstat-no" title="statement not covered" >          res.status(402).json({</span>
             success: false,
             message: 'Group not found. Group  not created or has been deleted'
           });
         } else {
-<span class="cstat-no" title="statement not covered" >          groupMembers</span>
+          groupMembers
             .findAll({ where: { groupId: req.params.groupId } })
-            .then(<span class="fstat-no" title="function not covered" >(</span>members) =&gt; {
-<span class="cstat-no" title="statement not covered" >              check = false;</span>
-<span class="cstat-no" title="statement not covered" >              members.forEach(<span class="fstat-no" title="function not covered" >(</span>member) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >                if (member.memberId === Number(req.headers.id)) {</span>
-<span class="cstat-no" title="statement not covered" >                  check = true;</span>
+            .then((members) =&gt; {
+              check = false;
+              members.forEach((member) =&gt; {
+                if (member.memberId === Number(req.decoded.user.id)) {
+                  check = true;
                 }
               });
-<span class="cstat-no" title="statement not covered" >              if (!check) {</span>
+              <span class="missing-if-branch" title="if path not taken" >I</span>if (!check) {
 <span class="cstat-no" title="statement not covered" >                res.status(401).json({</span>
                   success: false,
                   message: 'You are not a member of this group, so you can not view group data'
@@ -266,7 +266,7 @@ const group = <span class="fstat-no" title="function not covered" >{</span>
             })
             .catch(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >error =&gt; res.status(404).send(error));</span></span>
         }
-<span class="cstat-no" title="statement not covered" >        next();</span>
+        next();
       })
       .catch(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >error =&gt; res.status(404).send(error));</span></span>
   },
@@ -298,7 +298,7 @@ export default group;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Jul 02 2017 13:22:52 GMT-0700 (Pacific Daylight Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Jul 02 2017 15:56:39 GMT-0700 (Pacific Daylight Time)
 </div>
 </div>
 <script src="..\..\..\prettify.js"></script>
