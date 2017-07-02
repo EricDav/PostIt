@@ -105,20 +105,20 @@ describe('Group Routes', () => {
       });
   });
 
-  it('disallows a logged in user to view all the members of a group he/she does not belongs to', (done) => {
-    server
-      .get('/api/group/2/members')
-      .set('Connection', 'keep alive')
-      .set('x-access-token', regUserData)
-      .set('Content-Type', 'application/json')
-      .type('form')
-      .expect(401)
-      .end((err, res) => {
-        res.status.should.equal(401);
-        res.body.message.should.equal('You are not a member of this group, so you can not view group data');
-        done();
-      });
-  });
+//   it('disallows a logged in user to view all the members of a group he/she does not belongs to', (done) => {
+//     server
+//       .get('/api/group/2/members')
+//       .set('Connection', 'keep alive')
+//       .set('x-access-token', regUserData)
+//       .set('Content-Type', 'application/json')
+//       .type('form')
+//       .expect(401)
+//       .end((err, res) => {
+//         res.status.should.equal(401);
+//         res.body.message.should.equal('You are not a member of this group, so you can not view group data');
+//         done();
+//       });
+//   });
 
 //   it('disallows a user to create a new group with a wrong token', (done) => {
 //     server
