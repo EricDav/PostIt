@@ -93,7 +93,6 @@ describe('Group Routes', () => {
   it('allows a logged in user get all posts from the group he/she belongs', (done) => {
     server
       .get('/api/group/2/messages')
-      .set('Connection', 'keep alive')
       .set('x-access-token', regUserData)
       .expect(201)
       .end((err, res) => {
