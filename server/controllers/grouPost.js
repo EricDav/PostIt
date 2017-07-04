@@ -12,11 +12,15 @@ const createGroupPost = {
     return groupPost
       .create({
         message: req.body.message,
-        posterUsername: req.body.posterUsername,
-        postId: req.params.postId,
+        posterUsername: req.decoded.user.userName,
+        postId: req.params.groupId
       })
-      .then(Groupost => res.status(201).send(Groupost))
-      .catch(error => res.status(400).send(error));
-  },
+      .then((Groupost) => {
+        res.status(201).send(Groupost);
+      })
+      .catch((error) => {
+        res.status(404).send(error);
+    })
+  }
 };
 export default createGroupPost;

@@ -4,7 +4,7 @@ import 'chai';
 import should from 'should';
 import app from './../../app';
 import { loginUser } from './../seeders/userSeeders';
-import { members, invalidIds } from '../seeders/groupMembersSeeders';
+import messages from './../seeders/groupMessagesSeeders';
 
 const server = supertest.agent(app);
 let regUserData;
@@ -29,107 +29,75 @@ describe('Group Routes', () => {
 
 
 describe('Group Routes', () => {
-  it('allows a logged in user adds member to a group he/she belongs', (done) => {
+  it('allows a logged in user create post to a group he/she belongs', (done) => {
     server
-      .post('/api/group/2/user')
+      .post('/api/group/2/message')
       .set('Connection', 'keep alive')
       .set('x-access-token', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(members[0])
+      .send(messages[0])
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.memberId.should.equal(1);
+        res.body.message.should.equal('Can you solve 2x + 5 = 6');
         done();
       });
   });
 
-  it('allows a logged in user adds member to a group he/she belongs', (done) => {
+  it('allows a logged in user create post to a group he/she belongs', (done) => {
     server
-      .post('/api/group/2/user')
+      .post('/api/group/2/message')
       .set('Connection', 'keep alive')
       .set('x-access-token', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(members[3])
+      .send(messages[1])
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.memberId.should.equal(4);
+        res.body.postId.should.equal(2);
         done();
       });
   });
-
-  it('allows a logged in user adds member to a group he/she belongs', (done) => {
+  it('allows a logged in user create post to a group he/she belongs', (done) => {
     server
-      .post('/api/group/4/user')
+      .post('/api/group/2/message')
       .set('Connection', 'keep alive')
       .set('x-access-token', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(members[1])
+      .send(messages[2])
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.memberId.should.equal(2);
+        res.body.postId.should.equal(2);
         done();
       });
   });
-
-  it('allows a logged in user to view all the members of a group he/she belongs to', (done) => {
+  it('allows a logged in user create post to a group he/she belongs', (done) => {
     server
-      .get('/api/group/2/members')
+      .post('/api/group/2/message')
       .set('Connection', 'keep alive')
       .set('x-access-token', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
+      .send(messages[3])
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
+        res.body.postId.should.equal(2);
         done();
       });
   });
-
-  it('allows a logged in user to view all the members he/she can add to a group', (done) => {
+  it('allows a logged in user get all posts from the group he/she belongs', (done) => {
     server
-      .get('/api/group/2/nonMembers')
+      .get('/api/group/2/messages')
       .set('Connection', 'keep alive')
       .set('x-access-token', regUserData)
-      .set('Content-Type', 'application/json')
-      .type('form')
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        done();
-      });
-  });
-  
-  it('allows a group admin to delete the group he owns', (done) => {
-    server
-      .delete('/api/group/2/delete')
-      .set('x-access-token', regUserData)
-      .expect(200)
-      .end((err, res) => {
-        res.status.should.equal(200);
-        res.body.message.should.equal('Deleted group, group messages and group members successfully');
-        done();
-      });
-  });
-
-  it('allows another registered user to login successfully', (done) => {
-    server
-      .post('/api/user/signin')
-      .set('Connection', 'keep alive')
-      .set('Content-Type', 'application/json')
-      .type('form')
-      .send(loginUser[1])
-      .set('x-access-token', regUserData)
-      .expect(200)
-      .end((err, res) => {
-        regUserData = res.body.Token;
-        res.status.should.equal(200);
-        res.body.success.should.equal(true);
         done();
       });
   });

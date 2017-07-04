@@ -145,37 +145,6 @@ describe('Group Routes', () => {
         done();
       });
   });
-
-//   it('ensures that a group has a name', (done) => {
-//     server
-//     .post('/api/group')
-//     .set('Connection', 'keep alive')
-//     .set('Content-Type', 'application/json')
-//     .type('form')
-//     .send(noGrpName)
-//     .expect(400)
-//     .end((err, res) => {
-//       res.status.should.equal(400);
-//       res.body.error.should.equal('A new group needs to have a name');
-//       done();
-//     });
-//   });
-
-//   it('prevents a user from editing a group he is not a member of', (done) => {
-//     server
-//     .put('/api/group/2/edit')
-//     .set('Connection', 'keep alive')
-//     .set('Content-Type', 'application/json')
-//     .type('form')
-//     .send(updateInfo)
-//     .expect(400)
-//     .end((err, res) => {
-//       res.status.should.equal(400);
-//       res.body.error.should.equal('You are not authorized to access this group!');
-//       done();
-//     });
-//   });
-
   it('prevents a user from deleting a group that does not exist', (done) => {
     server
       .delete('/api/group/8/delete')
