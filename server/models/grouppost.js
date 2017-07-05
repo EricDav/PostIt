@@ -13,7 +13,7 @@ const groupPostModel = (sequelize, DataTypes) => {
     message: {
       type: DataTypes.STRING,
       allowNull: false,
-    }, 
+    },
     postId: {
       type: DataTypes.INTEGER,
       allowNull: false,

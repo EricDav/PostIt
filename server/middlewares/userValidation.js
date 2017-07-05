@@ -71,11 +71,11 @@ const userValidation = {
   emailValidation(req, res, next) {
     User
       .findOne(
-        {
-          where: {
-            email: req.body.email
+      {
+        where: {
+          email: req.body.email
           },
-        })
+      })
       .then((user) => {
         if (!user) {
           next();

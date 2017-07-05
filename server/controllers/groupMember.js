@@ -33,7 +33,6 @@ const AddMemberToAGroup = {
       })
       .catch(error => res.status(400).send(error));
   },
-  
   getNonGroupmMembers(req, res) {
     const listOfIdsOfMembers = [];
     const listOfNonUsers = [];

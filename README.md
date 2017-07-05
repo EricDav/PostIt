@@ -1,8 +1,8 @@
 # PostIt
 
-[![Coverage Status](https://coveralls.io/repos/github/EricDav/PostIt/badge.svg?branch=development)](https://coveralls.io/github/EricDav/PostIt?branch=development)  [![Build Status](https://travis-ci.org/EricDav/PostIt.svg?branch=development)](https://travis-ci.org/EricDav/PostIt)
-
+[![Coverage Status](https://coveralls.io/repos/github/EricDav/PostIt/badge.svg?branch=development)](https://coveralls.io/github/EricDav/PostIt?branch=development)  [![Build Status](https://travis-ci.org/EricDav/PostIt.svg?branch=development)](https://travis-ci.org/EricDav/PostIt)[![Code Climate](https://codeclimate.com/github/EricDav/PostIt/badges/gpa.svg)](https://codeclimate.com/github/EricDav/PostIt)
 ## Introduction
+* https://post-it1.herokuapp.com
 *  **`PostIt`** is a software that allows friends and colleagues create groups for              notification.
 *  It has the following features;
   *  Login with username and Password
@@ -38,11 +38,12 @@
   *  `npm install`
 
     >In order to use app dependencies, you need to install it through **npm**. You also need to have **node** installed on your system.
+* Run test
+  *  `npm tests`
 
 * Run the app
   *  `npm start`
   *  Running the command above will produce output that's similar to the sample below.
-
   ```
     > PostIt@1.0.0 start C:\Users\DAVID\Desktop\PostIt
     > nodemon --watch server --exec babel-node -- app.js

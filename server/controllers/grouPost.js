@@ -20,7 +20,7 @@ const createGroupPost = {
       })
       .catch((error) => {
         res.status(404).send(error);
-    })
+      });
   }
 };
 export default createGroupPost;
