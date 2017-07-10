@@ -25,7 +25,7 @@ const createGroups = {
           })
           .then(member => res.status(201).json({
             success: true,
-            message: `Group created successfully by a user with ${member.memberId}`
+            message: `Group created successfully by a user with an id of ${member.memberId}`
           }))
           .catch(error => res.status(404).send(error));
       })
