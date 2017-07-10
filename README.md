@@ -3,10 +3,10 @@
 [![Coverage Status](https://coveralls.io/repos/github/EricDav/PostIt/badge.svg?branch=development)](https://coveralls.io/github/EricDav/PostIt?branch=development)  [![Build Status](https://travis-ci.org/EricDav/PostIt.svg?branch=development)](https://travis-ci.org/EricDav/PostIt)[![Code Climate](https://codeclimate.com/github/EricDav/PostIt/badges/gpa.svg)](https://codeclimate.com/github/EricDav/PostIt)
 ## Introduction
 * https://post-it1.herokuapp.com
-*  **`PostIt`** is a software that allows friends and colleagues create groups for              notification.
+*  **`PostIt`** is a software that allows friends and colleagues create groups for  notification.
 *  It has the following features;
   *  Login with username and Password
-  *  Allows users to;
+  *  Allows users to:
     *  create group
     *  add members to group they belong
     *  Post messages to group they belong
@@ -20,6 +20,40 @@
   
 ## Front End Dependencies
 *  **materialize** - The app's grid layout have been styled using this CSS framework
+
+## Usage
+
+#### Routes
+* POST `/api/user/signup` Use this route to create an account. The following fields are required:
+  * `name`  The user fullname
+  * `email`     Email address of the new user
+  * `password` users password at least 8 characters include at least one digit and one alphabet
+  * `userName` user Username
+
+* POST `/api/user/signin` Use this route to sign in to the application. The following fields are required:
+  * `userName` User userName
+  * `password` User password
+
+* POST `/api/group` Use this route to create a new group. The following fields are required:
+  * `Name`  The Name of the group
+  * `Description`     A description or of the purpose of the group
+* POST `/api/group/<groupId>/user` Use this route to add a user to an existing group
+  * `memberId` The `id` of the member to be added
+
+
+* POST `/api/group/<groupId>/message` Use this route to post a message to a group
+  * `message` The body of the message to be posted to the group
+  * `postId` The name of the group the message is being posted to
+
+* GET `/api/group/<groupId>/messages` Use this route retrieve all the massages in a particular group
+* GET `/api/group/<groupId>/members` Use this route to retrieve all the members in a group
+* GET `/api/allUsers` Use this route to retrieve all registered members
+* GET `/api/user/:userId/groups` Use this route to retrieve all the groups a particular user belongs to
+* GET `/api/group/:groupId/nonMembers` Use this route to retrieve all registered members that are not a member of    a group
+
+* DELETE `/api/group/:groupId/delete` Use this route to delete a group with its groupId
+
+
 
 ## Installation and setup
 *  Navigate to a directory of choice on `terminal`.

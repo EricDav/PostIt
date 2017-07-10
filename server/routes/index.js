@@ -8,13 +8,13 @@ import auth from '../middlewares/auth';
 import userValidator from '../middlewares/userValidation';
 import groupMessagesController from '../controllers/groupMessages';
 import groupValidator from '../middlewares/groupValidation';
-
+import groupMembersValidation from '../middlewares/groupMembersValidation';
 
 const app = express.Router();
 app.get('/api/allUsers', auth, userController.allUsers);
 app.post('/api/group', auth, groupValidator.groupValidation, groupController.create);
 app.post('/api/user/signup', userValidator.basicValidation, userValidator.emailValidation, userController.create);
-app.post('/api/group/:groupId/user', auth, groupMembersController.create);
+app.post('/api/group/:groupId/user',  auth, groupMembersValidation.isValidUser, groupMembersValidation.canAddUserToGroup, groupMembersValidation.isAmember, groupMembersController.create);
 app.post('/api/group/:groupId/message', auth, groupValidator.getGroupInformationValidation, groupPostsController.create);
 app.post('/api/user/signin', loginController.findUser);
 app.get('/api/group/:groupId/messages', auth, groupValidator.getGroupInformationValidation, groupMessagesController.getPosts);

@@ -52,21 +52,6 @@ describe('Group Routes', () => {
       .set('x-access-token', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(messages[1])
-      .expect(201)
-      .end((err, res) => {
-        res.status.should.equal(201);
-        res.body.postId.should.equal(2);
-        done();
-      });
-  });
-  it('allows a logged in user create post to a group he/she belongs', (done) => {
-    server
-      .post('/api/group/2/message')
-      .set('Connection', 'keep alive')
-      .set('x-access-token', regUserData)
-      .set('Content-Type', 'application/json')
-      .type('form')
       .send(messages[2])
       .expect(201)
       .end((err, res) => {

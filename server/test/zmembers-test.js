@@ -36,11 +36,11 @@ describe('Group Routes', () => {
       .set('x-access-token', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(members[0])
+      .send(members[2])
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.memberId.should.equal(1);
+        res.body.memberId.should.equal(3);
         done();
       });
   });
@@ -57,22 +57,6 @@ describe('Group Routes', () => {
       .end((err, res) => {
         res.status.should.equal(201);
         res.body.memberId.should.equal(4);
-        done();
-      });
-  });
-
-  it('allows a logged in user adds member to a group he/she belongs', (done) => {
-    server
-      .post('/api/group/4/user')
-      .set('Connection', 'keep alive')
-      .set('x-access-token', regUserData)
-      .set('Content-Type', 'application/json')
-      .type('form')
-      .send(members[1])
-      .expect(201)
-      .end((err, res) => {
-        res.status.should.equal(201);
-        res.body.memberId.should.equal(2);
         done();
       });
   });
