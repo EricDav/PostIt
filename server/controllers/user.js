@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import db from '../models';
 
-const groupMembers = db.groupMembers;
+const groupMembers = db.User;
 
 dotenv.load();
 const secret = process.env.secretKey;

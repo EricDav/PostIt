@@ -2,7 +2,7 @@ import db from '../models';
 import isDigit from '../helpers/isDigit';
 import isText from '../helpers/isText';
 
-const User = db.PostIts;
+const User = db.User;
 /**
    * @param  {object} req
    * @param  {object} res
@@ -18,14 +18,14 @@ const userValidation = {
     if (req.body.email === null || req.body.email === undefined) {
       nullValues.push('email');
     }
-    if (req.body.name === null || req.body.name === undefined) {
+    if (req.body.fullname === null || req.body.fullname === undefined) {
       nullValues.push('name');
     }
     if (req.body.password === null || req.body.password === undefined) {
       nullValues.push('password');
     }
     if (req.body.phoneNumber === null || req.body.phoneNumber === undefined){
-      nullValues.push('password');
+      nullValues.push('phoneNumber');
     }
     if (nullValues.length > 0) {
       if (nullValues.length === 1) {
@@ -41,10 +41,10 @@ const userValidation = {
         return res.status(404).json({ success: false, message: 'Not a valid email address. can not find @ ' });
       }
       return res.status(404).json({ success: false, message: 'Not a valid email address. can not find the extension /'.com / ' and can not find @ ' });
-    } else if (!isText(req.body.name)) {
+    } else if (!isText(req.body.fullname)) {
       return res.status(404).json({ success: false, message: 'Invalid name. Name should contain alphabet and space alone. ' });
-    } else if (isDigit(req.body.userName) || isDigit(req.body.userName[0])) {
-      if (isDigit(req.body.userName)) {
+    } else if (isDigit(req.body.username) || isDigit(req.body.username[0])) {
+      if (isDigit(req.body.username)) {
         return res.status(404).json({ success: false, message: 'Invalid username. username must contain an alphabet' });
       }
       return res.status(404).json({ success: false, message: 'Invalid username. You can only start a username with an alphabet' });
@@ -56,7 +56,7 @@ const userValidation = {
       .findOne(
         {
           where: {
-            userName: req.body.userName
+            username: req.body.username
           },
         })
       .then((user) => {
@@ -69,7 +69,7 @@ const userValidation = {
           });
         }
       })
-      .catch(error => res.status(404).send(error));
+      .catch(error => res.status(401).send(error));
   },
   emailValidation(req, res, next) {
     User
@@ -101,7 +101,12 @@ const userValidation = {
         }
       )
       .then((phoneNumber) => {
-        if (!phoneNumber) {
+        if (req.body.phoneNumber.length !== 11) {
+          res.status(400).json({
+            success: false,
+            message: 'Invalid phone number'
+          })
+        } else if (!phoneNumber) {
           next();
         } else {
           return res.status(409).json({

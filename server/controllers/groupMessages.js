@@ -7,7 +7,7 @@ const Message = db.Message;
  * @description get all posts that belong to a specify group.
  * @return {object}
  */
-const messages = {
+const Messages = {
   createMessage(req, res) {
     return Message
       .create({
@@ -23,7 +23,23 @@ const messages = {
         });
       })
       .catch(error => res.status(400).send(error));
+  },
+  getMessages(req, res) {
+    return Message
+      .findAll({ where: {
+        groupId: req.params.groupId
+      } })
+      .then((messages) => {
+        if (messages.lenght === 0) {
+          res.status(200).json({
+            message: 'This group has no message'
+          });
+        } else {
+          res.status(200).send(messages);
+        }
+      })
+      .catch(error => res.status(404).send(error));
   }
 };
 
-export default messages;
+export default Messages;

@@ -1,6 +1,7 @@
 import db from '../models';
 
 const Group = db.Group;
+const User = db.User;
 // const posts = db.groupPosts;
 // const members = db.groupMembers;
 /**
@@ -26,11 +27,14 @@ const createGroups = {
           .create({
             name: req.body.name,
             description: req.body.description,
-            creator: req.body.creator
+            creator: req.decoded.user.username
           })
           .then((group) => {
             group.addUser(req.decoded.user.id);
-            res.status(201).send(group);
+            res.status(201).json({
+              success: true,
+              message: 'group created successfully'
+            });
           })
           .catch(error => res.status(400).send(error));
       })
@@ -49,6 +53,35 @@ const createGroups = {
         });
       })
       .catch(error => res.status(400).send(error));
+  },
+  getGroups(req, res) {
+    User
+      .findOne({ where: {
+        id: req.decoded.user.id
+      } })
+      .then((user) => {
+        user.getGroups().then((groups) => {
+          if (groups.length === 0) {
+            res.status(200).json({
+              message: 'You did not belong to any group'
+            });
+          } else {
+            res.status(200).send(groups);
+          }
+        });
+      })
+      .catch(error => res.status(400).send(error));
+  },
+  getGroupMembers(req, res) {
+    return Group
+      .findOne({ where: {
+        id: req.params.groupId
+      } })
+      .then((group) => {
+        group.getUsers()
+          .then(groups => res.status(200).send(groups))
+          .catch(error => res.status(400).send(error));
+      });
   },
   Delete(req, res) {
     return Group

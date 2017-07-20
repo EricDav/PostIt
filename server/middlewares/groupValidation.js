@@ -1,4 +1,5 @@
 import db from '../models';
+import isText from '../helpers/isText';
 
 const Groups = db.Group;
 const User = db.User;
@@ -76,6 +77,45 @@ const group = {
         }
       })
       .catch(error => res.status(404).send(error));
+  },
+  groupNullValidation(req, res, next) {
+    const nullValues = [];
+    console.log(req.body.name);
+    if (req.body.name === null || req.body.name === undefined) {
+      nullValues.push('name');
+    }
+    if (req.body.description === null || req.body.description === undefined) {
+      nullValues.push('description');
+    }
+    if (nullValues.length > 0) {
+      if (nullValues.length === 1) {
+        return res.status(400).json({
+          success: false,
+          message: `${nullValues[0]} can not be null: enter the value of ${nullValues[0]}`
+        });
+      }
+      let Message = '';
+      nullValues.forEach((elem, index) => {
+        if (index === 0) {
+          Message = `${Message} ${elem}`;
+        } else {
+          Message = `${Message}, ${elem}`;
+        }
+      });
+      Message = `${Message}  can not be null: Enter the values of  ${Message}`;
+      return res.status(400).json({
+        success: false,
+        message: Message
+      });
+    }
+    if (req.body.description.length < 30) {
+      return res.status(400).json({
+        success: false,
+        message: 'You must have a minimum of 30 characters in the description field'
+      });
+    }
+    console.log('I got here');
+    next();
   },
   deleteGroupValidation(req, res, next) {
     Groups
