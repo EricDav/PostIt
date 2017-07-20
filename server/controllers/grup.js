@@ -1,8 +1,8 @@
 import db from '../models';
 
-const Group = db.groups;
-const posts = db.groupPosts;
-const members = db.groupMembers;
+const Group = db.Group;
+// const posts = db.groupPosts;
+// const members = db.groupMembers;
 /**
  * @param  {object} req request coming from the client
  * @param  {object} res response to the client
@@ -11,23 +11,42 @@ const members = db.groupMembers;
  */
 const createGroups = {
   create(req, res) {
-    return Group
-      .create({
-        Name: req.body.Name,
-        Description: req.body.Description,
-        ownerUserName: req.decoded.user.userName,
-      })
-      .then((grup) => {
-        members
+    Group
+      .findOne({ where: {
+        name: req.body.name
+      } })
+      .then((user) => {
+        if (user) {
+          return res.status(400).json({
+            success: false,
+            message: 'name already exist'
+          });
+        }
+        Group
           .create({
-            groupId: grup.id,
-            memberId: req.decoded.user.id
+            name: req.body.name,
+            description: req.body.description,
+            creator: req.body.creator
           })
-          .then(member => res.status(201).json({
-            success: true,
-            message: `Group created successfully by a user with an id of ${member.memberId}`
-          }))
-          .catch(error => res.status(404).send(error));
+          .then((group) => {
+            group.addUser(req.decoded.user.id);
+            res.status(201).send(group);
+          })
+          .catch(error => res.status(400).send(error));
+      })
+      .catch(error => res.status(400).send(error));
+  },
+  addUser(req, res) {
+    return Group
+      .findOne({ where: {
+        id: req.params.groupId
+      } })
+      .then((group) => {
+        group.addUser(req.body.userId);
+        res.status(201).json({
+          success: true,
+          message: 'user added to group successfully'
+        });
       })
       .catch(error => res.status(400).send(error));
   },

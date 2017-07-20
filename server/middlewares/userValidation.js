@@ -12,7 +12,7 @@ const User = db.PostIts;
 const userValidation = {
   basicValidation(req, res, next) {
     const nullValues = [];
-    if (req.body.userName === null || req.body.userName === undefined) {
+    if (req.body.username === null || req.body.username === undefined) {
       nullValues.push('username');
     }
     if (req.body.email === null || req.body.email === undefined) {
@@ -22,6 +22,9 @@ const userValidation = {
       nullValues.push('name');
     }
     if (req.body.password === null || req.body.password === undefined) {
+      nullValues.push('password');
+    }
+    if (req.body.phoneNumber === null || req.body.phoneNumber === undefined){
       nullValues.push('password');
     }
     if (nullValues.length > 0) {
@@ -71,11 +74,11 @@ const userValidation = {
   emailValidation(req, res, next) {
     User
       .findOne(
-      {
-        where: {
-          email: req.body.email
+        {
+          where: {
+            email: req.body.email
           },
-      })
+        })
       .then((user) => {
         if (!user) {
           next();
@@ -87,6 +90,26 @@ const userValidation = {
         }
       })
       .catch(error => res.status(404).send(error));
+  },
+  phoneNumberValidation(req, res, next) {
+    User
+      .findOne(
+        {
+          where: {
+            phoneNumber: req.body.phoneNumber
+          }
+        }
+      )
+      .then((phoneNumber) => {
+        if (!phoneNumber) {
+          next();
+        } else {
+          return res.status(409).json({
+            success: false,
+            message: 'phone number already exist'
+          });
+        }
+      });
   }
 };
 export default userValidation;

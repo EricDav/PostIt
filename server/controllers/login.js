@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import db from '../models';
 
 dotenv.load();
-const User = db.PostIts;
+const User = db.User;
 const secret = process.env.secretKey;
 /**
  * @param  {object} req
@@ -14,7 +14,7 @@ const secret = process.env.secretKey;
 const logIn = {
   findUser(req, res) {
     return User
-      .findOne({ where: { userName: req.body.userName } })
+      .findOne({ where: { username: req.body.username } })
       .then((user) => {
         if (!user) {
           return res.status(401).json({ success: false, message: 'Authentication failed. wrong username or password.' });

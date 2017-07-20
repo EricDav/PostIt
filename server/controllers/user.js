@@ -6,8 +6,8 @@ const groupMembers = db.groupMembers;
 
 dotenv.load();
 const secret = process.env.secretKey;
-const User = db.PostIts;
-const groups = db.groups;
+const User = db.User;
+const groups = db.Group;
 /**
  * @param  {object} req
  * @param  {object} res
@@ -18,15 +18,15 @@ const createUser = {
   create(req, res) {
     return User
       .create({
-        name: req.body.name,
-        userName: req.body.userName,
+        fullname: req.body.fullname,
+        username: req.body.username,
         password: req.body.password,
         email: req.body.email,
+        phoneNumber: req.body.phoneNumber
       })
       .then((user) => {
         const token = jwt.sign(
-          { userId: user.id,
-            userName: user.userName
+          { user
           }, secret
         );
         res.status(201).json({

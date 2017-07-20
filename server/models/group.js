@@ -1,40 +1,31 @@
-
-/**
- * @param  {object} sequelize
- * @param  {object} DataTypes
- * @description creating model for group
- * @return {object} group model
- */
-const groupModel = (sequelize, DataTypes) => {
-  const group = sequelize.define('groups', {
-    Name: {
+module.exports = (sequelize, DataTypes) => {
+  const Group = sequelize.define('Group', {
+    name: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: false,
+      unique: {
+        args: true,
+        msg: 'Group name already exists. Use another name'
+      }
     },
-    Description: {
+    description: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
-    ownerUserName: {
+    creator: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: false
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        group.belongsTo(models.PostIt, {
-          foreignKey: 'ownerUserName',
-          onDelete: 'CASCADE',
-        });
-        group.hasMany(models.groupMember, {
-          foreignKey: 'groupId',
-          as: 'groupMembers',
-        });
-      },
-    },
   });
-  return group;
+  Group.associate = (models) => {
+    Group.belongsToMany(models.User, {
+      through: 'UserGroups',
+      foreignKey: 'groupId',
+    });
+    Group.hasMany(models.Message, {
+      foreignKey: 'groupId'
+    });
+  };
+  return Group;
 };
-
-export default groupModel;

@@ -1,6 +1,6 @@
 import db from '../models';
 
-const GrouPost = db.groupPosts;
+const Message = db.Message;
 /**
  * @param  {object} req request coming from the client
  * @param  {object} res response to the client
@@ -8,11 +8,21 @@ const GrouPost = db.groupPosts;
  * @return {object}
  */
 const messages = {
-  getPosts(req, res) {
-    return GrouPost
-      .findAll({ where: { postId: req.params.groupId } })
-      .then(posts => res.status(201).send(posts))
-      .catch(error => res.status(404).send(error));
+  createMessage(req, res) {
+    return Message
+      .create({
+        content: req.body.content,
+        groupId: req.params.groupId,
+        senderId: req.decoded.user.id,
+        piority: req.body.piority
+      })
+      .then(() => {
+        res.status(201).json({
+          success: true,
+          message: 'message sent successfully'
+        });
+      })
+      .catch(error => res.status(400).send(error));
   }
 };
 

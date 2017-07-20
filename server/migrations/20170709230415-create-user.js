@@ -1,43 +1,45 @@
 module.exports = {
-  up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('PostIts', {
+  up: (queryInterface, Sequelize) => {
+    queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: false,
-      },
-      userName: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false,
-      },
-      password: {
-        type: Sequelize.STRING,
-        unique: false,
-        allowNull: false,
+        type: Sequelize.INTEGER
       },
       email: {
         type: Sequelize.STRING,
-        unique: true,
         allowNull: false,
+        unique: true,
+      },
+      fullname: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: false
+      },
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      phoneNumber: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
-    }),
-
-  down: (queryInterface) => {
-    queryInterface.dropTable('PostIts');
-  }
+        type: Sequelize.DATE
+      }
+    });
+  },
+  down: queryInterface => queryInterface.dropTable('Users')
 };
