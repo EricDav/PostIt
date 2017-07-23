@@ -1,6 +1,6 @@
 import React from 'react';
 import SignUp from './signup';
-import LogIn from './LogIn';
+import Login from './LogIn';
 import Footer from './footer';
 import NavigationBar from './NavigationBar';
 import NavBar from './NavBar';
@@ -8,13 +8,28 @@ import NavBar from './NavBar';
 class HomePage extends React.Component {
     render() {
         return (
-        <div className="body-container">
+        <div classNameName="body-container">
             <NavBar/>
-            <NavigationBar />
-            <LogIn />
-            <SignUp />
-            <Footer />
+            <div>
+        <div className="row">
+          <div className="col s6 offset-s3 valign">
+            <div className="row">
+              <ul className="tabs tab-profile z-depth-1 purple darken-1" style={{ width: 100 }}>
+                <li className="tab" style={{ width: 50 }}>
+                    <a className="white-text waves-effect waves-light active" href="#login-page"><i className="mdi-editor-border-color" />Login</a>
+                </li>
+                <li className="tab" style={{ width: 50 }}><a className="white-text waves-effect waves-light" href="#signup-page"><i className="mdi-image-camera-alt" /> Register</a>
+                </li>
+                <div className="indicator" style={{ right: 616, left: 0 }} />
+              </ul>
+              <Login />
+              <SignUp />
+            </div>
+          </div>
         </div>
+      </div>
+            <Footer />
+            </div>
         );
     }
 }
