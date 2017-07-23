@@ -101,11 +101,11 @@ const userValidation = {
         }
       )
       .then((phoneNumber) => {
-        if (req.body.phoneNumber.length !== 11) {
+        if (req.body.phoneNumber.length !== 11 || !isDigit(req.body.phoneNumber)) {
           res.status(400).json({
             success: false,
             message: 'Invalid phone number'
-          })
+          });
         } else if (!phoneNumber) {
           next();
         } else {

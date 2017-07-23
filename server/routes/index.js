@@ -17,5 +17,7 @@ app.post('/api/user/signin', loginController.findUser);
 app.get('/api/group/:groupId/messages', auth, groupValidator.groupValidation, groupMessagesController.getMessages);
 app.get('/api/groups', auth, groupController.getGroups);
 app.get('/api/group/:groupId/members', auth, groupValidator.groupValidation, groupController.getGroupMembers);
+app.get('/api/messages', auth, userController.userMessages);
+app.get('/api/notification', auth, userController.userNotifications);
 app.delete('/api/group/:groupId/delete', auth, groupValidator.deleteGroupValidation, groupController.Delete);
 export default app;
