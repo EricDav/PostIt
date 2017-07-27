@@ -4,6 +4,9 @@ import Login from './LogIn';
 import Footer from './footer';
 import NavigationBar from './NavigationBar';
 import NavBar from './NavBar';
+import {connect} from 'react-redux';
+import userSignupRequest from '../actions/signupActions';
+import PropTypes from 'prop-types';
 
 class HomePage extends React.Component {
     render() {
@@ -23,7 +26,7 @@ class HomePage extends React.Component {
                 <div className="indicator" style={{ right: 616, left: 0 }} />
               </ul>
               <Login />
-              <SignUp />
+              <SignUp userSignupRequest={this.props.userSignupRequest}/>
             </div>
           </div>
         </div>
@@ -33,4 +36,8 @@ class HomePage extends React.Component {
         );
     }
 }
-export default HomePage;
+
+HomePage.propTypes = {
+   userSignupRequest: PropTypes.func.isRequired
+ }
+export default connect(null, {userSignupRequest})(HomePage);

@@ -1,4 +1,7 @@
 import React from 'react';
+import axios from 'axios';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 class SignUp extends React.Component {
     constructor(props) {
@@ -21,9 +24,8 @@ class SignUp extends React.Component {
         });
       }
       onSubmit(e) {
-        console.log('yes');
         e.preventDefault();
-        console.log(this.state);
+        this.props.userSignupRequest(this.state);
       }
     render() {
         return (<div id="signup-page" className="col s12 z-depth-4 card-panel">
@@ -77,13 +79,17 @@ class SignUp extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <button className="input-field col s12">
-                      <a  className="btn purple darken-1 waves-effect waves-light col s12">Register Now</a>
+                    <button className="input-field col s12 but">
+                      <a  className=" but btn purple darken-1 waves-effect waves-light col s12">Register Now</a>
                     </button>
                   </div>
                 </form>
               </div>);
     }
 }
+
+ SignUp.propTypes = {
+   userSignupRequest: PropTypes.func.isRequired
+ }
 
 export default SignUp;
