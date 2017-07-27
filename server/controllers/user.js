@@ -84,7 +84,6 @@ const createUser = {
       id: req.decoded.user.id
     } })
       .then((user) => {
-        console.log(req.decoded.user.id);
         viewMessages
           .findOne({ where: {
             viewerUsername: req.decoded.user.username
@@ -104,18 +103,21 @@ const createUser = {
                     groupId: groupIds
                   } })
                   .then((messages) => {
-                    let haveSeenNotification = false;
-                    const seenMessagesIds = [];
+                    let seenLast = 0;
+                    let seenMessagesIds = [];
+                    let hasSeenNotification = false;
                     const viewerData = [];
                     let viewerObject = { viewers: [] };
                     messages = messages.filter(Message =>
                       Message.senderId !== req.decoded.user.id
                     );
                     if (messages.length === viewers.seenMessageIds.length) {
-                      haveSeenNotification = true;
+                      hasSeenNotification = true;
                     } else {
-                      messages = messages.filter(Message =>
-                        !viewers.seenMessageIds.includes(Message.id));
+                      messages = messages.filter((Message) => {
+                        return !viewers.seenMessageIds.includes(Message.id);
+                        seenLast = viewers.seenMessageIds.length;
+                      });
                     }
                     messages.forEach((Message) => {
                       seenMessagesIds.push(Message.id);
@@ -125,7 +127,12 @@ const createUser = {
                           Viewers.forEach((viewer) => {
                             viewerObject.MessageId = Message.id;
                             if (viewer.seenMessageIds.includes(Message.id)) {
-                              viewerObject.viewers = viewerObject.viewers.concat(viewer.viewerId);
+                              if (viewer.viewerUsername === req.decoded.user.username) {
+                                viewerObject.viewers = viewerObject.viewers.concat('you');
+                              } else {
+                                viewerObject.viewers = viewerObject.viewers
+                                  .concat(viewer.viewerUsername);
+                              }
                             }
                           });
                           if (viewerObject.viewers.length > 0) {
@@ -134,19 +141,39 @@ const createUser = {
                           viewerObject = { viewers: [] };
                         });
                     });
-                    viewMessages
-                      .create({
-                        viewerUsername: req.decoded.user.username,
-                        seenMessageIds: seenMessagesIds
-                      })
-                      .then(() => {
-                        res.status(200).json({
-                          Messages: messages,
-                          Viewers: viewerData,
-                          haveSeen: haveSeenNotification
-                        });
-                      })
-                      .catch(error => res.status(407).send(error));
+                    if (viewers.seenMessageIds.length === 0) {
+                      viewMessages
+                        .create({
+                          viewerUsername: req.decoded.user.username,
+                          seenMessageIds: seenMessagesIds
+                        })
+                        .then(() => {
+                          res.status(200).json({
+                            Messages: messages,
+                            Viewers: viewerData,
+                          });
+                        })
+                        .catch(error => res.status(407).send(error));
+                    } else {
+                      if (!hasSeenNotification) {
+                        seenMessagesIds = viewers.seenMessageIds.concat(seenMessagesIds);
+                      }
+                      viewMessages
+                        .update({
+                          seenMessageIds: seenMessagesIds
+                        }, {
+                          where: {
+                            viewerUsername: req.decoded.user.username
+                          }
+                        })
+                        .then(() => {
+                          res.status(200).json({
+                            Messages: messages,
+                            Viewers: viewerData,
+                          });
+                        })
+                        .catch(error => res.status(407).send(error));
+                    }
                   })
                   .catch(error => res.status(401).send(error));
               })

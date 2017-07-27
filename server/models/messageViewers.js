@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: false
     },
+    seenLast: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: false
+    }
   });
   messageViewer.associate = (models) => {
     messageViewer.belongsTo(models.User, {

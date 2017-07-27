@@ -16,6 +16,11 @@ module.exports = {
         allowNull: false,
         unique: false
       },
+      seenLast: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
