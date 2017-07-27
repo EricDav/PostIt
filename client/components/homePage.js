@@ -8,10 +8,10 @@ import NavBar from './NavBar';
 class HomePage extends React.Component {
     render() {
         return (
-        <div classNameName="body-container">
+        <div className="body-container" className="image">
             <NavBar/>
             <div>
-        <div className="row">
+        <div className="row" >
           <div className="col s6 offset-s3 valign">
             <div className="row">
               <ul className="tabs tab-profile z-depth-1 purple darken-1" style={{ width: 100 }}>

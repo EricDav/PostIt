@@ -12,3 +12,9 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+.image {
+  background-image: url("../images/background-image.png");
+}
+.space {
+  margin-top: 20px;
+}
