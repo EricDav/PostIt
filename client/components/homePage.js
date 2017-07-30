@@ -7,9 +7,11 @@ import NavBar from './NavBar';
 import {connect} from 'react-redux';
 import userSignupRequest from '../actions/signupActions';
 import PropTypes from 'prop-types';
+import setFlashMessage from '../actions/flashMessages';
 
 class HomePage extends React.Component {
     render() {
+      const {userSignupRequest, setFlashMessage} = this.props;
         return (
         <div className="body-container" className="image">
             <NavBar/>
@@ -26,7 +28,7 @@ class HomePage extends React.Component {
                 <div className="indicator" style={{ right: 616, left: 0 }} />
               </ul>
               <Login />
-              <SignUp userSignupRequest={this.props.userSignupRequest}/>
+              <SignUp userSignupRequest={userSignupRequest} setFlashMessage={setFlashMessage}/>
             </div>
           </div>
         </div>
@@ -38,6 +40,7 @@ class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
-   userSignupRequest: PropTypes.func.isRequired
+   userSignupRequest: PropTypes.func.isRequired,
+   setFlashMessage: PropTypes.func.isRequired
  }
-export default connect(null, {userSignupRequest})(HomePage);
+export default connect(null, {userSignupRequest, setFlashMessage})(HomePage);

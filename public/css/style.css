@@ -18,6 +18,7 @@
 .space {
   margin-top: 20px;
 }
-.but {
-  width: 568px;
+.mes {
+  color: red !important;
+  margin-left: 50px !important;
 }

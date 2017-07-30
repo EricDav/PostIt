@@ -29,7 +29,7 @@ const createUser = {
           { user
           }, secret
         );
-        res.status(201).json({
+        return res.status(201).json({
           success: true,
           message: 'Token generated successfully',
           Token: token
