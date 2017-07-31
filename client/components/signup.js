@@ -30,9 +30,7 @@ class SignUp extends React.Component {
         const nameObject = {};
         const error = this.state.errors;
         nameObject[name] = this.state[name];
-        console.log(name);
         if (name === "Password") {
-          console.log(this.state.password, this.state[name])
           if (this.state.password !== this.state[name]) {
             error[name] = 'Password does not match';
             this.setState({errors: error});
@@ -140,7 +138,6 @@ class SignUp extends React.Component {
  SignUp.propTypes = {
    userSignupRequest: PropTypes.func.isRequired,
    setFlashMessage: PropTypes.func.isRequired
-
  }
 
 export default SignUp;

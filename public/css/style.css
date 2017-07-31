@@ -22,3 +22,13 @@
   color: red !important;
   margin-left: 50px !important;
 }
+.errorMessage {
+  margin-left: 80px;
+  width: 420px;
+  height: 35px;
+  border-radius: 5px;
+  background-color: #d64242;
+  color: white;
+  text-align: center;
+  line-height: 35px;
+}

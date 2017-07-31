@@ -1,37 +1,74 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 class LogIn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      success: false,
+      username: '',
+      password: '',
+      isLoading: false,
+      error: {}
+    }
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+  }
+  onChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+    }
+  onSubmit(event) {
+    this.setState({error: {}, isLoading: true});
+    event.preventDefault();
+    this.props.userSigninRequest(this.state).then(
+      () => {
+        this.setState({isLoading: false})
+      },
+      (data) => {
+        this.setState({error: data.response.data, username: '', password: '', isLoading: false, success: true}, );
+      }
+    )
+  }
+  onFocus(event) {
+    this.setState({success: false});
+  }
   render() {
+    const { error, username, password, isLoading, success, value } = this.state;
     return (<div id="login-page" className="col s12 z-depth-4 card-panel">
-                <form id="login" className="login-form">
+                <form id="login" className="login-form" onSubmit={this.onSubmit}>
                   <div className="row">
                     <div className="input-field col s12 center">
-                      <h5 className="center login-form-text">Welcome, Login to get started</h5>
+                      <h5 className="center login-form-text">Welcome, Login to get started</h5><br/>
+                      {success && <div className="errorMessage">{error.message}</div>}
                     </div>
                   </div>
                   <div className="row margin">
                     <div className="input-field col s12">
                       <i className="mdi-social-person-outline prefix" />
-                      <input id="username" type="text" />
+                      <input id="username" type="text" onChange={this.onChange} name="username" onFocus={this.onFocus} value={username} required="true"/>
                       <label htmlFor="username" className="center-align">Username</label>
                     </div>
                   </div>
                   <div className="row margin">
                     <div className="input-field col s12">
                       <i className="mdi-action-lock-outline prefix" />
-                      <input id="password" type="password" />
+                      <input id="password" type="password" onChange={this.onChange} name="password" onFocus={this.onFocus} value={password} required="true"/>
                       <label htmlFor="password">Password</label>
                     </div>
                   </div>
                   <div className="row">
                     <div className="input-field col s12 m12 l12  login-text">
-                      <input type="checkbox" id="remember-me" />
+                      <input type="checkbox" id="remember-me"/>
                       <label htmlFor="remember-me">Remember me</label>
                     </div>
                   </div>
                   <div className="row">
                     <div className="input-field col s12">
-                      <a href="index.html" className="btn purple darken-1 waves-effect waves-light col s12">Login</a>
+                      <button className="btn purple darken-1 waves-effect waves-light col s12" disabled={isLoading}>Login</button>
                     </div>
                   </div>
                   <div className="row">
@@ -43,5 +80,9 @@ class LogIn extends React.Component {
               </div>);
       }
 }
+
+LogIn.propTypes = {
+   userSigninRequest: PropTypes.func.isRequired
+ }
 
 export default LogIn
