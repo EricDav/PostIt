@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {browserHistory} from 'react-router';
 
 class LogIn extends React.Component {
   constructor(props) {
@@ -24,11 +25,11 @@ class LogIn extends React.Component {
   onSubmit(event) {
     this.setState({error: {}, isLoading: true});
     event.preventDefault();
-    this.props.userSigninRequest(this.state).then(
+    this.props.userSigninRequest({password:this.state.password, username: this.state.username}).then(
       () => {
-        this.setState({isLoading: false})
+        browserHistory.push('dashboard');
       },
-      (data) => {
+      ( data ) => {
         this.setState({error: data.response.data, username: '', password: '', isLoading: false, success: true}, );
       }
     )
@@ -86,3 +87,4 @@ LogIn.propTypes = {
  }
 
 export default LogIn
+

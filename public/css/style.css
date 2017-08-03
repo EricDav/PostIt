@@ -32,3 +32,32 @@
   text-align: center;
   line-height: 35px;
 }
+
+#email-list .collection .collection-item.avatar .circle {
+		    position: absolute;
+		    width: 42px;
+		    height: 42px;
+		    overflow: hidden;
+		    left: 15px;
+		    display: inline-block;
+		    vertical-align: middle;
+		    text-align: center;
+		    font-size: 1.5rem;
+		    color: #fff;
+		    font-weight: 300;
+		    padding: 10px;
+		}
+.side-nav .user-view, .side-nav .userView {
+		    position: relative;
+		    padding: 32px 32px 0;
+		    margin-bottom: 8px;
+		}
+.side-nav .user-view .background, .side-nav .userView .background {
+		    overflow: hidden;
+		    position: absolute;
+		    top: 0;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    z-index: -1;
+		}

@@ -25,7 +25,7 @@ const logIn = {
           { user
           }, secret
         );
-        res.status(200).json({
+        return res.status(200).json({
           success: true,
           message: 'Token generated successfully',
           Token: token,

@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {browserHistory} from 'react-router';
 
 class SignUp extends React.Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class SignUp extends React.Component {
         const nameObject = {};
         const error = this.state.errors;
         nameObject[name] = this.state[name];
-        if (name === "Password") {
+        if (name === "Password" && this.state[name] !== '') {
           if (this.state.password !== this.state[name]) {
             error[name] = 'Password does not match';
             this.setState({errors: error});
@@ -55,6 +56,7 @@ class SignUp extends React.Component {
         } else {
            this.props.userSignupRequest(this.state).then(
            () => {
+            browserHistory.push('dashboard');
              this.props.setFlashMessage({
                type: 'success',
                text: 'You have signed up successfully. welcome'

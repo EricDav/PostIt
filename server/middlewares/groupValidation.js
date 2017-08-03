@@ -80,7 +80,6 @@ const group = {
   },
   groupNullValidation(req, res, next) {
     const nullValues = [];
-    console.log(req.body.name);
     if (req.body.name === null || req.body.name === undefined) {
       nullValues.push('name');
     }
@@ -114,7 +113,6 @@ const group = {
         message: 'You must have a minimum of 30 characters in the description field'
       });
     }
-    console.log('I got here');
     next();
   },
   deleteGroupValidation(req, res, next) {

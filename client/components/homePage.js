@@ -6,15 +6,15 @@ import NavigationBar from './NavigationBar';
 import NavBar from './NavBar';
 import {connect} from 'react-redux';
 import userSignupRequest from '../actions/signupActions';
-import userSigninRequest from '../actions/signinActions';
-import PropTypes from 'prop-types';
+import { userSigninRequest } from '../actions/authActions';
+import {PropTypes} from 'react';
 import setFlashMessage from '../actions/flashMessages';
 
 class HomePage extends React.Component {
     render() {
       const {userSignupRequest, setFlashMessage, userSigninRequest} = this.props;
         return (
-        <div className="body-container" className="image">
+      <div className="body-container"   className="image">
             <NavBar/>
             <div>
         <div className="row" >

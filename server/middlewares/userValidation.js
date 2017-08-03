@@ -45,7 +45,9 @@ const userValidation = {
         success: false
       });
     }
-    if (canVerify.email && (req.body.email.slice(req.body.email.length - 4, req.body.email.length) !== '.com' || !(/[@]/.test(req.body.email)))) {
+    if (canVerify.email &&
+     (req.body.email.slice(req.body.email.length - 4, req.body.email.length)
+     !== '.com' || !(/[@]/.test(req.body.email)))) {
       canVerify.email = false;
       if (isValidField(error.email)) {
         error.email = 'Invalid email address';
@@ -57,9 +59,10 @@ const userValidation = {
         });
       }
     }
-    if (canVerify.fullname && (!isText(req.body.fullname) || req.body.fullname.length < 2)) {
+    if (canVerify.fullname && (!isText(req.body.fullname)
+     || req.body.fullname.length < 2)) {
       if (isValidField(error.fullname)) {
-        error.fullname = 'Invalid name. Name should contain alphabet and space alone and should contain at least 2 characters';
+        error.fullname = 'Name should contain alphabet and space alone and should contain at least 2 characters';
       }
       if (Object.keys(error).length === 5) {
         return res.status(400).json({
@@ -68,7 +71,8 @@ const userValidation = {
         });
       }
     }
-    if (canVerify.username && (isDigit(req.body.username) || isDigit(req.body.username[0]))) {
+    if (canVerify.username && (isDigit(req.body.username) ||
+    isDigit(req.body.username[0]))) {
       canVerify.username = false;
       error.username = 'Invalid username. username must contain an alphabet and must not begin with a number';
       if (Object.keys(error).length === 5) {
@@ -134,7 +138,8 @@ const userValidation = {
               },
             })
           .then((phoneNumber) => {
-            if (isValidField(error.phoneNumber) && req.body.phoneNumber.length !== 11) {
+            if (isValidField(error.phoneNumber) &&
+             req.body.phoneNumber.length !== 11) {
               error.phoneNumber = 'Invalid phone number';
             }
             if (phoneNumber && isValidField(error.phoneNumber)) {
