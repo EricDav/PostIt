@@ -24,7 +24,8 @@ const createUser = {
         username: req.body.username,
         password: req.body.password,
         email: req.body.email,
-        phoneNumber: req.body.phoneNumber
+        phoneNumber: req.body.phoneNumber,
+        active: true
       })
       .then((user) => {
         const token = jwt.sign(
@@ -102,7 +103,8 @@ const createUser = {
         success: true,
         message: 'User info has been updated'
       });
-    });
+    })
+      .catch(error => res.status(401).send(error));
   },
   resetPassword(req, res) {
     const oldPassword = req.body.oldPassword;
@@ -126,7 +128,8 @@ const createUser = {
           message: 'password does not match'
         });
       }
-    });
+    })
+      .catch(error => res.status(401).send(error));
   },
   userMessages(req, res) {
     User.findOne({

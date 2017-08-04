@@ -80,7 +80,6 @@ const group = {
   },
   groupNullValidation(req, res, next) {
     const nullValues = [];
-    console.log(req.body.name);
     if (req.body.name === null || req.body.name === undefined) {
       nullValues.push('name');
     }
