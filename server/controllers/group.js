@@ -83,23 +83,39 @@ const createGroups = {
           .catch(error => res.status(400).send(error));
       });
   },
-  Delete(req, res) {
-    return Group
-      .destroy({ where: { id: req.params.groupId } })
-      .then(() => {
-        posts
-          .destroy({ where: { postId: req.params.groupId } })
-          .then(() => {
-            members
-              .destroy({ where: { groupId: req.params.groupId } })
-              .then(() => res.status(200).json({
-                success: true,
-                message: 'Deleted group, group messages and group members successfully' }))
-              .catch(error => res.status(404).send(error));
-          })
-          .catch(error => res.status(404).send(error));
-      })
-      .catch(error => res.status(404).send(error));
+  updateGroupInfo(req, res) {
+    Group.findOne({
+      where: {
+        creator: req.decoded.user.username
+      }
+    }).then((group) => {
+      if (!group) {
+        return res.status(405).json({
+          success: false,
+          message: 'You are not athorize to update the info of this group'
+        });
+      }
+      if (group.creator === req.decoded.user.username) {
+        Group.update({
+          name: req.body.name,
+          description: req.body.description
+        }, {
+          where: {
+            id: group.id
+          }
+        }).then(() => {
+          res.status(201).json({
+            success: false,
+            message: 'group info updated successfully'
+          });
+        });
+      } else {
+        return res.status(403).json({
+          success: false,
+          message: 'You are not athorize to update the info of this group'
+        });
+      }
+    });
   }
 };
 

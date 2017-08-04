@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    active: {
+      type: DataTypes.BOOLEAN,
+      unique: false,
+      allowNull: false
+    },
     fullname: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -46,6 +51,10 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Message, {
       foreignKey: 'senderId',
       as: 'messages',
+    });
+    User.hasMany(models.messageViewer, {
+      foreignKey: 'viewerUsername',
+      as: 'viewers',
     });
   };
   return User;
