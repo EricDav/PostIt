@@ -83,23 +83,57 @@ const createGroups = {
           .catch(error => res.status(400).send(error));
       });
   },
-  Delete(req, res) {
-    return Group
-      .destroy({ where: { id: req.params.groupId } })
-      .then(() => {
-        posts
-          .destroy({ where: { postId: req.params.groupId } })
-          .then(() => {
-            members
-              .destroy({ where: { groupId: req.params.groupId } })
-              .then(() => res.status(200).json({
-                success: true,
-                message: 'Deleted group, group messages and group members successfully' }))
-              .catch(error => res.status(404).send(error));
-          })
-          .catch(error => res.status(404).send(error));
-      })
-      .catch(error => res.status(404).send(error));
+  updateGroupInfo(req, res) {
+    Group.findOne({
+      where: {
+        creator: req.decoded.user.username
+      }
+    }).then((group) => {
+      if (!group) {
+        return res.status(403).json({
+          success: false,
+          message: 'You are not athorize to update the info of this group'
+        });
+      }
+      if (group.creator === req.decoded.user.username) {
+        let isModified = false;
+        let name;
+        let description;
+        const groupIndex = [name, description];
+        const groupData = ['name', 'description'];
+        groupData.forEach((data, index) => {
+          if (!req.body[data] || req.body[data] === group[data]) {
+            groupIndex[index] = group[data];
+          } else {
+            isModified = true;
+            groupIndex[index] = req.body[data];
+          }
+        });
+        if (!isModified) {
+          return res.status(403).json({
+            success: false,
+            message: 'No change observed or Invalid credentials'
+          });
+        }
+        Group.update({
+          name,
+          description
+        }, {
+          where: {
+            id: group.id
+          }
+        }).then(() => {
+          return res.status(201).json({
+            success: false,
+            message: 'group info updated successfully'
+          });
+        });
+      }
+      return res.status(403).json({
+        success: false,
+        message: 'You are not athorize to update the info of this group'
+      });
+    });
   }
 };
 

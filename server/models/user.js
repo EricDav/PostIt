@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    active: {
+      type: DataTypes.BOOLEAN,
+      unique: false,
+      allowNull: false
+    },
     fullname: {
       type: DataTypes.STRING,
       allowNull: false,

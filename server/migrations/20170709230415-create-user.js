@@ -7,6 +7,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      active: {
+        type: Sequelize.BOOLEAN,
+        unique: false,
+        allowNull: false
+      },
       email: {
         type: Sequelize.STRING,
         allowNull: false,

@@ -11,8 +11,8 @@ const secret = process.env.secretKey;
  * @description Auntheticate user.
  * @return {object} user information
  */
-const logIn = {
-  findUser(req, res) {
+export const logIn = {
+  logIn(req, res) {
     return User
       .findOne({ where: { username: req.body.username } })
       .then((user) => {
@@ -22,9 +22,18 @@ const logIn = {
           return res.status(401).json({ success: false, message: 'Authentication failed. wrong username or password.' });
         }
         const token = jwt.sign(
-          { user
+          { user,
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
           }, secret
         );
+        User.update({
+          active: true
+        },
+        {
+          where: {
+            id: user.id
+          }
+        });
         res.status(200).json({
           success: true,
           message: 'Token generated successfully',
@@ -34,4 +43,19 @@ const logIn = {
       .catch(error => res.status(404).send(error));
   },
 };
-export default logIn;
+export const logOut = {
+  logOut(req, res) {
+    User.update({
+      active: false
+    }, {
+      where: {
+        id: req.decoded.user.id
+      }
+    }).then(() => {
+      res.ststus(200).json({
+        success: true,
+        message: 'logout successfully'
+      });
+    });
+  }
+};

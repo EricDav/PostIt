@@ -66,6 +66,68 @@ const createUser = {
       })
       .catch(error => res.status(404).send(error));
   },
+  updateUserInfo(req, res) {
+    let isModified = false;
+    let email;
+    let name;
+    let username;
+    let phoneNumber;
+    const userIndex = [email, name, username, phoneNumber];
+    const userData = ['email', 'name', 'username', 'phoneNumber'];
+    userData.forEach((data, index) => {
+      if (!req.body[data] || req.body[data] === req.decoded.user[data]) {
+        userIndex[index] = req.decoded.user[data];
+      } else {
+        isModified = true;
+        userIndex[index] = req.body[data];
+      }
+    });
+    if (!isModified) {
+      return res.status(403).json({
+        success: false,
+        message: 'No change observed or Invalid credentials'
+      });
+    }
+    User.update({
+      email,
+      name,
+      username,
+      phoneNumber
+    }, {
+      where: {
+        id: req.decoded.user.id
+      }
+    }).then(() => {
+      res.status(201).json({
+        success: true,
+        message: 'User info has been updated'
+      });
+    });
+  },
+  resetPassword(req, res) {
+    const oldPassword = req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+    User.findOne({
+      where: {
+        id: req.decoded.user.id
+      }
+    }).then((user) => {
+      if (oldPassword === user.password) {
+        User.update({
+          password: newPassword
+        }, {
+          where: {
+            id: user.id
+          }
+        });
+      } else {
+        return res.status(403).json({
+          success: false,
+          message: 'password does not match'
+        });
+      }
+    });
+  },
   userMessages(req, res) {
     User.findOne({
       where: {
