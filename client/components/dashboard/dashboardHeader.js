@@ -1,6 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import propTypes from 'prop-types';
+import { browserHistory } from 'react-router';
+import { logout } from '../../actions/authActions';
 
 class DashboardHeader extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onClick = this.onClick.bind(this);
+    }
+    onClick(event) {
+        event.preventDefault();
+        this.props.logout();
+         browserHistory.push('/');
+    }
     render() {
         return (
             <div className="col s12">
@@ -17,9 +30,9 @@ class DashboardHeader extends React.Component {
                         </li>
                       </ul>
                     </div>
-                    <div className="col s12 m7 l7 hide-on-med-and-down">
+                    <div className="col s12 m7 l7 hide-on-med-and-down" onClick={this.onClick}>
                       <ul className="right">
-                        <li>Logout</li>
+                        <li><a>Logout</a></li>
                       </ul>
                     </div>
                   </div>
@@ -28,5 +41,15 @@ class DashboardHeader extends React.Component {
         );
     }
 }
+DashboardHeader.propTypes = {
+    auth: propTypes.object.isRequired,
+    logout: propTypes.object.isRequired
+}
 
-export default DashboardHeader;
+function mapStateToProps(state) {
+    return {
+        auth: state.auth
+    };
+}
+
+export default connect(mapStateToProps, { logout })(DashboardHeader);

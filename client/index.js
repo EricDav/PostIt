@@ -20,10 +20,10 @@ const store = createStore(
     )
 );
 
-// if (localStorage.jwtToken) {
-//   setAuthorizationToken(localStorage.jwtToken);
-//   store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
-// }
+if (localStorage.jwtToken) {
+  setAuthorizationToken(localStorage.jwtToken);
+  store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
+}
 render(
     <Provider store={store}>
         <Router history={browserHistory} routes={routes} />
