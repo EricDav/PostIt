@@ -90,49 +90,31 @@ const createGroups = {
       }
     }).then((group) => {
       if (!group) {
-        return res.status(403).json({
+        return res.status(405).json({
           success: false,
           message: 'You are not athorize to update the info of this group'
         });
       }
       if (group.creator === req.decoded.user.username) {
-        let isModified = false;
-        let name;
-        let description;
-        const groupIndex = [name, description];
-        const groupData = ['name', 'description'];
-        groupData.forEach((data, index) => {
-          if (!req.body[data] || req.body[data] === group[data]) {
-            groupIndex[index] = group[data];
-          } else {
-            isModified = true;
-            groupIndex[index] = req.body[data];
-          }
-        });
-        if (!isModified) {
-          return res.status(403).json({
-            success: false,
-            message: 'No change observed or Invalid credentials'
-          });
-        }
         Group.update({
-          name,
-          description
+          name: req.body.name,
+          description: req.body.description
         }, {
           where: {
             id: group.id
           }
         }).then(() => {
-          return res.status(201).json({
+          res.status(201).json({
             success: false,
             message: 'group info updated successfully'
           });
         });
+      } else {
+        return res.status(403).json({
+          success: false,
+          message: 'You are not athorize to update the info of this group'
+        });
       }
-      return res.status(403).json({
-        success: false,
-        message: 'You are not athorize to update the info of this group'
-      });
     });
   }
 };

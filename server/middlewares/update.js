@@ -11,14 +11,13 @@ const User = db.User;
    * @description validate inputs field for username, name, email and password
    */
 const userValidation = {
-  basicValidation(req, res, next) {
+  basicUserUpdateValidation(req, res, next) {
     const error = {};
     const canVerify = {
       username: true,
       email: true,
       phoneNumber: true,
       fullname: true,
-      password: true
     };
     if (isValidField(req.body.username)) {
       error.username = 'This field is required';
@@ -31,10 +30,6 @@ const userValidation = {
     if (isValidField(req.body.fullname)) {
       error.fullname = 'This field is required';
       canVerify.fullname = false;
-    }
-    if (isValidField(req.body.password)) {
-      error.password = 'This field is required';
-      canVerify.password = false;
     }
     if (isValidField(req.body.phoneNumber)) {
       error.phoneNumber = 'This field is required';
@@ -82,18 +77,6 @@ const userValidation = {
         });
       }
     }
-    if (canVerify.password && (req.body.password.length < 9 || !(/[0-9]/.test(req.body.password) && /[a-z A-Z]/.test(req.body.password)))) {
-      canVerify.password = false;
-      if (isValidField(error.password)) {
-        error.password = 'Weak password. Password should contain at least 8 characters including at least one number and alphabet';
-      }
-      if (Object.keys(error).length === 5) {
-        return res.status(400).json({
-          error,
-          success: false
-        });
-      }
-    }
     if (Object.keys(error).length === 5) {
       return res.status(400).json({
         error,
@@ -120,10 +103,7 @@ const userValidation = {
             username: currentUsername
           },
         })
-      .then((users) => {
-        if (users && isValidField(error.username)) {
-          error.username = 'username already exist';
-        }
+      .then(() => {
         if (Object.keys(error).length === 5) {
           return res.status(404).json({
             error,
@@ -137,13 +117,10 @@ const userValidation = {
                 phoneNumber: currentPhoneNumber
               },
             })
-          .then((phoneNumber) => {
+          .then(() => {
             if (isValidField(error.phoneNumber) &&
              req.body.phoneNumber.length !== 11) {
               error.phoneNumber = 'Invalid phone number';
-            }
-            if (phoneNumber && isValidField(error.phoneNumber)) {
-              error.phoneNumber = 'phone number already exist';
             }
             if (Object.keys(error).length === 5) {
               return res.status(404).json({
@@ -161,8 +138,6 @@ const userValidation = {
               .then((email) => {
                 if (!email && Object.keys(error).length === 0) {
                   return next();
-                } else if (email && isValidField(error.email)) {
-                  error.email = 'email already exist';
                 }
                 if (Object.keys(error).length > 0) {
                   return res.status(404).json({

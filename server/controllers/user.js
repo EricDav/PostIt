@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import db from '../models';
+import isValidField from '../helpers/isValidField';
 
 const groupMembers = db.User;
 
@@ -68,32 +69,11 @@ const createUser = {
       .catch(error => res.status(404).send(error));
   },
   updateUserInfo(req, res) {
-    let isModified = false;
-    let email;
-    let name;
-    let username;
-    let phoneNumber;
-    const userIndex = [email, name, username, phoneNumber];
-    const userData = ['email', 'name', 'username', 'phoneNumber'];
-    userData.forEach((data, index) => {
-      if (!req.body[data] || req.body[data] === req.decoded.user[data]) {
-        userIndex[index] = req.decoded.user[data];
-      } else {
-        isModified = true;
-        userIndex[index] = req.body[data];
-      }
-    });
-    if (!isModified) {
-      return res.status(403).json({
-        success: false,
-        message: 'No change observed or Invalid credentials'
-      });
-    }
     User.update({
-      email,
-      name,
-      username,
-      phoneNumber
+      email: req.body.email,
+      fullname: req.body.fullname,
+      username: req.body.username,
+      phoneNumber: req.body.phoneNumber
     }, {
       where: {
         id: req.decoded.user.id
@@ -115,13 +95,29 @@ const createUser = {
       }
     }).then((user) => {
       if (oldPassword === user.password) {
+        if (isValidField(newPassword)) {
+          return res.status(403).json({
+            success: false,
+            message: 'This field is required'
+          });
+        } else if (req.body.newPassword.length < 9 || !(/[0-9]/.test(req.body.newPassword) && /[a-z A-Z]/.test(req.body.newPassword))) {
+          return res.status(403).json({
+            success: false,
+            message: 'Weak password. Password should contain at least 8 characters including at least one number and alphabet'
+          });
+        }
         User.update({
           password: newPassword
         }, {
           where: {
             id: user.id
           }
-        });
+        }).then(() => {
+          return res.status(201).json({
+            success: true,
+            message: 'Password has been reset'
+          })
+        })
       } else {
         return res.status(403).json({
           success: false,
@@ -129,7 +125,7 @@ const createUser = {
         });
       }
     })
-      .catch(error => res.status(401).send(error));
+      .catch(error => res.status(404).send(error));
   },
   userMessages(req, res) {
     User.findOne({
