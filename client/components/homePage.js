@@ -1,22 +1,20 @@
 import React from 'react';
 import SignUp from './signup';
 import Login from './LogIn';
-import Footer from './footer';
 import NavigationBar from './NavigationBar';
 import NavBar from './NavBar';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import userSignupRequest from '../actions/signupActions';
 import { userSigninRequest } from '../actions/authActions';
-import {PropTypes} from 'react';
+import PropTypes from 'prop-types';
 import setFlashMessage from '../actions/flashMessages';
 
 class HomePage extends React.Component {
     render() {
       const {userSignupRequest, setFlashMessage, userSigninRequest} = this.props;
         return (
-      <div className="body-container"   className="image">
-            <NavBar/>
-            <div>
+       <div className="body-container"   className="image">
+        <NavBar/>
         <div className="row" >
           <div className="col s6 offset-s3 valign">
             <div className="row">
@@ -33,9 +31,7 @@ class HomePage extends React.Component {
             </div>
           </div>
         </div>
-      </div>
-            <Footer />
-            </div>
+       </div>
         );
     }
 }

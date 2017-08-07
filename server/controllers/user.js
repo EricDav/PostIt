@@ -29,8 +29,15 @@ const createUser = {
         active: true
       })
       .then((user) => {
+        const currentUser = { username: user.username,
+          fullname: user.fullname,
+          id: user.id,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+        };
         const token = jwt.sign(
-          { user
+          { currentUser,
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
           }, secret
         );
         return res.status(201).json({

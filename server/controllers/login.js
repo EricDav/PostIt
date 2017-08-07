@@ -21,8 +21,13 @@ export const logIn = {
         } else if (user.password !== req.body.password) {
           return res.status(401).json({ success: false, message: 'Authentication failed. wrong username or password.' });
         }
+        const currentUser = { username: user.username,
+          fullname: user.fullname,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+        };
         const token = jwt.sign(
-          { user,
+          { currentUser,
             exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
           }, secret
         );

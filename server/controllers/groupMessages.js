@@ -13,7 +13,7 @@ const Messages = {
       .create({
         content: req.body.content,
         groupId: req.params.groupId,
-        senderId: req.decoded.user.id,
+        senderId: req.currentUser.currentUser.id,
         piority: req.body.piority
       })
       .then(() => {

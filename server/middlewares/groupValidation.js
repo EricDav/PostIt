@@ -61,7 +61,7 @@ const group = {
         } else {
           Group.getUsers().then((users) => {
             users.forEach((element) => {
-              if (element.id === req.decoded.user.id) {
+              if (element.id === req.currentUser.currentUser.id) {
                 check = true;
               }
             });

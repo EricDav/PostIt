@@ -7,21 +7,17 @@ import userValidator from '../middlewares/userValidation';
 import groupMessagesController from '../controllers/groupMessages';
 import groupValidator from '../middlewares/groupValidation';
 import userUpdateValidation from '../middlewares/update';
+import sendEmail from '../helpers/email';
 
 const app = express.Router();
 app.get('/api/allUsers', auth, userController.allUsers);
-<<<<<<< HEAD
-app.post('/api/group', auth, groupValidator.groupNullValidation, groupController.create);
-app.post('/api/user/signup', userValidator.basicValidation, userController.create);
-=======
 app.post('/api/user/signin', logIn.logIn);
 app.post('/api/user/signup', userValidator.basicValidation, userController.create);
 app.put('/api/user/signout', auth, logOut.logOut);
 app.put('/api/user/update', auth, userUpdateValidation.basicUserUpdateValidation, userController.updateUserInfo);
->>>>>>> server-side-implementation
 app.post('/api/group/:groupId/user', auth, groupValidator.groupValidation, groupValidator.userValidation, groupController.addUser);
 app.post('/api/group', auth, groupValidator.groupNullValidation, groupController.create);
-app.post('/api/group/:groupId/message', auth, groupValidator.groupValidation, groupMessagesController.createMessage);
+app.post('/api/group/:groupId/message', auth, groupValidator.groupValidation, sendEmail, groupMessagesController.createMessage);
 app.get('/api/group/:groupId/messages', auth, groupValidator.groupValidation, groupMessagesController.getMessages);
 app.get('/api/groups', auth, groupController.getGroups);
 app.put('/api/group/update', auth, groupController.updateGroupInfo);

@@ -56,11 +56,10 @@ class SignUp extends React.Component {
         } else {
            this.props.userSignupRequest(this.state).then(
            () => {
-            browserHistory.push('dashboard');
-             this.props.setFlashMessage({
-               type: 'success',
-               text: 'You have signed up successfully. welcome'
-             })
+             Materialize.toast('Sign Up Successfully', 1000, 'purple',
+            () => {
+                browserHistory.push('dashboard');
+            });
            },
           ( data ) => {
             this.setState({errors: data.response.data.error});

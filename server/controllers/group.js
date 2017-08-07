@@ -27,10 +27,10 @@ const createGroups = {
           .create({
             name: req.body.name,
             description: req.body.description,
-            creator: req.decoded.user.username
+            creator: req.currentUser.currentUser.username
           })
           .then((group) => {
-            group.addUser(req.decoded.user.id);
+            group.addUser(req.currentUser.currentUser.id);
             res.status(201).json({
               success: true,
               message: 'group created successfully'
@@ -38,7 +38,7 @@ const createGroups = {
           })
           .catch(error => res.status(400).send(error));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(401).send(error));
   },
   addUser(req, res) {
     return Group
@@ -57,7 +57,7 @@ const createGroups = {
   getGroups(req, res) {
     User
       .findOne({ where: {
-        id: req.decoded.user.id
+        id: req.currentUser.id
       } })
       .then((user) => {
         user.getGroups().then((groups) => {
@@ -86,7 +86,7 @@ const createGroups = {
   updateGroupInfo(req, res) {
     Group.findOne({
       where: {
-        creator: req.decoded.user.username
+        creator: req.currentUser.username
       }
     }).then((group) => {
       if (!group) {
@@ -95,7 +95,7 @@ const createGroups = {
           message: 'You are not athorize to update the info of this group'
         });
       }
-      if (group.creator === req.decoded.user.username) {
+      if (group.creator === req.currentUser.username) {
         Group.update({
           name: req.body.name,
           description: req.body.description

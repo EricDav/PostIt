@@ -1,5 +1,7 @@
 import {PropTypes} from 'react';
 import React from 'react';
+import Footer from './footer';
+import Header from './NavBar';
 
 
 
@@ -18,6 +20,7 @@ class App extends React.Component {
     return (
       <div>
         {this.props.children}
+        <Footer/>
       </div>
     );
   }

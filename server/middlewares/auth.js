@@ -24,7 +24,7 @@ const auth = (req, res, next) => {
         return res.status(403).json({ success: false, message: 'Failed to authenticate token.' });
       }
       // if everything is good, save to request for use in other routes
-      req.decoded = decoded;
+      req.currentUser = decoded;
       next();
     });
   } else {

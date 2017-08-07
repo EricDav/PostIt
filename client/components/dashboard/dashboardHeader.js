@@ -1,53 +1,70 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { logout } from '../../actions/authActions';
+import DashboardSearch from './dashboardSearch';
+
 
 class DashboardHeader extends React.Component {
     constructor(props) {
         super(props);
         this.onClick = this.onClick.bind(this);
+        this.openModal = this.openModal.bind(this);
     }
+    openModal() {
+    $('#modal1').modal('open');
+  }
     onClick(event) {
         event.preventDefault();
         this.props.logout();
-         browserHistory.push('/');
+        this.context.router.push('/');
     }
     render() {
-        return (
-            <div className="col s12">
-                <nav className="purple darken-1">
-                  <div className="nav-wrapper">
-                    <div className="left col s12 m5 l5">
-                      <ul>
-                        <li><a href="#!" data-activates="slide-out" className="button-collapse show-on-large" className="email-menu">
-                        </a>
+        return ( <nav className="purple darken-1" role="navigation">
+                 <div className="nav-wrapper container left nav">
+                    <a id="logo-container" href="#" className="brand-logo post">PostIt</a>
+                    <ul className="right">
+                    <li onClick={this.onClick}><a>Logout</a></li>
+                    </ul>
+                    <ul className="right">
+                      <li className="noHover">
+                        <i className="material-icons left">account_circle</i>
+                          {this.props.user.fullname}
                         </li>
-                        <li><a href="#!" className="email-type"><h4>PostIt</h4></a>
+                        <li>
+                            <a
+                     id="login"
+                            data-target="modal1"
+                    className="orange-text modal-trigger"
+                            >  Create New Group
+                            <i className="material-icons left">create</i>
+                         </a>
                         </li>
-                        <li className="right"><a href="#!"><i className="mdi-action-search"></i></a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="col s12 m7 l7 hide-on-med-and-down" onClick={this.onClick}>
-                      <ul className="right">
-                        <li><a>Logout</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </nav>
-              </div>
+                    </ul>
+                    <ul id="nav-mobile" className="side-nav">
+                        <li><a href="#">Navbar Link</a></li>
+                    </ul>
+                <a href="#" data-activates="nav-mobile" className="button-collapse"><i className="material-icons">menu</i></a>
+             </div>
+            </nav>
         );
     }
 }
+
 DashboardHeader.propTypes = {
-    auth: propTypes.object.isRequired,
-    logout: propTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    logout: PropTypes.object.isRequired,
+    user: PropTypes.string.isRequired
 }
+
+DashboardHeader.contextTypes = {
+      router: PropTypes.object.isRequired
+  }
 
 function mapStateToProps(state) {
     return {
+        user: state.auth.user.currentUser,
         auth: state.auth
     };
 }
