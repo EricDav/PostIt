@@ -11,6 +11,8 @@ import Dashboard from './components/dashboard/dashboard';
 import { Router, browserHistory } from 'react-router';
 import routes from './routes';
 import setAuthorizationToken from './utils/setAuthorizationToken';
+import { setCurrentUserGroups } from './actions/getGroupsAction';
+//import js from '../public/js/modal'
 
 // import './assets/css/custom.scss';
 // import '../node_modules/materialize-css/dist/js/materialize.min';
@@ -27,9 +29,11 @@ const store = createStore(
     )
 );
 
-if (localStorage.jwtToken) {
+ if (localStorage.jwtToken) {
+    console.log(localStorage.userGroups)
   setAuthorizationToken(localStorage.jwtToken);
   store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
+  store.dispatch(setCurrentUserGroups(JSON.parse(localStorage.userGroups)))
 }
 render(
     <Provider store={store}>

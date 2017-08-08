@@ -1,5 +1,5 @@
 import db from '../models';
-import isText from '../helpers/isText';
+import isValidField from '../helpers/isValidField';
 
 const Groups = db.Group;
 const User = db.User;
@@ -79,41 +79,34 @@ const group = {
       .catch(error => res.status(404).send(error));
   },
   groupNullValidation(req, res, next) {
-    const nullValues = [];
-    if (req.body.name === null || req.body.name === undefined) {
-      nullValues.push('name');
+    const nullValues = { name: '', description: '' };
+    if (isValidField(req.body.name)) {
+      nullValues.name = 'This field is required';
     }
-    if (req.body.description === null || req.body.description === undefined) {
-      nullValues.push('description');
+    if (isValidField(req.body.description)) {
+      nullValues.description = 'This field is required';
     }
-    if (nullValues.length > 0) {
-      if (nullValues.length === 1) {
-        return res.status(400).json({
-          success: false,
-          message: `${nullValues[0]} can not be null: enter the value of ${nullValues[0]}`
-        });
+    if (req.body.description.length < 20) {
+      if (nullValues.description === '') {
+        nullValues.description = 'You need to have up to 20 charecters';
       }
-      let Message = '';
-      nullValues.forEach((elem, index) => {
-        if (index === 0) {
-          Message = `${Message} ${elem}`;
-        } else {
-          Message = `${Message}, ${elem}`;
+    }
+    Groups.findOne({
+      where: {
+        name: req.body.name
+      }
+    }).then((groups) => {
+      if (groups) {
+        if (nullValues.name === '') {
+          nullValues.name = 'Group title already exist';
         }
-      });
-      Message = `${Message}  can not be null: Enter the values of  ${Message}`;
-      return res.status(400).json({
-        success: false,
-        message: Message
-      });
-    }
-    if (req.body.description.length < 30) {
-      return res.status(400).json({
-        success: false,
-        message: 'You must have a minimum of 30 characters in the description field'
-      });
-    }
-    next();
+        return res.status(401).send(nullValues);
+      } else if (nullValues.name === '' && nullValues.description === '') {
+        next();
+      } else {
+        return res.status(401).send(nullValues);
+      }
+    });
   },
   deleteGroupValidation(req, res, next) {
     Groups

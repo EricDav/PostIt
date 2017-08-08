@@ -13,33 +13,21 @@ const User = db.User;
 const createGroups = {
   create(req, res) {
     Group
-      .findOne({ where: {
-        name: req.body.name
-      } })
-      .then((user) => {
-        if (user) {
-          return res.status(400).json({
-            success: false,
-            message: 'name already exist'
-          });
-        }
-        Group
-          .create({
-            name: req.body.name,
-            description: req.body.description,
-            creator: req.currentUser.currentUser.username
-          })
-          .then((group) => {
-            group.addUser(req.currentUser.currentUser.id);
-            res.status(201).json({
-              success: true,
-              message: 'group created successfully'
-            });
-          })
-          .catch(error => res.status(400).send(error));
+      .create({
+        name: req.body.name,
+        description: req.body.description,
+        creator: req.currentUser.currentUser.username
       })
-      .catch(error => res.status(401).send(error));
+      .then((group) => {
+        group.addUser(req.currentUser.currentUser.id);
+        res.status(201).json({
+          success: true,
+          message: 'group created successfully'
+        });
+      })
+      .catch(error => res.status(400).send(error));
   },
+
   addUser(req, res) {
     return Group
       .findOne({ where: {
@@ -57,16 +45,19 @@ const createGroups = {
   getGroups(req, res) {
     User
       .findOne({ where: {
-        id: req.currentUser.id
+        id: req.currentUser.currentUser.id
       } })
       .then((user) => {
         user.getGroups().then((groups) => {
           if (groups.length === 0) {
             res.status(200).json({
+              groups: [],
               message: 'You did not belong to any group'
             });
           } else {
-            res.status(200).send(groups);
+            res.status(200).json({
+              groups
+            });
           }
         });
       })

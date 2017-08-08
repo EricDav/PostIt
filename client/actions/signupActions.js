@@ -10,7 +10,7 @@ export function setCurrentUser(user) {
   };
 }
 
-export default function userSigninRequest(userData) {
+export default function userSignupRequest(userData) {
   return dispatch => {
     return axios.post('/api/user/signup', userData).then(res => {
       const token = res.data.Token;

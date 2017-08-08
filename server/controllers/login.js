@@ -22,6 +22,7 @@ export const logIn = {
           return res.status(401).json({ success: false, message: 'Authentication failed. wrong username or password.' });
         }
         const currentUser = { username: user.username,
+          id: user.id,
           fullname: user.fullname,
           email: user.email,
           phoneNumber: user.phoneNumber,
@@ -54,7 +55,7 @@ export const logOut = {
       active: false
     }, {
       where: {
-        id: req.decoded.user.id
+        username: req.currentUser.currentUser.username
       }
     }).then(() => {
       res.status(200).json({

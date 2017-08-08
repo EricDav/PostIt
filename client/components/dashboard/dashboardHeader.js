@@ -10,15 +10,16 @@ class DashboardHeader extends React.Component {
     constructor(props) {
         super(props);
         this.onClick = this.onClick.bind(this);
-        this.openModal = this.openModal.bind(this);
+         this.openModal = this.openModal.bind(this);
     }
     openModal() {
     $('#modal1').modal('open');
   }
     onClick(event) {
-        event.preventDefault();
-        this.props.logout();
-        this.context.router.push('/');
+       // event.preventDefault();
+        this.props.logout()
+        this.context.router.push('/')
+        window.location.reload();
     }
     render() {
         return ( <nav className="purple darken-1" role="navigation">
@@ -33,7 +34,7 @@ class DashboardHeader extends React.Component {
                           {this.props.user.fullname}
                         </li>
                         <li>
-                            <a
+                            <a 
                      id="login"
                             data-target="modal1"
                     className="orange-text modal-trigger"
