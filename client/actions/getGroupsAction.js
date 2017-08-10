@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { SET_CURRENT_USER_GROUPS } from './types';
 
+const group = [];
+
 export function setCurrentUserGroups(groups) {
   return {
     type: SET_CURRENT_USER_GROUPS,
@@ -12,11 +14,11 @@ export function getGroupsRequest() {
   return dispatch => {
     return axios.get('/api/groups').then(res => {
       const groups = res.data.groups;
+      group.push(groups);
       const userGroups = { userGroups: groups };
-      console.log(userGroups)
-      localStorage.setItem('userGroups', JSON.stringify(userGroups));
-      console.log(userGroups);
       dispatch(setCurrentUserGroups(groups));
     });
   };
 }
+
+export const h = group;

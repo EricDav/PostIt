@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 
 export default function(ComposedComponent) {
     class AuthenticateHome extends React.Component {
         componentWillMount() {
             if (this.props.isAuthenticated) {
-                this.context.router.push('dashboard');
+                browserHistory.push('dashboard');
             } else {
-                this.context.router.push('/');
+                browserHistory.push('/');
             }
         }
         render() {
@@ -17,13 +18,11 @@ export default function(ComposedComponent) {
             );
         }
     }
-  AuthenticateHome.propTypes = {
-      isAuthenticated: PropTypes.bool.isRequired
+ const authenticateHomePropTypes = {
+      isAuthenticated: PropTypes.bool
   }
 
-  AuthenticateHome.contextTypes = {
-      router: PropTypes.object.isRequired
-  }
+  PropTypes.checkPropTypes(authenticateHomePropTypes, 'prop', 'AuthenticateHome')
 
     function mapStateToProps(state) {
        return {

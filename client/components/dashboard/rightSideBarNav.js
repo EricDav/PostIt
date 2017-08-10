@@ -9,10 +9,10 @@ class RightSideBarNav extends React.Component {
             <a href="#" data-activates="chat-out" className="chat-close-collapse right"><i className="mdi-navigation-close"></i></a>
             <div id="right-search" className="row">
                 <form className="col s12">
-                    <div class="input-field">
-                        <i class="mdi-action-search prefix"></i>
-                        <input id="icon_prefix" type="text" class="validate"/>
-                        <label for="icon_prefix">Search</label>
+                    <div className="input-field">
+                        <i className="mdi-action-search prefix"></i>
+                        <input id="icon_prefix" type="text" className="validate"/>
+                        <label htmlFor="icon_prefix">Search</label>
                     </div>
                 </form>
             </div>
@@ -20,10 +20,10 @@ class RightSideBarNav extends React.Component {
             <li className="li-hover">
                 <ul className="chat-collapsible" data-collapsible="expandable">
                 <li>
-                    <div className="collapsible-header teal white-text active"><i class="mdi-social-whatshot"></i>Recent Activity</div>
+                    <div className="collapsible-header teal white-text active"><i className="mdi-social-whatshot"></i>Recent Activity</div>
                     <div className="collapsible-body recent-activity">
                         <div className="recent-activity-list chat-out-list row">
-                            <div className="col s3 recent-activity-list-icon"><i class="mdi-action-add-shopping-cart"></i>
+                            <div className="col s3 recent-activity-list-icon"><i className="mdi-action-add-shopping-cart"></i>
                             </div>
                             <div className="col s9 recent-activity-list-text">
                                 <a href="#">just now</a>
@@ -31,7 +31,7 @@ class RightSideBarNav extends React.Component {
                             </div>
                         </div>
                         <div className="recent-activity-list chat-out-list row">
-                            <div className="col s3 recent-activity-list-icon"><i class="mdi-device-airplanemode-on"></i>
+                            <div className="col s3 recent-activity-list-icon"><i className="mdi-device-airplanemode-on"></i>
                             </div>
                             <div className="col s9 recent-activity-list-text">
                                 <a href="#">Yesterday</a>
@@ -39,7 +39,7 @@ class RightSideBarNav extends React.Component {
                             </div>
                         </div>
                         <div className="recent-activity-list chat-out-list row">
-                            <div className="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
+                            <div className="col s3 recent-activity-list-icon"><i className="mdi-action-settings-voice"></i>
                             </div>
                             <div className="col s9 recent-activity-list-text">
                                 <a href="#">5 Days Ago</a>
@@ -47,7 +47,7 @@ class RightSideBarNav extends React.Component {
                             </div>
                         </div>
                         <div className="recent-activity-list chat-out-list row">
-                            <div className="col s3 recent-activity-list-icon"><i class="mdi-action-store"></i>
+                            <div className="col s3 recent-activity-list-icon"><i className="mdi-action-store"></i>
                             </div>
                             <div className="col s9 recent-activity-list-text">
                                 <a href="#">Last Week</a>
@@ -55,7 +55,7 @@ class RightSideBarNav extends React.Component {
                             </div>
                         </div>
                         <div className="recent-activity-list chat-out-list row">
-                            <div className="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
+                            <div className="col s3 recent-activity-list-icon"><i className="mdi-action-settings-voice"></i>
                             </div>
                             <div className="col s9 recent-activity-list-text">
                                 <a href="#">5 Days Ago</a>
@@ -65,8 +65,8 @@ class RightSideBarNav extends React.Component {
                     </div>
                 </li>
                 <li>
-                    <div className="collapsible-header light-blue white-text active"><i class="mdi-editor-attach-money"></i>Sales Repoart</div>
-                    <div class="collapsible-body sales-repoart">
+                    <div className="collapsible-header light-blue white-text active"><i className="mdi-editor-attach-money"></i>Sales Repoart</div>
+                    <div className="collapsible-body sales-repoart">
                         <div className="sales-repoart-list  chat-out-list row">
                             <div className="col s8">Target Salse</div>
                             <div className="col s4"><span id="sales-line-1"></span>
@@ -93,7 +93,7 @@ class RightSideBarNav extends React.Component {
                     <div className="collapsible-header red white-text"><i className="mdi-action-stars"></i>Favorite Associates</div>
                     <div className="collapsible-body favorite-associates">
                         <div className="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" className="circle responsive-img online-user valign profile-image"/>
+                            <div className="col s4"><img src="images/avatar.jpg" alt="" className="circle responsive-img online-user valign profile-image"/>
                             </div>
                             <div className="col s8">
                                 <p>Eileen Sideways</p>
@@ -116,7 +116,7 @@ class RightSideBarNav extends React.Component {
                                 <p className="place">Cebu City, Philippines</p>
                             </div>
                         </div>
-                        <div class="favorite-associate-list chat-out-list row">
+                        <div className="favorite-associate-list chat-out-list row">
                             <div className="col s4"><img src="images/avatar.jpg" alt="" className="circle responsive-img online-user valign profile-image"/>
                             </div>
                             <div className="col s8">

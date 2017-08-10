@@ -29,8 +29,9 @@ class LogIn extends React.Component {
       () => {
         Materialize.toast('Logged In Successfully', 1500, 'purple',
       () => {
-        this.context.router.push('dashboard');
-        //window.location.reload();
+        browserHistory.push('dashboard');
+       window.location.reload();
+        this.props.getGroupsRequest();
       });
       },
       ( data ) => {
@@ -86,12 +87,12 @@ class LogIn extends React.Component {
       }
 }
 
-LogIn.propTypes = {
-   userSigninRequest: PropTypes.func.isRequired
+const logInPropTypes = {
+   userSigninRequest: PropTypes.func,
+   getGroupsRequest: PropTypes.func
  }
-LogIn.contextTypes = {
-      router: PropTypes.object.isRequired
-  }
+ PropTypes.checkPropTypes(logInPropTypes, 'prop', 'LogIn');
+
 
 export default LogIn
 

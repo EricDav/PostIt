@@ -8,10 +8,14 @@ import userSignupRequest from '../actions/signupActions';
 import { userSigninRequest } from '../actions/authActions';
 import PropTypes from 'prop-types';
 import setFlashMessage from '../actions/flashMessages';
+import  { getGroupsRequest }  from '../actions/getGroupsAction';
 
 class HomePage extends React.Component {
+  // componentWillMount() {
+  //   this.props.
+  // }
     render() {
-      const {userSignupRequest, setFlashMessage, userSigninRequest} = this.props;
+      const {userSignupRequest, setFlashMessage, userSigninRequest, getGroupsRequest} = this.props;
         return (
        <div className="body-container"   className="image">
         <NavBar/>
@@ -26,7 +30,7 @@ class HomePage extends React.Component {
                 </li>
                 <div className="indicator" style={{ right: 616, left: 0 }} />
               </ul>
-              <Login userSigninRequest={userSigninRequest}/>
+              <Login userSigninRequest={userSigninRequest} getGroupsRequest ={getGroupsRequest}/>
               <SignUp userSignupRequest={userSignupRequest} setFlashMessage={setFlashMessage}/>
             </div>
           </div>
@@ -36,11 +40,14 @@ class HomePage extends React.Component {
     }
 }
 
-HomePage.propTypes = {
-   userSignupRequest: PropTypes.func.isRequired,
-   userSigninRequest: PropTypes.func.isRequired,
-   setFlashMessage: PropTypes.func.isRequired
+const HomePagePropTypes = {
+   userSignupRequest: PropTypes.func,
+   userSigninRequest: PropTypes.func,
+   setFlashMessage: PropTypes.func,
+   getGroupsRequest: PropTypes.func
+
  }
 
+ PropTypes.checkPropTypes(HomePagePropTypes, 'prop', 'HomePage');
 
-export default connect(null, {userSignupRequest, setFlashMessage, userSigninRequest})(HomePage);
+export default connect(null, {userSignupRequest, setFlashMessage, userSigninRequest, getGroupsRequest})(HomePage);

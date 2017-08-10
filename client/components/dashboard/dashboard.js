@@ -12,6 +12,9 @@ class Dashboard extends React.Component {
     componentWillMount() {
       this.props.getGroupsRequest();
     }
+    // fetchGroups(event) {
+    //    this.setState({groups: this.props.currentUserGroups});
+    // }
     render() {
         return (
             <div>
@@ -20,12 +23,12 @@ class Dashboard extends React.Component {
     <div className="wrapper">
       <section id="content">
         <div className="container">
-          <div id="mail-app" class="section">
+          <div id="mail-app" className="section">
             <div className="row">
               <div className="col s12">
               </div>
               <div className="col s12">
-            <DashboardSideBar/>      
+             <DashboardSideBar allGroups={this.props.allGroups} user={this.props.user}/>
             <MessageBoard/>
             </div>
             </div>
@@ -40,8 +43,15 @@ class Dashboard extends React.Component {
         );
     }
 }
-Dashboard.propTypes = {
-  getGroupsRequest: PropTypes.func.isRequired
+const dashboardPropTypes = {
+  getGroupsRequest: PropTypes.func
 }
+PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Dashboard');
 
-export default connect(null, {getGroupsRequest})(Dashboard);
+function mapStateToProps(state) {
+  return {
+    allGroups: state.groups,
+    user: state.auth.user.currentUser
+  };
+}
+export default connect(mapStateToProps, {getGroupsRequest})(Dashboard);

@@ -1,4 +1,4 @@
-import {PropTypes} from 'react';
+import PropTypes from 'prop-types';
 import React from 'react';
 import Footer from './footer';
 import Header from './NavBar';
@@ -26,7 +26,9 @@ class App extends React.Component {
   }
 }
 
-App.propTypes = {
-  children: PropTypes.object.isRequired,
+const AppPropTypes = {
+  children: PropTypes.object
 };
+
+PropTypes.checkPropTypes(AppPropTypes, 'prop', 'App');
 export default App;

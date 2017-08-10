@@ -59,6 +59,7 @@ class SignUp extends React.Component {
              Materialize.toast('Sign Up Successfully', 1000, 'purple',
             () => {
                 browserHistory.push('dashboard');
+                window.location.reload();
             });
            },
           ( data ) => {
@@ -136,9 +137,10 @@ class SignUp extends React.Component {
     }
 }
 
- SignUp.propTypes = {
-   userSignupRequest: PropTypes.func.isRequired,
-   setFlashMessage: PropTypes.func.isRequired
+ const SignUpPropTypes = {
+   userSignupRequest: PropTypes.func,
+   setFlashMessage: PropTypes.func
  }
 
+PropTypes.checkPropTypes(SignUpPropTypes, 'prop', 'SignUp');
 export default SignUp;

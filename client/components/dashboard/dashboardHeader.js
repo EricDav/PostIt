@@ -17,8 +17,8 @@ class DashboardHeader extends React.Component {
   }
     onClick(event) {
        // event.preventDefault();
-        this.props.logout()
-        this.context.router.push('/')
+        this.props.logout();
+        browserHistory.push('/');
         window.location.reload();
     }
     render() {
@@ -53,16 +53,13 @@ class DashboardHeader extends React.Component {
     }
 }
 
-DashboardHeader.propTypes = {
-    auth: PropTypes.object.isRequired,
-    logout: PropTypes.object.isRequired,
-    user: PropTypes.string.isRequired
+const dashboardHeaderPropTypes = {
+    auth: PropTypes.object,
+    logout: PropTypes.object,
+    user: PropTypes.string
 }
 
-DashboardHeader.contextTypes = {
-      router: PropTypes.object.isRequired
-  }
-
+PropTypes.checkPropTypes(dashboardHeaderPropTypes, 'prop', 'DashboardHeader' );
 function mapStateToProps(state) {
     return {
         user: state.auth.user.currentUser,

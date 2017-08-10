@@ -15,12 +15,12 @@ export function logout() {
   return dispatch => {
     return axios.put('/api/user/signout').then(res => {
       localStorage.removeItem('jwtToken');
-     // localStorage.removeItem('userGroups');
       setAuthorizationToken(false);
       dispatch(setCurrentUser({}));
     });
   };
 }
+
 
 export function userSigninRequest(userData) {
   return dispatch => {

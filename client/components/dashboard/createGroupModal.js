@@ -55,7 +55,7 @@ class CreateGroupModal extends React.Component {
                     </div>
                     <div className="col s12 m7 l7 hide-on-med-and-down">
                       <ul className="right">
-                        <li><a className="red" href="#!"><i class="material-icons">send</i></a>
+                        <li><a className="red" href="#!"><i className="material-icons">send</i></a>
                         </li>
                       </ul>
                     </div>
@@ -67,15 +67,15 @@ class CreateGroupModal extends React.Component {
                   <form className="col s12">
                     <div className="row">
                       <div className="input-field col s12">
-                        <input id="group-title" type="text" class="validate" name = "name" onChange={this.onChange} required/>
-                        <label for="group-title">Group Title</label>
+                        <input id="group-title" type="text" className="validate" name = "name" onChange={this.onChange} required/>
+                        <label htmlFor="group-title">Group Title</label>
                       </div>
                       <div className="mes blue-text"><i>{errors.name}</i></div>
                     </div>
                     <div className="row">
                       <div className="input-field col s12">
-                        <textarea id="description" className="materialize-textarea" length="500" onChange={this.onChange} name="description"></textarea>
-                        <label for="description">Enter description...</label>
+                        <textarea id="description" className="materialize-textarea" onChange={this.onChange} name="description"></textarea>
+                        <label htmlFor="description">Enter description...</label>
                       </div>
                       <div className="mes blue-text"><i>{errors.description}</i></div>
                     </div>
@@ -87,8 +87,10 @@ class CreateGroupModal extends React.Component {
     }
 }
 
-CreateGroupModal.propTypes = {
-  createGroupRequest: PropTypes.func.isRequired
+const createGroupModalPropTypes = {
+  createGroupRequest: PropTypes.func
 }
+
+PropTypes.checkPropTypes(createGroupModalPropTypes, 'prop', 'CreateGroupModal');
 
 export default connect(null, {createGroupRequest})(CreateGroupModal);
