@@ -200,13 +200,13 @@ body {
         padding-left: 10px;
     }
     #text-area {
-        border: 1px solid #ccc;
+        border: 2px solid #ccc;
         border-radius: 20px;
         outline: none;
-        line-height: 40px;
+        line-height: 30px;
         margin-top: 5px;
-        text-indent: 10px;
-        resize: none;
+        text-indent: 2px;
+        overflow: hidden;
     }
     .message-text {
         font-size: 14px;
@@ -215,4 +215,17 @@ body {
     .send-icon {
         float: right;
         margin-top: 20px;
+    }
+    .my {
+        width: 600px !important;
+        border:2px solid  purple !important;
+    }
+
+    .contain {
+        width: 500px !important;
+    }
+    .auto {
+        height:auto !important;
+		overflow: scroll;
+        white-space: pre-line;
     }

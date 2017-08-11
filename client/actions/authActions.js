@@ -16,7 +16,8 @@ export function logout() {
     return axios.put('/api/user/signout').then(res => {
       localStorage.removeItem('jwtToken');
       setAuthorizationToken(false);
-      dispatch(setCurrentUser({}));
+      dispatch(setCurrentUser({ currentUser: { username: '',
+        fullname: '' } }));
     });
   };
 }

@@ -14,11 +14,8 @@ export function getGroupsRequest() {
   return dispatch => {
     return axios.get('/api/groups').then(res => {
       const groups = res.data.groups;
-      group.push(groups);
-      const userGroups = { userGroups: groups };
       dispatch(setCurrentUserGroups(groups));
     });
   };
 }
 
-export const h = group;

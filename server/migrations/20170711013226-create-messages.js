@@ -33,6 +33,10 @@ module.exports = {
           as: 'groupId',
         }
       },
+      senderUsername: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       senderId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',

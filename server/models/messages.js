@@ -24,7 +24,11 @@ module.exports = (sequelize, DataTypes) => {
     senderId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    }
+    },
+    senderUsername: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   });
   Message.associate = (models) => {
     Message.belongsTo(models.Group, {

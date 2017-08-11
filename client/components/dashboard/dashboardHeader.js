@@ -16,10 +16,10 @@ class DashboardHeader extends React.Component {
     $('#modal1').modal('open');
   }
     onClick(event) {
-       // event.preventDefault();
-        this.props.logout();
-        browserHistory.push('/');
-        window.location.reload();
+        event.preventDefault();
+        this.props.logout()
+                browserHistory.push('/');
+                 window.location.reload();
     }
     render() {
         return ( <nav className="purple darken-1" role="navigation">

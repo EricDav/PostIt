@@ -11,7 +11,6 @@ import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUserGroups } from './actions/getGroupsAction';
 import configureStore from './store/configureStore';
 import { h } from './actions/getGroupsAction';
-console.log(h)
 //import js from '../public/js/modal'
 
 // import './assets/css/custom.scss';

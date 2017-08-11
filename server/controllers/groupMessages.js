@@ -14,6 +14,7 @@ const Messages = {
         content: req.body.content,
         groupId: req.params.groupId,
         senderId: req.currentUser.currentUser.id,
+        senderUsername: req.currentUser.currentUser.username,
         piority: req.body.piority
       })
       .then(() => {
