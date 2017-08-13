@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: false
+    },
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: false
     }
   });
   messageViewer.associate = (models) => {

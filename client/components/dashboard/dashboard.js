@@ -3,7 +3,7 @@ import DashboardHeader from './dashboardHeader';
 import DashboardSideBar from './dashboardSideBar';
 import MessageBoard from './messageBoard';
 import CreateGroupModal from './createGroupModal';
-import RightSideBarNav from './rightSideBarNav';
+import RightSideBarNav from './sideBarRight';
 import { getGroupsRequest } from '../../actions/getGroupsAction';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -27,13 +27,13 @@ class Dashboard extends React.Component {
               <div className="col s12">
              <DashboardSideBar allGroups={this.props.allGroups} user={this.props.user}/>
             <MessageBoard messages={this.props.messages}/>
+              <RightSideBarNav members={this.props.members} group={this.props.group}/>
             </div>
             </div>
             <CreateGroupModal/>
             </div>
             </div>
             </section>
-         
           </div> 
           </div>
           </div>
@@ -49,7 +49,9 @@ function mapStateToProps(state) {
   return {
     allGroups: state.groups,
     user: state.auth.user.currentUser,
-    messages: state.messages
+    messages: state.messages,
+    members: state.members,
+    group: state.group
   };
 }
 export default connect(mapStateToProps, {getGroupsRequest})(Dashboard);

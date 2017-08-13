@@ -2,24 +2,20 @@ import React from 'react';
 import Messages from './message';
 import { connect } from 'react-redux';
 import TextInput from './textInput';
+import GroupButton from './groupButton';
 
 
 class MessageBoard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-        group: {
-
-        }
-    }
      this.getMessages = this.getMessages.bind(this);
   }
   getMessages() {
       return this.props.messages.map((message) => {
         return (
           <Messages name={message.senderUsername} key={message.id} content={message.content}/>
-        )
-      })
+        );
+      });
     }
     render() {
       const messages = this.getMessages();
@@ -27,7 +23,10 @@ class MessageBoard extends React.Component {
            <div id="email-details" className="col s12 m8 l8 card-panel my">
                   <hr className="grey-text text-lighten-2"/>
                   <div className="collection-item avatar">
-                      <p className="email-subject truncate"><span className="email-tag grey lighten-3"><b>#{this.props.currentGroup.name}</b></span> <span className="email-tag  light-blue lighten-4"></span>
+                      <p className="email-subject truncate"><span className="email-tag grey lighten-3">
+                        <b>#{this.props.currentGroup.name}</b>
+                        </span> <span className="email-tag spa light-blue lighten-4"> <GroupButton text={"ADD MEMBER"}/>
+                        <GroupButton text={"VIEW MEMBERS"}/></span>
                   </p>
                   </div>
                   <div id="message-board" className="email-content-wrap">

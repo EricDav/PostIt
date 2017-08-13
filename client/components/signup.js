@@ -139,7 +139,6 @@ class SignUp extends React.Component {
 
  const SignUpPropTypes = {
    userSignupRequest: PropTypes.func,
-   setFlashMessage: PropTypes.func
  }
 
 PropTypes.checkPropTypes(SignUpPropTypes, 'prop', 'SignUp');

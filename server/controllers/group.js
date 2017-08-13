@@ -42,6 +42,23 @@ const createGroups = {
       })
       .catch(error => res.status(400).send(error));
   },
+  removeUser(req, res) {
+    Group.findOne({
+      where: {
+        id: req.params.groupId
+      }
+    }).then((group) => {
+      group.getUsers().remove({
+        where: {
+          id: req.currentUser.currentUser.id
+        }
+      }).then(() => {
+        res.status(201).send('user remove successfully');
+      })
+        .catch(error => res.status(400).send(error));
+    })
+      .catch(error => res.status(400).send(error));
+  },
   getGroups(req, res) {
     User
       .findOne({ where: {

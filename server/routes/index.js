@@ -19,6 +19,7 @@ app.post('/api/group/:groupId/user', auth, groupValidator.groupValidation, group
 app.post('/api/group', auth, groupValidator.groupNullValidation, groupController.create);
 app.post('/api/group/:groupId/message', auth, groupValidator.groupValidation, sendEmail, groupMessagesController.createMessage);
 app.get('/api/group/:groupId/messages', auth, groupValidator.groupValidation, groupMessagesController.getMessages);
+app.post('/api/group/:groupId/removeUser', groupController.removeUser);
 app.get('/api/groups', auth, groupController.getGroups);
 app.put('/api/group/update', auth, groupController.updateGroupInfo);
 app.get('/api/group/:groupId/members', auth, groupValidator.groupValidation, groupController.getGroupMembers);

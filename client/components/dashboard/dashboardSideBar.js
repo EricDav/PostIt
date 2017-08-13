@@ -1,13 +1,10 @@
 import React, { Component }  from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+//import { connect } from 'react-redux';
+//import PropTypes from 'prop-types';
 import Group from './group';
-import { getGroupMessages } from '../../actions/getGroupMessages';
+//import { getGroupMessages } from '../../actions/getGroupMessages';
 
 class sideBar extends Component {
-  // const groups = allGroups.map((group) => {
-    
-  // });
   constructor(props, context) {
     super(props);
     this.getGroups = this.getGroups.bind(this);

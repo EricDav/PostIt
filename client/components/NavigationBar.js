@@ -1,9 +1,9 @@
 import React from 'react';
 
 class NavigationBar extends React.Component {
-    componentDidMount() {
-        $('ul.tabs').tabs();
-    }
+    // componentDidMount() {
+    //     $('ul.tabs').tabs();
+    // }
     render() {
         return (
             <div className="container">

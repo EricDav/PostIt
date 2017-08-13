@@ -16,17 +16,20 @@ class DashboardHeader extends React.Component {
     $('#modal1').modal('open');
   }
     onClick(event) {
-        event.preventDefault();
-        this.props.logout()
-                browserHistory.push('/');
-                 window.location.reload();
+        this.props.logout().then(
+            () => {
+              browserHistory.push('/');
+              window.location.reload();
+            },
+            () => {}
+        )
     }
     render() {
         return ( <nav className="purple darken-1" role="navigation">
                  <div className="nav-wrapper container left nav">
-                    <a id="logo-container" href="#" className="brand-logo post">PostIt</a>
+                    <a id="logo-container"  className="brand-logo post">PostIt</a>
                     <ul className="right">
-                    <li onClick={this.onClick}><a>Logout</a></li>
+                    <li ><a onClick={this.onClick}>Logout</a></li>
                     </ul>
                     <ul className="right">
                       <li className="noHover">

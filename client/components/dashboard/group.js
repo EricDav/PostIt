@@ -1,5 +1,6 @@
 import React from 'react';
-import { getGroupMessages } from '../../actions/getGroupMessages';
+import { getGroupMessages, getGroupMembers } from '../../actions/getGroupMessages';
+import { getAllUsersRequest } from '../../actions/getAllUsersAction';
 import { setGroup } from '../../actions/setCurrentGroup';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,15 +11,15 @@ class Group extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
     onClick(event) {
+        this.props.getGroupMembers(event.target.id.toString());
         this.props.getGroupMessages(event.target.id.toString());
+        this.props.getAllUsersRequest();
         this.props.groups.forEach((group) => {
-            console.log('no')
             if (group.id.toString() === event.target.id) {
-                this.props.setGroup(group)
+                this.props.setGroup(group);
             }
-        })
-        console.log(event.target.id.toString())
-       console.log(event.target.value)
+        });
+        
     }
     render() {
         return (
@@ -32,7 +33,9 @@ class Group extends React.Component {
 
 const dashboardPropTypes = {
   getGroupMessages: PropTypes.func,
-  setGroup: PropTypes.func
+  setGroup: PropTypes.func,
+  getGroupMembers: PropTypes.func,
+  getAllUsersRequest: PropTypes.func
 }
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Group');
 function mapStateToProps(state) {
@@ -41,4 +44,4 @@ function mapStateToProps(state) {
     }
 } 
 
-export default connect(mapStateToProps, {getGroupMessages, setGroup})(Group);
+export default connect(mapStateToProps, {getGroupMessages, setGroup, getGroupMembers, getAllUsersRequest})(Group);

@@ -217,7 +217,7 @@ body {
         margin-top: 20px;
     }
     .my {
-        width: 600px !important;
+        width: 47% !important;
         border:2px solid  purple !important;
     }
 
@@ -228,4 +228,25 @@ body {
         height:auto !important;
 		overflow: scroll;
         white-space: pre-line;
+    }
+
+    .spa {
+        margin-left: 20px !important;
+        font-size: 2px;
+    }
+
+    .groupBut {
+        height: 30px;
+        width: 160px;
+        font-size: 13px;
+        text-align: left;
+        background-color: purple;
+        margin-left: 2px;
+    }
+   .but {
+        height: 30px;
+        width: 50px;
+        font-size: 10px;
+        text-align: left;
+        background-color: purple;
     }

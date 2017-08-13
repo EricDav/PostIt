@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import userSignupRequest from '../actions/signupActions';
 import { userSigninRequest } from '../actions/authActions';
 import PropTypes from 'prop-types';
-import setFlashMessage from '../actions/flashMessages';
 import  { getGroupsRequest }  from '../actions/getGroupsAction';
 
 class HomePage extends React.Component {
@@ -15,7 +14,7 @@ class HomePage extends React.Component {
   //   this.props.
   // }
     render() {
-      const {userSignupRequest, setFlashMessage, userSigninRequest, getGroupsRequest} = this.props;
+      const {userSignupRequest, userSigninRequest, getGroupsRequest} = this.props;
         return (
        <div className="body-container"   className="image">
         <NavBar/>
@@ -31,7 +30,7 @@ class HomePage extends React.Component {
                 <div className="indicator" style={{ right: 616, left: 0 }} />
               </ul>
               <Login userSigninRequest={userSigninRequest} getGroupsRequest ={getGroupsRequest}/>
-              <SignUp userSignupRequest={userSignupRequest} setFlashMessage={setFlashMessage}/>
+              <SignUp userSignupRequest={userSignupRequest}/>
             </div>
           </div>
         </div>
@@ -43,11 +42,10 @@ class HomePage extends React.Component {
 const HomePagePropTypes = {
    userSignupRequest: PropTypes.func,
    userSigninRequest: PropTypes.func,
-   setFlashMessage: PropTypes.func,
    getGroupsRequest: PropTypes.func
 
  }
 
  PropTypes.checkPropTypes(HomePagePropTypes, 'prop', 'HomePage');
 
-export default connect(null, {userSignupRequest, setFlashMessage, userSigninRequest, getGroupsRequest})(HomePage);
+export default connect(null, {userSignupRequest, userSigninRequest, getGroupsRequest})(HomePage);
