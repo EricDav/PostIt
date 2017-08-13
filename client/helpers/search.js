@@ -1,8 +1,8 @@
-const search = (searchStr, users) => {
+const search = (searchStr, users, currentUser) => {
   const matchUsers = [];
   users.forEach((user) => {
     const matchValue = new RegExp(searchStr.toLowerCase());
-    if (matchValue.test(user.fullname.toLowerCase())) {
+    if (matchValue.test(user.fullname.toLowerCase()) && currentUser !== user.fullname) {
       matchUsers.push(user);
     }
   });

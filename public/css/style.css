@@ -218,6 +218,7 @@ body {
     }
     .my {
         width: 47% !important;
+        height: 100% !important;
         border:2px solid  purple !important;
     }
 

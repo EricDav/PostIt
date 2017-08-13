@@ -7,6 +7,7 @@ import RightSideBarNav from './sideBarRight';
 import { getGroupsRequest } from '../../actions/getGroupsAction';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { setRightNavBarView } from '../../actions/setRightNavBarView';
 
 class Dashboard extends React.Component {
     componentWillMount() {
@@ -26,7 +27,7 @@ class Dashboard extends React.Component {
               </div>
               <div className="col s12">
              <DashboardSideBar allGroups={this.props.allGroups} user={this.props.user}/>
-            <MessageBoard messages={this.props.messages}/>
+            <MessageBoard messages={this.props.messages} setRightNavBarView={setRightNavBarView}/>
               <RightSideBarNav members={this.props.members} group={this.props.group}/>
             </div>
             </div>
@@ -41,7 +42,8 @@ class Dashboard extends React.Component {
     }
 }
 const dashboardPropTypes = {
-  getGroupsRequest: PropTypes.func
+  getGroupsRequest: PropTypes.func,
+  setRightNavBarView: PropTypes.func
 }
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Dashboard');
 
@@ -51,7 +53,7 @@ function mapStateToProps(state) {
     user: state.auth.user.currentUser,
     messages: state.messages,
     members: state.members,
-    group: state.group
+    group: state.group,
   };
 }
-export default connect(mapStateToProps, {getGroupsRequest})(Dashboard);
+export default connect(mapStateToProps, {getGroupsRequest, setRightNavBarView})(Dashboard);

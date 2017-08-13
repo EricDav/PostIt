@@ -5,6 +5,7 @@ import messages from './groupMessages';
 import group from './currentGroup';
 import members from './currentGroupMembers';
 import allUsers from './allUsers';
+import viewNumber from './setView';
 
 export default combineReducers({
   auth,
@@ -12,5 +13,6 @@ export default combineReducers({
   messages,
   group,
   members,
-  allUsers
+  allUsers,
+  viewNumber
 });

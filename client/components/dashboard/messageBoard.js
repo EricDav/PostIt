@@ -25,8 +25,8 @@ class MessageBoard extends React.Component {
                   <div className="collection-item avatar">
                       <p className="email-subject truncate"><span className="email-tag grey lighten-3">
                         <b>#{this.props.currentGroup.name}</b>
-                        </span> <span className="email-tag spa light-blue lighten-4"> <GroupButton text={"ADD MEMBER"}/>
-                        <GroupButton text={"VIEW MEMBERS"}/></span>
+                        </span> <span className="email-tag spa light-blue lighten-4"> <GroupButton text={"ADD MEMBERS"}/>
+                        <GroupButton text={"VIEW MEMBERS"}  setRightNavBarView={this.props.setRightNavBarView}/></span>
                   </p>
                   </div>
                   <div id="message-board" className="email-content-wrap">

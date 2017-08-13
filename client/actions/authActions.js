@@ -8,17 +8,16 @@ export function setCurrentUser(user) {
   return {
     type: SET_CURRENT_USER,
     user
-  }
+  };
 }
 
 export function logout() {
   return dispatch => {
     return axios.put('/api/user/signout').then(res => {
       localStorage.removeItem('jwtToken');
-      console.log('yes');
       setAuthorizationToken(false);
       dispatch(setCurrentUser({ currentUser: { username: '',
-        fullname: '' } }));
+        fullname: ' ' } }));
     });
   };
 }
