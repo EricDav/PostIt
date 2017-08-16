@@ -83,11 +83,13 @@ const group = {
     if (isValidField(req.body.name)) {
       nullValues.name = 'This field is required';
     }
-    if (isValidField(req.body.description)) {
+    if (isValidField(req.body.description) || nullValues.description === null
+    || nullValues.description === undefined) {
       nullValues.description = 'This field is required';
     }
-    if (req.body.description.length < 20) {
-      if (nullValues.description === '') {
+    if (nullValues.description !== '' && req.body.description !== null
+     && req.body.description !== undefined) {
+      if (req.body.description.length < 20) {
         nullValues.description = 'You need to have up to 20 charecters';
       }
     }

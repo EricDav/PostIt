@@ -1,18 +1,24 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    queryInterface.createTable('messageViewers', {
+    queryInterface.createTable('SeenLasts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      viewerUsername: {
+      seenUsername: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: false
       },
-      seenMessageIds: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER),
+      groupId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: false
+      },
+      seenLast: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         unique: false
       },
@@ -26,5 +32,5 @@ module.exports = {
       }
     });
   },
-  down: queryInterface => queryInterface.dropTable('messageViewers')
+  down: queryInterface => queryInterface.dropTable('SeenLasts')
 };

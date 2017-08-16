@@ -9,29 +9,24 @@ class TextInput extends React.Component {
         super(props);
         this.state = {
             content: '',
-            piority: ''
+            piority: '',
+            groupName: this.props.currentGroup.name,
+            type: 1
         }
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
         this.modifyValue = this.modifyValue.bind(this);
-        this.onClick = this.onClick.bind(this);
     }
 
-    onClick(event) {
-        console.log('Yeah')
-    }
     modifyValue(event) {
-        console.log('yes')
         this.setState({
             piority: event.target.value
         })
     }
     onChange(event) {
-        console.log('yes')
     this.setState({
       [event.target.name]: event.target.value
     });
-    console.log(event.target.value, event.target.name)
     
 }
 
@@ -41,12 +36,13 @@ class TextInput extends React.Component {
              this.props.createMessage(this.state, this.props.currentGroup.id.toString()).then(
                  () => {
                      this.setState({
-                         content: ''
+                         content: '',
+                         groupName: this.props.currentGroup.name,
+                         type: 1
                      });
                     this.props.getGroupMessages(this.props.currentGroup.id.toString())
                  },
                  (response) => {
-                     console.log(response.data);
                  }
              )
         }

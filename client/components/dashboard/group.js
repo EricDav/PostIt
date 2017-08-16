@@ -1,5 +1,5 @@
 import React from 'react';
-import { getGroupMessages, getGroupMembers } from '../../actions/getGroupMessages';
+import { getGroupMessages, getGroupMembers, updateSeenMessages } from '../../actions/getGroupMessages';
 import { getAllUsersRequest } from '../../actions/getAllUsersAction';
 import { setGroup } from '../../actions/setCurrentGroup';
 import PropTypes from 'prop-types';
@@ -12,7 +12,9 @@ class Group extends React.Component {
     }
     onClick(event) {
         this.props.getGroupMembers(event.target.id.toString());
-        this.props.getGroupMessages(event.target.id.toString());
+        this.props.getGroupMessages(event.target.id.toString()).then(() => {
+
+        })
         this.props.getAllUsersRequest();
         this.props.groups.forEach((group) => {
             if (group.id.toString() === event.target.id) {
@@ -25,7 +27,7 @@ class Group extends React.Component {
         return (
             <li className="collection-item avatar email-unread group-channel">
                 <a><span className="group-title">{this.props.name}</span></a>
-                <a href="#!" className="secondary-content"><span onClick={this.onClick}  id={this.props.id} value={this.props.groupInfo} className="new badge reddish">6</span></a>
+                <a href="#!" className="secondary-content"><span onClick={this.onClick}  id={this.props.id} value={this.props.groupInfo} className="new round badge reddish">6</span></a>
             </li>
         )
     }

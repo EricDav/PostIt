@@ -4,7 +4,6 @@ import connect from 'react-redux';
 
 class SearchedUser extends React.Component {
     render() {
-        console.log(this.props.userId, 'search')
         const Buton = <Button id={this.props.userId} groupId = {this.props.groupId} fullname={this.props.fullname}/>
             return (
             <li className="collection-item avatar email-unread group-channel">

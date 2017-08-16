@@ -11,12 +11,13 @@ const User = db.User;
 const message = db.Message;
 const groups = db.Group;
 const viewMessages = db.messageViewer;
+const seenLast = db.SeenLast;
+console.log(viewMessages);
 /**
  * @param  {object} req
  * @param  {object} res
- * @description create a user with name, username, email and password.
+ * @description create a user with name, username, email, phone number and password.
  */
-
 const createUser = {
   create(req, res) {
     return User
@@ -147,8 +148,124 @@ const createUser = {
       })
       .catch(error => res.status(404).send(error));
   },
-  userNotifications(req, res) {
-    
+  getMessagesWithSeenUsers(req, res) {
+    let allViewMessages = [];
+    let viewerObject = { viewers: [] };
+    const viewerData = [];
+    seenLast.findOne({
+      where: {
+        seenUsername: req.currentUser.currentUser.username,
+        groupId: req.params.groupId
+      }
+    })
+      .then((viewer) => {
+        if (viewer === null) {
+          viewer = { seenLast: 0 };
+          seenLast.create({
+            seenUsername: req.currentUser.currentUser.username,
+            groupId: req.params.groupId,
+            seenLast: 0
+          })
+            .catch(error => res.status(404).send(error));
+        }
+        viewMessages.all()
+          .then((viewers) => {
+            if (!viewers) {
+              allViewMessages = [];
+            } else {
+              allViewMessages = viewers;
+            }
+          });
+        message
+          .findAll({
+            where: {
+              groupId: req.params.groupId
+            }
+          }).then((messages) => {
+            messages.forEach((Message) => {
+              allViewMessages.forEach((messageViewer) => {
+                if (messageViewer.seenMessageIds.includes(Message.id)) {
+                  viewerObject.viewers.push(messageViewer.viewerUsername);
+                }
+              });
+              viewerObject.message = Message;
+              viewerData.push(viewerObject);
+              viewerObject = { viewers: [] };
+            });
+            res.status(200).json({
+              success: true,
+              data: viewerData,
+              seenLast: viewer.seenLast
+            });
+          })
+          .catch(error => res.status(400).send(error));
+      })
+      .catch(error => res.status(402).send(error));
+  },
+
+  updateSeenMessages(req, res) {
+    viewMessages.findOne({
+      where: {
+        viewerUsername: req.currentUser.currentUser.username
+      }
+    })
+      .then((viewer) => {
+        if (!viewer) {
+          console.log('yes');
+          viewMessages.create({
+            viewerUsername: req.currentUser.currentUser.username,
+            seenMessageIds: req.body.seen.split('')
+          })
+            .then((view) => {
+              seenLast.update({
+                seenLast: req.body.seenLast
+              }, {
+                where: {
+                  seenUsername: req.currentUser.currentUser.username,
+                  groupId: req.params.groupId
+                }
+              })
+                .then(() => {
+                  res.status(201).json({
+                    success: true,
+                    message: `created view messages for ${view.viewerUsername} successfully`
+                  });
+                })
+                .catch(error => res.status(404).send(error));
+            })
+            .catch(error => res.status(401).send(error));
+        } else {
+          console.log('no');
+          const seenMessages = viewer.seenMessageIds.concat(req.body.seen.split(''));
+          console.log(seenMessages);
+          viewMessages.update({
+            seenMessageIds: seenMessages
+          }, {
+            where: {
+              viewerUsername: req.currentUser.currentUser.username
+            }
+          })
+            .then(() => {
+              seenLast.update({
+                seenLast: req.body.seenLast,
+              }, {
+                where: {
+                  seenUsername: req.currentUser.currentUser.username,
+                  groupId: req.params.groupId
+                }
+              })
+                .then(() => {
+                  res.status(201).json({
+                    success: true,
+                    message: 'seen messages updated successfully'
+                  });
+                })
+                .catch(error => res.status(402).send(error));
+            })
+            .catch(error => res.status(403).send(error));
+        }
+      })
+      .catch(error => res.status(405).send(error));
   }
 };
 

@@ -1,14 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
-  const messageViewer = sequelize.define('messageViewer', {
-    viewerUsername: {
+  const messageViewer = sequelize.define('forgotPassword', {
+    user: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
     },
-    seenMessageIds: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
+    generatedNumber: {
+      type: DataTypes.STRING,
       allowNull: false,
-      unique: false
+      unique: true
+    },
+    verified: {
+      type: DataTypes.BOOLEAN,
+      default: false
+
     }
   });
   messageViewer.associate = (models) => {

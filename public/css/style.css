@@ -251,3 +251,16 @@ body {
         text-align: left;
         background-color: purple;
     }
+
+    .number {
+        padding-right: 40px;
+    }
+
+    .mine {
+    width: 12px !important;
+    height: 12px;
+    border-radius: 10px;
+    background-color: green;
+    position: absolute;
+    margin-right: 5px;
+}

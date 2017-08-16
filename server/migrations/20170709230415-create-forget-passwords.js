@@ -1,20 +1,26 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    queryInterface.createTable('messageViewers', {
+    queryInterface.createTable('forgotPasswords', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      viewerUsername: {
+      user: {
         type: Sequelize.STRING,
-        allowNull: false
-      },
-      seenMessageIds: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER),
         allowNull: false,
-        unique: false
+        unique: true
+      },
+      generatedNumber: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
+      verified: {
+        type: Sequelize.BOOLEAN,
+        default: false
+
       },
       createdAt: {
         allowNull: false,
@@ -26,5 +32,5 @@ module.exports = {
       }
     });
   },
-  down: queryInterface => queryInterface.dropTable('messageViewers')
+  down: queryInterface => queryInterface.dropTable('forgotPasswords')
 };

@@ -20,7 +20,6 @@ class Search extends React.Component {
       });
     }
     searchedUsers() {
-        console.log(this.props.members)
         return this.state.users.map((user) => {
           return (
             <SearchedUser fullname={user.fullname} userId={user.id} key={user.id} groupId = {this.props.group.id} members={getFullnames(this.props.members)}/>
@@ -31,7 +30,6 @@ class Search extends React.Component {
     render() {
         const users = this.searchedUsers();
         return (
-            //  <aside id="right-sidebar-nav">
             <ul>
             <div id="right-search" className="row">
                 <form className="col s12">

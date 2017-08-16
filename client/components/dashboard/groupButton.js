@@ -10,11 +10,8 @@ class GroupButton extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
     onClick(event) {
-        console.log(event.target.id)
         if(event.target.id === "VIEW MEMBERS") {
-            console.log('I got here')
              this.props.setRightNavBarView(1)
-            // console.log(this.props.setRightNavBarView(1))
         } else if(event.target.id === "ADD MEMBERS") {
             this.props.setRightNavBarView(2)
         }

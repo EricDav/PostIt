@@ -8,6 +8,7 @@ import groupMessagesController from '../controllers/groupMessages';
 import groupValidator from '../middlewares/groupValidation';
 import userUpdateValidation from '../middlewares/update';
 import sendEmail from '../helpers/email';
+import notifications from '../controllers/notification';
 
 const app = express.Router();
 app.get('/api/allUsers', auth, userController.allUsers);
@@ -24,6 +25,8 @@ app.get('/api/groups', auth, groupController.getGroups);
 app.put('/api/group/update', auth, groupController.updateGroupInfo);
 app.get('/api/group/:groupId/members', auth, groupValidator.groupValidation, groupController.getGroupMembers);
 app.get('/api/messages', auth, userController.userMessages);
-app.get('/api/notification', auth, userController.userNotifications);
+app.get('/api/group/:groupId/message/viewers', auth, userController.getMessagesWithSeenUsers);
 app.put('/api/resetpassword', auth, userController.resetPassword);
+app.get('/api/group/:groupId/notification', auth, notifications.getNotification);
+app.put('/api/group/:groupId/updateSeenMessages', auth, userController.updateSeenMessages);
 export default app;

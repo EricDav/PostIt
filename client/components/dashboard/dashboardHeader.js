@@ -33,7 +33,7 @@ class DashboardHeader extends React.Component {
                     </ul>
                     <ul className="right">
                       <li className="noHover">
-                        <i className="material-icons left">account_circle</i>
+                        <span className="number">2</span> <i className="material-icons left">notifications</i>
                           {this.props.user.fullname}
                         </li>
                         <li>
