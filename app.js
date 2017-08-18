@@ -8,7 +8,7 @@ import webpackMiddleware from 'webpack-dev-middleware';
 import webpackConfig from './webpack.config.dev';
 import routes from './server/routes';
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 9000;
 const app = express();
 app.use(express.static('public')); // configure static files folder
 app.use(logger('dev'));

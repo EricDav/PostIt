@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import TextInput from './textInput';
 import GroupButton from './groupButton';
 
-
 class MessageBoard extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +12,8 @@ class MessageBoard extends React.Component {
   getMessages() {
       return this.props.messages.map((message) => {
         return (
-          <Messages name={message.senderUsername} key={message.id} content={message.content}/>
+            <Messages name={message.message.senderUsername} key={message.message.id}
+            content={message.message.content} viewers={message.viewers.toString()}/>
         );
       });
     }
@@ -38,7 +38,7 @@ class MessageBoard extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <div className="email-content-wrap">
+                  <div className="email-content-wrap em">
                     <div className="row">
                       <div className="col s12 m12 l12">
                         <ul>

@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import db from '../models';
 import isValidField from '../helpers/isValidField';
+import getNewMessages from '../helpers/getNewMessages';
 
 const groupMembers = db.User;
 
@@ -12,7 +13,6 @@ const message = db.Message;
 const groups = db.Group;
 const viewMessages = db.messageViewer;
 const seenLast = db.SeenLast;
-console.log(viewMessages);
 /**
  * @param  {object} req
  * @param  {object} res
@@ -108,7 +108,8 @@ const createUser = {
             success: false,
             message: 'This field is required'
           });
-        } else if (req.body.newPassword.length < 9 || !(/[0-9]/.test(req.body.newPassword) && /[a-z A-Z]/.test(req.body.newPassword))) {
+        } else if (req.body.newPassword.length < 9 || !(/[0-9]/
+          .test(req.body.newPassword) && /[a-z A-Z]/.test(req.body.newPassword))) {
           return res.status(403).json({
             success: false,
             message: 'Weak password. Password should contain at least 8 characters including at least one number and alphabet'
@@ -138,7 +139,7 @@ const createUser = {
   userMessages(req, res) {
     User.findOne({
       where: {
-        id: req.decoded.user.id
+        id: req.currentUser.currentUser.id
       }
     })
       .then((user) => {
@@ -211,10 +212,9 @@ const createUser = {
     })
       .then((viewer) => {
         if (!viewer) {
-          console.log('yes');
           viewMessages.create({
             viewerUsername: req.currentUser.currentUser.username,
-            seenMessageIds: req.body.seen.split('')
+            seenMessageIds: req.body.seenMessageIds
           })
             .then((view) => {
               seenLast.update({
@@ -235,11 +235,9 @@ const createUser = {
             })
             .catch(error => res.status(401).send(error));
         } else {
-          console.log('no');
-          const seenMessages = viewer.seenMessageIds.concat(req.body.seen.split(''));
-          console.log(seenMessages);
+          //const seenMessages = viewer.seenMessageIds.concat(req.body.seen.split(''));
           viewMessages.update({
-            seenMessageIds: seenMessages
+            seenMessageIds: req.body.seenMessageIds
           }, {
             where: {
               viewerUsername: req.currentUser.currentUser.username
@@ -266,7 +264,47 @@ const createUser = {
         }
       })
       .catch(error => res.status(405).send(error));
-  }
+  },
+  getMessages(req, res) {
+    User.findOne({
+      where: {
+        username: req.currentUser.currentUser.username
+      }
+    })
+      .then((user) => {
+        user.getGroups().then((Groups) => {
+          const groupIds = [];
+          Groups.forEach((group) => {
+            groupIds.push(group.id);
+          });
+          message.findAll({
+            where: {
+              groupId: groupIds
+            }
+          })
+            .then((messages) => {
+              seenLast.findAll({
+                groupId: groupIds,
+                seenUsername: req.currentUser.currentUser.username
+              })
+                .then((seenLasts) => {
+                  if (!seenLasts) {
+                    seenLasts = [];
+                  }
+                  const newMessages = [];
+                  groupIds.forEach((groupId) => {
+                    newMessages.push(getNewMessages(groupId, messages, seenLasts));
+                  });
+                  res.status(200).send(newMessages);
+                })
+                .catch(error => res.status(405).send(error));
+            })
+            .catch(error => res.status(405).send(error));
+        })
+          .catch(error => res.status(405).send(error));
+      })
+      .catch(error => res.status(405).send(error));
+  },
 };
 
 export default createUser;

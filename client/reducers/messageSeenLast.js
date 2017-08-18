@@ -1,9 +1,9 @@
 import { SET_LAST_SEEN_MESSAGE } from '../actions/types';
 
-export default (state = {}, action = {}) => {
+export default (state = 0, action = {}) => {
   switch (action.type) {
     case SET_LAST_SEEN_MESSAGE:
-      return action.group;
+      return action.groupMessageSeenLast;
     default: return state;
   }
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import SearchUsers from '../../helpers/search.js';
 import SearchedUser from './searchedUser';
-import getFullnames from '../../helpers/getFullname'
+import getUsernames from '../../helpers/getUsername'
 
 class Search extends React.Component {
     constructor(props) {
@@ -22,7 +22,8 @@ class Search extends React.Component {
     searchedUsers() {
         return this.state.users.map((user) => {
           return (
-            <SearchedUser fullname={user.fullname} userId={user.id} key={user.id} groupId = {this.props.group.id} members={getFullnames(this.props.members)}/>
+            <SearchedUser fullname={user.fullname} username={user.username}
+            userId={user.id} key={user.id} groupId = {this.props.group.id} members={getUsernames(this.props.members)}/>
           );
       });
     }
@@ -50,7 +51,7 @@ function mapStateToProps(state) {
     return {
         allUsers: state.allUsers,
         group: state.group,
-        currentUser: state.auth.user.currentUser.fullname,
+        currentUser: state.auth.user.currentUser.username,
         members: state.members
     }
 }

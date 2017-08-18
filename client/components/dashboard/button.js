@@ -1,5 +1,6 @@
 import React from 'react';
 import addUserToAGroup from '../../actions/addUserToAGroup';
+import { getGroupMembers } from '../../actions/getGroupMessages';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 
@@ -12,16 +13,17 @@ class Button extends React.Component {
         }
     }
     onClick(event) {
+        this.setState({
+          hasAdded: true
+        })
         const data = {userId: this.props.id}
         this.props.addUserToAGroup(data, this.props.groupId).then(
             () => {
-                this.setState({
-                        hasAdded: true
-                  });
                Materialize.toast(`${this.props.fullname} has been added Successfully to the group`, 2000, 'purple',
                  () => {
                      
-            }
+            },
+            this.props.getGroupMembers(this.props.groupId.toString()),
         );
     },
     (error) => {
@@ -44,8 +46,9 @@ class Button extends React.Component {
 }
 
 const ButtonPropTypes = {
-  addUserToAGroup: PropTypes.func
+  addUserToAGroup: PropTypes.func,
+  getGroupMembers: PropTypes.func
 }
 PropTypes.checkPropTypes(ButtonPropTypes, 'prop', 'Button');
 
-export default connect(null, { addUserToAGroup})(Button);
+export default connect(null, {getGroupMembers, addUserToAGroup})(Button);

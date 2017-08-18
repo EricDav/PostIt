@@ -1,7 +1,9 @@
 import React, { Component }  from 'react';
-//import { connect } from 'react-redux';
-//import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Group from './group';
+import { getNewGroupMessages } from  '../../actions/getGroupsAction';
+import newMessage from '../../helpers/getNewMessage';
 //import { getGroupMessages } from '../../actions/getGroupMessages';
 
 class sideBar extends Component {
@@ -9,10 +11,20 @@ class sideBar extends Component {
     super(props);
     this.getGroups = this.getGroups.bind(this);
   }
+  componentWillMount() {
+      this.props.getNewGroupMessages().then(
+        () => {
+         // console.log(this.props.newMessages);
+        }
+      )
+    }
  getGroups() {
+      //console.log('Hos')
       return this.props.allGroups.map((group) => {
+        console.log(newMessage(group.id, this.props.newMessages))
         return (
-          <Group name={group.name} key={group.id} id={group.id} groupInfo={{name:group.name, owner: group.creator}}/>
+          <Group name={group.name} key={group.id} id={group.id} groupInfo={{name:group.name, owner: group.creator}}
+          newMessage={newMessage(group.id, this.props.newMessages)}/>
         )
       })
     }
@@ -40,4 +52,16 @@ class sideBar extends Component {
   }
 };
 
-export default sideBar;
+const dashboardPropTypes = {
+  getNewGroupMessages: PropTypes.func
+}
+
+PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'sideBar');
+
+function mapStateToProps(state) {
+  return {
+    newMessages: state.newMessages
+  }
+}
+
+export default connect(mapStateToProps, {getNewGroupMessages})(sideBar);

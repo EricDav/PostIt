@@ -8,7 +8,7 @@ class SearchedUser extends React.Component {
             return (
             <li className="collection-item avatar email-unread group-channel">
                 <a><span className="group-title">{this.props.fullname}</span>
-                 { !this.props.members.includes(this.props.fullname) && Buton }</a>
+                 { !this.props.members.includes(this.props.username) && Buton }</a>
                 <a href="#!" className="secondary-content"></a>
             </li>
         );

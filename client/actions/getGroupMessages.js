@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { SET_CURRENT_GROUP_MESSAGES, SET_CURRENT_GROUP_MEMBERS, SET_LAST_SEEN_MESSAGE } from './types';
+import { SET_CURRENT_GROUP_MESSAGES, SET_CURRENT_GROUP_MEMBERS,
+  SET_LAST_SEEN_MESSAGE } from './types';
 
 export function setCurrentGroupMessages(messages) {
   return {
@@ -15,7 +16,7 @@ export function setCurrentGroupMembers(members) {
   };
 }
 
-export function setSeenMessages(groupMessageSeenLast) {
+export function setSeenLast(groupMessageSeenLast) {
   return {
     type: SET_LAST_SEEN_MESSAGE,
     groupMessageSeenLast
@@ -24,7 +25,7 @@ export function setSeenMessages(groupMessageSeenLast) {
 
 export function getGroupMembers(groupId) {
   return dispatch => {
-    return axios.get(`/api/group/${groupId}/members/viewers`).then(res => {
+    return axios.get(`/api/group/${groupId}/members`).then(res => {
       const members = res.data;
       dispatch(setCurrentGroupMembers(members));
     });
@@ -33,9 +34,10 @@ export function getGroupMembers(groupId) {
 
 export function getGroupMessages(groupId) {
   return dispatch => {
-    return axios.get(`/api/group/${groupId}/messages`).then(res => {
+    return axios.get(`/api/group/${groupId}/message/viewers`).then(res => {
       const messages = res.data;
-      dispatch(setCurrentGroupMessages(messages));
+      dispatch(setCurrentGroupMessages(messages.data));
+      dispatch(setSeenLast(messages.seenLast));
     });
   };
 }
@@ -43,8 +45,7 @@ export function getGroupMessages(groupId) {
 export function updateSeenMessages(groupId, data) {
   return dispatch => {
     return axios.put(`/api/group/${groupId}/updateSeenMessages`, data).then(res => {
-      const messages = res.data;
-      dispatch(setSeenMessages(messages));
+      dispatch(setSeenLast(data.seenLast));
     });
   };
 }

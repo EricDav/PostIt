@@ -21,6 +21,7 @@ const sendEmail = (req, res, next) => {
         group.getUsers()
           .then((users) => {
             recieverEmails = getEmailsFromUsers(users);
+
             const transporter = nodemailer.createTransport({
               service: 'Gmail',
               auth: {
