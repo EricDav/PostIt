@@ -5,7 +5,6 @@ import mailSender from '../helpers/mailSender';
 
 const User = db.User;
 const forgotPassword = db.forgotPassword;
-console.log(forgotPassword);
 
 const forgetPassword = (req, res) => {
   User.findOne({
@@ -14,7 +13,6 @@ const forgetPassword = (req, res) => {
     }
   })
     .then((user) => {
-          console.log(generatedNumber);
       if (!user) {
         return res.status(404).json({
           success: false,
@@ -22,14 +20,12 @@ const forgetPassword = (req, res) => {
         });
       }
       const generatedNumber = generateCode();
-      console.log(generatedNumber);
       const message = 'Your verification code is:';
       forgotPassword.create({
         user: user.username,
         generatedNumber,
         verified: false
       }).then((Users) => {
-          console.log(Users)
         if (!Users) {
           res.status(500).json({
             success: false,

@@ -7,7 +7,6 @@ $('.modal').modal({
   startingTop: '4%',
   endingTop: '10%',
   ready: function (modal, trigger) {
-     console.log(modal, trigger);
   },
   complete: function () { }
 });

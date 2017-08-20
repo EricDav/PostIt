@@ -8,6 +8,7 @@ import allUsers from './allUsers';
 import viewNumber from './setView';
 import seenLast from './messageSeenLast';
 import newMessages from './newMessages';
+import initialNewMessages from './initialNewMessages';
 
 export default combineReducers({
   auth,
@@ -18,5 +19,6 @@ export default combineReducers({
   allUsers,
   viewNumber,
   seenLast,
-  newMessages
+  newMessages,
+  initialNewMessages
 });

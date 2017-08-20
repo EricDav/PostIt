@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import createMessage from '../../actions/createMessageAction';
+import { getNewGroupMessages, getInitialNewMessages } from  '../../actions/getGroupsAction';
 import PropTypes from 'prop-types';
-import { getGroupMessages } from '../../actions/getGroupMessages';
+import { getGroupMessages, updateSeenMessages } from '../../actions/getGroupMessages';
+import getMessageIds from '../../helpers/getMessageIds';
 
 class TextInput extends React.Component {
     constructor(props) {
@@ -31,7 +33,7 @@ class TextInput extends React.Component {
 }
 
     onKeyDown(event) {
-        if (event.which== 13) {
+        if (event.which == 13) {
              event.preventDefault();
              this.props.createMessage(this.state, this.props.currentGroup.id.toString()).then(
                  () => {
@@ -40,7 +42,15 @@ class TextInput extends React.Component {
                          groupName: this.props.currentGroup.name,
                          type: 1
                      });
-                    this.props.getGroupMessages(this.props.currentGroup.id.toString())
+                    this.props.getGroupMessages(this.props.currentGroup.id.toString()).then(
+                        () => {
+                            const seenMessageIds = getMessageIds(this.props.messages);
+                            const updateSeenMessagesData = {seenMessageIds,
+                            seenLast: seenMessageIds.length}
+                            this.props.updateSeenMessages(this.props.currentGroupId.toString(), updateSeenMessagesData)
+                            this.props.getInitialNewMessages(this.props.newMessages);
+                        }
+                    )
                  },
                  (response) => {
                  }
@@ -65,15 +75,20 @@ class TextInput extends React.Component {
 }
 const textInputPropTypes = {
   createMessage: PropTypes.func,
-  getGroupMessages: PropTypes.func
-
+  getGroupMessages: PropTypes.func,
+  getNewGroupMessages: PropTypes.func,
+  updateSeenMessages: PropTypes.func,
+  getInitialNewMessages: PropTypes.func
 }
 PropTypes.checkPropTypes(textInputPropTypes, 'prop', 'TextInput');
 
 function mapStateToProps(state) {
     return {
-        currentGroup: state.group
+        currentGroup: state.group,
+        messages: state.messages,
+        currentGroupId: state.group.id,
+        newMessages: state.newMessages
     }
 }
 
-export default connect(mapStateToProps, { createMessage, getGroupMessages })(TextInput);
+export default connect(mapStateToProps, {getInitialNewMessages, updateSeenMessages, getNewGroupMessages, createMessage, getGroupMessages })(TextInput);

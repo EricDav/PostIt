@@ -16,8 +16,6 @@ const mailSender = (req, res, message) => {
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-    console.log(error, '---------');
-    console.log('yesssssss')
       res.status(403).json({ error: 'Something bad happened' });
     } else {
       res.status(200).json({

@@ -18,7 +18,7 @@ class GroupButton extends React.Component {
     }
     render() {
         return (
-             <button onClick={this.onClick} className="btn waves-effect waves-light groupBut" id={this.props.text} type="submit" name="action">{this.props.text}
+             <button onClick={this.onClick} className="btn waves-effect waves-light groupBut" id={this.props.text} type="submit" name="action" >{this.props.text}
                  
              </button>
         )

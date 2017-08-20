@@ -21,18 +21,14 @@ class Dashboard extends React.Component {
     <div className="wrapper">
       <section id="content">
         <div className="container">
-          <div id="mail-app" className="section">
             <div className="row">
               <div className="col s12">
               </div>
-              <div className="col s12">
              <DashboardSideBar allGroups={this.props.allGroups} user={this.props.user}/>
             <MessageBoard messages={this.props.messages} setRightNavBarView={setRightNavBarView}/>
-              <RightSideBarNav members={this.props.members} group={this.props.group}/>
-            </div>
+             { this.props.group.id && <RightSideBarNav members={this.props.members} group={this.props.group}/>}
             </div>
             <CreateGroupModal/>
-            </div>
             </div>
             </section>
           </div> 

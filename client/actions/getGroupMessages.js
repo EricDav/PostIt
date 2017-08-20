@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SET_CURRENT_GROUP_MESSAGES, SET_CURRENT_GROUP_MEMBERS,
-  SET_LAST_SEEN_MESSAGE } from './types';
+  SET_LAST_SEEN_MESSAGE, SET_OLD_SEEN_LAST } from './types';
 
 export function setCurrentGroupMessages(messages) {
   return {
@@ -14,6 +14,13 @@ export function setCurrentGroupMembers(members) {
     type: SET_CURRENT_GROUP_MEMBERS,
     members
   };
+}
+
+export function setOldSeenLast(setOldSeenLast) {
+  return {
+    type: SET_OLD_SEEN_LAST,
+    setOldSeenLast
+  }
 }
 
 export function setSeenLast(groupMessageSeenLast) {

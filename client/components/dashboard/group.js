@@ -1,5 +1,6 @@
 import React from 'react';
 import { getGroupMessages, getGroupMembers, updateSeenMessages } from '../../actions/getGroupMessages';
+import { getNewGroupMessages } from  '../../actions/getGroupsAction';
 import { getAllUsersRequest } from '../../actions/getAllUsersAction';
 import { setGroup } from '../../actions/setCurrentGroup';
 import PropTypes from 'prop-types';
@@ -23,6 +24,7 @@ class Group extends React.Component {
                 this.props.updateSeenMessages(groupId.toString(), updateSeenMessagesData).then(
                     () => {
                         this.props.getGroupMessages(groupId.toString());
+                        this.props.getNewGroupMessages();
                     }
                 );
             }
@@ -37,10 +39,10 @@ class Group extends React.Component {
     }
     render() {
         return (
-            <li className="collection-item avatar email-unread group-channel">
-                <a><span className="group-title">{this.props.name}</span></a>
-                <a href="#!" className="secondary-content"><span onClick={this.onClick}  id={this.props.id}
-                value={this.props.groupInfo} className="new round badge reddish">{this.props.newMessage}</span></a>
+            <li className="collection-item avatar email-unread group-channel group">
+                <a href="#!"><span id={this.props.id} value={this.props.groupInfo} className="group-title" onClick={this.onClick}>{this.props.name}</span></a>
+                {this.props.newMessage > 0 && <a href="#!" className="secondary-content"><span id={this.props.id}
+                value={this.props.groupInfo} className="new bad">{this.props.newMessage}</span></a>}
             </li>
         )
     }
@@ -51,14 +53,16 @@ const dashboardPropTypes = {
   setGroup: PropTypes.func,
   getGroupMembers: PropTypes.func,
   getAllUsersRequest: PropTypes.func,
-  updateSeenMessages: PropTypes.func
+  updateSeenMessages: PropTypes.func,
+  getNewGroupMessages: PropTypes.func
 }
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Group');
 function mapStateToProps(state) {
     return{
         groups: state.groups,
         messages: state.messages,
+        currentGroup: state.group
     }
 } 
 
-export default connect(mapStateToProps, {updateSeenMessages, getGroupMessages, setGroup, getGroupMembers, getAllUsersRequest})(Group);
+export default connect(mapStateToProps, {getNewGroupMessages, updateSeenMessages, getGroupMessages, setGroup, getGroupMembers, getAllUsersRequest})(Group);

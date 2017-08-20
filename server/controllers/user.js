@@ -285,17 +285,22 @@ const createUser = {
             .then((messages) => {
               seenLast.findAll({
                 groupId: groupIds,
-                seenUsername: req.currentUser.currentUser.username
               })
                 .then((seenLasts) => {
                   if (!seenLasts) {
                     seenLasts = [];
                   }
                   const newMessages = [];
+                  const userSeenLast = [];
+                  seenLasts.forEach((seenlast) => {
+                    if (seenlast.seenUsername === req.currentUser.currentUser.username) {
+                      userSeenLast.push(seenlast);
+                    }
+                  })
                   groupIds.forEach((groupId) => {
-                    newMessages.push(getNewMessages(groupId, messages, seenLasts));
+                    newMessages.push(getNewMessages(groupId, messages, userSeenLast));
                   });
-                  res.status(200).send(newMessages);
+                  return res.status(200).send(newMessages);
                 })
                 .catch(error => res.status(405).send(error));
             })
