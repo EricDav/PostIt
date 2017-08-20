@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import db from '../models';
 
 dotenv.load();
-const User = db.PostIts;
+const User = db.User;
 const secret = process.env.secretKey;
 /**
  * @param  {object} req
@@ -11,20 +11,35 @@ const secret = process.env.secretKey;
  * @description Auntheticate user.
  * @return {object} user information
  */
-const logIn = {
-  findUser(req, res) {
+export const logIn = {
+  logIn(req, res) {
     return User
-      .findOne({ where: { userName: req.body.userName } })
+      .findOne({ where: { username: req.body.username } })
       .then((user) => {
         if (!user) {
           return res.status(401).json({ success: false, message: 'Authentication failed. wrong username or password.' });
         } else if (user.password !== req.body.password) {
           return res.status(401).json({ success: false, message: 'Authentication failed. wrong username or password.' });
         }
+        const currentUser = { username: user.username,
+          id: user.id,
+          fullname: user.fullname,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+        };
         const token = jwt.sign(
-          { user
+          { currentUser,
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
           }, secret
         );
+        User.update({
+          active: true
+        },
+        {
+          where: {
+            id: user.id
+          }
+        });
         res.status(200).json({
           success: true,
           message: 'Token generated successfully',
@@ -34,4 +49,19 @@ const logIn = {
       .catch(error => res.status(404).send(error));
   },
 };
-export default logIn;
+export const logOut = {
+  logOut(req, res) {
+    User.update({
+      active: false
+    }, {
+      where: {
+        username: req.currentUser.currentUser.username
+      }
+    }).then(() => {
+      res.status(200).json({
+        success: true,
+        message: 'logout successfully'
+      });
+    });
+  }
+};

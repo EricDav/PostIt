@@ -14,16 +14,17 @@ const secret = process.env.secretKey;
  */
 
 const auth = (req, res, next) => {
-  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  let token = req.headers.authorization;
   // decode token
   if (token) {
+    token = token.split(' ')[1];
     // verifies secret and checks exp
     jwt.verify(token, secret, (err, decoded) => {
       if (err) {
         return res.status(403).json({ success: false, message: 'Failed to authenticate token.' });
       }
       // if everything is good, save to request for use in other routes
-      req.decoded = decoded;
+      req.currentUser = decoded;
       next();
     });
   } else {

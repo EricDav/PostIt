@@ -1,5 +1,5 @@
 import user from './user';
-import group from './grup';
+import group from './group';
 import groupMembers from './groupMember';
 
 const modules = {

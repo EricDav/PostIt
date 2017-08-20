@@ -33,29 +33,6 @@ const AddMemberToAGroup = {
       })
       .catch(error => res.status(400).send(error));
   },
-  getNonGroupmMembers(req, res) {
-    const listOfIdsOfMembers = [];
-    const listOfNonUsers = [];
-    return groupmember
-      .findAll({ where: { groupId: req.params.groupId } })
-      .then((Groupmembers) => {
-        Groupmembers.forEach((users) => {
-          listOfIdsOfMembers.push(users.memberId);
-        });
-        User
-          .all()
-          .then((users) => {
-            users.forEach((user) => {
-              if (!listOfIdsOfMembers.includes(user.id)) {
-                listOfNonUsers.push(user);
-              }
-            });
-            res.status(201).send(listOfNonUsers);
-          })
-          .catch(error => res.status(400).send(error));
-      })
-      .catch(error => res.status(404).send(error));
-  }
 };
 
 export default AddMemberToAGroup;
