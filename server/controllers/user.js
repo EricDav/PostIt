@@ -84,9 +84,10 @@ const createUser = {
       phoneNumber: req.body.phoneNumber
     }, {
       where: {
-        id: req.decoded.user.id
+        id: req.currentUser.currentUser.id
       }
     }).then(() => {
+      console.log('+++++++++')
       res.status(201).json({
         success: true,
         message: 'User info has been updated'
@@ -99,7 +100,7 @@ const createUser = {
     const newPassword = req.body.newPassword;
     User.findOne({
       where: {
-        id: req.decoded.user.id
+        id: req.currentUser.currentUser.id
       }
     }).then((user) => {
       if (oldPassword === user.password) {
@@ -125,7 +126,7 @@ const createUser = {
           return res.status(201).json({
             success: true,
             message: 'Password has been reset'
-          })
+          });
         })
       } else {
         return res.status(403).json({
@@ -310,6 +311,38 @@ const createUser = {
       })
       .catch(error => res.status(405).send(error));
   },
+  getUser(req, res) {
+    User.findOne({
+      where: {
+        id: req.currentUser.currentUser.id
+      }
+    })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({
+            success: false,
+            message: 'User does not exist'
+          });
+        } else if (Number(user.id) !== Number(req.currentUser.currentUser.id)) {
+          console.log(user.id, req.currentUser.currentUser.id);
+          return res.status(400).json({
+            success: false,
+            message: 'You are not Authorize for this operation'
+          });
+        }
+        const userInfo = {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          fullname: user.fullname
+        };
+        return res.status(200).json({
+          success: true,
+          user: userInfo
+        });
+      });
+  }
 };
 
 export default createUser;

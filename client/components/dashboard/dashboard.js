@@ -1,17 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import DashboardHeader from './dashboardHeader';
 import DashboardSideBar from './dashboardSideBar';
 import MessageBoard from './messageBoard';
 import CreateGroupModal from './createGroupModal';
+import InitialMessageBoard from './initialMessage';
 import RightSideBarNav from './sideBarRight';
 import { getGroupsRequest } from '../../actions/getGroupsAction';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+ import { updateUserProfile, getUser } from '../../actions/userActions'
 import { setRightNavBarView } from '../../actions/setRightNavBarView';
+import EditUser from './editUser';
 
 class Dashboard extends React.Component {
     componentWillMount() {
-      this.props.getGroupsRequest();
+      this.props.getGroupsRequest(true);
     }
     render() {
         return (
@@ -25,8 +29,10 @@ class Dashboard extends React.Component {
               <div className="col s12">
               </div>
              <DashboardSideBar allGroups={this.props.allGroups} user={this.props.user}/>
-            <MessageBoard messages={this.props.messages} setRightNavBarView={setRightNavBarView}/>
+            {this.props.group.id && !this.props.showUpdatePage && < MessageBoard messages={this.props.messages} setRightNavBarView={setRightNavBarView}/>}
+            {this.props.showUpdatePage && <EditUser getUser={this.props.getUser} updateUserProfile = {this.props.updateUserProfile} error={this.props.error} user={this.props.user}/>}
              { this.props.group.id && <RightSideBarNav members={this.props.members} group={this.props.group}/>}
+             {!this.props.group.id && !this.props.showUpdatePage && <InitialMessageBoard group={this.props.group}/>}
             </div>
             <CreateGroupModal/>
             </div>
@@ -39,7 +45,9 @@ class Dashboard extends React.Component {
 }
 const dashboardPropTypes = {
   getGroupsRequest: PropTypes.func,
-  setRightNavBarView: PropTypes.func
+  setRightNavBarView: PropTypes.func,
+  updateUserProfile:  PropTypes.func,
+  getUser: PropTypes.func
 }
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Dashboard');
 
@@ -50,6 +58,8 @@ function mapStateToProps(state) {
     messages: state.messages,
     members: state.members,
     group: state.group,
+    showUpdatePage: state.showUpdatePage,
+    error: state.error
   };
 }
-export default connect(mapStateToProps, {getGroupsRequest, setRightNavBarView})(Dashboard);
+export default connect(mapStateToProps, {getUser, updateUserProfile, getGroupsRequest, setRightNavBarView})(Dashboard);

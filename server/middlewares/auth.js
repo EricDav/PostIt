@@ -14,7 +14,7 @@ const secret = process.env.secretKey;
  */
 
 const auth = (req, res, next) => {
-  let token = req.headers.authorization;
+  let token = req.body.token || req.headers.authorization;
   // decode token
   if (token) {
     token = token.split(' ')[1];
@@ -23,7 +23,7 @@ const auth = (req, res, next) => {
       if (err) {
         return res.status(403).json({ success: false, message: 'Failed to authenticate token.' });
       }
-      // if everything is good, save to request for use in other routes
+      // if everything is good, save to request for use in other routes/
       req.currentUser = decoded;
       next();
     });

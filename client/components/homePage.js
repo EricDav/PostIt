@@ -5,7 +5,7 @@ import NavigationBar from './NavigationBar';
 import NavBar from './NavBar';
 import { connect } from 'react-redux';
 import userSignupRequest from '../actions/signupActions';
-import { userSigninRequest } from '../actions/authActions';
+import { userSigninRequest } from '../actions/userActions';
 import PropTypes from 'prop-types';
 import  { getGroupsRequest }  from '../actions/getGroupsAction';
 

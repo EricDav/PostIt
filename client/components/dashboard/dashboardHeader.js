@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
-import { logout } from '../../actions/authActions';
+import { logout } from '../../actions/userActions';
 import DashboardSearch from './dashboardSearch';
 
 

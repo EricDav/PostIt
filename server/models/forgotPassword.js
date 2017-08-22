@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const messageViewer = sequelize.define('forgotPassword', {
+  const forgotPassword = sequelize.define('forgotPassword', {
     user: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -16,11 +16,11 @@ module.exports = (sequelize, DataTypes) => {
 
     }
   });
-  messageViewer.associate = (models) => {
-    messageViewer.belongsTo(models.User, {
+  forgotPassword.associate = (models) => {
+    forgotPassword.belongsTo(models.User, {
       foreignKey: 'viewerUsername',
       onDelete: 'CASCADE',
     });
   };
-  return messageViewer;
+  return forgotPassword;
 };

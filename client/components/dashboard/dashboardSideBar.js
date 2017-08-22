@@ -4,21 +4,25 @@ import PropTypes from 'prop-types';
 import Group from './group';
 import { getNewGroupMessages, getInitialNewMessages } from  '../../actions/getGroupsAction';
 import newMessage from '../../helpers/getNewMessage';
+import { showUpdateUserPage } from '../../actions/userActions';
 //import { getGroupMessages } from '../../actions/getGroupMessages';
 
 class sideBar extends Component {
   constructor(props, context) {
     super(props);
     this.getGroups = this.getGroups.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
   componentWillMount() {
       this.props.getNewGroupMessages().then(
         () => {
-          console.log(this.props.newMessages);
         this.props.getInitialNewMessages(this.props.newMessages);
         }
       )
     }
+ onClick() {
+    this.props.showUpdateUserPage(true);
+ }
  getGroups() {
       return this.props.allGroups.map((group) => {
         return (
@@ -38,7 +42,7 @@ class sideBar extends Component {
           <span className="circle indigo darken-1">{this.props.user.fullname[0]}</span>
           <span className="email-title">{this.props.user.fullname}</span>
           <p className="truncate grey-text ultra-small">{this.props.user.email}</p>
-          <p className="grey-text ultra-small"><a href="">Edit profile</a></p>
+          <p className="grey-text ultra-small"><a onClick={this.onClick} >Edit profile</a></p>
         </li>
       <li className="collection-item avatar email-unread group-collection group">
           <span className="group-title">Groups</span>
@@ -53,15 +57,16 @@ class sideBar extends Component {
 
 const dashboardPropTypes = {
   getNewGroupMessages: PropTypes.func,
-  getInitialNewMessages: PropTypes.func
+  getInitialNewMessages: PropTypes.func,
+  showUpdateUserPage: PropTypes.func
 }
 
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'sideBar');
 
 function mapStateToProps(state) {
   return {
-    newMessages: state.newMessages
+    newMessages: state.newMessages,
   }
 }
 
-export default connect(mapStateToProps, {getInitialNewMessages, getNewGroupMessages})(sideBar);
+export default connect(mapStateToProps, {showUpdateUserPage, getInitialNewMessages, getNewGroupMessages})(sideBar);

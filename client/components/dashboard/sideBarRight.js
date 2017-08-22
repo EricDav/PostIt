@@ -23,7 +23,7 @@ class RightSideBar extends React.Component {
         const search = <Search/>
         const groupMember = <GroupMember/>
         return (
-            <div id="email-list" className="col s10 m3 l3 card-panel right">
+            <div id="email-list" className="col s10 m3 l3 card-panel">
                 <ul className="collection">
                     <GroupHeader name={this.props.group.creator}/>
             {this.props.viewNumber === 1 && groupMember}

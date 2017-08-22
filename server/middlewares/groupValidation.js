@@ -119,7 +119,7 @@ const group = {
             success: false,
             message: 'Group not found. Group does not exist or has been deleted'
           });
-        } else if (Group.ownerUserName === req.decoded.user.userName) {
+        } else if (Group.ownerUserName === req.currentUser.currentUser.username) {
           next();
         } else {
           res.status(401).json({

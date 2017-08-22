@@ -63,12 +63,6 @@ class TextInput extends React.Component {
         return (
              <div className="input-field row" >
                  <textarea value={content} onKeyDown={this.onKeyDown} onChange={this.onChange} className="materialize-textarea col s10" id= "text-area"  placeholder="write message..." name="content"></textarea>
-                 <select className="col s2" onChange={this.modifyValue} value={this.state.piority} >
-                    {/*<option value="" disabled selected>Priority</option>*/}
-                    <option onClick={this.onClick} value="Normal" >Normal</option>
-                    <option value="Urgent" >Urgent</option>
-                     <option value="Critical">Critical</option>
-                 </select>
             </div>
         )
     }

@@ -11,17 +11,21 @@ class LogIn extends React.Component {
       username: '',
       password: '',
       isLoading: false,
-      error: {}
+      error: ''
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
-    }
+  }
+  onClick(event) {
+    browserHistory.push('forgotPassword');
+  }
   onSubmit(event) {
     this.setState({error: {}, isLoading: true});
     event.preventDefault();
@@ -30,7 +34,7 @@ class LogIn extends React.Component {
         Materialize.toast('Logged In Successfully', 1500, 'purple',
       () => {
         browserHistory.push('dashboard');
-       window.location.reload();
+        window.location.reload();
         this.props.getGroupsRequest();
       });
       },
@@ -79,7 +83,7 @@ class LogIn extends React.Component {
                   </div>
                   <div className="row">
                     <div className="input-field col s12">
-                      <p className="margin center medium-small sign-up"><a href="page-forgot-password.html">Forgot password ?</a></p>
+                      <p className="margin center medium-small sign-up"><a onClick={this.onClick} href="">Forgot password ?</a></p>
                     </div>
                   </div>
                 </form>

@@ -5,10 +5,12 @@ import App from './components/App';
 import Dashboard from './components/dashboard/dashboard';
 import requireAuth from './utils/requireAuth';
 import requireAuthForHome from './utils/requireAuthForHomePage';
+import ForgotPassword from './components/forgetPassword/forgetPassword';
 
 export default (
     <Route path="/" component={App}>
         <IndexRoute component={requireAuthForHome(HomePage)} />
         <Route path="dashboard" component={requireAuth(Dashboard)}/>
+        <Route path="forgotPassword" component={ForgotPassword}/>
     </Route>
 );

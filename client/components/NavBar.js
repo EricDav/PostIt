@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { browserHistory } from 'react-router';
-import { logout } from '../actions/authActions';
+import { logout } from '../actions/userActions';
 
 
 

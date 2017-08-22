@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-const mailSender = (req, res, message) => {
+const mailSender = (req, res, message, successMessage, secretCode, email) => {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -16,13 +16,17 @@ const mailSender = (req, res, message) => {
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      res.status(403).json({ error: 'Something bad happened' });
-    } else {
-      res.status(200).json({
-        success: true,
-        message: 'email sent successfully'
+      return res.status(500).json({
+        success: false,
+        message: 'An error occured'
       });
     }
+    return res.status(200).json({
+      success: true,
+      message: successMessage,
+      SwZ5: secretCode,
+      email
+    });
   });
 };
 

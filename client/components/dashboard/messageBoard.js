@@ -14,34 +14,35 @@ class MessageBoard extends React.Component {
       let initialSeenLast;
       let isNewMessage = true;
       this.props.initialNewMessages.forEach((initialNewMessage) => {
-        console.log(this.props.currentGroup)
-        console.log(initialNewMessage.groupId , this.props.currentGroup.id);
         if (initialNewMessage.groupId == this.props.currentGroup.id) {
           initialSeenLast = initialNewMessage.newMessage;
-           console.log(initialSeenLast, '+++++++');
         }
       });
        if (initialSeenLast == 0) {
           isNewMessage = false;
         }
-        console.log(this.props.messages.length - initialSeenLast, '-------');
       return this.props.messages.map((message) => {
-        if (this.props.messages[this.props.messages.length - initialSeenLast - 1].message.id == message.message.id && isNewMessage) {
+
+        if (isNewMessage && this.props.messages[this.props.messages.length - initialSeenLast].message.id == message.message.id) {
           return (
+            <div key={message.message.id}>
             <Line key={message.message.id}/>
+            <Messages name={message.message.senderUsername} key={message.message.id +1}
+              content={message.message.content} viewers={message.viewers} date={message.message.createdAt}/>
+              </div>
           )
         } else {
            return (
            <Messages name={message.message.senderUsername} key={message.message.id}
-              content={message.message.content} viewers={message.viewers.toString()} date={message.message.createdAt}/>          
+              content={message.message.content} viewers={message.viewers} date={message.message.createdAt}/>          
         );
-        }
+       }
       });
     }
     render() {
       const messages = this.getMessages();
         return (
-           <div id="email-details" className="col s12 m8 l8 card-panel my">
+           <div id="email-details" className="col s12 m8 l8 card-panel my Message">
                   <hr className="grey-text text-lighten-2"/>
                   <div className="collection-item avatar">
                       <p className="email-subject truncate"><span className="email-tag grey lighten-3">

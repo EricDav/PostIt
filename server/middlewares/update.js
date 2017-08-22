@@ -103,7 +103,11 @@ const userValidation = {
             username: currentUsername
           },
         })
-      .then(() => {
+      .then((username) => {
+        console.log(username);
+        if ((username && req.currentUser.currentUser.username !== currentUsername) && isValidField(error.username)) {
+          error.username = 'username already exist';
+        }
         if (Object.keys(error).length === 5) {
           return res.status(404).json({
             error,
@@ -117,10 +121,13 @@ const userValidation = {
                 phoneNumber: currentPhoneNumber
               },
             })
-          .then(() => {
+          .then((phoneNumber) => {
             if (isValidField(error.phoneNumber) &&
              req.body.phoneNumber.length !== 11) {
               error.phoneNumber = 'Invalid phone number';
+            }
+            if ((phoneNumber && req.currentUser.currentUser.phoneNumber !== currentPhoneNumber) && isValidField(error.phoneNumber)) {
+              error.phoneNumber = 'phone number already exist';
             }
             if (Object.keys(error).length === 5) {
               return res.status(404).json({
@@ -136,15 +143,19 @@ const userValidation = {
                   },
                 })
               .then((email) => {
-                if (!email && Object.keys(error).length === 0) {
+                console.log(req.body.currentUser.currentUser)
+                if (!email && Object.keys(error).length === 0 ) {
                   return next();
+                } else if ((email && req.currentUser.currentUser.email !== currentEmail) && isValidField(error.email)) {
+                  error.email = 'email already exist';
                 }
                 if (Object.keys(error).length > 0) {
-                  return res.status(404).json({
+                  return res.status(400).json({
                     error,
                     success: false
                   });
                 }
+                console.log(error)
                 return next();
               })
               .catch(err => res.status(400).send(err));

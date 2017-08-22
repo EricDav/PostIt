@@ -9,13 +9,14 @@ import groupValidator from '../middlewares/groupValidation';
 import userUpdateValidation from '../middlewares/update';
 import sendEmail from '../helpers/email';
 import notifications from '../controllers/notification';
-import forgotPasswordController from '../controllers/forgetPassword';
+import { sendSecretCode, VerifyCodeAndUpdatePassword } from '../controllers/forgetPassword';
 
 const app = express.Router();
 app.get('/api/allUsers', auth, userController.allUsers);
 app.post('/api/user/signin', logIn.logIn);
 app.post('/api/user/signup', userValidator.basicValidation, userController.create);
-app.post('/api/forgot', forgotPasswordController);
+app.post('/api/sendSecretCode', sendSecretCode);
+app.post('/api/resetPassword', VerifyCodeAndUpdatePassword);
 app.put('/api/user/signout', auth, logOut.logOut);
 app.put('/api/user/update', auth, userUpdateValidation.basicUserUpdateValidation, userController.updateUserInfo);
 app.post('/api/group/:groupId/user', auth, groupValidator.groupValidation, groupValidator.userValidation, groupController.addUser);
@@ -31,6 +32,6 @@ app.get('/api/group/:groupId/message/viewers', auth, userController.getMessagesW
 app.put('/api/resetpassword', auth, userController.resetPassword);
 app.get('/api/group/:groupId/notification', auth, notifications.getNotification);
 app.get('/api/newMessages', auth, userController.getMessages);
+app.get('/api/user', auth, userController.getUser);
 app.put('/api/group/:groupId/updateSeenMessages', auth, userController.updateSeenMessages);
-app.post('/api/forgot', forgotPasswordController);
 export default app;
