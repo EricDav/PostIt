@@ -129,6 +129,48 @@ const group = {
         }
       })
       .catch(error => res.status(404).send(error));
-  }
+  },
+  deleteUserFromGroupValidation(req, res) {
+    Groups.findOne({
+      where: {
+        id: req.params.groupId,
+      }
+    })
+      .then((group2) => {
+        if (!group2) {
+          res.status(404).json({
+            success: false,
+            message: 'User does not exist'
+          });
+        } else {
+          User.findOne({
+            where: {
+              id: req.body.userId
+            }
+          })
+            .then((user) => {
+              if (!user) {
+                res.status(404).json({
+                  success: false,
+                  message: 'User does not exist'
+                });
+              } else if (req.currentUser.currentUser.username === group.creator ||
+                 req.currentUser.currentUser.username === user.username) {
+                res.status(200).json({
+                  success: true,
+                  message: `${user.username} has been deleted from ${group2.name} successfully`
+                });
+              } else {
+                res.status(401).json({
+                  success: true,
+                  message: 'You are not permited to perform this operation'
+                });
+              }
+            })
+            .catch(error => res.status(404).send(error));
+        }
+      })
+      .catch(error => res.status(404).send(error));
+  },
 };
 export default group;

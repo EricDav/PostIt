@@ -2,6 +2,7 @@ import db from '../models';
 
 const Group = db.Group;
 const User = db.User;
+const Members = db.UserGroup;
 // const posts = db.groupPosts;
 // const members = db.groupMembers;
 /**
@@ -42,23 +43,6 @@ const createGroups = {
       })
       .catch(error => res.status(400).send(error));
   },
-  removeUser(req, res) {
-    Group.findOne({
-      where: {
-        id: req.params.groupId
-      }
-    }).then((group) => {
-      group.getUsers().remove({
-        where: {
-          id: req.currentUser.currentUser.id
-        }
-      }).then(() => {
-        res.status(201).send('user remove successfully');
-      })
-        .catch(error => res.status(400).send(error));
-    })
-      .catch(error => res.status(400).send(error));
-  },
   getGroups(req, res) {
     User
       .findOne({ where: {
@@ -90,6 +74,43 @@ const createGroups = {
           .then(groups => res.status(200).send(groups))
           .catch(error => res.status(400).send(error));
       });
+  },
+  deleteGroup(req, res) {
+    Group.destroy({
+      where: {
+        id: req.params.groupId
+      }
+    })
+      .then(() => {
+        Members.destroy({
+          where: {
+            groupId: req.params.groupId
+          }
+        })
+          .then(() => {
+            res.status(200).json({
+              success: true,
+              message: 'group deleted successfully'
+            });
+          })
+          .catch(error => res.status(400).send(error));
+      })
+      .catch(error => res.status(400).send(error));
+  },
+  deleteUser(req, res) {
+    Members.destroy({
+      where: {
+        groupId: req.params.groupId,
+        userId: req.body.userId
+      }
+    })
+      .then(() => {
+        res.status(200).json({
+          success: true,
+          message: 'user deleted from group successfully'
+        });
+      })
+      .catch(error => res.status(400).send(error));
   },
   updateGroupInfo(req, res) {
     Group.findOne({

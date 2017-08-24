@@ -87,8 +87,7 @@ const createUser = {
         id: req.currentUser.currentUser.id
       }
     }).then(() => {
-      console.log('+++++++++')
-      res.status(201).json({
+      return res.status(201).json({
         success: true,
         message: 'User info has been updated'
       });

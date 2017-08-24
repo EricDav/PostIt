@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
  import { updateUserProfile, getUser } from '../../actions/userActions'
 import { setRightNavBarView } from '../../actions/setRightNavBarView';
 import EditUser from './editUser';
+import Drop from './drop';
 
 class Dashboard extends React.Component {
     componentWillMount() {
@@ -30,8 +31,8 @@ class Dashboard extends React.Component {
               </div>
              <DashboardSideBar allGroups={this.props.allGroups} user={this.props.user}/>
             {this.props.group.id && !this.props.showUpdatePage && < MessageBoard messages={this.props.messages} setRightNavBarView={setRightNavBarView}/>}
-            {this.props.showUpdatePage && <EditUser getUser={this.props.getUser} updateUserProfile = {this.props.updateUserProfile} error={this.props.error} user={this.props.user}/>}
-             { this.props.group.id && <RightSideBarNav members={this.props.members} group={this.props.group}/>}
+            {this.props.showUpdatePage && <EditUser getUser={this.props.getUser} updateUserProfile = {this.props.updateUserProfile} user={this.props.user}/>}
+             { this.props.group.id && <RightSideBarNav user={this.props.user} members={this.props.members} group={this.props.group}/>}
              {!this.props.group.id && !this.props.showUpdatePage && <InitialMessageBoard group={this.props.group}/>}
             </div>
             <CreateGroupModal/>

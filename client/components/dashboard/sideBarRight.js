@@ -13,7 +13,7 @@ class RightSideBar extends React.Component {
      getMembers() {
         return this.props.members.map((member) => {
             return (
-                <Member fullname={member.fullname} key={member.id}/>
+                <Member member={member} key={member.id}/>
         );
          });
     }
@@ -25,7 +25,7 @@ class RightSideBar extends React.Component {
         return (
             <div id="email-list" className="col s10 m3 l3 card-panel">
                 <ul className="collection">
-                    <GroupHeader name={this.props.group.creator}/>
+                    <GroupHeader user={this.props.user} group={this.props.group}/>
             {this.props.viewNumber === 1 && groupMember}
             {this.props.viewNumber === 1 && members}
             {this.props.viewNumber === 2 && search}

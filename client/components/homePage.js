@@ -10,9 +10,9 @@ import PropTypes from 'prop-types';
 import  { getGroupsRequest }  from '../actions/getGroupsAction';
 
 class HomePage extends React.Component {
-  // componentWillMount() {
-  //   this.props.
-  // }
+  componentDidMount() {
+  //  window.location.reload();
+  }
     render() {
       const {userSignupRequest, userSigninRequest, getGroupsRequest} = this.props;
         return (

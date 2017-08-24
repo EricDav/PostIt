@@ -26,19 +26,15 @@ class EditUser extends React.Component {
       }
     onSubmit(event) {
         event.preventDefault();
-        console.log(this.props.error)
         this.props.updateUserProfile(this.state).then(
-        (res) => {
-            console.log(res)
-        if (Object.keys(this.props.error).length === 0) {
+        () => {
              Materialize.toast('Your prifile has been updated', 1500, 'purple');
              this.props.getUser();
-
-        } else {
-            this.setState({
-              errors: this.props.error,
-            });
-        }
+    },
+    ( data ) => {
+       this.setState({
+          errors: data.response.data.error,
+      });
     }
   )
 }

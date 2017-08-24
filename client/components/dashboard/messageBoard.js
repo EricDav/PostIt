@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import TextInput from './textInput';
 import GroupButton from './groupButton';
 import Line from './line';
+import Drop from './drop';
+import Piority from './piority';
 
 class MessageBoard extends React.Component {
   constructor(props) {
@@ -47,7 +49,7 @@ class MessageBoard extends React.Component {
                   <div className="collection-item avatar">
                       <p className="email-subject truncate"><span className="email-tag grey lighten-3">
                         <b>#{this.props.currentGroup.name}</b>
-                        </span> <span className="email-tag spa light-blue lighten-4"> 
+                        </span> <span className="email-tag spa light-blue lighten-4">
                        {this.props.currentGroup.id && <GroupButton text={"ADD MEMBERS"}/>}
                        { this.props.currentGroup.id && <GroupButton text={"VIEW MEMBERS"}  setRightNavBarView={this.props.setRightNavBarView}/>}</span>
                   </p>
@@ -67,6 +69,7 @@ class MessageBoard extends React.Component {
                         <ul>
                           <li className="collection-item avatar" id="text-input">
                              {this.props.currentGroup.id && <TextInput/>}
+                             {<Piority/>}
                           </li>
                         </ul>
                       </div>

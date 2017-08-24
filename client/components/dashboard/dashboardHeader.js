@@ -1,49 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
 import { logout } from '../../actions/userActions';
 import DashboardSearch from './dashboardSearch';
+import Drop from './drop';
 
 
 class DashboardHeader extends React.Component {
-    constructor(props) {
-        super(props);
-        this.onClick = this.onClick.bind(this);
-         this.openModal = this.openModal.bind(this);
-    }
-    openModal() {
-    $('#modal1').modal('open');
-  }
-    onClick(event) {
-        this.props.logout().then(
-            () => {
-              browserHistory.push('/');
-              window.location.reload();
-            },
-            () => {}
-        )
-    }
     render() {
         return ( <nav className="purple darken-1" role="navigation">
                  <div className="nav-wrapper container left nav">
                     <a id="logo-container"  className="brand-logo post">PostIt</a>
                     <ul className="right">
-                    <li ><a onClick={this.onClick}>Logout</a></li>
+                   <Drop logout={this.props.logout} user={this.props.user}/>
                     </ul>
                     <ul className="right">
                       <li className="noHover">
                         <span className="number">2</span> <i className="material-icons left">notifications</i>
-                          {this.props.user.fullname}
-                        </li>
-                        <li>
-                            <a 
-                     id="login"
-                            data-target="modal1"
-                    className="orange-text modal-trigger"
-                            >  Create New Group
-                            <i className="material-icons left">create</i>
-                         </a>
                         </li>
                     </ul>
                     <ul id="nav-mobile" className="side-nav">

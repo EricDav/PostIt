@@ -56,10 +56,7 @@ export function updateUserProfile(userData) {
   return dispatch => {
     return axios.put('/api/user/update', userData).then(res => {
       dispatch(setShowUpdateUserPage(false));
-    })
-      .catch(error => {
-        dispatch(errorMessage(error.response.data.error));
-      });
+    });
   };
 }
 
@@ -70,9 +67,6 @@ export function getUser() {
         currentUser: res.data.user
       };
       dispatch(setCurrentUser(user));
-    })
-      .catch(error => {
-        dispatch(errorMessage(error.response.data.error));
-      });
+    });
   };
 }

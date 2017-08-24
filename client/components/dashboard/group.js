@@ -5,6 +5,7 @@ import { getAllUsersRequest } from '../../actions/getAllUsersAction';
 import { setGroup } from '../../actions/setCurrentGroup';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { showUpdateUserPage } from '../../actions/userActions'
 import getMessageViewers from '../../helpers/getMessageViewers';
 import getMessageIds from '../../helpers/getMessageIds';
 
@@ -25,6 +26,8 @@ class Group extends React.Component {
                     () => {
                         this.props.getGroupMessages(groupId.toString());
                         this.props.getNewGroupMessages();
+                        this.props.showUpdateUserPage(false);
+
                     }
                 );
             }
@@ -54,7 +57,8 @@ const dashboardPropTypes = {
   getGroupMembers: PropTypes.func,
   getAllUsersRequest: PropTypes.func,
   updateSeenMessages: PropTypes.func,
-  getNewGroupMessages: PropTypes.func
+  getNewGroupMessages: PropTypes.func,
+  showUpdateUserPage: PropTypes.func
 }
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Group');
 function mapStateToProps(state) {
@@ -65,4 +69,4 @@ function mapStateToProps(state) {
     }
 } 
 
-export default connect(mapStateToProps, {getNewGroupMessages, updateSeenMessages, getGroupMessages, setGroup, getGroupMembers, getAllUsersRequest})(Group);
+export default connect(mapStateToProps, {showUpdateUserPage, getNewGroupMessages, updateSeenMessages, getGroupMessages, setGroup, getGroupMembers, getAllUsersRequest})(Group);
