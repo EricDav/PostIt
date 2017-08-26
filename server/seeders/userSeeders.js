@@ -1,73 +1,89 @@
 export const user = [{
-  userName: 'Pythagoras',
+  username: 'Pythagoras',
   password: 'David19632',
   email: 'david@gmail.com',
-  name: 'Alienyi David'
+  fullname: 'Alienyi David',
+  phoneNumber: '08099487586',
+  active: false
 }, {
-  userName: 'lolade',
+  username: 'lolade',
   password: 'lolade0512',
   email: 'lolade05@gmail.com',
-  name: 'lolade toluwanimi'
+  fullname: 'lolade toluwanimi',
+  phoneNumber: '08099480086',
+  active: false
 }, {
-  userName: 'bolu',
+  username: 'bolu',
   password: 'bolu05123we',
   email: 'bolu05@yahoo.com',
-  name: 'bolu adebayo'
+  fullname: 'bolu adebayo',
+  phoneNumber: '08099487581',
+  active: false
 }, {
-  userName: 'jide',
+  username: 'jide',
   password: 'jide0534eds',
   email: 'jide05@yahoo.com',
-  name: 'jide adebayo'
+  fullname: 'jide adebayo',
+  phoneNumber: '08099487586',
+  active: false
 }, {
-  userName: 'Pythag',
+  username: 'Pythag',
   password: 'David65',
   email: 'david@gmail.com',
-  name: 'Alienyi David'
+  fullname: 'Alienyi David',
+  phoneNumber: '08099481386',
+  active: false
 }, {
-  userName: 'Pythagoras',
+  username: 'Pythagoras',
   password: 'Davidghfrdstr',
   email: 'david@gmail.com',
-  name: 'Alienyi David'
+  fullname: 'Alienyi David',
+  phoneNumber: '08099487580',
+  active: false
 }, {
-  userName: '12345',
+  username: '12345',
   password: 'David19632ght',
   email: 'david@gmail.com',
-  name: 'Alienyi Daniel'
+  fullname: 'Alienyi Daniel',
+  phoneNumber: '09099487586',
+  active: false
 }, {
-  userName: 'Pythagoras',
+  username: 'Pythagoras',
   password: '67854321319632',
   email: 'david@gmail.com',
-  name: 'Alienyi David'
+  fullname: 'Alienyi David',
+  phoneNumber: '07099487586',
+  active: false
 }, {
   password: 'David19632',
   email: 'david@gmail.com',
-  name: 'Alienyi David'
+  fullname: 'Alienyi David'
 }, {
-  userName: 'Pythagoras',
+  username: 'Pythagoras',
   password: 'David19632',
   email: 'david@gmail.com'
 }];
 
 export const loginUser = [{
-  userName: 'Pythagoras',
+  username: 'Pythagoras',
   password: 'David19632'
 }, {
-  userName: 'jide',
+  username: 'jide',
   password: 'jide0534eds'
 }];
 
 export const incorrectPassword = {
-  userName: 'lolade',
+  username: 'lolade',
   password: 'lolade'
 };
 
 export const invalidUser = {
-  userName: 'test',
+  username: 'test',
   password: 1234
 };
 
 export const invalidEmail = {
-  userName: 'tunji',
+  username: 'tunji',
   password: 'tunji05',
   email: 'tunji05@y',
   name: 'tunji olaleye'

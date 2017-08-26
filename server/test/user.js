@@ -8,16 +8,15 @@ import { user, loginUser, invalidUser, incorrectPassword, invalidEmail } from '.
 
 const server = supertest.agent(app);
 
-
-before((done) => {
-  models.sequelize.sync({ force: true }).then(() => {
-    done(null);
-  }).catch((errors) => {
-    done(errors);
-  });
-});
-
 describe('User Registration', () => {
+  before((done) => {
+    models.sequelize.sync({ force: true }).then(() => {
+      done(null);
+    }).catch((errors) => {
+      done(errors);
+    });
+  });
+
   it('allows a new user to register', (done) => {
     server
       .post('/api/user/signup')

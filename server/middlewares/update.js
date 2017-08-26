@@ -15,15 +15,12 @@ class UpdateUser {
     this.error = {}
     this.user = user;
   }
-  filterUserData(data){
+  filterUserData(data) {
     const { fullname, email, username, phoneNumber } = this.user;
     const shouldUpdate = [];
 
     if (fullname !== null && fullname !== undefined && fullname !== data.fullname) {
       shouldUpdate.push([fullname, 1]);
-    }
-    if (username !== null && username !== undefined && username !== data.username) {
-      shouldUpdate.push([username, 2]);
     }
     if (email !== null && email !== undefined && email !== data.email) {
       shouldUpdate.push([email, 3]);
@@ -95,6 +92,8 @@ function validateUpdateUser(req, res, next) {
       if (property[1] === 1) {
         update.validateFullname(property[0]);
       } else if (property[1] === 2) {
+        req.body.isUsername = true;
+        req.body.userName = user.username;
         uniqueUpdates.pop(2);
         update.validateUsername(property[0]);
       } else if (property[1] === 3) {
@@ -117,11 +116,7 @@ function validateUpdateUser(req, res, next) {
       .then((users) => {
         users.forEach((user) => {
           uniqueUpdates.forEach((unique) => {
-            if (unique === 2) {
-              if (user.username === req.body.username && user.id !== req.currentUser.currentUser.id) {
-                error.username = 'Username already exist';
-              }
-            } else if (unique === 3) {
+            if (unique === 3) {
               if (user.email === req.body.email && user.id !== req.currentUser.currentUser.id) {
                 error.email = 'Email already exist';
               }

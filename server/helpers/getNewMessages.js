@@ -3,12 +3,12 @@ const newMessages = (groupId, messages, seenLasts) => {
   let numGroupSeenLast = 0;
   const numNewMessage = {};
   messages.forEach((message) => {
-    if (message.groupId == groupId) {
+    if (message.groupId === groupId) {
       numGroupMessages +=1;
     }
   });
   seenLasts.forEach((seenLast) => {
-    if (seenLast.groupId == groupId) {
+    if (seenLast.groupId === groupId) {
       numGroupSeenLast = seenLast.seenLast;
     }
   });

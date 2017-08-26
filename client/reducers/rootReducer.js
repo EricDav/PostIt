@@ -13,6 +13,8 @@ import willShow from './willShow';
 import resetPasswordUser from './setResetPasswordUser';
 import showUpdatePage from './showUpdatePage';
 import error from './error';
+import setPiority from './setPiority';
+import showResetPassword from './showResetPassword';
 
 export default combineReducers({
   auth,
@@ -28,5 +30,7 @@ export default combineReducers({
   willShow,
   resetPasswordUser,
   showUpdatePage,
-  error
+  error,
+  setPiority,
+  showResetPassword
 });

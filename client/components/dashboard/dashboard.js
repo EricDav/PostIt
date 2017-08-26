@@ -8,11 +8,15 @@ import CreateGroupModal from './createGroupModal';
 import InitialMessageBoard from './initialMessage';
 import RightSideBarNav from './sideBarRight';
 import { getGroupsRequest } from '../../actions/getGroupsAction';
+import { getGroupMessages, getGroupMembers, updateSeenMessages } from '../../actions/getGroupMessages';
+
 import PropTypes from 'prop-types';
- import { updateUserProfile, getUser } from '../../actions/userActions'
+import { updateUserProfile, getUser, showResetPasswordUserPage, resetPassword } from '../../actions/userActions';
 import { setRightNavBarView } from '../../actions/setRightNavBarView';
 import EditUser from './editUser';
 import Drop from './drop';
+import ResetPassword from './resetPassword';
+import { showUpdateUserPage } from '../../actions/userActions';
 
 class Dashboard extends React.Component {
     componentWillMount() {
@@ -31,7 +35,11 @@ class Dashboard extends React.Component {
               </div>
              <DashboardSideBar allGroups={this.props.allGroups} user={this.props.user}/>
             {this.props.group.id && !this.props.showUpdatePage && < MessageBoard messages={this.props.messages} setRightNavBarView={setRightNavBarView}/>}
-            {this.props.showUpdatePage && <EditUser getUser={this.props.getUser} updateUserProfile = {this.props.updateUserProfile} user={this.props.user}/>}
+            {this.props.showUpdatePage && !this.props.showResetPassword && <EditUser getUser={this.props.getUser} updateUserProfile =
+            {this.props.updateUserProfile} user={this.props.user} showResetPassword={this.props.showResetPasswordUserPage}
+            showUpdateUserPage={this.props.showUpdateUserPage}/>}
+            {this.props.showResetPassword && <ResetPassword resetPassword={this.props.resetPassword}
+            showResetPassword={this.props.showResetPasswordUserPage}/>}
              { this.props.group.id && <RightSideBarNav user={this.props.user} members={this.props.members} group={this.props.group}/>}
              {!this.props.group.id && !this.props.showUpdatePage && <InitialMessageBoard group={this.props.group}/>}
             </div>
@@ -48,7 +56,10 @@ const dashboardPropTypes = {
   getGroupsRequest: PropTypes.func,
   setRightNavBarView: PropTypes.func,
   updateUserProfile:  PropTypes.func,
-  getUser: PropTypes.func
+  getUser: PropTypes.func,
+  showResetPasswordUserPage: PropTypes.func,
+  resetPassword:  PropTypes.func,
+  showUpdateUserPage:  PropTypes.func,
 }
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Dashboard');
 
@@ -60,7 +71,8 @@ function mapStateToProps(state) {
     members: state.members,
     group: state.group,
     showUpdatePage: state.showUpdatePage,
+    showResetPassword: state.showResetPassword,
     error: state.error
   };
 }
-export default connect(mapStateToProps, {getUser, updateUserProfile, getGroupsRequest, setRightNavBarView})(Dashboard);
+export default connect(mapStateToProps, {showUpdateUserPage, resetPassword, showResetPasswordUserPage, getUser, updateUserProfile, getGroupsRequest, setRightNavBarView})(Dashboard);

@@ -10,7 +10,7 @@ export function setAllUser(allUsers) {
 
 export function getAllUsersRequest() {
   return dispatch => {
-    return axios.get('/api/allUsers').then(res => {
+    return axios.get('/api/v1/allUsers').then(res => {
       const allUsers = res.data;
       dispatch(setAllUser(allUsers));
     });

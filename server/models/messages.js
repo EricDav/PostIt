@@ -7,15 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     priority: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'normal',
-      validate: {
-        isIn: {
-          args: [
-            ['normal', 'urgent', 'critical']
-          ],
-          msg: 'normal, urgent or critical Required'
-        }
-      }
     },
     groupId: {
       type: DataTypes.INTEGER,

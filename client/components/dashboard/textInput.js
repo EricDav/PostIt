@@ -11,19 +11,10 @@ class TextInput extends React.Component {
         super(props);
         this.state = {
             content: '',
-            piority: '',
-            groupName: this.props.currentGroup.name,
-            type: 1
+            priority: ''
         }
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
-        this.modifyValue = this.modifyValue.bind(this);
-    }
-
-    modifyValue(event) {
-        this.setState({
-            piority: event.target.value
-        })
     }
     onChange(event) {
     this.setState({
@@ -33,14 +24,20 @@ class TextInput extends React.Component {
 }
 
     onKeyDown(event) {
+        console.log(this.props.piority)
         if (event.which == 13) {
              event.preventDefault();
-             this.props.createMessage(this.state, this.props.currentGroup.id.toString()).then(
+             if (this.props.piority === '') {
+               Materialize.toast('You need to select a mesage type!', 2000, 'purple');
+             } else {
+               const data = {
+                    content: this.state.content,
+                    priority: this.props.piority
+                }
+             this.props.createMessage(data, this.props.currentGroup.id.toString()).then(
                  () => {
                      this.setState({
                          content: '',
-                         groupName: this.props.currentGroup.name,
-                         type: 1
                      });
                     this.props.getGroupMessages(this.props.currentGroup.id.toString()).then(
                         () => {
@@ -55,6 +52,7 @@ class TextInput extends React.Component {
                  (response) => {
                  }
              )
+             }
         }
     }
 
@@ -78,6 +76,7 @@ PropTypes.checkPropTypes(textInputPropTypes, 'prop', 'TextInput');
 
 function mapStateToProps(state) {
     return {
+        piority: state.setPiority,
         currentGroup: state.group,
         messages: state.messages,
         currentGroupId: state.group.id,

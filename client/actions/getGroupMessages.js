@@ -32,7 +32,7 @@ export function setSeenLast(groupMessageSeenLast) {
 
 export function getGroupMembers(groupId) {
   return dispatch => {
-    return axios.get(`/api/group/${groupId}/members`).then(res => {
+    return axios.get(`/api/v1/group/${groupId}/members`).then(res => {
       const members = res.data;
       dispatch(setCurrentGroupMembers(members));
     });
@@ -41,7 +41,7 @@ export function getGroupMembers(groupId) {
 
 export function getGroupMessages(groupId) {
   return dispatch => {
-    return axios.get(`/api/group/${groupId}/message/viewers`).then(res => {
+    return axios.get(`/api/v1/group/${groupId}/message/viewers`).then(res => {
       const messages = res.data;
       dispatch(setCurrentGroupMessages(messages.data));
       dispatch(setSeenLast(messages.seenLast));
@@ -51,7 +51,7 @@ export function getGroupMessages(groupId) {
 
 export function updateSeenMessages(groupId, data) {
   return dispatch => {
-    return axios.put(`/api/group/${groupId}/updateSeenMessages`, data).then(res => {
+    return axios.put(`/api/v1/group/${groupId}/updateSeenMessages`, data).then(res => {
       dispatch(setSeenLast(data.seenLast));
     });
   };

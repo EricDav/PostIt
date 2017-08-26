@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default function createGroupRequest(userData) {
   return dispatch => {
-    return axios.post('/api/group', userData).then(res => {
+    return axios.post('/api/v1/group', userData).then(res => {
     });
   };
 }

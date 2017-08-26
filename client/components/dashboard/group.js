@@ -5,7 +5,7 @@ import { getAllUsersRequest } from '../../actions/getAllUsersAction';
 import { setGroup } from '../../actions/setCurrentGroup';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { showUpdateUserPage } from '../../actions/userActions'
+import { showUpdateUserPage } from '../../actions/userActions';
 import getMessageViewers from '../../helpers/getMessageViewers';
 import getMessageIds from '../../helpers/getMessageIds';
 
@@ -24,7 +24,7 @@ class Group extends React.Component {
                 seenLast: seenMessageIds.length}
                 this.props.updateSeenMessages(groupId.toString(), updateSeenMessagesData).then(
                     () => {
-                        this.props.getGroupMessages(groupId.toString());
+                        //this.props.getGroupMessages(groupId.toString());
                         this.props.getNewGroupMessages();
                         this.props.showUpdateUserPage(false);
 

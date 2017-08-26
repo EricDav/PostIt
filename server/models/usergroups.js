@@ -10,12 +10,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: false
     },
-  }, {
-    classMethods: {
-      associate(models) {
-        // associations can be defined here
-      }
-    }
   });
   return UserGroup;
 };

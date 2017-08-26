@@ -15,13 +15,10 @@ const Messages = {
         groupId: req.params.groupId,
         senderId: req.currentUser.currentUser.id,
         senderUsername: req.currentUser.currentUser.username,
-        piority: req.body.piority
+        priority: req.body.priority
       })
       .then(() => {
-        res.status(201).json({
-          success: true,
-          message: 'message sent successfully'
-        });
+        res.status(201).send('i am here');
       })
       .catch(error => res.status(400).send(error));
   },

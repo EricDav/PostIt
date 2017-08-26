@@ -24,7 +24,7 @@ export function setInitialNewMessages(initialNewMessages) {
 
 export function getGroupsRequest() {
   return dispatch => {
-    return axios.get('/api/groups').then(res => {
+    return axios.get('/api/v1/groups').then(res => {
       const groups = res.data.groups;
       dispatch(setCurrentUserGroups(groups));
     });
@@ -33,7 +33,7 @@ export function getGroupsRequest() {
 
 export function getNewGroupMessages() {
   return dispatch => {
-    return axios.get('/api/newMessages').then(res => {
+    return axios.get('/api/v1/newMessages').then(res => {
       const newGroupMessages = res.data;
       dispatch(setNewGroupMessages(newGroupMessages));
     });

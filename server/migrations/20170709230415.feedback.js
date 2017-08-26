@@ -1,26 +1,27 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    queryInterface.createTable('forgotPasswords', {
+    queryInterface.createTable('Feedbacks', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user: {
-        type: Sequelize.STRING,
+      Bug: {
+        type: Sequelize.TEXT,
         allowNull: false,
-        unique: true
       },
-      generatedNumber: {
-        type: Sequelize.STRING,
+      recomendation: {
+        type: Sequelize.TEXT,
         allowNull: false,
-        unique: true
       },
-      verified: {
-        type: Sequelize.BOOLEAN,
-        default: false
-
+      generalRating: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      rejections: {
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -32,5 +33,5 @@ module.exports = {
       }
     });
   },
-  down: queryInterface => queryInterface.dropTable('forgotPasswords')
+  down: queryInterface => queryInterface.dropTable('Feedbacks')
 };

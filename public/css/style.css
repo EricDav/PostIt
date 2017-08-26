@@ -29,6 +29,7 @@
   border-radius: 5px;
   background-color: #d64242;
   color: white;
+  position: center;
   text-align: center;
   line-height: 35px;
 }

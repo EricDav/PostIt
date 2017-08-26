@@ -17,12 +17,12 @@ export function setResetPasswordUser(resetPasswordUser) {
 
 export function VerifyCodeAndUpdatePassword(userData) {
   return dispatch => {
-    return axios.post('/api/resetPassword', userData);
+    return axios.post('/api/v1/resetPassword', userData);
   };
 }
 export function sendSecretCode(userData) {
   return dispatch => {
-    return axios.post('/api/sendSecretCode', userData).then(res => {
+    return axios.post('/api/v1/sendSecretCode', userData).then(res => {
       dispatch(willShowResetPasswordPage(true));
       dispatch(setResetPasswordUser(res.data));
     });

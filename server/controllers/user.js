@@ -108,11 +108,20 @@ const createUser = {
             success: false,
             message: 'This field is required'
           });
-        } else if (req.body.newPassword.length < 9 || !(/[0-9]/
-          .test(req.body.newPassword) && /[a-z A-Z]/.test(req.body.newPassword))) {
+        } else if (req.body.newPassword.length < 9) {
           return res.status(403).json({
             success: false,
-            message: 'Weak password. Password should contain at least 8 characters including at least one number and alphabet'
+            message: 'Password should contain at least 8 characters'
+          });
+        } else if (!/[0-9]/.test(req.body.newPassword)) {
+          return res.status(403).json({
+            success: false,
+            message: 'Password should contain at least one number'
+          });
+        } else if(!/[a-z A-Z]/.test(req.body.newPassword)) {
+          return res.status(403).json({
+            success: false,
+            message: 'Password should contain at least one number'
           });
         }
         User.update({
@@ -130,7 +139,7 @@ const createUser = {
       } else {
         return res.status(403).json({
           success: false,
-          message: 'password does not match'
+          message: 'Invalid old password'
         });
       }
     })
@@ -214,7 +223,7 @@ const createUser = {
         if (!viewer) {
           viewMessages.create({
             viewerUsername: req.currentUser.currentUser.username,
-            seenMessageIds: req.body.seenMessageIds
+            seenMessageIds: req.body.seenMessageIds,
           })
             .then((view) => {
               seenLast.update({
@@ -268,7 +277,7 @@ const createUser = {
   getMessages(req, res) {
     User.findOne({
       where: {
-        username: req.currentUser.currentUser.username
+        id: req.currentUser.currentUser.id
       }
     })
       .then((user) => {

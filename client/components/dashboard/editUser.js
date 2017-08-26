@@ -6,38 +6,61 @@ class EditUser extends React.Component {
         this.state = {
             user: this.props.user,
             showLabelFullname: false,
-            showLabelUsername: false,
             showLabelEmail: false,
             showLabelPhoneNumber: false,
             fullname: this.props.user.fullname,
             username: this.props.user.username,
             email: this.props.user.email,
             phoneNumber: this.props.user.phoneNumber,
+            displayButton: false,
             errors: {}
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit= this.onSubmit.bind(this);
         this.onFocus = this.onFocus.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
     onChange(event) {
         this.setState({
           [event.target.name]: event.target.value
         });
+        setTimeout(() => {
+          const {username, fullname, email, phoneNumber} = this.state;
+        console.log(username, fullname)
+        if (this.state.user.fullname !== fullname || this.state.user.username !== this.state.username ||
+        this.state.user.email !== email || this.state.user.phoneNumber !== phoneNumber) {
+          this.setState({
+            displayButton: true
+          });
+        } else {
+          this.setState({
+            displayButton: false
+          });
+        }
+        }, 500)
       }
     onSubmit(event) {
-        event.preventDefault();
-        this.props.updateUserProfile(this.state).then(
+       event.preventDefault();
+        if (!this.state.displayButton) {
+          this.props.showUpdateUserPage(false);
+        } else {
+          this.props.updateUserProfile(this.state).then(
         () => {
              Materialize.toast('Your prifile has been updated', 1500, 'purple');
              this.props.getUser();
-    },
-    ( data ) => {
-       this.setState({
-          errors: data.response.data.error,
-      });
+             this.props.getGroupMessages(groupId.toString());
+        },
+          ( data ) => {
+            this.setState({
+            errors: data.response.data.error,
+        });
+      }
+    )
     }
-  )
 }
+onClick(event) {
+      this.props.showResetPassword(true);
+  }
     onFocus(event) {
         this.setState({
             [event.target.className]: true,
@@ -50,7 +73,7 @@ class EditUser extends React.Component {
                 <form onSubmit={this.onSubmit} className="login-form">
                   <div className="row">
                     <div className="input-field col s12 center">
-                      <p className="center"><h5><b>Edit Your Profile</b></h5></p>
+                      <h5 className="center"><b>Edit Your Profile</b></h5>
                     </div>
                   </div>
                   <div className="row margin">
@@ -64,10 +87,9 @@ class EditUser extends React.Component {
                   <div className="row margin">
                     <div className="input-field col s12">
                       <i className="mdi-social-person-outline prefix" />
-                    <input className="showLabelUsername" onFocus={this.onFocus} onChange={this.onChange}  name= "username" value={username} id="username" type="text" required="true"/>
+                    <input className="showLabelUsername" onFocus={this.onFocus} onChange={this.onChange}  name= "username" value={username} id="username" type="text" required="true" disabled/>
                     {showLabelUsername && <label htmlFor="username" className="center-align">Username</label>}
                     </div>
-                    {errors.username && <div className="mes blue-text"><i>{errors.username}</i></div>}
                   </div>
                   <div className="row margin">
                     <div className="input-field col s12">
@@ -85,14 +107,20 @@ class EditUser extends React.Component {
                     </div>
                     {errors.email && <div className="mes blue-text"><i>{errors.email}</i></div>}
                   </div>
-                  <div className="row">
+                  { this.state.displayButton && <div className="row">
                     <a className="col s12">
                       <button className="btn purple darken-1 waves-effect waves-light col s12">
                       Update Now
                     </button></a>
-                  </div>
+                  </div>}
+                 { !this.state.displayButton && <div className="row">
+                    <a className="col s12">
+                      <button className="btn red darken-1 waves-effect waves-light col s12">
+                      CANCEL
+                    </button></a>
+                  </div>}
                     <div className="col s12 resetUser">
-                      <p className="margin center medium-small sign-up"><a>Reset Password</a></p>
+                      <p className="margin center medium-small sign-up"><a onClick={this.onClick} href="#!">Reset Password</a></p>
                     </div>
                 </form>
          </div>);

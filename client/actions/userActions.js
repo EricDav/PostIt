@@ -1,7 +1,8 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
-import { SET_CURRENT_USER, SET_SHOW_UPDATE_USER_PAGE, SET_ERROR_MESSAGE } from './types';
+import { SET_CURRENT_USER, SET_SHOW_UPDATE_USER_PAGE, SET_ERROR_MESSAGE,
+  SET_RESET_PASSWORD_USER_PAGE } from './types';
 
 
 export function setCurrentUser(user) {
@@ -16,6 +17,13 @@ export function setShowUpdateUserPage(show) {
     show
   };
 }
+
+export function setResetPasswordUserPage(show) {
+  return {
+    type: SET_RESET_PASSWORD_USER_PAGE,
+    show
+  };
+}
 export function errorMessage(error) {
   return {
     type: SET_ERROR_MESSAGE,
@@ -25,7 +33,7 @@ export function errorMessage(error) {
 
 export function logout() {
   return dispatch => {
-    return axios.put('/api/user/signout').then(res => {
+    return axios.put('/api/v1/user/signout').then(res => {
       localStorage.removeItem('jwtToken');
       setAuthorizationToken(false);
       dispatch(setCurrentUser({ currentUser: { username: '',
@@ -37,7 +45,7 @@ export function logout() {
 
 export function userSigninRequest(userData) {
   return dispatch => {
-    return axios.post('/api/user/signin', userData).then(res => {
+    return axios.post('/api/v1/user/signin', userData).then(res => {
       const token = res.data.Token;
       localStorage.setItem('jwtToken', token);
       setAuthorizationToken(token);
@@ -52,9 +60,23 @@ export function showUpdateUserPage(shouldShow) {
   }
 }
 
+export function showResetPasswordUserPage(shouldShow) {
+  return dispatch => {
+    dispatch(setResetPasswordUserPage(shouldShow));
+  }
+}
+
+export function resetPassword(userData) {
+  return dispatch => {
+    return axios.put('/api/v1/resetPassword', userData).then(res => {
+      dispatch(setResetPasswordUserPage(false));
+    });
+  };
+}
+
 export function updateUserProfile(userData) {
   return dispatch => {
-    return axios.put('/api/user/update', userData).then(res => {
+    return axios.put('/api/v1/user/update', userData).then(res => {
       dispatch(setShowUpdateUserPage(false));
     });
   };
@@ -62,7 +84,7 @@ export function updateUserProfile(userData) {
 
 export function getUser() {
   return dispatch => {
-    return axios.get('/api/user').then(res => {
+    return axios.get('/api/v1/user').then(res => {
       const user = {
         currentUser: res.data.user
       };

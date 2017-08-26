@@ -52,10 +52,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'senderId',
       as: 'messages',
     });
-    User.hasMany(models.messageViewer, {
-      foreignKey: 'viewerUsername',
-      as: 'viewers',
-    });
   };
   return User;
 };
