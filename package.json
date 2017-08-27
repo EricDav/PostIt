@@ -6,7 +6,7 @@
   "scripts": {
     "migrate": "sequelize db:migrate",
     "start": "nodemon --watch server --exec babel-node -- app.js",
-    "test": "SET NODE_ENV=test&& mocha --timeout 40000 --compilers js:babel-core/register server/test ",
+    "test": "NODE_ENV=test&& mocha --timeout 40000 --compilers js:babel-core/register server/test ",
     "tests": "NODE_ENV=test mocha --timeout 40000 --compilers js:babel-core/register server/test",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "coverage": "./node_modules/.bin/nyc --reporter=html --reporter=text mocha --reporter spec --timeout 40000 --compilers js:babel-core/register server/test"
@@ -16,7 +16,7 @@
     "url": "git+https://github.com/EricDav/PostIt.git"
   },
   "engines": {
-    "node": "6.11.x",
+    "node": "8.1.x",
     "npm": "3.10.x"
   },
   "keywords": [],

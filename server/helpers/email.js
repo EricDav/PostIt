@@ -34,11 +34,12 @@ const sendEmail = (req, res, next) => {
               service: 'Gmail',
               auth: {
                 user: 'alienyidavid4christ@gmail.com',
-                pass: process.env.GMAIL_PASSWORD
+                pass: "Davidwedomotola"
               }
             });
+            //console.log(recieverEmails);
             const mailOptions = {
-              from: `${sender} from ${groupName} <PostIt.io>`, // sender address
+              from: `${sender} from ${groupName} <alienyidavid4christ@gmail.com>`, // sender address
               to: recieverEmails, // list of receivers
               subject: `PostIt: ${groupName}`, // Subject line
               html: `
@@ -65,11 +66,15 @@ const sendEmail = (req, res, next) => {
             };
             transporter.sendMail(mailOptions, (error, info) => {
               if (error) {
+                console.log(error);
                 res.status(403).json({ error: 'Could not send email' });
+                next();
               } else {
                 receiverPhoneNumbers.forEach((phoneNumber) => {
-                  smsSender(req, res, message, phoneNumber);
+                  
+                  smsSender(message, phoneNumber);
                 });
+                next();
               }
             });
           })

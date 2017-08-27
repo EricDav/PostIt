@@ -47,8 +47,9 @@ const createUser = {
           Token: token
         });
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(500).send(error));
   },
+
   /**
    * @param  {object} req
    * @param  {object} res
@@ -59,28 +60,19 @@ const createUser = {
     return User
       .all()
       .then(user => res.status(201).send(user))
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(500).send(error));
   },
-  userGroups(req, res) {
-    const list = [];
-    groupMembers
-      .findAll({ where: { memberId: req.params.userId } })
-      .then((member) => {
-        member.forEach((obj) => {
-          list.push(obj.groupId);
-        });
-        groups
-          .findAll({ where: { id: list } })
-          .then(Groups => res.status(200).send(Groups))
-          .catch(error => res.status(404).send(error));
-      })
-      .catch(error => res.status(404).send(error));
-  },
+
+  /**
+   * @param  {object} req
+   * @param  {object} res
+   * @description update user uptable details like fullname, email and phone number
+   */
+
   updateUserInfo(req, res) {
     User.update({
       email: req.body.email,
       fullname: req.body.fullname,
-      username: req.body.username,
       phoneNumber: req.body.phoneNumber
     }, {
       where: {
@@ -94,6 +86,13 @@ const createUser = {
     })
       .catch(error => res.status(401).send(error));
   },
+
+  /**
+   * @param  {object} req
+   * @param  {object} res
+   * @description reset users password given the user provide the initial password
+   */
+
   resetPassword(req, res) {
     const oldPassword = req.body.oldPassword;
     const newPassword = req.body.newPassword;
@@ -104,22 +103,22 @@ const createUser = {
     }).then((user) => {
       if (oldPassword === user.password) {
         if (isValidField(newPassword)) {
-          return res.status(403).json({
+          return res.status(400).json({
             success: false,
             message: 'This field is required'
           });
         } else if (req.body.newPassword.length < 9) {
-          return res.status(403).json({
+          return res.status(400).json({
             success: false,
             message: 'Password should contain at least 8 characters'
           });
         } else if (!/[0-9]/.test(req.body.newPassword)) {
-          return res.status(403).json({
+          return res.status(400).json({
             success: false,
             message: 'Password should contain at least one number'
           });
         } else if(!/[a-z A-Z]/.test(req.body.newPassword)) {
-          return res.status(403).json({
+          return res.status(400).json({
             success: false,
             message: 'Password should contain at least one number'
           });
@@ -137,27 +136,23 @@ const createUser = {
           });
         })
       } else {
-        return res.status(403).json({
+        return res.status(400).json({
           success: false,
           message: 'Invalid old password'
         });
       }
     })
-      .catch(error => res.status(404).send(error));
+      .catch(error => res.status(500).send(error));
   },
-  userMessages(req, res) {
-    User.findOne({
-      where: {
-        id: req.currentUser.currentUser.id
-      }
-    })
-      .then((user) => {
-        user.getMessages()
-          .then(messages => res.status(200).send(messages))
-          .catch(error => res.status(404).send(error));
-      })
-      .catch(error => res.status(404).send(error));
-  },
+
+/**
+   * @param  {object} req
+   * @param  {object} res
+   * @description fetch all the messages and those that has seen 
+   * @description  them from a specific group the current users belongs to.
+   * @return {array} all messages and viewers in an array
+   */
+
   getMessagesWithSeenUsers(req, res) {
     let allViewMessages = [];
     let viewerObject = { viewers: [] };
@@ -176,7 +171,7 @@ const createUser = {
             groupId: req.params.groupId,
             seenLast: 0
           })
-            .catch(error => res.status(404).send(error));
+            .catch(error => res.status(500).send(error));
         }
         viewMessages.all()
           .then((viewers) => {
@@ -213,6 +208,12 @@ const createUser = {
       .catch(error => res.status(402).send(error));
   },
 
+  /**
+   * @param  {object} req
+   * @param  {object} res
+   * @description update the messages that have been seen by a user
+   */
+
   updateSeenMessages(req, res) {
     viewMessages.findOne({
       where: {
@@ -240,11 +241,10 @@ const createUser = {
                     message: `created view messages for ${view.viewerUsername} successfully`
                   });
                 })
-                .catch(error => res.status(404).send(error));
+                .catch(error => res.status(500).send(error));
             })
-            .catch(error => res.status(401).send(error));
+            .catch(error => res.status(500).send(error));
         } else {
-          //const seenMessages = viewer.seenMessageIds.concat(req.body.seen.split(''));
           viewMessages.update({
             seenMessageIds: req.body.seenMessageIds
           }, {
