@@ -70,8 +70,9 @@ const sendEmail = (req, res, next) => {
                 res.status(403).json({ error: 'Could not send email' });
                 next();
               } else {
+                console.log(receiverPhoneNumbers);
                 receiverPhoneNumbers.forEach((phoneNumber) => {
-                  
+                  console.log(phoneNumber);
                   smsSender(message, phoneNumber);
                 });
                 next();

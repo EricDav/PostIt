@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from '../NavBar';
 import Details from './details';
-import Confirm from './Confirm';
+import Confirm from './confirm';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendSecretCode, VerifyCodeAndUpdatePassword } from '../../actions/resetPassword';

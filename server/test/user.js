@@ -10,10 +10,10 @@ const server = supertest.agent(app);
 
 describe('User Registration', () => {
   before((done) => {
-    models.sequelize.sync({ force: false }).then(() => {
-      done(null);
+    models.sequelize.sync({ force: true }).then(() => {
+      done();
     }).catch((errors) => {
-      done(errors);
+      done();
     });
   });
 
