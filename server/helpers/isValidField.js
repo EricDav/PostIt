@@ -1,3 +1,8 @@
+/**
+ * @param  {type} fieldData 
+ * @description checks if a field is null, undefined or empty
+ * @return {boolean} true or false
+ */
 const inValidField = (fieldData) => {
   if (typeof (fieldData) !== 'string' || fieldData.length === 0) {
     return true;

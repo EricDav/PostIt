@@ -42,7 +42,7 @@ class sideBar extends Component {
           <span className="circle indigo darken-1">{this.props.user.fullname[0]}</span>
           <span className="email-title">{this.props.user.fullname}</span>
           <p className="truncate grey-text ultra-small">{this.props.user.email}</p>
-          <p className="grey-text ultra-small"><a onClick={this.onClick} >Edit profile</a></p>
+          <p className="grey-text ultra-small"><a onClick={this.onClick} href="#!">Edit profile</a></p>
         </li>
       <li className="collection-item avatar email-unread group-collection group">
           <span className="group-title">Groups</span>

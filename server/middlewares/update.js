@@ -5,7 +5,7 @@ import isValidField from '../helpers/isValidField';
 
 const User = db.User;
 /**
-   * @param  {object} req
+   * @param  {object} 
    * @param  {object} res
    * @param  {} next
    * @description validate inputs field for username, name, email and password
@@ -15,8 +15,14 @@ class UpdateUser {
     this.error = {}
     this.user = user;
   }
+
+  /**
+ * @param  {object} data user object
+ * @description checks for field that was updated
+ * @return {array} returns an array of updated field
+ */
   filterUserData(data) {
-    const { fullname, email, username, phoneNumber } = this.user;
+    const { fullname, email, phoneNumber } = this.user;
     const shouldUpdate = [];
 
     if (fullname !== null && fullname !== undefined && fullname !== data.fullname) {
@@ -31,6 +37,11 @@ class UpdateUser {
     return shouldUpdate;
   }
 
+  /**
+ * @param  {string} fullname 
+ * @description validate username field
+ * @return {string} return error message
+ */
   validateFullname(fullname) {
     if (isValidField(fullname)) {
       this.error.fullname = 'This field is required';
@@ -38,14 +49,12 @@ class UpdateUser {
       this.error.fullname = 'Name should contain alphabet and space alone and should contain at least 5 characters';
     }
   }
-  validateUsername (username, res) {
-    if (isValidField(username)) {
-      this.error.username = 'This field is required';
-    } else if (isDigit(username) ||
-    isDigit(username[0]) || username.length < 3) {
-      this.error.username = 'Username must contain an alphabet and must not begin with a number and must have up to 3 letters';
-    }
-  }
+
+  /**
+ * @param  {string} email
+ * @description validate email field
+ * @return {string} return error message
+ */
   validateEmail(email, res) {
     if (isValidField(email)) {
       this.error.email = 'This field is required';
@@ -54,6 +63,12 @@ class UpdateUser {
       this.error.email = 'Invalid email';
     }
   }
+
+  /**
+ * @param  {string} phoneNumber 
+ * @description validate phone number field
+ * @return {string} return error message
+ */
   validatePhoneNumber(phoneNumber) {
     if (isValidField(phoneNumber)) {
       this.error.phoneNumber = 'This field is required';
@@ -62,10 +77,14 @@ class UpdateUser {
     }
   }
 }
-// updateUniqueValidation(req, res, next) {
 
-// }
-
+/**
+ * @param  {string} req request object
+ * @param  {string} res response object
+ * @param  {string} next call back
+ * @description validate updated user information
+ * @return {void} no returns
+ */
 function validateUpdateUser(req, res, next) {
   const update = new UpdateUser(req.body);
   User.findOne({

@@ -43,7 +43,7 @@ class Dashboard extends React.Component {
              { this.props.group.id && <RightSideBarNav user={this.props.user} members={this.props.members} group={this.props.group}/>}
              {!this.props.group.id && !this.props.showUpdatePage && <InitialMessageBoard group={this.props.group}/>}
             </div>
-            <CreateGroupModal/>
+            <CreateGroupModal group={this.props.getGroupsRequest}/>
             </div>
             </section>
           </div> 
@@ -60,6 +60,7 @@ const dashboardPropTypes = {
   showResetPasswordUserPage: PropTypes.func,
   resetPassword:  PropTypes.func,
   showUpdateUserPage:  PropTypes.func,
+  getGroupMessages: PropTypes.func,
 }
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Dashboard');
 
@@ -75,4 +76,4 @@ function mapStateToProps(state) {
     error: state.error
   };
 }
-export default connect(mapStateToProps, {showUpdateUserPage, resetPassword, showResetPasswordUserPage, getUser, updateUserProfile, getGroupsRequest, setRightNavBarView})(Dashboard);
+export default connect(mapStateToProps, {getGroupsRequest, showUpdateUserPage, resetPassword, showResetPasswordUserPage, getUser, updateUserProfile, getGroupsRequest, setRightNavBarView})(Dashboard);

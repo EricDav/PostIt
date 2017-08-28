@@ -6,6 +6,12 @@ import isValidField from '../helpers/isValidField';
 
 const User = db.User;
 
+/**
+   * @param  {object} req
+   * @param  {object} res
+   * @description send secret code to users that has forgoten their password
+   * @return {string} an object with key: group, value: number of new messages in the group
+   */
 export const sendSecretCode = (req, res) => {
   User.findOne({
     where: {
@@ -35,6 +41,12 @@ export const sendSecretCode = (req, res) => {
     });
 };
 
+/**
+   * @param  {object} req
+   * @param  {object} res
+   * @description Verify secrete code sent to users 
+   */
+
 export const VerifyCodeAndUpdatePassword = (request, response) => {
   bcrypt.compare(request.body.response, request.body.hash, (err, res) => {
     if (res) {
@@ -50,20 +62,22 @@ export const VerifyCodeAndUpdatePassword = (request, response) => {
           message: 'Weak password. Password should contain at least 8 characters including at least one number and alphabet'
         });
       }
-      User.update({
-        password: request.body.password
-      }, {
-        where: {
-          email: request.body.userEmail
-        }
-      })
-        .then(() => {
-          return response.status(200).json({
-            success: true,
-            message: 'Your password has been reset successfully'
-          });
+      bcrypt.hash(request.body.password, 10, (err, hash) => {
+        User.update({
+          password: hash
+        }, {
+          where: {
+            email: request.body.userEmail
+          }
         })
-        .catch(error => response.status(404).send(error));
+          .then(() => {
+            response.status(200).json({
+              success: true,
+              message: 'Your password has been reset successfully'
+            });
+          })
+          .catch(error => response.status(404).send(error));
+      });
     } else {
       return response.status(400).json({
         success: false,

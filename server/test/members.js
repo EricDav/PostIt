@@ -10,7 +10,7 @@ const server = supertest.agent(app);
 let regUserData;
 
 describe('Group Routes', () => {
-  it('allows a registered user to login successfully', (done) => {
+  it('should allows a registered user to login successfully', (done) => {
     server
       .post('/api/user/signin')
       .set('Connection', 'keep alive')
@@ -29,7 +29,7 @@ describe('Group Routes', () => {
 
 
 describe('Group Routes', () => {
-  it('allows a logged in user adds member to a group he/she belongs', (done) => {
+  it('should allows a logged in user adds member to a group he/she belongs', (done) => {
     server
       .post('/api/group/2/user')
       .set('Connection', 'keep alive')
@@ -45,7 +45,7 @@ describe('Group Routes', () => {
       });
   });
 
-  it('allows a logged in user adds member to a group he/she belongs', (done) => {
+  it('should allows a logged in user adds member to a group he/she belongs', (done) => {
     server
       .post('/api/group/2/user')
       .set('Connection', 'keep alive')
@@ -61,7 +61,7 @@ describe('Group Routes', () => {
       });
   });
 
-  it('allows a logged in user to view all the members of a group he/she belongs to', (done) => {
+  it('should allows a logged in user to view all the members of a group he/she belongs to', (done) => {
     server
       .get('/api/group/2/members')
       .set('Connection', 'keep alive')
@@ -75,7 +75,7 @@ describe('Group Routes', () => {
       });
   });
 
-  it('allows a logged in user to view all the members he/she can add to a group', (done) => {
+  it('should allows a logged in user to view all the members he/she can add to a group', (done) => {
     server
       .get('/api/group/2/nonMembers')
       .set('Connection', 'keep alive')

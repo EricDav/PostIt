@@ -24,7 +24,6 @@ class Group extends React.Component {
                 seenLast: seenMessageIds.length}
                 this.props.updateSeenMessages(groupId.toString(), updateSeenMessagesData).then(
                     () => {
-                        //this.props.getGroupMessages(groupId.toString());
                         this.props.getNewGroupMessages();
                         this.props.showUpdateUserPage(false);
 

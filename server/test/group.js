@@ -1,26 +1,48 @@
 import supertest from 'supertest';
+import model from '../models';
 import 'mocha';
 import 'chai';
 import should from 'should';
 import app from './../../app';
-import { loginUser } from './../seeders/userSeeders';
+import { loginUser, user } from './../seeders/userSeeders';
 import groupDetails from './../seeders/groupSeeders';
 
 const server = supertest.agent(app);
 let regUserData;
 
 describe('Group Routes', () => {
-  it('allows a registered user to login successfully', (done) => {
+  before((done) => {
+    model.sequelize.sync({ force: true }).then(() => {
+      done();
+    }).catch((errors) => {
+      done();
+    });
+  });
+  it('should allows a registered user to signin successfully', (done) => {
     server
-      .post('/api/user/signin')
+      .post('/api/v1/user/signup')
+      .set('Connection', 'keep alive')
+      .set('Content-Type', 'application/json')
+      .type('form')
+      .send(user[0])
+      .expect(200)
+      .end((err, res) => {
+        regUserData = res.body.Token;
+        res.status.should.equal(201);
+        res.body.success.should.equal(true);
+        done();
+      });
+  });
+  it('allows a registered user to log in successfully', (done) => {
+    server
+      .post('/api/v1/user/signin')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
       .send(loginUser[0])
-      .expect(200)
+      .expect(201)
       .end((err, res) => {
-        regUserData = res.body.Token;
-        res.status.should.equal(200);
+        res.status.should.equal(201);
         res.body.success.should.equal(true);
         done();
       });
