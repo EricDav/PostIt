@@ -34,11 +34,11 @@ class TextInput extends React.Component {
                     content: this.state.content,
                     priority: this.props.piority
                 }
+                    this.setState({
+                        content: '',
+                    });
              this.props.createMessage(data, this.props.currentGroup.id.toString()).then(
                  () => {
-                     this.setState({
-                         content: '',
-                     });
                     this.props.getGroupMessages(this.props.currentGroup.id.toString()).then(
                         () => {
                             const seenMessageIds = getMessageIds(this.props.messages);

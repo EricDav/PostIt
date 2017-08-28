@@ -1,3 +1,4 @@
+
 const generateCode = () => {
   const number = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
   const alpha = ['a', 'B', 'c', 'D', 'e', 'F', 'g', 'H', 'i', 'J', 'k', 'L', 'm',

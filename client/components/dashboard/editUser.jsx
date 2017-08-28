@@ -26,7 +26,6 @@ class EditUser extends React.Component {
         });
         setTimeout(() => {
           const {username, fullname, email, phoneNumber} = this.state;
-        console.log(username, fullname)
         if (this.state.user.fullname !== fullname || this.state.user.username !== this.state.username ||
         this.state.user.email !== email || this.state.user.phoneNumber !== phoneNumber) {
           this.setState({

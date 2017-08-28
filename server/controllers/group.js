@@ -1,10 +1,10 @@
 import db from '../models';
+import removePassword from '../helpers/removePassword';
 
 const Group = db.Group;
 const User = db.User;
 const Members = db.UserGroup;
-// const posts = db.groupPosts;
-// const members = db.groupMembers;
+
 /**
  * @param  {object} req request coming from the client
  * @param  {object} res response to the client
@@ -43,6 +43,14 @@ const createGroups = {
       })
       .catch(error => res.status(400).send(error));
   },
+
+  /**
+   * @param  {object} req
+   * @param  {object} res
+   * @description It gets all the numbers of new messages in all the groups a user belongs to
+   * @return {array} an object with key: group, value: number of new messages in the group
+   */
+
   getGroups(req, res) {
     User
       .findOne({ where: {
@@ -64,6 +72,13 @@ const createGroups = {
       })
       .catch(error => res.status(400).send(error));
   },
+
+  /**
+   * @param  {object} req
+   * @param  {object} res
+   * @description get all the members of a particular group
+   * @return {array} array of object
+   */
   getGroupMembers(req, res) {
     return Group
       .findOne({ where: {
@@ -71,10 +86,17 @@ const createGroups = {
       } })
       .then((group) => {
         group.getUsers()
-          .then(groups => res.status(200).send(groups))
+          .then(groupMembers => res.status(200).send(removePassword(groupMembers)))
           .catch(error => res.status(400).send(error));
       });
   },
+
+  /**
+   * @param  {object} req  request object
+   * @param  {object} res  response object
+   * @description delete  a particular group given its Id
+   * @return {void} no returns
+   */
   deleteGroup(req, res) {
     Group.destroy({
       where: {
@@ -97,6 +119,14 @@ const createGroups = {
       })
       .catch(error => res.status(400).send(error));
   },
+
+  /**
+   * @param  {object} req  request object
+   * @param  {object} res  response object
+   * @description delete a member of a group
+   * @return {void} no returns
+   */
+
   deleteUser(req, res) {
     Members.destroy({
       where: {
@@ -112,6 +142,13 @@ const createGroups = {
       })
       .catch(error => res.status(400).send(error));
   },
+
+  /**
+   * @param  {object} req  request object
+   * @param  {object} res  response object
+   * @description update group details
+   * @return {void} no returns
+   */
   updateGroupInfo(req, res) {
     Group.findOne({
       where: {

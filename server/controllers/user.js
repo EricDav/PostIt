@@ -1,16 +1,15 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
 import db from '../models';
 import isValidField from '../helpers/isValidField';
+import removePassword from '../helpers/removePassword';
 import getNewMessages from '../helpers/getNewMessages';
-
-const groupMembers = db.User;
 
 dotenv.load();
 const secret = process.env.secretKey;
 const User = db.User;
 const message = db.Message;
-const groups = db.Group;
 const viewMessages = db.messageViewer;
 const seenLast = db.SeenLast;
 /**
@@ -20,34 +19,42 @@ const seenLast = db.SeenLast;
  */
 const createUser = {
   create(req, res) {
-    return User
-      .create({
-        fullname: req.body.fullname,
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-        phoneNumber: req.body.phoneNumber,
-        active: true
-      })
-      .then((user) => {
-        const currentUser = { username: user.username,
-          fullname: user.fullname,
-          id: user.id,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-        };
-        const token = jwt.sign(
-          { currentUser,
-            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
-          }, secret
-        );
-        return res.status(201).json({
-          success: true,
-          message: 'Token generated successfully',
-          Token: token
+    bcrypt.hash(req.body.password, 10, (err, hash) => {
+      if (err) {
+        return res.status(403).json({
+          success: false,
+          message: 'An error occured while encrypting password'
         });
-      })
-      .catch(error => res.status(500).send(error));
+      }
+      return User
+        .create({
+          fullname: req.body.fullname,
+          username: req.body.username,
+          password: hash,
+          email: req.body.email,
+          phoneNumber: req.body.phoneNumber,
+          active: true
+        })
+        .then((user) => {
+          const currentUser = { username: user.username,
+            fullname: user.fullname,
+            id: user.id,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+          };
+          const token = jwt.sign(
+            { currentUser,
+              exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
+            }, secret
+          );
+          return res.status(201).json({
+            success: true,
+            message: 'Token generated successfully',
+            Token: token
+          });
+        })
+        .catch(error => res.status(500).send(error));
+    });
   },
 
   /**
@@ -59,7 +66,9 @@ const createUser = {
   allUsers(req, res) {
     return User
       .all()
-      .then(user => res.status(201).send(user))
+      .then((users) => {
+        res.status(200).send(removePassword(users));
+      })
       .catch(error => res.status(500).send(error));
   },
 
@@ -79,7 +88,7 @@ const createUser = {
         id: req.currentUser.currentUser.id
       }
     }).then(() => {
-      return res.status(201).json({
+      res.status(201).json({
         success: true,
         message: 'User info has been updated'
       });
@@ -101,51 +110,56 @@ const createUser = {
         id: req.currentUser.currentUser.id
       }
     }).then((user) => {
-      if (oldPassword === user.password) {
-        if (isValidField(newPassword)) {
-          return res.status(400).json({
-            success: false,
-            message: 'This field is required'
+      bcrypt.compare(oldPassword, user.password, (error, response) => {
+        if (response) {
+          if (isValidField(newPassword)) {
+            return res.status(400).json({
+              success: false,
+              message: 'This field is required'
+            });
+          } else if (req.body.newPassword.length < 9) {
+            return res.status(400).json({
+              success: false,
+              message: 'Password should contain at least 8 characters'
+            });
+          } else if (!/[0-9]/.test(req.body.newPassword)) {
+            return res.status(400).json({
+              success: false,
+              message: 'Password should contain at least one number'
+            });
+          } else if (!/[a-z A-Z]/.test(req.body.newPassword)) {
+            return res.status(400).json({
+              success: false,
+              message: 'Password should contain at least one number'
+            });
+          }
+          bcrypt.hash(newPassword, 10, (err, hash) => {
+            User.update({
+              password: hash
+            }, {
+              where: {
+                id: user.id
+              }
+            }).then(() => {
+              res.status(201).json({
+                success: true,
+                message: 'Password has been reset'
+              });
+            })
+              .catch(err => res.status(500).send(err));
           });
-        } else if (req.body.newPassword.length < 9) {
+        } else {
           return res.status(400).json({
             success: false,
-            message: 'Password should contain at least 8 characters'
-          });
-        } else if (!/[0-9]/.test(req.body.newPassword)) {
-          return res.status(400).json({
-            success: false,
-            message: 'Password should contain at least one number'
-          });
-        } else if(!/[a-z A-Z]/.test(req.body.newPassword)) {
-          return res.status(400).json({
-            success: false,
-            message: 'Password should contain at least one number'
+            message: 'Invalid old password'
           });
         }
-        User.update({
-          password: newPassword
-        }, {
-          where: {
-            id: user.id
-          }
-        }).then(() => {
-          return res.status(201).json({
-            success: true,
-            message: 'Password has been reset'
-          });
-        })
-      } else {
-        return res.status(400).json({
-          success: false,
-          message: 'Invalid old password'
-        });
-      }
+      });
     })
       .catch(error => res.status(500).send(error));
   },
 
-/**
+  /**
    * @param  {object} req
    * @param  {object} res
    * @description fetch all the messages and those that has seen 
@@ -274,6 +288,13 @@ const createUser = {
       })
       .catch(error => res.status(405).send(error));
   },
+
+  /**
+   * @param  {object} req
+   * @param  {object} res
+   * @description It gets all the numbers of new messages in all the groups a user belongs to
+   * @return {object} an object with key: group, value: number of new messages in the group
+   */
   getMessages(req, res) {
     User.findOne({
       where: {
@@ -305,7 +326,7 @@ const createUser = {
                     if (seenlast.seenUsername === req.currentUser.currentUser.username) {
                       userSeenLast.push(seenlast);
                     }
-                  })
+                  });
                   groupIds.forEach((groupId) => {
                     newMessages.push(getNewMessages(groupId, messages, userSeenLast));
                   });
@@ -319,6 +340,13 @@ const createUser = {
       })
       .catch(error => res.status(405).send(error));
   },
+
+  /**
+   * @param  {object} req
+   * @param  {object} res
+   * @description get current user information
+   * @return {object} current user information
+   */
   getUser(req, res) {
     User.findOne({
       where: {
@@ -332,7 +360,6 @@ const createUser = {
             message: 'User does not exist'
           });
         } else if (Number(user.id) !== Number(req.currentUser.currentUser.id)) {
-          console.log(user.id, req.currentUser.currentUser.id);
           return res.status(400).json({
             success: false,
             message: 'You are not Authorize for this operation'

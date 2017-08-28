@@ -2,11 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const Message = sequelize.define('Feedback', {
     Bug: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     recomendation: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     generalRating: {
       type: DataTypes.INTEGER,
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     rejections: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
   });
   return Message;

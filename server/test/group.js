@@ -1,25 +1,47 @@
 import supertest from 'supertest';
+import model from '../models';
 import 'mocha';
 import 'chai';
 import should from 'should';
 import app from './../../app';
-import { loginUser } from './../seeders/userSeeders';
+import { loginUser, user } from './../seeders/userSeeders';
 import groupDetails from './../seeders/groupSeeders';
 
 const server = supertest.agent(app);
 let regUserData;
 
 describe('Group Routes', () => {
-  it('allows a registered user to login successfully', (done) => {
+  before((done) => {
+    model.sequelize.sync({ force: true }).then(() => {
+      done();
+    }).catch((errors) => {
+      done();
+    });
+  });
+  it('should allows a registered user to signup successfully', (done) => {
     server
-      .post('/api/user/signin')
+      .post('/api/v1/user/signup')
+      .set('Connection', 'keep alive')
+      .set('Content-Type', 'application/json')
+      .type('form')
+      .send(user[0])
+      .expect(200)
+      .end((err, res) => {
+        regUserData = res.body.Token;
+        res.status.should.equal(201);
+        res.body.success.should.equal(true);
+        done();
+      });
+  });
+  it('allows a registered user to log in successfully', (done) => {
+    server
+      .post('/api/v1/user/signin')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
       .send(loginUser[0])
-      .expect(200)
+      .expect(201)
       .end((err, res) => {
-        regUserData = res.body.Token;
         res.status.should.equal(200);
         res.body.success.should.equal(true);
         done();
@@ -28,7 +50,7 @@ describe('Group Routes', () => {
 
   it('allows a logged in user to create a new group', (done) => {
     server
-      .post('/api/group')
+      .post('/api/v1/group')
       .set('Connection', 'keep alive')
       .set('x-access-token', regUserData)
       .set('Content-Type', 'application/json')
@@ -44,12 +66,12 @@ describe('Group Routes', () => {
 
   it('allows a logged in user to create a new group', (done) => {
     server
-      .post('/api/group')
+      .post('/api/v1/group')
       .set('Connection', 'keep alive')
       .set('x-access-token', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(groupDetails[1])
+      .send(groupDetails[0])
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
@@ -60,12 +82,12 @@ describe('Group Routes', () => {
 
   it('disallows a logged in user to create a group with an existing name', (done) => {
     server
-      .post('/api/group')
+      .post('/api/v1/group')
       .set('Connection', 'keep alive')
       .set('x-access-token', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(groupDetails[2])
+      .send(groupDetails[1])
       .expect(409)
       .end((err, res) => {
         res.status.should.equal(409);
@@ -76,7 +98,7 @@ describe('Group Routes', () => {
 
   it('allows a logged in user to get all the groups he/she belongs to', (done) => {
     server
-      .get('/api/user/1/groups')
+      .get('/api/v1/user/1/groups')
       .set('x-access-token', regUserData)
       .expect(200)
       .end((err, res) => {
@@ -87,7 +109,7 @@ describe('Group Routes', () => {
 
   it('disallows a user to create a new group without a token', (done) => {
     server
-      .post('/api/group')
+      .post('/api/v1/group')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -102,7 +124,7 @@ describe('Group Routes', () => {
 
   it('disallows a user to create a new group with a wrong token', (done) => {
     server
-      .post('/api/group')
+      .post('/api/v1/group')
       .set('Connection', 'keep alive')
       .set('x-access-token', 'tyrtyfgf67543')
       .set('Content-Type', 'application/json')
@@ -119,7 +141,7 @@ describe('Group Routes', () => {
 
   it('allows a group admin to delete the group he owns', (done) => {
     server
-      .delete('/api/group/1/delete')
+      .delete('/api/v1/group/1/delete')
       .set('x-access-token', regUserData)
       .expect(200)
       .end((err, res) => {
@@ -131,7 +153,7 @@ describe('Group Routes', () => {
 
   it('allows another registered user to login successfully', (done) => {
     server
-      .post('/api/user/signin')
+      .post('/api/v1/user/signin')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -147,7 +169,7 @@ describe('Group Routes', () => {
   });
   it('prevents a user from deleting a group that does not exist', (done) => {
     server
-      .delete('/api/group/8/delete')
+      .delete('/api/v1/group/8/delete')
       .expect(404)
       .set('x-access-token', regUserData)
       .end((err, res) => {
