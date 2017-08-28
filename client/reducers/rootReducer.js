@@ -8,6 +8,13 @@ import allUsers from './allUsers';
 import viewNumber from './setView';
 import seenLast from './messageSeenLast';
 import newMessages from './newMessages';
+import initialNewMessages from './initialNewMessages';
+import willShow from './willShow';
+import resetPasswordUser from './setResetPasswordUser';
+import showUpdatePage from './showUpdatePage';
+import error from './error';
+import setPiority from './setPiority';
+import showResetPassword from './showResetPassword';
 
 export default combineReducers({
   auth,
@@ -18,5 +25,12 @@ export default combineReducers({
   allUsers,
   viewNumber,
   seenLast,
-  newMessages
+  newMessages,
+  initialNewMessages,
+  willShow,
+  resetPasswordUser,
+  showUpdatePage,
+  error,
+  setPiority,
+  showResetPassword
 });

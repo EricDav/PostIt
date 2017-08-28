@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import HomePage from './components/homePage';
 import { Provider } from 'react-redux';
 import jwt from 'jsonwebtoken';
-import { setCurrentUser } from './actions/authActions';
+import { setCurrentUser } from './actions/userActions';
 import Dashboard from './components/dashboard/dashboard';
 import { Router, browserHistory } from 'react-router';
 import routes from './routes';

@@ -3,12 +3,12 @@ import isValidField from '../helpers/isValidField';
 
 const Groups = db.Group;
 const User = db.User;
-//const groupMembers = db.groupMembers;
+
 /**
  * @param  {object} req
  * @param  {object} res
- * @param  {} next
- * @description validate for group creation by checking in if group name exist
+ * @param  {type} next call back function
+ * @description group validation. validate for adding members to group
  * @return {object}
  */
 const group = {
@@ -48,6 +48,14 @@ const group = {
       })
       .catch(error => res.status(404).send(error));
   },
+
+  /**
+    * @param  {object} req
+    * @param  {object} res
+    * @param  {type} next call back function
+    * @description validate for obtaining a group information
+    * @return {null} no return
+ */
   groupValidation(req, res, next) {
     let check = false;
     return Groups
@@ -78,6 +86,14 @@ const group = {
       })
       .catch(error => res.status(404).send(error));
   },
+
+  /**
+    * @param  {object} req
+    * @param  {object} res
+    * @param  {type} next call back function
+    * @description validate for creating a group
+    * @return {voud} no returns
+ */
   groupNullValidation(req, res, next) {
     const nullValues = { name: '', description: '' };
     if (isValidField(req.body.name)) {
@@ -110,6 +126,14 @@ const group = {
       }
     });
   },
+
+  /**
+ * @param  {object} req
+ * @param  {object} res
+ * @param  {type} next call back function
+ * @description validate for group deletion. make sure that it is the correct user have the license to delete a group
+ * @return {void}
+ */
   deleteGroupValidation(req, res, next) {
     Groups
       .findOne({ where: { id: req.params.groupId } })
@@ -119,7 +143,7 @@ const group = {
             success: false,
             message: 'Group not found. Group does not exist or has been deleted'
           });
-        } else if (Group.ownerUserName === req.decoded.user.userName) {
+        } else if (Group.ownerUserName === req.currentUser.currentUser.username) {
           next();
         } else {
           res.status(401).json({
@@ -129,6 +153,56 @@ const group = {
         }
       })
       .catch(error => res.status(404).send(error));
-  }
+  },
+
+  /**
+ * @param  {object} req
+ * @param  {object} res
+ * @param  {type} next call back function
+ * @description validate for deleting a user from a group
+ * @return {void}
+ */
+  deleteUserFromGroupValidation(req, res) {
+    Groups.findOne({
+      where: {
+        id: req.params.groupId,
+      }
+    })
+      .then((group2) => {
+        if (!group2) {
+          res.status(404).json({
+            success: false,
+            message: 'User does not exist'
+          });
+        } else {
+          User.findOne({
+            where: {
+              id: req.body.userId
+            }
+          })
+            .then((user) => {
+              if (!user) {
+                res.status(404).json({
+                  success: false,
+                  message: 'User does not exist'
+                });
+              } else if (req.currentUser.currentUser.username === group.creator ||
+                 req.currentUser.currentUser.username === user.username) {
+                res.status(200).json({
+                  success: true,
+                  message: `${user.username} has been deleted from ${group2.name} successfully`
+                });
+              } else {
+                res.status(401).json({
+                  success: true,
+                  message: 'You are not permited to perform this operation'
+                });
+              }
+            })
+            .catch(error => res.status(404).send(error));
+        }
+      })
+      .catch(error => res.status(404).send(error));
+  },
 };
 export default group;

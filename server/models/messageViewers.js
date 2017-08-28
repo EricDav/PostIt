@@ -11,11 +11,5 @@ module.exports = (sequelize, DataTypes) => {
       unique: false
     }
   });
-  messageViewer.associate = (models) => {
-    messageViewer.belongsTo(models.User, {
-      foreignKey: 'viewerUsername',
-      onDelete: 'CASCADE',
-    });
-  };
   return messageViewer;
 };

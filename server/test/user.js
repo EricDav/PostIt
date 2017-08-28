@@ -8,19 +8,18 @@ import { user, loginUser, invalidUser, incorrectPassword, invalidEmail } from '.
 
 const server = supertest.agent(app);
 
-
-before((done) => {
-  models.sequelize.sync({ force: true }).then(() => {
-    done(null);
-  }).catch((errors) => {
-    done(errors);
-  });
-});
-
 describe('User Registration', () => {
+  before((done) => {
+    models.sequelize.sync({ force: true }).then(() => {
+      done();
+    }).catch((errors) => {
+      done();
+    });
+  });
+
   it('allows a new user to register', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -35,7 +34,7 @@ describe('User Registration', () => {
 
   it('allows a new user to register', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -50,7 +49,7 @@ describe('User Registration', () => {
 
   it('allows a new user to register', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -65,7 +64,7 @@ describe('User Registration', () => {
 
   it('allows a new user to register', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -80,7 +79,7 @@ describe('User Registration', () => {
 
   it('should ensure that username is unique', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -95,7 +94,7 @@ describe('User Registration', () => {
 
   it('validates email during registration', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -110,7 +109,7 @@ describe('User Registration', () => {
 
   it('disallows a new user to register if password is not up to eight characters', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -124,7 +123,7 @@ describe('User Registration', () => {
   });
   it('disallows a new user to register if password does not contains at least a digit', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -138,7 +137,7 @@ describe('User Registration', () => {
   });
   it('disallows a new user to register if password does not contain at least one alphabet', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -152,7 +151,7 @@ describe('User Registration', () => {
   });
   it('disallows a new user to register with an Invalid userName', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -166,7 +165,7 @@ describe('User Registration', () => {
   });
   it('disallows a new user to register without a username', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -180,7 +179,7 @@ describe('User Registration', () => {
   });
   it('disallows a new user to register without a name', (done) => {
     server
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -197,7 +196,7 @@ describe('User Registration', () => {
 describe('Authentication', () => {
   it('prevents an invalid user from logging in', (done) => {
     server
-      .post('/api/user/signin')
+      .post('/api/v1/user/signin')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -212,7 +211,7 @@ describe('Authentication', () => {
 
   it('prevents a user with a wrong password from logging in', (done) => {
     server
-      .post('/api/user/signin')
+      .post('/api/v1/user/signin')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
@@ -227,7 +226,7 @@ describe('Authentication', () => {
 
   it('allows a registered user to login successfully', (done) => {
     server
-      .post('/api/user/signin')
+      .post('/api/v1/user/signin')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')

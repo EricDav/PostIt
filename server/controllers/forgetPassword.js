@@ -1,46 +1,88 @@
+import bcrypt from 'bcrypt';
 import db from '../models';
-import generateCode from '../helpers/generateVerificationToken';
+import generateCode from '../helpers/generateCode';
 import mailSender from '../helpers/mailSender';
-
+import isValidField from '../helpers/isValidField';
 
 const User = db.User;
-const forgotPassword = db.forgotPassword;
-console.log(forgotPassword);
 
-const forgetPassword = (req, res) => {
+/**
+   * @param  {object} req
+   * @param  {object} res
+   * @description send secret code to users that has forgoten their password
+   * @return {string} an object with key: group, value: number of new messages in the group
+   */
+export const sendSecretCode = (req, res) => {
   User.findOne({
     where: {
       email: req.body.email
     }
   })
     .then((user) => {
-          console.log(generatedNumber);
       if (!user) {
-        return res.status(404).json({
+        return res.status(404).send({
           success: false,
           message: 'User does not exist'
         });
       }
-      const generatedNumber = generateCode();
-      console.log(generatedNumber);
-      const message = 'Your verification code is:';
-      forgotPassword.create({
-        user: user.username,
-        generatedNumber,
-        verified: false
-      }).then((Users) => {
-          console.log(Users)
-        if (!Users) {
-          res.status(500).json({
+      const generatedCode = generateCode();
+      const email = req.body.email;
+      const message = `Your Secrete code is: ${generatedCode}`;
+      bcrypt.hash(generatedCode, 10, (err, hashSecret) => {
+        if (err) {
+          return res.status(400).json({
             success: false,
-            message: 'An unexpected error occured'
+            message: 'Email was not sent',
+            userEmail: req.body.email,
           });
         }
-        mailSender(req, res, message);
-      })
-        .catch(error => res.status(402).send(error));
-    })
-    .catch(error => res.status(403).send(error));
+        mailSender(req, res, message, 'A code has been sent to your mail', hashSecret, email);
+      });
+    });
 };
 
-export default forgetPassword;
+/**
+   * @param  {object} req
+   * @param  {object} res
+   * @description Verify secrete code sent to users 
+   */
+
+export const VerifyCodeAndUpdatePassword = (request, response) => {
+  bcrypt.compare(request.body.response, request.body.hash, (err, res) => {
+    if (res) {
+      if (isValidField(request.body.password)) {
+        return res.status(403).json({
+          success: false,
+          message: 'This field is required'
+        });
+      } else if (request.body.password.length < 9 || !(/[0-9]/
+        .test(request.body.password) && /[a-z A-Z]/.test(request.body.password))) {
+        return response.status(403).json({
+          success: false,
+          message: 'Weak password. Password should contain at least 8 characters including at least one number and alphabet'
+        });
+      }
+      bcrypt.hash(request.body.password, 10, (err, hash) => {
+        User.update({
+          password: hash
+        }, {
+          where: {
+            email: request.body.userEmail
+          }
+        })
+          .then(() => {
+            response.status(200).json({
+              success: true,
+              message: 'Your password has been reset successfully'
+            });
+          })
+          .catch(error => response.status(404).send(error));
+      });
+    } else {
+      return response.status(400).json({
+        success: false,
+        message: 'Invalid code'
+      });
+    }
+  });
+};

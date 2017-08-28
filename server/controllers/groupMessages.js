@@ -4,8 +4,8 @@ const Message = db.Message;
 /**
  * @param  {object} req request coming from the client
  * @param  {object} res response to the client
- * @description get all posts that belong to a specify group.
- * @return {object}
+ * @description construct a message with the appriopriate field
+ * @return {void} no returns
  */
 const Messages = {
   createMessage(req, res) {
@@ -15,16 +15,20 @@ const Messages = {
         groupId: req.params.groupId,
         senderId: req.currentUser.currentUser.id,
         senderUsername: req.currentUser.currentUser.username,
-        piority: req.body.piority
+        priority: req.body.priority
       })
       .then(() => {
-        res.status(201).json({
-          success: true,
-          message: 'message sent successfully'
-        });
+        res.status(201).send('i am here');
       })
       .catch(error => res.status(400).send(error));
   },
+
+  /**
+   * @param  {object} req  request object
+   * @param  {object} res  response object
+   * @description fetches all the messages for a particular group
+   * @return {array} array of object
+   */
   getMessages(req, res) {
     return Message
       .findAll({ where: {

@@ -1,11 +1,21 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+import winston from 'winston';
 
-const mailSender = (req, res, message) => {
+dotenv.config();
+
+/**
+ * @param  {string} str
+ * @description checks if the string pass in is a digit. Means all the charcters are digit
+ * @return {boolean} true or false
+ */
+
+const mailSender = (req, res, message, successMessage, secretCode, email) => {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
       user: 'alienyidavid4christ@gmail.com',
-      pass: 'Davidwedomotola'
+      pass: process.env.GMAIL_PASSWORD
     }
   });
   const mailOptions = {
@@ -16,15 +26,18 @@ const mailSender = (req, res, message) => {
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-    console.log(error, '---------');
-    console.log('yesssssss')
-      res.status(403).json({ error: 'Something bad happened' });
-    } else {
-      res.status(200).json({
-        success: true,
-        message: 'email sent successfully'
+      winston.info(info);
+      return res.status(500).json({
+        success: false,
+        message: 'An error occured'
       });
     }
+    return res.status(200).json({
+      success: true,
+      message: successMessage,
+      SwZ5: secretCode,
+      email
+    });
   });
 };
 

@@ -1,18 +1,18 @@
 const groupDetails = [{
-  Name: 'Mathematics World',
-  Description: 'This is where Maths lives',
-  ownerUserName: 'lolade'
+  name: 'Mathematics World',
+  description: 'This is where Maths lives',
+  creator: 'lolade'
 }, {
-  Name: 'Learn Python',
-  Description: 'Meet Python gurus',
-  ownerUserName: 'jide'
+  name: 'Learn Python',
+  description: 'Meet Python gurus',
+  creator: 'jide'
 }, {
-  Name: 'Mathematics World',
-  Description: 'We are mathematicians',
-  ownerUsername: 'Pythagoras'
+  name: 'Mathematics World',
+  description: 'We are mathematicians',
+  creator: 'Pythagoras'
 },
 {
-  Name: 'Java World',
-  Description: 'We are android developers',
-  ownerUsername: 'bolu' }];
+  name: 'Java World',
+  description: 'We are android developers',
+  creator: 'bolu' }];
 export default groupDetails;

@@ -1,3 +1,9 @@
+
+/**
+ * @param  {string} str
+ * @description checks if the string pass in is a text. Means all the charcters are alphabet
+ * @return {boolean} true or false
+ */
 const isText = (str) => {
   if (str.length === 0) {
     return false;
