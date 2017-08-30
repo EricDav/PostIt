@@ -1,17 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import ReactTooltip from 'react-tooltip'
 
 class Message extends React.Component {
     render() {
         let viewers = '';
         let seen = '';
+        let hidden = true;
+        let numOfSeen = 0;
         this.props.viewers.forEach((viewer) => {
             if (viewer !== this.props.user.username && viewer !== this.props.name) {
-                viewers = viewers + ' ' + viewer;
+                viewers = viewers + ' @' + viewer;
+                numOfSeen +=1;
             }
         });
-        if (viewers !== '') {
-            seen = 'seen by:'
+        if (numOfSeen === 0) {
+            hidden = false;
         }
         return (
             <li className="collection-item avatar">
@@ -19,7 +23,8 @@ class Message extends React.Component {
                         <span className="email-title"><a href="">{this.props.name}</a></span>
                         <span className="ultra-small grey-text time-text">  {new Date(this.props.date).toLocaleString()}</span> 
                     <span className="truncate auto">{this.props.content}</span>
-                    <span className="viewers"><i>{seen} {viewers}</i></span>
+                    { hidden && <p data-tip={viewers}><span className="seen">seen:<span className="numSeen">{numOfSeen}</span></span></p>}
+                    <ReactTooltip />
                 </li>
         )
     }

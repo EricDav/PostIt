@@ -6,16 +6,22 @@ import path from 'path';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackConfig from './webpack.config.dev';
-import routes from './server/routes';
+import group from './server/routes/group';
+import user from './server/routes/user';
+import message from './server/routes/message';
+import forgetPassword from './server/routes/forgetPassword';
 
 const port = process.env.PORT || 9000;
 const app = express();
-app.use(express.static('public')); // configure static files folder
+app.use(express.static('public'));
 app.use(logger('dev'));
 app.use(webpackMiddleware(webpack(webpackConfig)));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(routes);
+app.use(group);
+app.use(user);
+app.use(message);
+app.use(forgetPassword);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './client/index.html'));

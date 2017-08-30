@@ -7,9 +7,10 @@ dotenv.load();
 const User = db.User;
 const secret = process.env.secretKey;
 /**
+ *@description Auntheticate user.
+ * 
  * @param  {object} req request object
  * @param  {object} res responsee object
- * @description Auntheticate user.
  * @return {object} user information
  */
 export const logIn = {
@@ -58,14 +59,15 @@ export const logIn = {
           }
         });
       })
-      .catch(error => response.status(400).send(error));
+      .catch(error => response.status(500).send(error));
   }
 };
 
 /**
+   *@description sign a user out and deactive a user
+   *
    * @param  {object} req  request object
    * @param  {object} res  response object
-   * @description sign a user out and deactive a user
    * @return {void} no returns
    */
 
@@ -82,6 +84,7 @@ export const logOut = {
         success: true,
         message: 'logout successfully'
       });
-    });
+    })
+      .catch(error => res.status(500).send(error));
   }
 };

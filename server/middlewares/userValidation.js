@@ -5,10 +5,11 @@ import isValidField from '../helpers/isValidField';
 
 const User = db.User;
 /**
+   * @description validate inputs field for username, name, email and password
+   * 
    * @param  {object} req
    * @param  {object} res
    * @param  {} next
-   * @description validate inputs field for username, name, email and password
    */
 const userValidation = {
   basicValidation(req, res, next) {
@@ -125,7 +126,7 @@ const userValidation = {
           error.username = 'username already exist';
         }
         if (Object.keys(error).length === 5) {
-          return res.status(404).json({
+          return res.status(400).json({
             error,
             success: false
           });
@@ -146,7 +147,7 @@ const userValidation = {
               error.phoneNumber = 'phone number already exist';
             }
             if (Object.keys(error).length === 5) {
-              return res.status(404).json({
+              return res.status(400).json({
                 error,
                 success: false
               });
@@ -165,7 +166,7 @@ const userValidation = {
                   error.email = 'email already exist';
                 }
                 if (Object.keys(error).length > 0) {
-                  return res.status(404).json({
+                  return res.status(400).json({
                     error,
                     success: false
                   });

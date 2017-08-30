@@ -4,9 +4,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 /**
+ * @description sends sms notification
+ * 
  * @param  {string} phoneNumber
  * @param  {string} message
- * @description sends sms notification
  * @return {boolean} true or false
  */
 const sendSms = (phoneNumber, message) => {

@@ -3,23 +3,24 @@ import 'mocha';
 import 'chai';
 import should from 'should';
 import app from './../../app';
-import { loginUser } from './../seeders/userSeeders';
-import messages from './../seeders/groupMessagesSeeders';
 
 const server = supertest.agent(app);
-let regUserData;
+let regUserData = 'bearer ';
 
 describe('Group Routes', () => {
   it('allows a registered user to login successfully', (done) => {
     server
-      .post('/api/user/signin')
+      .post('/api/v1/user/signin')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(loginUser[0])
+      .send({
+        username: 'Pythagoras',
+        password: 'David19632'
+      })
       .expect(200)
       .end((err, res) => {
-        regUserData = res.body.Token;
+        regUserData += res.body.Token;
         res.status.should.equal(200);
         res.body.success.should.equal(true);
         done();
@@ -31,58 +32,99 @@ describe('Group Routes', () => {
 describe('Group Routes', () => {
   it('allows a logged in user create post to a group he/she belongs', (done) => {
     server
-      .post('/api/group/2/message')
+      .post('/api/v1/group/1/message')
       .set('Connection', 'keep alive')
-      .set('x-access-token', regUserData)
+      .set('authorization', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(messages[0])
+      .send({
+        content: 'I love coding',
+        priority: 'normal'
+      })
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.message.should.equal('Can you solve 2x + 5 = 6');
+        res.body.message.should.equal('message sent successfully');
         done();
       });
   });
 
   it('allows a logged in user create post to a group he/she belongs', (done) => {
     server
-      .post('/api/group/2/message')
+      .post('/api/v1/group/1/message')
       .set('Connection', 'keep alive')
-      .set('x-access-token', regUserData)
+      .set('authorization', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(messages[2])
+      .send({
+        content: 'I am here',
+        priority: 'normal'
+      })
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.postId.should.equal(2);
+        res.body.message.should.equal('message sent successfully');
         done();
       });
   });
   it('allows a logged in user create post to a group he/she belongs', (done) => {
     server
-      .post('/api/group/2/message')
+      .post('/api/v1/group/1/message')
       .set('Connection', 'keep alive')
-      .set('x-access-token', regUserData)
+      .set('authorization', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(messages[3])
+      .send({
+        content: 'I am the winner',
+        priority: 'normal'
+      })
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.postId.should.equal(2);
+        res.body.message.should.equal('message sent successfully');
         done();
       });
   });
   it('allows a logged in user get all posts from the group he/she belongs', (done) => {
     server
-      .get('/api/group/2/messages')
-      .set('x-access-token', regUserData)
+      .get('/api/v1/group/1/messages')
+      .set('authorization', regUserData)
       .expect(201)
       .end((err, res) => {
-        res.status.should.equal(201);
+        res.status.should.equal(200);
+        res.body[1].content.should.equal('I love coding');
         done();
       });
   });
+  it('allows a logged in user get all posts and their viewers from the group he/she belongs',
+    (done) => {
+      server
+        .get('/api/v1/group/1/message/viewers')
+        .set('authorization', regUserData)
+        .expect(200)
+        .end((err, res) => {
+          res.status.should.equal(200);
+          res.body.success.should.equal(true);
+          done();
+        });
+    });
+  it('allows a logged in user to be able to update seen messages',
+    (done) => {
+      server
+        .put('/api/v1/group/1updateSeenMessages')
+        .set('authorization', regUserData)
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .send({
+          seenMessageIds: [1],
+          seenLast: 1
+        })
+        .expect(201)
+        .end((err, res) => {
+          console.log(res.body, '________________________');
+          res.status.should.equal(201);
+          res.body.success.should.equal(true);
+          done();
+        });
+    });
 });

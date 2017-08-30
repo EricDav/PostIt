@@ -10,7 +10,7 @@
   "test": {
     "username": "postgres",
     "password": "Iloveodunayo",
-    "database": "test",
+    "database": "PostIt",
      "port": 5432,
     "host": "127.0.0.1",
     "dialect": "postgres"

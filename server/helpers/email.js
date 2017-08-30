@@ -11,10 +11,11 @@ dotenv.config();
 const Group = db.Group;
 
 /**
+ * @description sends email and sms notification based on the message type
+ * 
  * @param  {string} req request object
  * @param  {string} res response object
  * @param  {string} next call back
- * @description sends email and sms notification based on the message type
  * @return {void} no returns
  */
 const sendEmail = (req, res, next) => {

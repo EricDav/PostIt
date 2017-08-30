@@ -1,33 +1,29 @@
 import supertest from 'supertest';
-import model from '../models';
 import 'mocha';
 import 'chai';
 import should from 'should';
 import app from './../../app';
-import { loginUser, user } from './../seeders/userSeeders';
-import groupDetails from './../seeders/groupSeeders';
 
 const server = supertest.agent(app);
-let regUserData;
+let regUserData = 'bearer ';
 
 describe('Group Routes', () => {
-  before((done) => {
-    model.sequelize.sync({ force: true }).then(() => {
-      done();
-    }).catch((errors) => {
-      done();
-    });
-  });
   it('should allows a registered user to signup successfully', (done) => {
     server
       .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(user[0])
+      .send({
+        fullname: 'Ade Bola',
+        username: 'Bola',
+        email: 'Bola@me.com',
+        phoneNumber: '09066780653',
+        password: 'david1996'
+      })
       .expect(200)
       .end((err, res) => {
-        regUserData = res.body.Token;
+        //regUserData += res.body.Token;
         res.status.should.equal(201);
         res.body.success.should.equal(true);
         done();
@@ -39,9 +35,13 @@ describe('Group Routes', () => {
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(loginUser[0])
+      .send({
+        username: 'Pythagoras',
+        password: 'David19632'
+      })
       .expect(201)
       .end((err, res) => {
+        regUserData += res.body.Token;
         res.status.should.equal(200);
         res.body.success.should.equal(true);
         done();
@@ -52,10 +52,13 @@ describe('Group Routes', () => {
     server
       .post('/api/v1/group')
       .set('Connection', 'keep alive')
-      .set('x-access-token', regUserData)
+      .set('authorization', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(groupDetails[0])
+      .send({
+        name: 'Cohort 8',
+        description: 'We are one'
+      })
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
@@ -68,10 +71,13 @@ describe('Group Routes', () => {
     server
       .post('/api/v1/group')
       .set('Connection', 'keep alive')
-      .set('x-access-token', regUserData)
+      .set('authorization', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(groupDetails[0])
+      .send({
+        name: 'House',
+        description: 'I am house renter'
+      })
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
@@ -84,25 +90,31 @@ describe('Group Routes', () => {
     server
       .post('/api/v1/group')
       .set('Connection', 'keep alive')
-      .set('x-access-token', regUserData)
+      .set('authorization', regUserData)
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(groupDetails[1])
+      .send({
+        name: 'Learn Python',
+        description: 'Where we learn pyhton'
+      })
       .expect(409)
       .end((err, res) => {
         res.status.should.equal(409);
-        res.body.success.should.equal(false);
+        res.body.name.should.equal('Group title already exist');
         done();
       });
   });
 
   it('allows a logged in user to get all the groups he/she belongs to', (done) => {
     server
-      .get('/api/v1/user/1/groups')
-      .set('x-access-token', regUserData)
+      .get('/api/v1/groups')
+      .set('authorization', regUserData)
       .expect(200)
       .end((err, res) => {
         res.status.should.equal(200);
+        res.body.groups.length.should.equal(3);
+        res.body.groups[0].description.should.equal('This is where Maths lives');
+        res.body.groups[1].name.should.equal('Cohort 8');
         done();
       });
   });
@@ -113,10 +125,13 @@ describe('Group Routes', () => {
       .set('Connection', 'keep alive')
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(groupDetails[0])
+      .send({
+        name: 'fish',
+        description: 'where we train fish'
+      })
       .expect(403)
       .end((err, res) => {
-        res.status.should.equal(403);
+        res.status.should.equal(401);
         res.body.message.should.equal('No token provided.');
         done();
       });
@@ -126,13 +141,16 @@ describe('Group Routes', () => {
     server
       .post('/api/v1/group')
       .set('Connection', 'keep alive')
-      .set('x-access-token', 'tyrtyfgf67543')
+      .set('authorization', 'tyrtyfgf67543')
       .set('Content-Type', 'application/json')
       .type('form')
-      .send(groupDetails[0])
+      .send({
+        name: 'love',
+        description: 'Love is good'
+      })
       .expect(403)
       .end((err, res) => {
-        res.status.should.equal(403);
+        res.status.should.equal(401);
         res.body.message.should.equal('Failed to authenticate token.');
         done();
       });
@@ -141,40 +159,43 @@ describe('Group Routes', () => {
 
   it('allows a group admin to delete the group he owns', (done) => {
     server
-      .delete('/api/v1/group/1/delete')
-      .set('x-access-token', regUserData)
+      .delete('/api/v1/group/4/delete')
+      .set('authorization', regUserData)
       .expect(200)
       .end((err, res) => {
         res.status.should.equal(200);
-        res.body.message.should.equal('Deleted group, group messages and group members successfully');
+        res.body.message.should.equal('group deleted successfully');
         done();
       });
   });
 
-  it('allows another registered user to login successfully', (done) => {
-    server
-      .post('/api/v1/user/signin')
-      .set('Connection', 'keep alive')
-      .set('Content-Type', 'application/json')
-      .type('form')
-      .send(loginUser[1])
-      .set('x-access-token', regUserData)
-      .expect(200)
-      .end((err, res) => {
-        regUserData = res.body.Token;
-        res.status.should.equal(200);
-        res.body.success.should.equal(true);
-        done();
-      });
-  });
   it('prevents a user from deleting a group that does not exist', (done) => {
     server
       .delete('/api/v1/group/8/delete')
       .expect(404)
-      .set('x-access-token', regUserData)
+      .set('authorization', regUserData)
       .end((err, res) => {
         res.status.should.equal(404);
         res.body.message.should.equal('Group not found. Group does not exist or has been deleted');
+        done();
+      });
+  });
+  it('should update group details', (done) => {
+    server
+      .put('/api/v1/group/1/update')
+      .set('Connection', 'keep alive')
+      .set('authorization', regUserData)
+      .set('Content-Type', 'application/json')
+      .type('form')
+      .send({
+        name: 'love',
+        description: 'Love is good'
+      })
+      .expect(201)
+      .end((err, res) => {
+        console.log(res.body)
+        res.status.should.equal(201);
+        res.body.message.should.equal('group info updated successfully');
         done();
       });
   });

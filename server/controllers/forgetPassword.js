@@ -7,9 +7,10 @@ import isValidField from '../helpers/isValidField';
 const User = db.User;
 
 /**
+   * @description send secret code to users that has forgoten their password
+   * 
    * @param  {object} req
    * @param  {object} res
-   * @description send secret code to users that has forgoten their password
    * @return {string} an object with key: group, value: number of new messages in the group
    */
 export const sendSecretCode = (req, res) => {
@@ -42,9 +43,10 @@ export const sendSecretCode = (req, res) => {
 };
 
 /**
+   * @description Verify secrete code sent to users 
+   * 
    * @param  {object} req
    * @param  {object} res
-   * @description Verify secrete code sent to users 
    */
 
 export const VerifyCodeAndUpdatePassword = (request, response) => {

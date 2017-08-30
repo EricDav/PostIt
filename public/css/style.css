@@ -364,3 +364,11 @@ resetUser {
     margin-top: 0px;
     margin-bottom: 20px;
 }
+.seen {
+    color:#35aeeb;
+    border: solid #35aeeb;
+    font-size: 15px;
+}
+.numSeen {
+    color:black;
+}

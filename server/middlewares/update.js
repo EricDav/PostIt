@@ -5,10 +5,11 @@ import isValidField from '../helpers/isValidField';
 
 const User = db.User;
 /**
+   * @description validate inputs field for username, name, email and password
+   * 
    * @param  {object} 
    * @param  {object} res
    * @param  {} next
-   * @description validate inputs field for username, name, email and password
    */
 class UpdateUser {
   constructor(user) {
@@ -17,8 +18,9 @@ class UpdateUser {
   }
 
   /**
- * @param  {object} data user object
  * @description checks for field that was updated
+ * 
+ * @param  {object} data user object
  * @return {array} returns an array of updated field
  */
   filterUserData(data) {
@@ -37,9 +39,10 @@ class UpdateUser {
     return shouldUpdate;
   }
 
-  /**
- * @param  {string} fullname 
+  /** 
  * @description validate username field
+ * 
+ * @param  {string} fullname 
  * @return {string} return error message
  */
   validateFullname(fullname) {
@@ -51,8 +54,9 @@ class UpdateUser {
   }
 
   /**
- * @param  {string} email
  * @description validate email field
+ * 
+ * @param  {string} email
  * @return {string} return error message
  */
   validateEmail(email, res) {
@@ -65,8 +69,9 @@ class UpdateUser {
   }
 
   /**
- * @param  {string} phoneNumber 
  * @description validate phone number field
+ * 
+ * @param  {string} phoneNumber 
  * @return {string} return error message
  */
   validatePhoneNumber(phoneNumber) {
@@ -79,10 +84,11 @@ class UpdateUser {
 }
 
 /**
+ * @description validate updated user information
+ * 
  * @param  {string} req request object
  * @param  {string} res response object
  * @param  {string} next call back
- * @description validate updated user information
  * @return {void} no returns
  */
 function validateUpdateUser(req, res, next) {
@@ -111,8 +117,6 @@ function validateUpdateUser(req, res, next) {
       if (property[1] === 1) {
         update.validateFullname(property[0]);
       } else if (property[1] === 2) {
-        req.body.isUsername = true;
-        req.body.userName = user.username;
         uniqueUpdates.pop(2);
         update.validateUsername(property[0]);
       } else if (property[1] === 3) {

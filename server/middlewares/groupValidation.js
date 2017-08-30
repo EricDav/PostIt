@@ -5,10 +5,11 @@ const Groups = db.Group;
 const User = db.User;
 
 /**
+ * @description group validation. validate for adding members to group
+ * 
  * @param  {object} req
  * @param  {object} res
  * @param  {type} next call back function
- * @description group validation. validate for adding members to group
  * @return {object}
  */
 const group = {
@@ -50,10 +51,11 @@ const group = {
   },
 
   /**
+    * @description validate for obtaining a group information
+    * 
     * @param  {object} req
     * @param  {object} res
     * @param  {type} next call back function
-    * @description validate for obtaining a group information
     * @return {null} no return
  */
   groupValidation(req, res, next) {
@@ -88,10 +90,11 @@ const group = {
   },
 
   /**
+    * @description validate for creating a group
+    *
     * @param  {object} req
     * @param  {object} res
     * @param  {type} next call back function
-    * @description validate for creating a group
     * @return {voud} no returns
  */
   groupNullValidation(req, res, next) {
@@ -118,20 +121,21 @@ const group = {
         if (nullValues.name === '') {
           nullValues.name = 'Group title already exist';
         }
-        return res.status(401).send(nullValues);
+        return res.status(409).send(nullValues);
       } else if (nullValues.name === '' && nullValues.description === '') {
         next();
       } else {
-        return res.status(401).send(nullValues);
+        return res.status(405).send(nullValues);
       }
     });
   },
 
   /**
+ * @description validate for group deletion. make sure that it is the correct user have the license to delete a group
+ * 
  * @param  {object} req
  * @param  {object} res
  * @param  {type} next call back function
- * @description validate for group deletion. make sure that it is the correct user have the license to delete a group
  * @return {void}
  */
   deleteGroupValidation(req, res, next) {
@@ -143,7 +147,7 @@ const group = {
             success: false,
             message: 'Group not found. Group does not exist or has been deleted'
           });
-        } else if (Group.ownerUserName === req.currentUser.currentUser.username) {
+        } else if (Group.creator === req.currentUser.currentUser.username) {
           next();
         } else {
           res.status(401).json({
@@ -156,10 +160,11 @@ const group = {
   },
 
   /**
+ *@description validate for deleting a user from a group
+ *
  * @param  {object} req
  * @param  {object} res
  * @param  {type} next call back function
- * @description validate for deleting a user from a group
  * @return {void}
  */
   deleteUserFromGroupValidation(req, res) {
