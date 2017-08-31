@@ -7,7 +7,7 @@ export default (state = [], action = {}) => {
     case ADD_GROUP:
       return [
         ...state,
-        state.group
+        action.addedGroup
       ];
     default: return state;
   }

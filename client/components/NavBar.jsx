@@ -4,7 +4,10 @@ import propTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { logout } from '../actions/userActions';
 
-export default () => {
+
+
+class NavBar extends React.Component {
+    render() {
         return ( <nav className="purple darken-1" role="navigation">
                  <div className="nav-wrapper container"><a id="logo-container" href="#" className="brand-logo">PostIt</a>
                     <ul className="right hide-on-med-and-down">
@@ -18,6 +21,7 @@ export default () => {
              </div>
             </nav>
         );
+    }
 }
 
-
+export default NavBar;

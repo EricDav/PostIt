@@ -1,6 +1,7 @@
 import React from 'react';
 
-export default () => {
+class Member extends React.Component {
+    render() {
             return (
             <li className="collection-item avatar email-unread group-channel Me">
                 <a><span className="group-title">{this.props.member.fullname}</span></a>
@@ -8,4 +9,7 @@ export default () => {
                 </span></a>}
             </li>
         );
+    }
 }
+
+export default Member;

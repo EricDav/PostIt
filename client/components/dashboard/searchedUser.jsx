@@ -3,7 +3,8 @@ import connect from 'react-redux';
 
 import Button from './button';
 
-export default () => {
+class SearchedUser extends React.Component {
+    render() {
         const Buton = <Button id={this.props.userId} groupId = {this.props.groupId} fullname={this.props.fullname}/>
             return (
             <li className="collection-item avatar email-unread group-channel">
@@ -12,4 +13,7 @@ export default () => {
                 <a href="#!" className="secondary-content"></a>
             </li>
         );
+    }
 }
+
+export default SearchedUser;

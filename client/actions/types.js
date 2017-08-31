@@ -17,3 +17,4 @@ export const SET_PIORITY_LEVEL = 'SET_PIORITY_LEVEL';
 export const SET_RESET_PASSWORD_USER_PAGE = 'SET_RESET_PASSWORD_USER_PAGE';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const ADD_GROUP = 'ADD_GROUP';
+export const ADD_USER = 'ADD_USER';

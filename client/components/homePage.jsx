@@ -12,7 +12,7 @@ import Google from './googleSignin';
 
 class HomePage extends React.Component {
   componentDidMount() {
-   window.location.reload();
+   //window.location.reload();
   }
     render() {
       const {userSignupRequest, userSigninRequest, getGroupsRequest} = this.props;

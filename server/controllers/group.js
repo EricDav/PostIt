@@ -36,10 +36,18 @@ const createGroups = {
         id: req.params.groupId
       } })
       .then((group) => {
-        group.addUser(req.body.userId);
-        res.status(201).json({
-          success: true,
-          message: 'user added to group successfully'
+        group.addUser(req.body.userId).then(() => {
+          User.findOne({
+            where: {
+              id: req.body.userId
+            }
+          })
+            .then((addedUser) => {
+              res.status(201).json({
+                success: true,
+                user: addedUser
+              });
+            });
         });
       })
       .catch(error => res.status(400).send(error));

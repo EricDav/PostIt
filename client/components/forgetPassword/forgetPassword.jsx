@@ -6,8 +6,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendSecretCode, VerifyCodeAndUpdatePassword } from '../../actions/resetPassword';
 
-ForgetPassword = () => {
-    return (
+class ForgetPassword extends React.Component {
+  render() {
+      return (
              <div className="body-container"   className="image">
                 <NavBar/>
                 <center>
@@ -19,6 +20,7 @@ ForgetPassword = () => {
                </div>
       )
   }
+}
 
 const ResetPasswordPropTypes = {
     sendSecretCode: PropTypes.func,

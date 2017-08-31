@@ -5,7 +5,7 @@ import { ADD_MESSAGE } from './types';
 /**
  * @description set messages of the current group
  * 
- * @param  {array} messages
+ * @param  {object} message
  * @return {object} returns object
  */
 export function addMessage(message) {

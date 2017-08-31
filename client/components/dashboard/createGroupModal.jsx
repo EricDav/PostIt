@@ -52,23 +52,14 @@ class CreateGroupModal extends React.Component {
   }
   
     onClick(event) {
+      event.preventDefault();
       this.props.createGroupRequest({name: this.state.name, description: this.state.description}).then(
         () => {
-          Materialize.toast('Group created succesfully', 1500, 'purple', 
-          () => {
-             this.props.group().then(
-            () => {},
-            () => {
-               Materialize.toast('could not load groups', 1500, 'purple')
-            }
-          )
-          });
-    },
+          Materialize.toast('Group created succesfully', 1500, 'purple');
+        },
         ( data ) => {
-          Materialize.toast(this.state.errors.message, 5000, 'purple',
-      () => {
-        
-      });
+          console.log(data)
+          Materialize.toast('Cant create Group', 5000, 'purple');
         }
       )
     }

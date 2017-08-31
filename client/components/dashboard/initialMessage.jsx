@@ -6,7 +6,7 @@ export default () => {
                   <hr className="grey-text text-lighten-2"/>
                   <div className="collection-item avatar">
                       <p className="email-subject truncate"><span className="email-tag grey lighten-3">
-                        <b>#{this.props.group.name}</b>
+                        <b>Select or Create a group</b>
                         </span>
                   </p>
                   </div>
