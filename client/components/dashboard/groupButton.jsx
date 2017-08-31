@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { setRightNavBarView } from '../../actions/setRightNavBarView';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 
 class GroupButton extends React.Component {

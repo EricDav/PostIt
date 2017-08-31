@@ -1,10 +1,6 @@
 import React from 'react';
 
-class NavigationBar extends React.Component {
-    // componentDidMount() {
-    //     $('ul.tabs').tabs();
-    // }
-    render() {
+export default () => {
         return (
             <div className="container">
               <div className="section">
@@ -26,7 +22,4 @@ class NavigationBar extends React.Component {
     <br></br>
   </div>
         );
-    }
 }
-
-export default NavigationBar;

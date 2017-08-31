@@ -1,6 +1,7 @@
 import React, { Component }  from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import Group from './group';
 import { getNewGroupMessages, getInitialNewMessages } from  '../../actions/getGroupsAction';
 import newMessage from '../../helpers/getNewMessage';

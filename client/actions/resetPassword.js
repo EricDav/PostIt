@@ -1,9 +1,11 @@
 import axios from 'axios';
+
 import { WILL_SHOW, RESET_PASSWORD_USER } from './types';
 
 /**
- * @param  {boolean} willShow
  * @description decide weather to show the confirm password page
+ * 
+ * @param  {boolean} willShow
  * @return {object} returns object
  */
 export function willShowResetPasswordPage(willShow) {
@@ -14,8 +16,9 @@ export function willShowResetPasswordPage(willShow) {
 }
 
 /**
- * @param  {object} resetPasswordUser
  * @description set the user requesting for reset password
+ * 
+ * @param  {object} resetPasswordUser
  * @return {object} returns object
  */
 export function setResetPasswordUser(resetPasswordUser) {
@@ -26,8 +29,9 @@ export function setResetPasswordUser(resetPasswordUser) {
 }
 
 /**
- * @param  {array} userData
  * @description api call that checks if code is valid
+ * 
+ * @param  {array} userData
  * @return {object} returns object
  */
 export function VerifyCodeAndUpdatePassword(userData) {
@@ -37,8 +41,9 @@ export function VerifyCodeAndUpdatePassword(userData) {
 }
 
 /**
+ * @description sends code for verification
+ * 
  * @param  {object}userData
- * @description current user information
  * @return {object} returns object
  */
 export function sendSecretCode(userData) {

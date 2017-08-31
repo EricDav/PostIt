@@ -1,7 +1,6 @@
 import React from 'react';
 
-class InitialMessageBoard extends React.Component {
-    render() {
+export default () => {
         return (
            <div id="email-details" className="col s12 m8 l8 card-panel my Imessage">
                   <hr className="grey-text text-lighten-2"/>
@@ -27,7 +26,5 @@ class InitialMessageBoard extends React.Component {
                   </div>
                 </div>
         );
-    }
 }
 
-export default InitialMessageBoard;

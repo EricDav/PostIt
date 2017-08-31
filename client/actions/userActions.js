@@ -1,12 +1,14 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { SET_CURRENT_USER, SET_SHOW_UPDATE_USER_PAGE, SET_ERROR_MESSAGE,
   SET_RESET_PASSWORD_USER_PAGE } from './types';
 
 /**
- * @param  {object} user
  * @description action for user current user information in store
+ * 
+ * @param  {object} user
  * @return {object} returns object
  */
 export function setCurrentUser(user) {
@@ -17,8 +19,9 @@ export function setCurrentUser(user) {
 }
 
 /**
- * @param  {boolean} show
  * @description set weather to show update user form
+ * 
+ * @param  {boolean} show
  * @return {object} returns object
  */
 export function setShowUpdateUserPage(show) {
@@ -29,8 +32,9 @@ export function setShowUpdateUserPage(show) {
 }
 
 /**
- * @param  {boolean} show
  * @description set weather to show reset password user page
+ * 
+ * @param  {boolean} show
  * @return {object} returns object
  */
 export function setResetPasswordUserPage(show) {
@@ -41,8 +45,9 @@ export function setResetPasswordUserPage(show) {
 }
 
 /**
- * @param  {object} error
  * @description set error messages
+ * 
+ * @param  {object} error
  * @return {object} returns object
  */
 export function errorMessage(error) {
@@ -53,8 +58,9 @@ export function errorMessage(error) {
 }
 
 /**
- * @param  {boolean} show
  * @description sign out action creator
+ * 
+ * @param  {boolean} show
  * @return {object} returns object
  */
 export function logout() {
@@ -68,8 +74,9 @@ export function logout() {
 }
 
 /**
- * @param  {object} userData
  * @description set weather to show reset password user page
+ * 
+ * @param  {object} userData
  * @return {object} returns object
  */
 export function userSigninRequest(userData) {
@@ -83,8 +90,9 @@ export function userSigninRequest(userData) {
 }
 
 /**
- * @param  {boolean} shouldShow
  * @description set weather to show update user page
+ * 
+ * @param  {boolean} shouldShow
  * @return {object} returns object
  */
 export function showUpdateUserPage(shouldShow) {
@@ -93,8 +101,9 @@ export function showUpdateUserPage(shouldShow) {
 }
 
 /**
- * @param  {boolean} shouldShow
  * @description set weather to show reset password user page
+ * 
+ * @param  {boolean} shouldShow
  * @return {object} returns object
  */
 export function showResetPasswordUserPage(shouldShow) {
@@ -103,8 +112,9 @@ export function showResetPasswordUserPage(shouldShow) {
 }
 
 /**
- * @param  {object} userData
  * @description reset user password
+ * 
+ * @param  {object} userData
  * @return {object} returns object
  */
 export function resetPassword(userData) {
@@ -116,8 +126,9 @@ export function resetPassword(userData) {
 }
 
 /**
+ *  @description update user information action creator
+ * 
  * @param  {object} userData
- * @description update user information action creator
  * @return {object} returns object
  */
 export function updateUserProfile(userData) {
@@ -130,6 +141,7 @@ export function updateUserProfile(userData) {
 
 /**
  * @description set a user Information when updated
+ * 
  * @return {object} returns object
  */
 export function getUser() {

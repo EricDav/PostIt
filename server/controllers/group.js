@@ -24,7 +24,7 @@ const createGroups = {
         group.addUser(req.currentUser.currentUser.id);
         res.status(201).json({
           success: true,
-          message: 'group created successfully'
+          group
         });
       })
       .catch(error => res.status(500).send(error));

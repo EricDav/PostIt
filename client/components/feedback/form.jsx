@@ -1,8 +1,9 @@
 import React from 'react';
-import feedback from '../../actions/feedback';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+
+import feedback from '../../actions/feedback';
 
 class FeedbackForm extends React.Component {
     constructor(props) {

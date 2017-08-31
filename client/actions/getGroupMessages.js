@@ -1,10 +1,12 @@
 import axios from 'axios';
+
 import { SET_CURRENT_GROUP_MESSAGES, SET_CURRENT_GROUP_MEMBERS,
   SET_LAST_SEEN_MESSAGE, SET_OLD_SEEN_LAST } from './types';
 
 /**
- * @param  {array} messages
  * @description set messages of the current group
+ * 
+ * @param  {array} messages
  * @return {object} returns object
  */
 export function setCurrentGroupMessages(messages) {
@@ -15,8 +17,9 @@ export function setCurrentGroupMessages(messages) {
 }
 
 /**
- * @param  {array} members
  * @description set the members of the current group
+ * 
+ * @param  {array} members
  * @return {object} returns object
  */
 export function setCurrentGroupMembers(members) {
@@ -27,8 +30,9 @@ export function setCurrentGroupMembers(members) {
 }
 
 /**
- * @param  {integer} setOldSeenLast
  * @description set the initial seenLast value 
+ * 
+ * @param  {integer} setOldSeenLast
  * @return {object} returns object
  */
 export function setOldSeenLast(setoldSeenLast) {
@@ -39,8 +43,9 @@ export function setOldSeenLast(setoldSeenLast) {
 }
 
 /**
- * @param  {integer} groupMessageSeenLast
  * @description set the current message seen last
+ * 
+ * @param  {integer} groupMessageSeenLast
  * @return {object} returns object
  */
 export function setSeenLast(groupMessageSeenLast) {
@@ -51,8 +56,9 @@ export function setSeenLast(groupMessageSeenLast) {
 }
 
 /**
- * @param  {integer} groupId
  * @description get all the members in a group by making a get request
+ * 
+ * @param  {integer} groupId
  * @return {object} returns object
  */
 export function getGroupMembers(groupId) {
@@ -64,8 +70,9 @@ export function getGroupMembers(groupId) {
   };
 }
 /**
+ * @description get all the messages and its viewers in a group by making a get request
+ * 
  * @param  {integer} groupId
- * @description get all the messages in a group by making a get request
  * @return {object} returns object
  */
 export function getGroupMessages(groupId) {
@@ -78,9 +85,10 @@ export function getGroupMessages(groupId) {
   };
 }
 /**
+ * @description update all the messages that have been seen by a user
+ * 
  * @param  {integer} groupId
  * @param  {integer} data group data to be updated in data base
- * @description get all the members in a group by making a get request
  * @return {object} returns object
  */
 export function updateSeenMessages(groupId, data) {

@@ -1,8 +1,9 @@
 import React from 'react';
-import addUserToAGroup from '../../actions/addUserToAGroup';
-import { getGroupMembers } from '../../actions/getGroupMessages';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
+
+import addUserToAGroup from '../../actions/addUserToAGroup';
+import { getGroupMembers } from '../../actions/getGroupMessages';
 
 class Button extends React.Component {
     constructor(props) {

@@ -1,8 +1,9 @@
 import { SET_PIORITY_LEVEL } from './types';
 
 /**
- * @param  {array} piority
  * @description saction creator for setting current group
+ * 
+ * @param  {array} piority
  * @return {object} returns object
  */
 export function setPiority(piority) {
@@ -13,12 +14,13 @@ export function setPiority(piority) {
 }
 
 /**
+ * @description set messages piority
+ * 
  * @param  {array} piority
- * @description set messages piority 
  * @return {object} returns object
  */
 export function piorityLevel(piority) {
   return dispatch => {
     dispatch(setPiority(piority));
-  }
+  };
 }

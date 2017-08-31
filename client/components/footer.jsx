@@ -1,7 +1,6 @@
 import React from 'react';
 
-class Footer extends React.Component {
-    render() {
+export default () => {
         return (
         <footer className="page-footer purple darken-1">
            <div className="footer-copyright">
@@ -11,7 +10,4 @@ class Footer extends React.Component {
           </div>
        </footer>
         );
-    }
 }
-
-export default Footer;

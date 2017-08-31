@@ -18,10 +18,10 @@ const Messages = {
         senderUsername: req.currentUser.currentUser.username,
         priority: req.body.priority
       })
-      .then(() => {
+      .then((createdMessage) => {
         res.status(201).json({
           success: true,
-          message: 'message sent successfully'
+          message: createdMessage
         });
       })
       .catch(error => res.status(400).send(error));

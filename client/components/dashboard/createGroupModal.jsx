@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createGroupRequest from '../../actions/createGroupAction';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
+import createGroupRequest from '../../actions/createGroupAction';
 class CreateGroupModal extends React.Component {
     constructor(props) {
         super(props);

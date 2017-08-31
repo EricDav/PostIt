@@ -1,11 +1,13 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { SET_CURRENT_USER } from './types';
 
 /**
- * @param  {object} user
  * @description action for user signin
+ * 
+ * @param  {object} user
  * @return {object} returns object
  */
 export function setCurrentUser(user) {
@@ -16,8 +18,9 @@ export function setCurrentUser(user) {
 }
 
 /**
- * @param  {object} userData
  * @description create action for user signin
+ * 
+ * @param  {object} userData
  * @return {object} returns object
  */
 export function userSignupRequest(userData) {
