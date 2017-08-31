@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - node
+script:
+  - npm install
+  - npm run tests
+before_script:
+  - psql -c 'create database travis;' -U postgres
+after success:
+  - psql -c 'drop database travis;' -U postgres
+services:
+  - postgres sql
+exclude_paths:
+  - coverage/
+  - dist/**/*  
