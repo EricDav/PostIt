@@ -1,10 +1,11 @@
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+
 import db from '../models';
 import isValidField from '../helpers/isValidField';
 import removePassword from '../helpers/removePassword';
 import getNewMessages from '../helpers/getNewMessages';
+import genToken from '../helpers/genToken';
 
 dotenv.load();
 const secret = process.env.secretKey;
@@ -37,17 +38,14 @@ const user = {
           active: true
         })
         .then((createdUser) => {
-          const currentUser = { username: user.username,
+          const currentUser = {
+            username: createdUser.username,
             fullname: createdUser.fullname,
             id: createdUser.id,
             email: createdUser.email,
             phoneNumber: createdUser.phoneNumber,
           };
-          const token = jwt.sign(
-            { currentUser,
-              exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
-            }, secret
-          );
+          const token = genToken(currentUser, secret);
           return res.status(201).json({
             success: true,
             message: 'Token generated successfully',
@@ -400,6 +398,35 @@ const user = {
           user: userInfo
         });
       });
+  },
+  googleSignin(req, res) {
+    User.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
+      .then((googleUser) => {
+        if (!googleUser) {
+          return res.status(200).json({
+            success: true,
+            message: 'New user'
+          });
+        }
+        const currentUser = {
+          id: googleUser.id,
+          fullname: googleUser.fullname,
+          email: googleUser.email,
+          username: googleUser.username,
+          phoneNumber: googleUser.phoneNumber
+        };
+        const token = genToken(currentUser, secret);
+        res.status(200).json({
+          success: true,
+          message: 'signup with google successfully',
+          token
+        });
+      })
+      .catch(error => res.status(500).send(error));
   }
 };
 

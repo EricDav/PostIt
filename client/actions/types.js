@@ -18,3 +18,4 @@ export const SET_RESET_PASSWORD_USER_PAGE = 'SET_RESET_PASSWORD_USER_PAGE';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const ADD_GROUP = 'ADD_GROUP';
 export const ADD_USER = 'ADD_USER';
+export const SET_GOOGLE_FORM = 'SET_GOOGLE_FORM';

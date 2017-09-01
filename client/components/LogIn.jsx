@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import Google from './googleSignin';
 import { browserHistory } from 'react-router';
 
 class LogIn extends React.Component {
@@ -83,6 +84,9 @@ class LogIn extends React.Component {
                   </div>
                   <div className="row">
                     <div className="input-field col s12">
+                      <center>
+                            <Google/>
+                          </center>
                       <p className="margin center medium-small sign-up"><a onClick={this.onClick} href="">Forgot password ?</a></p>
                     </div>
                   </div>

@@ -15,6 +15,7 @@ import showUpdatePage from './showUpdatePage';
 import error from './error';
 import setPiority from './setPiority';
 import showResetPassword from './showResetPassword';
+import showGoogleForm from './showGoogleForm';
 
 export default combineReducers({
   auth,
@@ -32,5 +33,6 @@ export default combineReducers({
   showUpdatePage,
   error,
   setPiority,
-  showResetPassword
+  showResetPassword,
+  showGoogleForm
 });

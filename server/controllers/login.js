@@ -1,7 +1,8 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+
 import db from '../models';
+import genToken from '../helpers/genToken';
 
 dotenv.load();
 const User = db.User;
@@ -33,11 +34,7 @@ export const logIn = {
               email: user.email,
               phoneNumber: user.phoneNumber,
             };
-            const token = jwt.sign(
-              { currentUser,
-                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
-              }, secret
-            );
+            const token = genToken(currentUser, secret);
             User.update({
               active: true
             },
