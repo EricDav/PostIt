@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import winston from 'winston';
 
-dotenv.config();
+dotenv.load();
 
 /**
  * @description checks if the string pass in is a digit. Means all the charcters are digit
@@ -27,6 +27,7 @@ const mailSender = (req, res, message, successMessage, secretCode, email) => {
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
+      console.log(error);
       winston.info(info);
       return res.status(500).json({
         success: false,

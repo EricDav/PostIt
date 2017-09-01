@@ -73,6 +73,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-google-login": "^2.9.3",
+    "react-google-login-component": "^0.8.0",
     "react-paginate": "^4.4.3",
     "react-redux": "^5.0.5",
     "react-router": "^2.4.0",

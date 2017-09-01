@@ -9,6 +9,7 @@ import { userSigninRequest } from '../actions/userActions';
 import PropTypes from 'prop-types';
 import  { getGroupsRequest }  from '../actions/getGroupsAction';
 import Google from './googleSignin';
+import GoogleSignup from './googleLoginForm';
 
 class HomePage extends React.Component {
   componentDidMount() {
@@ -19,7 +20,7 @@ class HomePage extends React.Component {
         return (
        <div className="body-container"   className="image">
         <NavBar/>
-        <div className="row" >
+       {this.props.showGoogleForm.showForm && <div className="row" >
           <div className="col s6 offset-s3 valign">
             <div className="row">
               <ul className="tabs tab-profile z-depth-1 purple darken-1" style={{ width: 100 }}>
@@ -32,12 +33,13 @@ class HomePage extends React.Component {
               </ul>
               <Login userSigninRequest={userSigninRequest} getGroupsRequest ={getGroupsRequest}/>
               <SignUp userSignupRequest={userSignupRequest}/>
-              <Google/>
+              <Google googleData={this.props.showGoogleForm}/>
             </div>
           </div>
-        </div>
-       </div>
-        );
+        </div> }
+         {!this.props.showGoogleForm.showForm && <GoogleSignup userSignupRequest={userSignupRequest} googleData={this.props.showGoogleForm}/> }
+       </div> 
+        ); 
     }
 }
 
@@ -48,6 +50,12 @@ const HomePagePropTypes = {
 
  }
 
+ function mapStateToProps(state) {
+   return {
+     showGoogleForm: state.showGoogleForm
+   };
+ }
+
  PropTypes.checkPropTypes(HomePagePropTypes, 'prop', 'HomePage');
 
-export default connect(null, {userSignupRequest, userSigninRequest, getGroupsRequest})(HomePage);
+export default connect(mapStateToProps, {userSignupRequest, userSigninRequest, getGroupsRequest})(HomePage);
