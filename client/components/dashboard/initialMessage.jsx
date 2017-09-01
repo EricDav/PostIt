@@ -1,13 +1,12 @@
 import React from 'react';
 
-class InitialMessageBoard extends React.Component {
-    render() {
+export default () => {
         return (
            <div id="email-details" className="col s12 m8 l8 card-panel my Imessage">
                   <hr className="grey-text text-lighten-2"/>
                   <div className="collection-item avatar">
                       <p className="email-subject truncate"><span className="email-tag grey lighten-3">
-                        <b>#{this.props.group.name}</b>
+                        <b>Select or Create a group</b>
                         </span>
                   </p>
                   </div>
@@ -27,7 +26,5 @@ class InitialMessageBoard extends React.Component {
                   </div>
                 </div>
         );
-    }
 }
 
-export default InitialMessageBoard;

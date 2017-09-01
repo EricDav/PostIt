@@ -1,10 +1,11 @@
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+
 import db from '../models';
 import isValidField from '../helpers/isValidField';
 import removePassword from '../helpers/removePassword';
 import getNewMessages from '../helpers/getNewMessages';
+import genToken from '../helpers/genToken';
 
 dotenv.load();
 const secret = process.env.secretKey;
@@ -13,11 +14,12 @@ const message = db.Message;
 const viewMessages = db.messageViewer;
 const seenLast = db.SeenLast;
 /**
+ *  @description create a user with name, username, email, phone number and password.
+ * 
  * @param  {object} req
  * @param  {object} res
- * @description create a user with name, username, email, phone number and password.
  */
-const createUser = {
+const user = {
   create(req, res) {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
@@ -35,18 +37,14 @@ const createUser = {
           phoneNumber: req.body.phoneNumber,
           active: true
         })
-        .then((user) => {
+        .then((createdUser) => {
           const currentUser = { username: user.username,
-            fullname: user.fullname,
-            id: user.id,
-            email: user.email,
-            phoneNumber: user.phoneNumber,
+            fullname: createdUser.fullname,
+            id: createdUser.id,
+            email: createdUser.email,
+            phoneNumber: createdUser.phoneNumber,
           };
-          const token = jwt.sign(
-            { currentUser,
-              exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
-            }, secret
-          );
+          const token = genToken(currentUser, secret);
           return res.status(201).json({
             success: true,
             message: 'Token generated successfully',
@@ -58,9 +56,10 @@ const createUser = {
   },
 
   /**
+   * @description fetch all the users from database
+   *
    * @param  {object} req
    * @param  {object} res
-   * @description fetch all the users from database
    * @return {array} all users in an array
    */
   allUsers(req, res) {
@@ -73,16 +72,31 @@ const createUser = {
   },
 
   /**
+   *@description update user uptable details like fullname, email and phone number
+   *
    * @param  {object} req
    * @param  {object} res
-   * @description update user uptable details like fullname, email and phone number
    */
 
   updateUserInfo(req, res) {
-    User.update({
+    const user = {
       email: req.body.email,
-      fullname: req.body.fullname,
-      phoneNumber: req.body.phoneNumber
+      phoneNumber: req.body.phoneNumber,
+      fullname: req.body.fullname
+    };
+    if (!req.body.email) {
+      user.email = req.currentUser.currentUser.email;
+    }
+    if (!req.body.fullname) {
+      user.fullname = req.currentUser.currentUser.fullname;
+    }
+    if (!req.body.phoneNumber) {
+      user.phoneNumber = req.currentUser.currentUser.phoneNumber;
+    }
+    User.update({
+      email: user.email,
+      fullname: user.fullname,
+      phoneNumber: user.phoneNumber
     }, {
       where: {
         id: req.currentUser.currentUser.id
@@ -97,9 +111,10 @@ const createUser = {
   },
 
   /**
-   * @param  {object} req
-   * @param  {object} res
    * @description reset users password given the user provide the initial password
+   * 
+   * @param  {object} req request object
+   * @param  {object} res response object
    */
 
   resetPassword(req, res) {
@@ -160,10 +175,11 @@ const createUser = {
   },
 
   /**
-   * @param  {object} req
-   * @param  {object} res
-   * @description fetch all the messages and those that has seen 
-   * @description  them from a specific group the current users belongs to.
+   * @description fetch all the messages and those that has seen
+   * them from a specific group the current users belongs to.
+   * 
+   * @param  {object} request object
+   * @param  {object} response object
    * @return {array} all messages and viewers in an array
    */
 
@@ -223,9 +239,11 @@ const createUser = {
   },
 
   /**
-   * @param  {object} req
-   * @param  {object} res
    * @description update the messages that have been seen by a user
+   * 
+   * @param  {object} req request object
+   * @param  {object} res response object
+   * 
    */
 
   updateSeenMessages(req, res) {
@@ -281,18 +299,19 @@ const createUser = {
                     message: 'seen messages updated successfully'
                   });
                 })
-                .catch(error => res.status(402).send(error));
+                .catch(error => res.status(500).send(error));
             })
-            .catch(error => res.status(403).send(error));
+            .catch(error => res.status(500).send(error));
         }
       })
-      .catch(error => res.status(405).send(error));
+      .catch(error => res.status(500).send(error));
   },
 
   /**
+   *  @description It gets all the numbers of new messages in all the groups a user belongs to
+   * 
    * @param  {object} req
    * @param  {object} res
-   * @description It gets all the numbers of new messages in all the groups a user belongs to
    * @return {object} an object with key: group, value: number of new messages in the group
    */
   getMessages(req, res) {
@@ -301,8 +320,8 @@ const createUser = {
         id: req.currentUser.currentUser.id
       }
     })
-      .then((user) => {
-        user.getGroups().then((Groups) => {
+      .then((currentUser) => {
+        currentUser.getGroups().then((Groups) => {
           const groupIds = [];
           Groups.forEach((group) => {
             groupIds.push(group.id);
@@ -342,9 +361,10 @@ const createUser = {
   },
 
   /**
+   * @description get current user information
+   * 
    * @param  {object} req
    * @param  {object} res
-   * @description get current user information
    * @return {object} current user information
    */
   getUser(req, res) {
@@ -353,8 +373,8 @@ const createUser = {
         id: req.currentUser.currentUser.id
       }
     })
-      .then((user) => {
-        if (!user) {
+      .then((currentUser) => {
+        if (!currentUser) {
           return res.status(404).json({
             success: false,
             message: 'User does not exist'
@@ -366,18 +386,47 @@ const createUser = {
           });
         }
         const userInfo = {
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-          fullname: user.fullname
+          id: currentUser.id,
+          username: currentUser.username,
+          email: currentUser.email,
+          phoneNumber: currentUser.phoneNumber,
+          fullname: currentUser.fullname
         };
         return res.status(200).json({
           success: true,
           user: userInfo
         });
       });
+  },
+  googleSignin(req, res) {
+    User.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
+      .then((googleUser) => {
+        if (!googleUser) {
+          return res.status(200).json({
+            success: true,
+            message: 'New user'
+          });
+        }
+        const currentUser = {
+          id: googleUser.id,
+          fullname: googleUser.fullname,
+          email: googleUser.email,
+          username: googleUser.username,
+          phoneNumber: googleUser.phoneNumber
+        };
+        const token = genToken(currentUser, secret);
+        res.status(200).json({
+          success: true,
+          message: 'signup with google successfully',
+          token
+        });
+      })
+      .catch(error => res.status(500).send(error));
   }
 };
 
-export default createUser;
+export default user;

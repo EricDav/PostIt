@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 /**
+ * @description make a post request that add user feedback about the application
+ * 
  * @param  {object} response user feedback
- * @description make a post request that add a user to a group
  * @return {object} returns object
  */
 export default function feedback(response) {

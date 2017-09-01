@@ -1,6 +1,7 @@
 import React from 'react';
-import Button from './button';
 import connect from 'react-redux';
+
+import Button from './button';
 
 class SearchedUser extends React.Component {
     render() {

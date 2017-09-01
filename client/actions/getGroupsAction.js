@@ -1,9 +1,11 @@
 import axios from 'axios';
+
 import { SET_CURRENT_USER_GROUPS, SET_NEW_GROUP_MESSAGES, SET_INITIAL_NEW_MESSAGES } from './types';
 
 /**
- * @param  {array} groups
  * @description set current groups a user belongs to
+ * 
+ * @param  {array} groups
  * @return {object} returns object
  */
 export function setCurrentUserGroups(groups) {
@@ -14,8 +16,9 @@ export function setCurrentUserGroups(groups) {
 }
 
 /**
- * @param  {array} newGroupMessages
  * @description actions that set the new group messages
+ * 
+ * @param  {array} newGroupMessages
  * @return {object} returns object
  */
 export function setNewGroupMessages(newGroupMessages) {
@@ -26,8 +29,9 @@ export function setNewGroupMessages(newGroupMessages) {
 }
 
 /**
- * @param  {array} messages
  * @description set messages of the current group
+ * 
+ * @param  {array} messages
  * @return {object} returns object
  */
 export function setInitialNewMessages(initialNewMessages) {
@@ -39,6 +43,7 @@ export function setInitialNewMessages(initialNewMessages) {
 
 /**
  * @description fetch groups
+ * 
  * @return {object} returns object
  */
 export function getGroupsRequest() {
@@ -52,6 +57,7 @@ export function getGroupsRequest() {
 
 /**
  * @description get new group messages
+ * 
  * @return {object} returns object
  */
 export function getNewGroupMessages() {
@@ -64,8 +70,9 @@ export function getNewGroupMessages() {
 }
 
 /**
+ * @description fetch all the initial new messages
+ * 
  * @param  {array} initialNewMessages
- * @description initial new messages 
  * @return {object} returns object
  */
 export function getInitialNewMessages(initialNewMessages) {

@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import Member from './members';
 import Search from './search';
 import GroupHeader from './groupHeader';
 import GroupMember from './groupMembers';
-import { connect } from 'react-redux';
 
 class RightSideBar extends React.Component {
     constructor(props) {

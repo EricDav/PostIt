@@ -3,9 +3,10 @@ import db from '../models';
 const Feedback = db.Feedback;
 
 /**
+   * @description save user feedback in database
+   * 
    * @param  {object} req
    * @param  {object} res
-   * @description save user feedback in database
    * @return {none} no return
    */
 const feedback = (req, res) => {

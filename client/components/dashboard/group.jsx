@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import { getGroupMessages, getGroupMembers, updateSeenMessages } from '../../actions/getGroupMessages';
 import { getNewGroupMessages } from  '../../actions/getGroupsAction';
 import { getAllUsersRequest } from '../../actions/getAllUsersAction';
 import { setGroup } from '../../actions/setCurrentGroup';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { showUpdateUserPage } from '../../actions/userActions';
 import getMessageViewers from '../../helpers/getMessageViewers';
 import getMessageIds from '../../helpers/getMessageIds';

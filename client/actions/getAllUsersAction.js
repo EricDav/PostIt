@@ -1,9 +1,11 @@
 import axios from 'axios';
+
 import { SET_ALL_USERS } from './types';
 
 /**
- * @param  {array} allUsers
  * @description set all users to state
+ * 
+ * @param  {array} allUsers
  * @return {object} returns object
  */
 export function setAllUser(allUsers) {
@@ -14,15 +16,15 @@ export function setAllUser(allUsers) {
 }
 
 /**
- * @param  {array} allUsers
  * @description make a get request to fetch all users
+ * 
+ * @param  {array} allUsers
  * @return {object} returns object
  */
 export function getAllUsersRequest() {
   return dispatch => {
     return axios.get('/api/v1/allUsers').then(res => {
-      const allUsers = res.data;
-      dispatch(setAllUser(allUsers));
+      dispatch(setAllUser(res.data));
     });
   };
 }

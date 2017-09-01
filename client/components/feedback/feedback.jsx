@@ -1,9 +1,9 @@
 import React from 'react';
+
 import NavBar from '../NavBar';
 import Form from './form';
 
-class Feedback extends React.Component {
-    render() {
+export default () => {
         return (
          <div className="body-container"   className="image">
             <NavBar/>
@@ -15,6 +15,4 @@ class Feedback extends React.Component {
         </div>
 
         )
-    }
 }
-export default Feedback

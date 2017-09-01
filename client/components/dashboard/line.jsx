@@ -1,7 +1,6 @@
 import React from 'react';
 
-class Line extends React.Component {
-  render() {
+  export default () => {
       return (
           <li className= "collection-item">
             <div className="line">
@@ -11,7 +10,4 @@ class Line extends React.Component {
           </div>
         </li>
       )
-  }
 }
-
-export default Line;

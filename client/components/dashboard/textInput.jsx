@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import createMessage from '../../actions/createMessageAction';
 import { getNewGroupMessages, getInitialNewMessages } from  '../../actions/getGroupsAction';
 import PropTypes from 'prop-types';
@@ -39,18 +40,16 @@ class TextInput extends React.Component {
                     });
              this.props.createMessage(data, this.props.currentGroup.id.toString()).then(
                  () => {
-                    this.props.getGroupMessages(this.props.currentGroup.id.toString()).then(
-                        () => {
+                   
+                       
                             const seenMessageIds = getMessageIds(this.props.messages);
-                            const updateSeenMessagesData = {seenMessageIds,
-                            seenLast: seenMessageIds.length}
+                            const updateSeenMessagesData = {
+                                seenMessageIds,
+                                seenLast: seenMessageIds.length
+                            }
                             this.props.updateSeenMessages(this.props.currentGroupId.toString(), updateSeenMessagesData)
                             this.props.getInitialNewMessages(this.props.newMessages);
                         }
-                    )
-                 },
-                 (response) => {
-                 }
              )
              }
         }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import SearchUsers from '../../helpers/search.js';
 import SearchedUser from './searchedUser';
 import getUsernames from '../../helpers/getUsername'

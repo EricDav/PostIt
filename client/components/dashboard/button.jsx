@@ -1,8 +1,9 @@
 import React from 'react';
-import addUserToAGroup from '../../actions/addUserToAGroup';
-import { getGroupMembers } from '../../actions/getGroupMessages';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
+
+import addUserToAGroup from '../../actions/addUserToAGroup';
+import { getGroupMembers } from '../../actions/getGroupMessages';
 
 class Button extends React.Component {
     constructor(props) {
@@ -19,12 +20,7 @@ class Button extends React.Component {
         const data = {userId: this.props.id}
         this.props.addUserToAGroup(data, this.props.groupId).then(
             () => {
-               Materialize.toast(`${this.props.fullname} has been added Successfully to the group`, 2000, 'purple',
-                 () => {
-                     
-            },
-            this.props.getGroupMembers(this.props.groupId.toString()),
-        );
+               Materialize.toast(`${this.props.fullname} has been added Successfully to the group`, 2000, 'purple');
     },
     (error) => {
         Materialize.toast(`An error occured. ${this.props.fullname} has not been added to the group`, 2000, 'purple',

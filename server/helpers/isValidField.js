@@ -1,6 +1,7 @@
 /**
- * @param  {type} fieldData 
- * @description checks if a field is null, undefined or empty
+ *@description checks if a field is null, undefined or empty
+ * 
+ * @param  {type} fieldData
  * @return {boolean} true or false
  */
 const inValidField = (fieldData) => {

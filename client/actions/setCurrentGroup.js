@@ -13,8 +13,9 @@ export function setCurrentUser(group) {
 }
 
 /**
- * @param  {object} group
  * @description saction creator for setting current group
+ * 
+ * @param  {object} group
  * @return {object} returns object
  */
 export function setGroup(group) {

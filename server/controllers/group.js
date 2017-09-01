@@ -6,9 +6,10 @@ const User = db.User;
 const Members = db.UserGroup;
 
 /**
+ * @description create a group with a name, the name of creator of the group and Description.
+ * 
  * @param  {object} req request coming from the client
  * @param  {object} res response to the client
- * @description create a group with a name, the name of creator of the group and Description .
  * @return {object} Group
  */
 const createGroups = {
@@ -23,10 +24,10 @@ const createGroups = {
         group.addUser(req.currentUser.currentUser.id);
         res.status(201).json({
           success: true,
-          message: 'group created successfully'
+          group
         });
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(500).send(error));
   },
 
   addUser(req, res) {
@@ -35,19 +36,28 @@ const createGroups = {
         id: req.params.groupId
       } })
       .then((group) => {
-        group.addUser(req.body.userId);
-        res.status(201).json({
-          success: true,
-          message: 'user added to group successfully'
+        group.addUser(req.body.userId).then(() => {
+          User.findOne({
+            where: {
+              id: req.body.userId
+            }
+          })
+            .then((addedUser) => {
+              res.status(201).json({
+                success: true,
+                user: addedUser
+              });
+            });
         });
       })
       .catch(error => res.status(400).send(error));
   },
 
   /**
+   *@description It gets all the numbers of new messages in all the groups a user belongs to
+   *
    * @param  {object} req
    * @param  {object} res
-   * @description It gets all the numbers of new messages in all the groups a user belongs to
    * @return {array} an object with key: group, value: number of new messages in the group
    */
 
@@ -74,9 +84,10 @@ const createGroups = {
   },
 
   /**
+   *@description get all the members of a particular group
+   * 
    * @param  {object} req
    * @param  {object} res
-   * @description get all the members of a particular group
    * @return {array} array of object
    */
   getGroupMembers(req, res) {
@@ -92,9 +103,10 @@ const createGroups = {
   },
 
   /**
+   * @description delete  a particular group given its Id
+   * 
    * @param  {object} req  request object
    * @param  {object} res  response object
-   * @description delete  a particular group given its Id
    * @return {void} no returns
    */
   deleteGroup(req, res) {
@@ -121,9 +133,10 @@ const createGroups = {
   },
 
   /**
+   * @description delete a member of a group
+   * 
    * @param  {object} req  request object
    * @param  {object} res  response object
-   * @description delete a member of a group
    * @return {void} no returns
    */
 
@@ -144,15 +157,16 @@ const createGroups = {
   },
 
   /**
+   * @description update group details
+   * 
    * @param  {object} req  request object
    * @param  {object} res  response object
-   * @description update group details
    * @return {void} no returns
    */
   updateGroupInfo(req, res) {
     Group.findOne({
       where: {
-        creator: req.currentUser.username
+        id: req.params.groupId
       }
     }).then((group) => {
       if (!group) {
@@ -161,7 +175,7 @@ const createGroups = {
           message: 'You are not athorize to update the info of this group'
         });
       }
-      if (group.creator === req.currentUser.username) {
+      if (group.creator === req.currentUser.currentUser.username) {
         Group.update({
           name: req.body.name,
           description: req.body.description

@@ -1,6 +1,7 @@
 /**
- * @param  {array} users 
  * @description get the emails and phone numbers from a user object
+ * 
+ * @param  {array} users 
  * @return {void} no returns
  */
 const getEmails = (users) => {

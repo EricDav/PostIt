@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Messages from './message';
 import { connect } from 'react-redux';
 import TextInput from './textInput';

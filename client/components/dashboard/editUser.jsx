@@ -68,6 +68,7 @@ onClick(event) {
     }
     render() {
         const { errors, fullname, username, phoneNumber, email, showLabelFullname,showLabelEmail, showLabelPhoneNumber, showLabelUsername } = this.state;
+        console.log(username, '___________________')
         return (<div id="email-details" className="col s12 m8 l8 card-panel my Message">
                 <form onSubmit={this.onSubmit} className="login-form">
                   <div className="row">

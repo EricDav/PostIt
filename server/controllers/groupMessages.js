@@ -2,9 +2,10 @@ import db from '../models';
 
 const Message = db.Message;
 /**
+ *@description construct a message with the appriopriate field
+ * 
  * @param  {object} req request coming from the client
  * @param  {object} res response to the client
- * @description construct a message with the appriopriate field
  * @return {void} no returns
  */
 const Messages = {
@@ -17,16 +18,20 @@ const Messages = {
         senderUsername: req.currentUser.currentUser.username,
         priority: req.body.priority
       })
-      .then(() => {
-        res.status(201).send('i am here');
+      .then((createdMessage) => {
+        res.status(201).json({
+          success: true,
+          message: createdMessage
+        });
       })
       .catch(error => res.status(400).send(error));
   },
 
   /**
+   *@description fetches all the messages for a particular group
+   * 
    * @param  {object} req  request object
    * @param  {object} res  response object
-   * @description fetches all the messages for a particular group
    * @return {array} array of object
    */
   getMessages(req, res) {
