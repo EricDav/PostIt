@@ -50,9 +50,9 @@ const sendEmail = (req, res, next) => {
               }
             });
             const mailOptions = {
-              from: `${sender} from ${groupName} <alienyidavid4christ@gmail.com>`, // sender address
-              to: recieverEmails, // list of receivers
-              subject: `PostIt: ${groupName}`, // Subject line
+              from: `${sender} from ${groupName} <alienyidavid4christ@gmail.com>`,
+              to: recieverEmails,
+              subject: `PostIt: ${groupName}`,
               html: `
           <a href="http://localhost">
           </a>

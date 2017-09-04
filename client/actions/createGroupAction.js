@@ -22,9 +22,8 @@ export function addGroup(addedGroup) {
  * @return {object} returns object
  */
 export default function createGroupRequest(userData) {
-  return dispatch => {
-    return axios.post('/api/v1/group', userData).then((res) => {
+  return dispatch =>
+    axios.post('/api/v1/group', userData).then((res) => {
       dispatch(addGroup(res.data.group));
     });
-  };
 }

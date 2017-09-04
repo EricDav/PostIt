@@ -61,7 +61,8 @@ export const VerifyCodeAndUpdatePassword = (request, response) => {
         .test(request.body.password) && /[a-z A-Z]/.test(request.body.password))) {
         return response.status(403).json({
           success: false,
-          message: 'Weak password. Password should contain at least 8 characters including at least one number and alphabet'
+          message: `Weak password. Password should contain at least 8 
+          characters including at least one number and alphabet`
         });
       }
       bcrypt.hash(request.body.password, 10, (err, hash) => {

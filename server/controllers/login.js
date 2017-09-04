@@ -7,6 +7,7 @@ import genToken from '../helpers/genToken';
 dotenv.load();
 const User = db.User;
 const secret = process.env.secretKey;
+
 /**
  *@description Auntheticate user.
  * 
@@ -24,7 +25,10 @@ export const logIn = {
       })
       .then((user) => {
         if (!user) {
-          return response.status(401).json({ success: false, message: 'Authentication failed. wrong username or password.' });
+          return response.status(401).json(
+            { success: false,
+              message: 'Authentication failed. wrong username or password.'
+            });
         }
         bcrypt.compare(request.body.password, user.password, (err, res) => {
           if (res) {
@@ -52,7 +56,10 @@ export const logIn = {
               })
               .catch(error => response.status(400).send(error));
           } else {
-            return response.status(401).json({ success: false, message: 'Authentication failed. wrong username or password.' });
+            return response.status(401).json(
+              { success: false,
+                message: 'Authentication failed. wrong username or password.'
+              });
           }
         });
       })

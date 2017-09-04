@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { SET_CURRENT_USER } from './types';
 
+/* global localStorage */
+
 /**
  * @description action for user signin
  * 
@@ -24,12 +26,11 @@ export function setCurrentUser(user) {
  * @return {object} returns object
  */
 export function userSignupRequest(userData) {
-  return dispatch => {
-    return axios.post('/api/v1/user/signup', userData).then((res) => {
+  return dispatch =>
+    axios.post('/api/v1/user/signup', userData).then((res) => {
       const token = res.data.Token;
       localStorage.setItem('jwtToken', token);
       setAuthorizationToken(token);
       dispatch(setCurrentUser(jwt.decode(token)));
     });
-  };
 }

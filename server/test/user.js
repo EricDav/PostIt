@@ -67,7 +67,8 @@ describe('User Registration', () => {
       .end((err, res) => {
         res.status.should.equal(400);
         res.body.error.username.should
-          .equal('Invalid username. username must contain an alphabet and must not begin with a number');
+          .equal(`Invalid username. username must contain an 
+          alphabet and must not begin with a number`);
         done();
       });
   });
@@ -150,7 +151,8 @@ describe('User Registration', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.error.username.should.equal('Invalid username. username must contain an alphabet and must not begin with a number');
+        res.body.error.username.should.equal(`Invalid username. username must
+      contain an alphabet and must not begin with a number`);
         done();
       });
   });
@@ -297,7 +299,6 @@ describe('Update user details', () => {
       })
       .expect(401)
       .end((err, res) => {
-        console.log(res.body)
         res.status.should.equal(201);
         res.body.message.should.equal('User info has been updated');
         done();

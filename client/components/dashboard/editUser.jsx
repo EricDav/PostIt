@@ -41,13 +41,19 @@ class EditUser extends React.Component {
     onSubmit(event) {
        event.preventDefault();
         if (!this.state.displayButton) {
-          this.props.showUpdateUserPage(false);
+          this.props.showUpdateUserPage(this.props.showInitial, this.props.showDashboardPage);
         } else {
           this.props.updateUserProfile(this.state).then(
         () => {
+              this.props.showUpdateUserPage(this.props.showInitial, 1);
              Materialize.toast('Your prifile has been updated', 1500, 'purple');
-             this.props.getUser();
-             this.props.getGroupMessages(groupId.toString());
+             const updatedUser = {currentUser: {
+               fullname: this.state.fullname,
+               email: this.state.email,
+               phoneNumber: this.state.phoneNumber,
+               username: this.props.currentUser.username
+             }}
+             this.props.setUpdatedUser(updatedUser);
         },
           ( data ) => {
             this.setState({
@@ -58,7 +64,7 @@ class EditUser extends React.Component {
     }
 }
 onClick(event) {
-      this.props.showResetPassword(true);
+      this.props.showUpdateUserPage(3, this.props.showDashboardPage);
   }
     onFocus(event) {
         this.setState({
@@ -68,7 +74,6 @@ onClick(event) {
     }
     render() {
         const { errors, fullname, username, phoneNumber, email, showLabelFullname,showLabelEmail, showLabelPhoneNumber, showLabelUsername } = this.state;
-        console.log(username, '___________________')
         return (<div id="email-details" className="col s12 m8 l8 card-panel my Message">
                 <form onSubmit={this.onSubmit} className="login-form">
                   <div className="row">

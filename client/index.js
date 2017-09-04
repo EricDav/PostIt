@@ -10,15 +10,14 @@ import routes from './routes';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUserGroups } from './actions/getGroupsAction';
 import configureStore from './store/configureStore';
-import { h } from './actions/getGroupsAction';
 //import js from '../public/js/modal'
 
 // import './assets/css/custom.scss';
-// import '../node_modules/materialize-css/dist/js/materialize.min';
-// import '../node_modules/materialize-css/dist/css/materialize.min.css';
-// import '../node_modules/material-icons/css/material-icons.css';
-// import '../node_modules/sweetalert/dist/sweetalert.min';
-// import '../node_modules/sweetalert/dist/sweetalert.css';
+//import '../node_modules/materialize-css/dist/js/materialize.min';
+//import '../node_modules/materialize-css/dist/css/materialize.min.css';
+//import '../node_modules/material-icons/css/material-icons.css';
+import '../node_modules/sweetalert/dist/sweetalert.min';
+import '../node_modules/sweetalert/dist/sweetalert.css';
 
 const store = configureStore();
 

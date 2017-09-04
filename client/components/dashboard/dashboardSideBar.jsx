@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Group from './group';
 import { getNewGroupMessages, getInitialNewMessages } from  '../../actions/getGroupsAction';
 import newMessage from '../../helpers/getNewMessage';
-import { showUpdateUserPage } from '../../actions/userActions';
+import { showUpdateUserPage } from '../../actions/setDashboardView';
 //import { getGroupMessages } from '../../actions/getGroupMessages';
 
 class sideBar extends Component {
@@ -22,7 +22,9 @@ class sideBar extends Component {
       )
     }
  onClick() {
-    this.props.showUpdateUserPage(true);
+   if (this.props.showDashboardPage !== 2) {
+      this.props.dashboardPage(2, this.props.showDashboardPage);
+   }
  }
  getGroups() {
       return this.props.allGroups.map((group) => {

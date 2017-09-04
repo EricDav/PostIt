@@ -1,5 +1,8 @@
 import axios from 'axios';
+
 import { ADD_USER } from './types';
+
+/* global Materialize */
 
 /**
  * @description update state to 
@@ -21,9 +24,11 @@ export function addUser(user) {
  * @return {object} returns object
  */
 export default function addUserToAGroup(userId, groupId) {
-  return dispatch => {
-    return axios.post(`/api/v1/group/${groupId}/user`, userId).then((res) => {
+  return dispatch =>
+    axios.post(`/api/v1/group/${groupId}/user`, userId).then((res) => {
       dispatch(addUser(res.data.user));
-    });
-  };
+    })
+      .catch(() => {
+        Materialize.toast('An error occured!', 1500, 'purple');
+      });
 }

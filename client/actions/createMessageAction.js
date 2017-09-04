@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { ADD_MESSAGE } from './types';
 
+/* global Materialize */
+
 /**
  * @description set messages of the current group
  * 
@@ -23,12 +25,14 @@ export function addMessage(message) {
  * @return {object} returns object
  */
 export default function createMessage(messageData, groupId) {
-  return dispatch => {
-    return axios.post(`/api/v1/group/${groupId}/message`, messageData).then(res => {
+  return dispatch =>
+    axios.post(`/api/v1/group/${groupId}/message`, messageData).then((res) => {
       const message = {};
       message.message = res.data.message;
       message.viewers = [];
       dispatch(addMessage(message));
-    });
-  };
+    })
+      .catch(() => {
+        Materialize.toast('An error occured!', 1500, 'purple');
+      });
 }

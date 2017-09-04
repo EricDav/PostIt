@@ -9,6 +9,7 @@ import { userSigninRequest } from '../actions/userActions';
 import PropTypes from 'prop-types';
 import  { getGroupsRequest }  from '../actions/getGroupsAction';
 import GoogleSignup from './googleLoginForm';
+import Alert from './sweetalert';
 
 class HomePage extends React.Component {
   componentDidMount() {
@@ -32,6 +33,7 @@ class HomePage extends React.Component {
               </ul>
               <Login userSigninRequest={userSigninRequest} getGroupsRequest ={getGroupsRequest}  googleData={this.props.showGoogleForm}/>
               <SignUp userSignupRequest={userSignupRequest}/>
+              {/*<Alert/>*/}
             </div>
           </div>
         </div> }

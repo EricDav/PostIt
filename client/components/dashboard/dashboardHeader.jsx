@@ -15,11 +15,6 @@ class DashboardHeader extends React.Component {
                     <ul className="right">
                    <Drop logout={this.props.logout} user={this.props.user}/>
                     </ul>
-                    <ul className="right">
-                      <li className="noHover">
-                        <span className="number">2</span> <i className="material-icons left">notifications</i>
-                        </li>
-                    </ul>
                     <ul id="nav-mobile" className="side-nav">
                         <li><a href="#">Navbar Link</a></li>
                     </ul>

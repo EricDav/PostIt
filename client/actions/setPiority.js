@@ -20,7 +20,7 @@ export function setPiority(piority) {
  * @return {object} returns object
  */
 export function piorityLevel(piority) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(setPiority(piority));
   };
 }

@@ -31,6 +31,13 @@ class ResetPassword extends React.Component {
           })
           this.props.resetPassword(this.state).then(
           () => {
+            let initialPage;
+             if (this.props.currentGroup.id) {
+               initialPage = 1
+             } else {
+               initialPage = 0
+             }
+             this.props.showResetPassword(this.props.showInitial, initialPage);
              Materialize.toast('Your password has been reset', 1500, 'purple');
 
           },
@@ -44,7 +51,13 @@ class ResetPassword extends React.Component {
       }
   }
   onClick(event) {
-      this.props.showResetPassword(false);
+    let initialPage;
+        if (this.props.currentGroup.id) {
+           initialPage = 1
+        } else {
+               initialPage = 0
+         }
+      this.props.showResetPassword(2, initialPage);
   }
   render() {
         return (<div id="email-details" className="col s12 m8 l8 card-panel my Message">

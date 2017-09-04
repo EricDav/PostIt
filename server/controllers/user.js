@@ -80,24 +80,24 @@ const user = {
    */
 
   updateUserInfo(req, res) {
-    const user = {
+    const updatedUser = {
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       fullname: req.body.fullname
     };
     if (!req.body.email) {
-      user.email = req.currentUser.currentUser.email;
+      updatedUser.email = req.currentUser.currentUser.email;
     }
     if (!req.body.fullname) {
-      user.fullname = req.currentUser.currentUser.fullname;
+      updatedUser.fullname = req.currentUser.currentUser.fullname;
     }
     if (!req.body.phoneNumber) {
-      user.phoneNumber = req.currentUser.currentUser.phoneNumber;
+      updatedUser.phoneNumber = req.currentUser.currentUser.phoneNumber;
     }
     User.update({
-      email: user.email,
-      fullname: user.fullname,
-      phoneNumber: user.phoneNumber
+      email: updatedUser.email,
+      fullname: updatedUser.fullname,
+      phoneNumber: updatedUser.phoneNumber
     }, {
       where: {
         id: req.currentUser.currentUser.id
@@ -125,8 +125,8 @@ const user = {
       where: {
         id: req.currentUser.currentUser.id
       }
-    }).then((user) => {
-      bcrypt.compare(oldPassword, user.password, (error, response) => {
+    }).then((resetUser) => {
+      bcrypt.compare(oldPassword, resetUser.password, (error, response) => {
         if (response) {
           if (isValidField(newPassword)) {
             return res.status(400).json({
@@ -156,12 +156,13 @@ const user = {
               where: {
                 id: user.id
               }
-            }).then(() => {
-              res.status(201).json({
-                success: true,
-                message: 'Password has been reset'
-              });
             })
+              .then(() => {
+                res.status(201).json({
+                  success: true,
+                  message: 'Password has been reset'
+                });
+              })
               .catch(err => res.status(500).send(err));
           });
         } else {
@@ -352,53 +353,15 @@ const user = {
                   });
                   return res.status(200).send(newMessages);
                 })
-                .catch(error => res.status(405).send(error));
+                .catch(error => res.status(500).send(error));
             })
-            .catch(error => res.status(405).send(error));
+            .catch(error => res.status(500).send(error));
         })
-          .catch(error => res.status(405).send(error));
+          .catch(error => res.status(500).send(error));
       })
-      .catch(error => res.status(405).send(error));
+      .catch(error => res.status(500).send(error));
   },
 
-  /**
-   * @description get current user information
-   * 
-   * @param  {object} req
-   * @param  {object} res
-   * @return {object} current user information
-   */
-  getUser(req, res) {
-    User.findOne({
-      where: {
-        id: req.currentUser.currentUser.id
-      }
-    })
-      .then((currentUser) => {
-        if (!currentUser) {
-          return res.status(404).json({
-            success: false,
-            message: 'User does not exist'
-          });
-        } else if (Number(user.id) !== Number(req.currentUser.currentUser.id)) {
-          return res.status(400).json({
-            success: false,
-            message: 'You are not Authorize for this operation'
-          });
-        }
-        const userInfo = {
-          id: currentUser.id,
-          username: currentUser.username,
-          email: currentUser.email,
-          phoneNumber: currentUser.phoneNumber,
-          fullname: currentUser.fullname
-        };
-        return res.status(200).json({
-          success: true,
-          user: userInfo
-        });
-      });
-  },
   googleSignin(req, res) {
     User.findOne({
       where: {

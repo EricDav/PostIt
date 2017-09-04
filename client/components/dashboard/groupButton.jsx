@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { setRightNavBarView } from '../../actions/setRightNavBarView';
+import { setRightNavBarView } from '../../actions/setDashboardView';
 import { connect } from 'react-redux';
 
 

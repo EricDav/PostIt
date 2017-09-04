@@ -56,10 +56,17 @@ class CreateGroupModal extends React.Component {
       this.props.createGroupRequest({name: this.state.name, description: this.state.description}).then(
         () => {
           Materialize.toast('Group created succesfully', 1500, 'purple');
+          this.setState({
+            name: '',
+            description: ''
+          });
         },
         ( data ) => {
-          console.log(data)
-          Materialize.toast('Cant create Group', 5000, 'purple');
+          Materialize.toast('Cant create Group invalid group details', 3000, 'purple');
+          this.setState({
+            name: '',
+            description: ''
+          });
         }
       )
     }
@@ -90,21 +97,21 @@ class CreateGroupModal extends React.Component {
                   <form className="col s12">
                     <div className="row">
                       <div className="input-field col s12">
-                        <input onBlur={this.onBlur} id="group-title" type="text" className="validate" name = "name" onChange={this.onChange} required/>
+                        <input onBlur={this.onBlur} id="group-title" type="text" className="validate" value={this.state.name} name = "name" onChange={this.onChange} required/>
                         <label htmlFor="group-title">Group Title</label>
                       </div>
                       { nameError && <div className="mes blue-text"><i>{nameError}</i></div>}
                     </div>
                     <div className="row">
                       <div className="input-field col s12">
-                        <textarea onBlur={this.onBlur} id="description" className="materialize-textarea" onChange={this.onChange} name="description"></textarea>
+                        <textarea onBlur={this.onBlur} value={this.state.description} id="description" className="materialize-textarea" onChange={this.onChange} name="description"></textarea>
                         <label htmlFor="description">Enter description...</label>
                       </div>
                        {descriptionError && <div className="mes blue-text"><i>{descriptionError}</i></div>}
                     </div>
                      <div className="row">
                     <div className="input-field col s12">
-                      <button onClick={this.onClick} className="modal-action modal-close btn purple darken-1 waves-effect waves-light col s12" disabled={!(!nameError && !descriptionError)}>{this.state.status}</button>
+                      <button onClick={this.onClick} className="modal-action modal-close btn purple darken-1 waves-effect waves-light col s12">{this.state.status}</button>
                     </div>
                   </div>
                   </form>

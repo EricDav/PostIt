@@ -4,7 +4,9 @@ import { browserHistory } from 'react-router';
 
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { SET_CURRENT_USER, SET_SHOW_UPDATE_USER_PAGE, SET_ERROR_MESSAGE,
-  SET_RESET_PASSWORD_USER_PAGE, SHOW_SIGNUP_FORM, SET_GOOGLE_FORM } from './types';
+  SET_RESET_PASSWORD_USER_PAGE, SHOW_SIGNUP_FORM, SET_GOOGLE_FORM, SET_TEXT_INPUT } from './types';
+
+/* global localStorage, window */
 
 /**
  * @description action for user current user information in store
@@ -22,7 +24,7 @@ export function setCurrentUser(user) {
 /**
  * @description this action decide whether to show sign up form alone
  * 
- * @param  {object} showForm
+ * @param  {object} googleUserData
  * @return {object} returns object
  */
 export function setShowSignupForm(googleUserData) {
@@ -31,6 +33,7 @@ export function setShowSignupForm(googleUserData) {
     googleUserData
   };
 }
+
 /**
  * @description set weather to show update user form
  * 
@@ -44,6 +47,20 @@ export function setShowUpdateUserPage(show) {
   };
 }
 
+
+export function setTextInput(text) {
+  return {
+    type: SET_TEXT_INPUT,
+    text
+  }
+}
+
+/**
+ * @description set weather to show update form
+ * 
+ * @param  {boolean} googledata
+ * @return {object} returns object
+ */
 export function setGoogleForm(googledata) {
   return {
     type: SET_GOOGLE_FORM,
@@ -101,7 +118,7 @@ export function logout() {
  */
 export function userSigninRequest(userData) {
   return dispatch =>
-    axios.post('/api/v1/user/signin', userData).then(res => {
+    axios.post('/api/v1/user/signin', userData).then((res) => {
       const token = res.data.Token;
       localStorage.setItem('jwtToken', token);
       setAuthorizationToken(token);
@@ -158,14 +175,12 @@ export function showResetPasswordUserPage(shouldShow) {
 /**
  * @description set weather to show only signup Form in the home page
  * 
- * @param  {boolean} show
+ * @param  {boolean} googleUserData
  * @return {object} returns object
  */
-
 export function showSignupForm(googleUserData) {
-  return dispatch => {
+  return dispatch =>
     dispatch(setShowSignupForm(googleUserData));
-  }
 }
 
 /**
@@ -175,11 +190,10 @@ export function showSignupForm(googleUserData) {
  * @return {object} returns object
  */
 export function resetPassword(userData) {
-  return dispatch => {
+  return dispatch =>
     axios.put('/api/v1/resetPassword', userData).then(() => {
       dispatch(setResetPasswordUserPage(false));
     });
-  }
 }
 
 /**
@@ -189,25 +203,32 @@ export function resetPassword(userData) {
  * @return {object} returns object
  */
 export function updateUserProfile(userData) {
-  return dispatch => {
+  return dispatch =>
     axios.put('/api/v1/user/update', userData).then(() => {
       dispatch(setShowUpdateUserPage(false));
     });
+}
+
+/**
+ * @description set a user Information when updated
+ * 
+ * @param {object}user
+ * @return {object} returns object
+ */
+export function setUpdatedUser(user) {
+  return (dispatch) => {
+    dispatch(setCurrentUser(user));
   };
 }
 
 /**
  * @description set a user Information when updated
  * 
+ * @param {object} text
  * @return {object} returns object
  */
-export function getUser() {
-  return dispatch => {
-    axios.get('/api/v1/user').then((res) => {
-      const user = {
-        currentUser: res.data.user
-      };
-      dispatch(setCurrentUser(user));
-    });
+export function TextInput(text) {
+  return (dispatch) => {
+    dispatch(setTextInput(text));
   };
 }

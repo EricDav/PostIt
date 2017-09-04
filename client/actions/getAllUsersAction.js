@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { SET_ALL_USERS } from './types';
 
+/* global Materialize */
+
 /**
  * @description set all users to state
  * 
@@ -22,9 +24,11 @@ export function setAllUser(allUsers) {
  * @return {object} returns object
  */
 export function getAllUsersRequest() {
-  return dispatch => {
-    return axios.get('/api/v1/allUsers').then(res => {
+  return dispatch =>
+    axios.get('/api/v1/allUsers').then((res) => {
       dispatch(setAllUser(res.data));
-    });
-  };
+    })
+      .catch(() => {
+        Materialize.toast('An error occured! could not leave group', 1500, 'purple');
+      });
 }

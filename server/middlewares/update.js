@@ -1,19 +1,20 @@
 import db from '../models';
-import isDigit from '../helpers/isDigit';
 import isText from '../helpers/isText';
 import isValidField from '../helpers/isValidField';
 
 const User = db.User;
-/**
-   * @description validate inputs field for username, name, email and password
-   * 
-   * @param  {object} 
-   * @param  {object} res
-   * @param  {} next
-   */
+
+/** @class UpdateUser
+ * @classdesc validate update user details field
+ */
 class UpdateUser {
+  /**
+   * constructor - contains the constructor
+   * @param  {type} user the properties of the class UpdateUser
+   * @return {void} no return or void
+   */
   constructor(user) {
-    this.error = {}
+    this.error = {};
     this.user = user;
   }
 
@@ -49,7 +50,8 @@ class UpdateUser {
     if (isValidField(fullname)) {
       this.error.fullname = 'This field is required';
     } else if (!isText(fullname) && fullname.length < 5) {
-      this.error.fullname = 'Name should contain alphabet and space alone and should contain at least 5 characters';
+      this.error.fullname = `Name should contain alphabet and space 
+      alone and should contain at least 5 characters`;
     }
   }
 
@@ -59,10 +61,10 @@ class UpdateUser {
  * @param  {string} email
  * @return {string} return error message
  */
-  validateEmail(email, res) {
+  validateEmail(email) {
     if (isValidField(email)) {
       this.error.email = 'This field is required';
-    } else if ( (email.slice(email.length - 4, email.length)
+    } else if ((email.slice(email.length - 4, email.length)
      !== '.com' || !(/[@]/.test(email)))) {
       this.error.email = 'Invalid email';
     }
@@ -105,30 +107,26 @@ function validateUpdateUser(req, res, next) {
       });
     }
     const propertiesToUpdate = update.filterUserData(user);
-    (propertiesToUpdate);
     if (propertiesToUpdate.length === 0) {
       return res.status(400).json({
         success: false,
         message: 'Could not find change'
       });
     }
-    const uniqueUpdates = [2, 3, 4];
+    const uniqueUpdates = [3, 4];
     propertiesToUpdate.forEach((property) => {
       if (property[1] === 1) {
         update.validateFullname(property[0]);
-      } else if (property[1] === 2) {
-        uniqueUpdates.pop(2);
-        update.validateUsername(property[0]);
       } else if (property[1] === 3) {
-        uniqueUpdates.pop(3);
+        uniqueUpdates.pop();
         update.validateEmail(property[0]);
       } else if (property[1] === 4) {
-        uniqueUpdates.pop(4);
+        uniqueUpdates.pop();
         update.validatePhoneNumber(property[0]);
       }
     });
     const error = update.error;
-    if (uniqueUpdates.length === 0) {
+    if (uniqueUpdates.length === 2) {
       return res.status(400).json({
         success: false,
         error
@@ -137,14 +135,15 @@ function validateUpdateUser(req, res, next) {
     User
       .all()
       .then((users) => {
-        users.forEach((user) => {
+        users.forEach((eachUser) => {
           uniqueUpdates.forEach((unique) => {
             if (unique === 3) {
-              if (user.email === req.body.email && user.id !== req.currentUser.currentUser.id) {
+              if (eachUser.email === req.body.email && eachUser.id !== req.currentUser.currentUser.id) {
                 error.email = 'Email already exist';
               }
             } else if (unique === 4) {
-              if (user.phoneNumber === req.body.phoneNumber && user.id !== req.currentUser.currentUser.id) {
+              if (user.phoneNumber === req.body.phoneNumber
+              && user.id !== req.currentUser.currentUser.id) {
                 error.phoneNumber = 'Phone number already exist';
               }
             }

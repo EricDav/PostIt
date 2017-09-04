@@ -9,14 +9,11 @@ import { googleSignin, showGoogleForm }  from '../actions/userActions';
 class GoogleLogIn extends React.Component {
     render() {
     const responseGoogle = (response) => {
-        console.log(response);
         const googleUser = {
             fullname: response.profileObj.name,
             email: response.profileObj.email,
             showForm: false
         }
-        //console.log(this.props.googleData);
-        console.log(this.props.googleData.showForm)
         this.props.googleSignin(googleUser);
 }
         return (

@@ -27,7 +27,6 @@ const mailSender = (req, res, message, successMessage, secretCode, email) => {
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log(error);
       winston.info(info);
       return res.status(500).json({
         success: false,

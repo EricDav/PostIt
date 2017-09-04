@@ -1,4 +1,5 @@
-import { SET_CURRENT_USER_GROUPS, ADD_GROUP } from '../actions/types';
+import { SET_CURRENT_USER_GROUPS, ADD_GROUP, DELETE_GROUP } from '../actions/types';
+import deleteGroup from '../helpers/deleteGroup';
 
 export default (state = [], action = {}) => {
   switch (action.type) {
@@ -9,6 +10,8 @@ export default (state = [], action = {}) => {
         ...state,
         action.addedGroup
       ];
+    case DELETE_GROUP:
+      return deleteGroup(state, action.groupData.groupId);
     default: return state;
   }
 };

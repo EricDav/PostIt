@@ -44,7 +44,7 @@ describe('Group Routes', () => {
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.message.should.equal('message sent successfully');
+        res.body.message.content.should.equal('I love coding');
         done();
       });
   });
@@ -63,7 +63,7 @@ describe('Group Routes', () => {
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.message.should.equal('message sent successfully');
+        res.body.message.senderUsername.should.equal('Pythagoras');
         done();
       });
   });
@@ -81,7 +81,7 @@ describe('Group Routes', () => {
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.message.should.equal('message sent successfully');
+        res.body.message.content.should.equal('I am the winner');
         done();
       });
   });
@@ -121,7 +121,6 @@ describe('Group Routes', () => {
         })
         .expect(201)
         .end((err, res) => {
-          console.log(res.body, '________________________');
           res.status.should.equal(201);
           res.body.success.should.equal(true);
           done();

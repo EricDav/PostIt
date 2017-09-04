@@ -35,9 +35,7 @@ export function setResetPasswordUser(resetPasswordUser) {
  * @return {object} returns object
  */
 export function VerifyCodeAndUpdatePassword(userData) {
-  return dispatch => {
-    return axios.post('/api/v1/resetPassword', userData);
-  };
+  return axios.post('/api/v1/resetPassword', userData);
 }
 
 /**
@@ -47,10 +45,9 @@ export function VerifyCodeAndUpdatePassword(userData) {
  * @return {object} returns object
  */
 export function sendSecretCode(userData) {
-  return dispatch => {
-    return axios.post('/api/v1/sendSecretCode', userData).then((res) => {
+  return dispatch =>
+    axios.post('/api/v1/sendSecretCode', userData).then((res) => {
       dispatch(willShowResetPasswordPage(true));
       dispatch(setResetPasswordUser(res.data));
     });
-  };
 }

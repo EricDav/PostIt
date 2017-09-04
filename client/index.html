@@ -12,6 +12,8 @@
     <!--<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <script src="bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="bower_components/sweetalert2/dist/sweetalert2.min.css">
 </head>
 
 <body>
@@ -19,10 +21,13 @@
     <script src="bundle.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
+  <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <script src="js/init.js"></script>
   <script type="text/javascript">
       $('#email-details').scrollTop($('#email-details')[0].scrollHeight);
       $('#message-board').scrollTop($('#message-board')[0].scrollHeight);
+      $('#email-list').scrollTop($('#email-list')[0].scrollHeight);
        $('select').material_select();
        $('.modal').modal();
        $('#text-area').trigger('autoresize');

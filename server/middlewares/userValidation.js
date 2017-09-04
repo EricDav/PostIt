@@ -63,7 +63,8 @@ const userValidation = {
     if (canVerify.fullname && (!isText(req.body.fullname)
      || req.body.fullname.length < 2)) {
       if (isValidField(error.fullname)) {
-        error.fullname = 'Name should contain alphabet and space alone and should contain at least 2 characters';
+        error.fullname = `Name should contain alphabet and space
+        alone and should contain at least 2 characters`;
       }
       if (Object.keys(error).length === 5) {
         return res.status(400).json({
@@ -75,7 +76,8 @@ const userValidation = {
     if (canVerify.username && (isDigit(req.body.username) ||
     isDigit(req.body.username[0]))) {
       canVerify.username = false;
-      error.username = 'Invalid username. username must contain an alphabet and must not begin with a number';
+      error.username = `Invalid username. username must
+      contain an alphabet and must not begin with a number`;
       if (Object.keys(error).length === 5) {
         return res.status(400).json({
           error,
@@ -83,10 +85,12 @@ const userValidation = {
         });
       }
     }
-    if (canVerify.password && (req.body.password.length < 9 || !(/[0-9]/.test(req.body.password) && /[a-z A-Z]/.test(req.body.password)))) {
+    if (canVerify.password && (req.body.password.length < 9 ||
+    !(/[0-9]/.test(req.body.password) && /[a-z A-Z]/.test(req.body.password)))) {
       canVerify.password = false;
       if (isValidField(error.password)) {
-        error.password = 'Weak password. Password should contain at least 8 characters including at least one number and alphabet';
+        error.password = `Weak password. Password should contain 
+        at least 8 characters including at least one number and alphabet`;
       }
       if (Object.keys(error).length === 5) {
         return res.status(400).json({

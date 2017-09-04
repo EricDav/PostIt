@@ -13,7 +13,7 @@ class Drop extends React.Component {
               window.location.reload();
             },
             () => {
-
+                Materialize.toast
             }
         )
     }
