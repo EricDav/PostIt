@@ -25,7 +25,13 @@ class LogIn extends React.Component {
     });
   }
   onClick(event) {
-    browserHistory.push('forgotPassword');
+    if (event.target.textContent === 'Forgot password ?') {
+      browserHistory.push('forgotPassword');
+      this.props.setPage(3);
+    } else if(event.target.textContent === ' Signup') {
+      browserHistory.push('signup');
+      this.props.setPage(2)
+    }
   }
   onSubmit(event) {
     this.setState({error: {}, isLoading: true});
@@ -36,7 +42,6 @@ class LogIn extends React.Component {
       () => {
         browserHistory.push('dashboard');
         window.location.reload();
-        this.props.getGroupsRequest();
       });
       },
       ( data ) => {
@@ -87,20 +92,19 @@ class LogIn extends React.Component {
                       <center>
                             <Google/>
                           </center>
-                      <p className="margin center medium-small sign-up"><a onClick={this.onClick} href="">Forgot password ?</a></p>
+                      <p className="margin center medium-small sign-up">
+                        <a onClick={this.onClick} href="#!">Forgot password ?</a>
+                        </p>
+                         <p className="margin center medium-small sign-up">
+                        <i>No account?</i>
+                        <a onClick={this.onClick} href="#!"> Signup</a>
+                        </p>
                     </div>
                   </div>
                 </form>
               </div>);
       }
 }
-
-const logInPropTypes = {
-   userSigninRequest: PropTypes.func,
-   getGroupsRequest: PropTypes.func
- }
- PropTypes.checkPropTypes(logInPropTypes, 'prop', 'LogIn');
-
 
 export default LogIn
 

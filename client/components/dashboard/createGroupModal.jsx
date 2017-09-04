@@ -31,6 +31,12 @@ class CreateGroupModal extends React.Component {
       })
     }
     if (event.target.name === 'name') {
+      if (this.state.name.length > 20) {
+        this.setState({
+          nameError: 'Group name can not be more than 20 characters',
+        })
+        return;
+      }
       this.props.createGroupRequest({name: this.state.name, description: ''}).then(
         ()=> {},
         (data) => {
@@ -97,7 +103,7 @@ class CreateGroupModal extends React.Component {
                   <form className="col s12">
                     <div className="row">
                       <div className="input-field col s12">
-                        <input onBlur={this.onBlur} id="group-title" type="text" className="validate" value={this.state.name} name = "name" onChange={this.onChange} required/>
+                        <input  max="10" onBlur={this.onBlur} id="group-title" type="text" className="validate" value={this.state.name} name = "name" onChange={this.onChange} required/>
                         <label htmlFor="group-title">Group Title</label>
                       </div>
                       { nameError && <div className="mes blue-text"><i>{nameError}</i></div>}

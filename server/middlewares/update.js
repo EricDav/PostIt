@@ -49,7 +49,7 @@ class UpdateUser {
   validateFullname(fullname) {
     if (isValidField(fullname)) {
       this.error.fullname = 'This field is required';
-    } else if (!isText(fullname) && fullname.length < 5) {
+    } else if (!isText(fullname) || fullname.length < 5) {
       this.error.fullname = `Name should contain alphabet and space 
       alone and should contain at least 5 characters`;
     }
@@ -102,7 +102,7 @@ function validateUpdateUser(req, res, next) {
   }).then((user) => {
     if (!user) {
       return res.status(404).json({
-        succesds: false,
+        success: false,
         message: 'An unexpected error occured'
       });
     }
@@ -126,11 +126,13 @@ function validateUpdateUser(req, res, next) {
       }
     });
     const error = update.error;
-    if (uniqueUpdates.length === 2) {
+    if (uniqueUpdates.length === 2 && error.fullname) {
       return res.status(400).json({
         success: false,
         error
       });
+    } else if (uniqueUpdates.length === 2 && !error.fullname) {
+      return next();
     }
     User
       .all()
@@ -138,7 +140,8 @@ function validateUpdateUser(req, res, next) {
         users.forEach((eachUser) => {
           uniqueUpdates.forEach((unique) => {
             if (unique === 3) {
-              if (eachUser.email === req.body.email && eachUser.id !== req.currentUser.currentUser.id) {
+              if (eachUser.email === req.body.email && eachUser.id
+              !== req.currentUser.currentUser.id) {
                 error.email = 'Email already exist';
               }
             } else if (unique === 4) {
@@ -158,8 +161,8 @@ function validateUpdateUser(req, res, next) {
           });
         }
       })
-      .catch(err => res.status(404).send(err));
+      .catch(err => res.status(500).send(err));
   })
-    .catch(error => res.status(404).send(error));
+    .catch(error => res.status(500).send(error));
 }
 export default validateUpdateUser;

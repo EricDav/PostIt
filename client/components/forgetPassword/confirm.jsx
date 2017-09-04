@@ -40,7 +40,7 @@ class Confirm extends React.Component {
           () => {
             Materialize.toast('Password reset successfully', 2000, 'purple',
              () => {
-              browserHistory.push('/');  
+              browserHistory.push('/');
           });
         },
         (data) => {

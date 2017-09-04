@@ -17,6 +17,7 @@ import showGoogleForm from './showGoogleForm';
 import showDashboardForm from './showDashboardForm';
 import initialDashboardPage from './initialDashboardPage';
 import allTextContent from './allTextContent';
+import setCurrentPage from './setCurrentPage';
 
 export default combineReducers({
   auth,
@@ -36,5 +37,6 @@ export default combineReducers({
   showGoogleForm,
   showDashboardForm,
   initialDashboardPage,
-  allTextContent
+  allTextContent,
+  setCurrentPage
 });

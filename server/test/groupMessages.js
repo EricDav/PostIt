@@ -108,22 +108,4 @@ describe('Group Routes', () => {
           done();
         });
     });
-  it('allows a logged in user to be able to update seen messages',
-    (done) => {
-      server
-        .put('/api/v1/group/1updateSeenMessages')
-        .set('authorization', regUserData)
-        .set('Content-Type', 'application/json')
-        .type('form')
-        .send({
-          seenMessageIds: [1],
-          seenLast: 1
-        })
-        .expect(201)
-        .end((err, res) => {
-          res.status.should.equal(201);
-          res.body.success.should.equal(true);
-          done();
-        });
-    });
 });

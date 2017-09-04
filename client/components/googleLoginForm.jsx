@@ -11,7 +11,9 @@ class GoogleSignup extends React.Component {
         username: '',
         password: '',
         Password: '',
-        errors: {}
+        errors: {},
+        buttonText: 'Submit',
+        status: false
       }
       this.onChange = this.onChange.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
@@ -29,6 +31,10 @@ class GoogleSignup extends React.Component {
            error[name] = 'Password does not match';
            this.setState({errors: error});
         } else {
+           this.setState({
+             status: true,
+             buttonText: 'Loading...'
+           });
            this.props.userSignupRequest(this.state).then(
            () => {
              Materialize.toast('Sign Up Successfully', 1000, 'purple',
@@ -38,7 +44,11 @@ class GoogleSignup extends React.Component {
             });
            },
           ( data ) => {
-            this.setState({errors: data.response.data.error});
+            this.setState({
+              errors: data.response.data.error,
+              status: false,
+              buttonText: 'Submit'
+            });
           }
         );
         }
@@ -88,8 +98,8 @@ class GoogleSignup extends React.Component {
                   </div>
                   <div className="row">
                     <a className="col s12">
-                      <button className="btn purple darken-1 waves-effect waves-light col s12">
-                        submit
+                      <button className="btn purple darken-1 waves-effect waves-light col s12" disabled={this.state.status}>
+                        {this.state.buttonText}
                     </button></a>
                   </div>
                 </form>

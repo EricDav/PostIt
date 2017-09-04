@@ -154,7 +154,7 @@ const user = {
               password: hash
             }, {
               where: {
-                id: user.id
+                id: req.currentUser.currentUser.id
               }
             })
               .then(() => {

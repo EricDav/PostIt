@@ -35,7 +35,9 @@ export function setResetPasswordUser(resetPasswordUser) {
  * @return {object} returns object
  */
 export function VerifyCodeAndUpdatePassword(userData) {
-  return axios.post('/api/v1/resetPassword', userData);
+  return () => {
+    return axios.post('/api/v1/resetPassword', userData);
+  };
 }
 
 /**

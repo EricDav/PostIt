@@ -7,6 +7,7 @@ import requireAuth from './utils/requireAuth';
 import requireAuthForHome from './utils/requireAuthForHomePage';
 import ForgotPassword from './components/forgetPassword/forgetPassword';
 import Feedback from './components/feedback/feedback';
+import SignupPage from './components/signupPage';
 
 export default (
     <Route path="/" component={App}>
@@ -14,5 +15,7 @@ export default (
         <Route path="dashboard" component={requireAuth(Dashboard)}/>
         <Route path="forgotPassword" component={ForgotPassword}/>
         <Route path="feedback" component={Feedback}/>
+        <Route path="signup" component={SignupPage}/>
+        <Route path="*" component={SignupPage}/>
     </Route>
 );
