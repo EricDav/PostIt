@@ -22,8 +22,8 @@ import EditGroup from './editGroup';
 
 class Dashboard extends React.Component {
     componentWillMount() {
-      this.props.getGroupsRequest();
-      this.props.getAllUsersRequest();
+        this.props.getGroupsRequest();
+        this.props.getAllUsersRequest();
     }
     render() {
         return (
@@ -53,7 +53,7 @@ class Dashboard extends React.Component {
             {this.props.showDashboardPage === 3 && <ResetPassword resetPassword={this.props.resetPassword}
             showResetPassword={this.props.dashboardPage} currentGroup={this.props.group} showInitial={this.props.initialDashboardPage}/>}
 
-             { this.props.group.id && <RightSideBarNav  showDashboardPage={this.props.showDashboardPage} setCurrentGroup={this.props.setGroup} user={this.props.user}
+             { this.props.showDashboardPage > 0 && this.props.group.id && <RightSideBarNav  showDashboardPage={this.props.showDashboardPage} setCurrentGroup={this.props.setGroup} user={this.props.user}
              members={this.props.members} group={this.props.group}deleteUser = {this.props.deleteUserFromGroup} dashboardPage={this.props.dashboardPage} />}
 
              {this.props.showDashboardPage === 0 && <InitialMessageBoard group={this.props.group}/>}
@@ -88,6 +88,7 @@ PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Dashboard');
 function mapStateToProps(state) {
   return {
     allGroups: state.groups,
+    isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user.currentUser,
     messages: state.messages,
     members: state.members,

@@ -4,9 +4,9 @@ import { browserHistory } from 'react-router';
 
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { SET_CURRENT_USER, SET_SHOW_UPDATE_USER_PAGE, SET_ERROR_MESSAGE,
-  SET_RESET_PASSWORD_USER_PAGE, SHOW_SIGNUP_FORM, SET_GOOGLE_FORM, SET_TEXT_INPUT } from './types';
+  SET_RESET_PASSWORD_USER_PAGE, SHOW_SIGNUP_FORM, SET_GOOGLE_FORM, SET_CURRENT_PAGE } from './types';
 
-/* global localStorage, window */
+/* global localStorage, window, Materialize */
 
 /**
  * @description action for user current user information in store
@@ -18,6 +18,13 @@ export function setCurrentUser(user) {
   return {
     type: SET_CURRENT_USER,
     user
+  };
+}
+
+export function setCurrentPage(pageNumber) {
+  return {
+    type: SET_CURRENT_PAGE,
+    pageNumber
   };
 }
 
@@ -45,14 +52,6 @@ export function setShowUpdateUserPage(show) {
     type: SET_SHOW_UPDATE_USER_PAGE,
     show
   };
-}
-
-
-export function setTextInput(text) {
-  return {
-    type: SET_TEXT_INPUT,
-    text
-  }
 }
 
 /**
@@ -101,13 +100,24 @@ export function errorMessage(error) {
  * @return {object} returns object
  */
 export function logout() {
+  browserHistory.push('/');
   return dispatch =>
     axios.put('/api/v1/user/signout').then(() => {
       localStorage.removeItem('jwtToken');
       setAuthorizationToken(false);
-      dispatch(setCurrentUser({ currentUser: { username: '',
-        fullname: ' ' } }));
-    });
+      dispatch(setCurrentUser(
+        {
+          currentUser: {
+            username: '',
+            fullname: ''
+          }
+        }));
+      browserHistory.push('/');
+      //window.location.reload();
+    })
+      .catch(() => {
+        Materialize.toast('Try again. An error occured!', 2000, 'purple');
+      });
 }
 
 /**
@@ -221,14 +231,8 @@ export function setUpdatedUser(user) {
   };
 }
 
-/**
- * @description set a user Information when updated
- * 
- * @param {object} text
- * @return {object} returns object
- */
-export function TextInput(text) {
+export function setPage(pageNumber) {
   return (dispatch) => {
-    dispatch(setTextInput(text));
+    dispatch(setCurrentPage(pageNumber));
   };
 }

@@ -26,8 +26,11 @@ class Group extends React.Component {
                 seenLast: seenMessageIds.length}
                 this.props.updateSeenMessages(groupId.toString(), updateSeenMessagesData).then(
                     () => {
-                        this.props.getNewGroupMessages();
-                        this.props.dashboardPage(1, this.props.showDashboardPage);
+                        this.props.getNewGroupMessages().then(
+                            () => {
+                                this.props.dashboardPage(1, this.props.showDashboardPage);
+                            }
+                        )
                     }
                 );
             }

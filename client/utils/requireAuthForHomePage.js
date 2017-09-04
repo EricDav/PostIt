@@ -8,8 +8,6 @@ export default function(ComposedComponent) {
         componentWillMount() {
             if (this.props.isAuthenticated) {
                 browserHistory.push('dashboard');
-            } else {
-                browserHistory.push('/');
             }
         }
         render() {

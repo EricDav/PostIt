@@ -61,7 +61,8 @@ describe('Group Routes', () => {
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(201);
-        res.body.message.should.equal('user added to group successfully');
+        res.body.success.should.equal(true);
+        res.body.user.username.should.equal('Pythagoras1');
         done();
       });
   });

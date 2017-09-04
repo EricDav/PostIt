@@ -125,7 +125,7 @@ onClick(event) {
                     </button></a>
                   </div>}
                     <div className="col s12 resetUser">
-                      <p className="margin center medium-small sign-up"><a onClick={this.onClick} href="#!">Reset Password</a></p>
+                      <p className="margin center medium-small sign-up"><a onClick={this.onClick} href="#!">Change Password</a></p>
                     </div>
                 </form>
          </div>);

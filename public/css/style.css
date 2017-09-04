@@ -330,7 +330,7 @@ body {
 }
 .reset {
     width: 50% !important;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .Message {
 width: 55% !important;
@@ -379,4 +379,8 @@ resetUser {
     text-align: center;
     margin-top: 10px;
     font-weight: 300
+}
+
+.minimizeSeen {
+    width: 40px;
 }

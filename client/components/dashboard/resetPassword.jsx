@@ -8,6 +8,7 @@ class ResetPassword extends React.Component {
         oldPassword: '',
         confirmPassword: '',
         error: '',
+        buttonContent: 'Change Password',
         status: false
     }
     this.onChange =this.onChange.bind(this);
@@ -27,8 +28,9 @@ class ResetPassword extends React.Component {
           });
       } else {
           this.setState({
-              status: true
-          })
+              status: true,
+              buttonContent: 'Loading...'
+          });
           this.props.resetPassword(this.state).then(
           () => {
             let initialPage;
@@ -44,7 +46,8 @@ class ResetPassword extends React.Component {
           (data) => {
             this.setState({
                 error: data.response.data.message,
-                status: false
+                status: false,
+                buttonContent: 'Change Password'
             });
           }
       )
@@ -86,13 +89,13 @@ class ResetPassword extends React.Component {
                     <div className="input-field col s12">
                      <i className="mdi-action-lock-outline prefix" />
                       <input className="showLabelPhoneNumber" onFocus={this.onFocus} onChange={this.onChange}  name= "confirmPassword" id="password-again" type="password"  required="true"/>
-                    <label htmlFor="phoneNumber" className="center-align">Confirm New Passwprd</label>
+                    <label htmlFor="phoneNumber" className="center-align">Confirm New Password</label>
                     </div>
                   </div>
                   <div className="row">
                     <a className="col s12">
                       <button className="btn purple darken-1 waves-effect waves-light col s12" disabled={this.state.status}>
-                      Reset Password
+                     {this.state.buttonContent}
                     </button></a>
                   </div>
                     <div className="col s12 resetUser">
