@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getGroupMessages, getGroupMembers, updateSeenMessages } from '../../actions/getGroupMessages';
-import { getNewGroupMessages } from  '../../actions/getGroupsAction';
+import { getNewGroupMessages, deleteUserFromGroup } from  '../../actions/getGroupsAction';
 import { getAllUsersRequest } from '../../actions/getAllUsersAction';
 import { setGroup } from '../../actions/setCurrentGroup';
-import { showUpdateUserPage } from '../../actions/userActions';
+import { dashboardPage } from '../../actions/setDashboardView';
 import getMessageViewers from '../../helpers/getMessageViewers';
 import getMessageIds from '../../helpers/getMessageIds';
 
@@ -16,7 +16,8 @@ class Group extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
     onClick(event) {
-        const groupId = event.target.id
+        if (event.target.id != this.props.currentGroup.id) {
+            const groupId = event.target.id
         this.props.getGroupMembers(groupId.toString());
         this.props.getGroupMessages(groupId.toString()).then(
             () => {
@@ -25,19 +26,21 @@ class Group extends React.Component {
                 seenLast: seenMessageIds.length}
                 this.props.updateSeenMessages(groupId.toString(), updateSeenMessagesData).then(
                     () => {
-                        this.props.getNewGroupMessages();
-                        this.props.showUpdateUserPage(false);
-
+                        this.props.getNewGroupMessages().then(
+                            () => {
+                                this.props.dashboardPage(1, this.props.showDashboardPage);
+                            }
+                        )
                     }
                 );
             }
         )
-        this.props.getAllUsersRequest();
         this.props.groups.forEach((group) => {
             if (group.id.toString() === event.target.id) {
                 this.props.setGroup(group);
             }
         });
+        }
         
     }
     render() {
@@ -58,15 +61,16 @@ const dashboardPropTypes = {
   getAllUsersRequest: PropTypes.func,
   updateSeenMessages: PropTypes.func,
   getNewGroupMessages: PropTypes.func,
-  showUpdateUserPage: PropTypes.func
+  dashboardPage: PropTypes.func,
 }
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Group');
 function mapStateToProps(state) {
     return{
         groups: state.groups,
         messages: state.messages,
-        currentGroup: state.group
+        currentGroup: state.group,
+        showDashboardPage: state.showDashboardForm
     }
 } 
 
-export default connect(mapStateToProps, {showUpdateUserPage, getNewGroupMessages, updateSeenMessages, getGroupMessages, setGroup, getGroupMembers, getAllUsersRequest})(Group);
+export default connect(mapStateToProps, {dashboardPage, getNewGroupMessages, updateSeenMessages, getGroupMessages, setGroup, getGroupMembers, getAllUsersRequest})(Group);

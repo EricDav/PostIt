@@ -19,11 +19,11 @@ class Message extends React.Component {
         }
         return (
             <li className="collection-item avatar">
-                    <span className="circle indigo darken-1">A</span>
+                     <span className="circle indigo darken-1"><center className="firstName">{this.props.name[0]}</center></span>
                         <span className="email-title"><a href="">{this.props.name}</a></span>
                         <span className="ultra-small grey-text time-text">  {new Date(this.props.date).toLocaleString()}</span> 
                     <span className="truncate auto">{this.props.content}</span>
-                    { hidden && <p data-tip={viewers}><span className="seen">seen:<span className="numSeen">{numOfSeen}</span></span></p>}
+                    { hidden && <p className="minimizeSeen" data-tip={viewers}><span className="seen">seen:<span className="numSeen">{numOfSeen}</span></span></p>}
                     <ReactTooltip />
                 </li>
         )

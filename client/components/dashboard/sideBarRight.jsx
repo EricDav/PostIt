@@ -26,7 +26,8 @@ class RightSideBar extends React.Component {
         return (
             <div id="email-list" className="col s10 m3 l3 card-panel">
                 <ul className="collection">
-                    <GroupHeader user={this.props.user} group={this.props.group}/>
+                    <GroupHeader showDashboardPage ={this.props.showDashboardPage} setCurrentGroup={this.props.setCurrentGroup}
+                     deleteUser={this.props.deleteUser} user={this.props.user} group={this.props.group} dashboardPage={this.props.dashboardPage}/>
             {this.props.viewNumber === 1 && groupMember}
             {this.props.viewNumber === 1 && members}
             {this.props.viewNumber === 2 && search}
@@ -38,7 +39,7 @@ class RightSideBar extends React.Component {
 
 function mapStateToProps(state) {
    return {
-    viewNumber: state.viewNumber
+    viewNumber: state.viewNumber,
    }
 }
 

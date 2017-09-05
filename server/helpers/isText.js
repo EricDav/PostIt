@@ -9,7 +9,7 @@ const isText = (str) => {
   if (str.length === 0) {
     return false;
   }
-  for (let i = 0; i < str.length; i+=1) {
+  for (let i = 0; i < str.length; i += 1) {
     if (/[a-z A-Z ' ']/.test(str[i]) === false) {
       return false;
     }

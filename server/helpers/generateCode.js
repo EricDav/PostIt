@@ -1,3 +1,8 @@
+/**
+   * @description generate secret code to be sent to forgot password users
+   * 
+   * @return  {string} random secret code
+*/
 
 const generateCode = () => {
   const number = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];

@@ -1,11 +1,13 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+
 import db from '../models';
+import genToken from '../helpers/genToken';
 
 dotenv.load();
 const User = db.User;
 const secret = process.env.secretKey;
+
 /**
  *@description Auntheticate user.
  * 
@@ -23,7 +25,10 @@ export const logIn = {
       })
       .then((user) => {
         if (!user) {
-          return response.status(401).json({ success: false, message: 'Authentication failed. wrong username or password.' });
+          return response.status(401).json(
+            { success: false,
+              message: 'Authentication failed. wrong username or password.'
+            });
         }
         bcrypt.compare(request.body.password, user.password, (err, res) => {
           if (res) {
@@ -33,11 +38,7 @@ export const logIn = {
               email: user.email,
               phoneNumber: user.phoneNumber,
             };
-            const token = jwt.sign(
-              { currentUser,
-                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
-              }, secret
-            );
+            const token = genToken(currentUser, secret);
             User.update({
               active: true
             },
@@ -55,7 +56,10 @@ export const logIn = {
               })
               .catch(error => response.status(400).send(error));
           } else {
-            return response.status(401).json({ success: false, message: 'Authentication failed. wrong username or password.' });
+            return response.status(401).json(
+              { success: false,
+                message: 'Authentication failed. wrong username or password.'
+              });
           }
         });
       })

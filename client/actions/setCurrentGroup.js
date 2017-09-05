@@ -19,7 +19,6 @@ export function setCurrentUser(group) {
  * @return {object} returns object
  */
 export function setGroup(group) {
-  return dispatch => {
+  return dispatch =>
     dispatch(setCurrentUser(group));
-  };
 }

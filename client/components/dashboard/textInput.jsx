@@ -5,6 +5,7 @@ import createMessage from '../../actions/createMessageAction';
 import { getNewGroupMessages, getInitialNewMessages } from  '../../actions/getGroupsAction';
 import PropTypes from 'prop-types';
 import { getGroupMessages, updateSeenMessages } from '../../actions/getGroupMessages';
+import { setTextInput } from '../../actions/userActions';
 import getMessageIds from '../../helpers/getMessageIds';
 
 class TextInput extends React.Component {
@@ -21,11 +22,9 @@ class TextInput extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     });
-    
 }
 
     onKeyDown(event) {
-        console.log(this.props.piority)
         if (event.which == 13) {
              event.preventDefault();
              if (this.props.piority === '') {
@@ -69,7 +68,8 @@ const textInputPropTypes = {
   getGroupMessages: PropTypes.func,
   getNewGroupMessages: PropTypes.func,
   updateSeenMessages: PropTypes.func,
-  getInitialNewMessages: PropTypes.func
+  getInitialNewMessages: PropTypes.func,
+  setTextInput: PropTypes.func,
 }
 PropTypes.checkPropTypes(textInputPropTypes, 'prop', 'TextInput');
 
@@ -83,4 +83,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {getInitialNewMessages, updateSeenMessages, getNewGroupMessages, createMessage, getGroupMessages })(TextInput);
+export default connect(mapStateToProps, {setTextInput, getInitialNewMessages, updateSeenMessages, getNewGroupMessages, createMessage, getGroupMessages })(TextInput);

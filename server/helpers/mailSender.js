@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import winston from 'winston';
 
-dotenv.config();
+dotenv.load();
 
 /**
  * @description checks if the string pass in is a digit. Means all the charcters are digit

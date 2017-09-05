@@ -177,20 +177,21 @@ body {
         top: 9px !important;
     }
     #email-list {
-        min-height: 603px;
-        max-height: 603px;
+        min-height: 590px;
+        max-height: 590px;
         margin-bottom: -20px;
         margin-top: 0px;
+        overflow: scroll;
     }
     .model-email-content {
     padding: 24px;
 }
     #email-details {
-        min-height: 607px;
-        max-height: 607px;
+        min-height: 592px;
+        max-height: 592px;
         flex: 1;
         display: flex;
-        margin-bottom: -20px;
+        margin-bottom: -30px;
         flex-direction: column;
         position: relative;
     }
@@ -226,7 +227,7 @@ body {
         margin-top: 20px;
     }
     .my {
-        height: 100% !important;
+        height: 105% !important;
         margin-top: 0px;
         padding-left: -15px !important;
         margin: 0px;
@@ -329,7 +330,7 @@ body {
 }
 .reset {
     width: 50% !important;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .Message {
 width: 55% !important;
@@ -371,4 +372,15 @@ resetUser {
 }
 .numSeen {
     color:black;
+}
+.firstName {
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 300
+}
+
+.minimizeSeen {
+    width: 40px;
 }

@@ -7,8 +7,5 @@ import axios from 'axios';
  * @return {object} returns object
  */
 export default function feedback(response) {
-  return dispatch => {
-    return axios.post(`/api/v1/feedback`, response).then(res => {
-    });
-  };
+  return axios.post('/api/v1/feedback', response);
 }

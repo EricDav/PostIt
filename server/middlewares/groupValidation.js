@@ -131,7 +131,8 @@ const group = {
   },
 
   /**
- * @description validate for group deletion. make sure that it is the correct user have the license to delete a group
+ * @description validate for group deletion. make sure that 
+ * it is the correct user have the license to delete a group
  * 
  * @param  {object} req
  * @param  {object} res
@@ -139,6 +140,13 @@ const group = {
  * @return {void}
  */
   deleteGroupValidation(req, res, next) {
+    if (req.params.groupId === null || req.params.groupId === undefined ||
+    req.params.groupId === 'undefined') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid group id'
+      });
+    }
     Groups
       .findOne({ where: { id: req.params.groupId } })
       .then((Group) => {
@@ -167,7 +175,7 @@ const group = {
  * @param  {type} next call back function
  * @return {void}
  */
-  deleteUserFromGroupValidation(req, res) {
+  deleteUserFromGroupValidation(req, res, next) {
     Groups.findOne({
       where: {
         id: req.params.groupId,
@@ -177,12 +185,12 @@ const group = {
         if (!group2) {
           res.status(404).json({
             success: false,
-            message: 'User does not exist'
+            message: 'Group does not exist'
           });
         } else {
           User.findOne({
             where: {
-              id: req.body.userId
+              id: req.params.userId
             }
           })
             .then((user) => {
@@ -193,13 +201,10 @@ const group = {
                 });
               } else if (req.currentUser.currentUser.username === group.creator ||
                  req.currentUser.currentUser.username === user.username) {
-                res.status(200).json({
-                  success: true,
-                  message: `${user.username} has been deleted from ${group2.name} successfully`
-                });
+                next();
               } else {
                 res.status(401).json({
-                  success: true,
+                  success: false,
                   message: 'You are not permited to perform this operation'
                 });
               }

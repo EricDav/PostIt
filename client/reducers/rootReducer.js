@@ -11,10 +11,13 @@ import newMessages from './newMessages';
 import initialNewMessages from './initialNewMessages';
 import willShow from './willShow';
 import resetPasswordUser from './setResetPasswordUser';
-import showUpdatePage from './showUpdatePage';
 import error from './error';
 import setPiority from './setPiority';
-import showResetPassword from './showResetPassword';
+import showGoogleForm from './showGoogleForm';
+import showDashboardForm from './showDashboardForm';
+import initialDashboardPage from './initialDashboardPage';
+import allTextContent from './allTextContent';
+import setCurrentPage from './setCurrentPage';
 
 export default combineReducers({
   auth,
@@ -29,8 +32,11 @@ export default combineReducers({
   initialNewMessages,
   willShow,
   resetPasswordUser,
-  showUpdatePage,
   error,
   setPiority,
-  showResetPassword
+  showGoogleForm,
+  showDashboardForm,
+  initialDashboardPage,
+  allTextContent,
+  setCurrentPage
 });

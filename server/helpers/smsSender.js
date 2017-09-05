@@ -22,7 +22,7 @@ const sendSms = (phoneNumber, message) => {
     .then(result =>
       result
     )
-    .catch(() => 'An error occured'
+    .catch(err => err
     );
 };
 export default sendSms;

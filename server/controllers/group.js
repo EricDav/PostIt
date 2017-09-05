@@ -115,7 +115,7 @@ const createGroups = {
         id: req.params.groupId
       }
     })
-      .then(() => {
+      .then((deletedGroup) => {
         Members.destroy({
           where: {
             groupId: req.params.groupId
@@ -124,6 +124,7 @@ const createGroups = {
           .then(() => {
             res.status(200).json({
               success: true,
+              deletedGroup,
               message: 'group deleted successfully'
             });
           })
@@ -144,7 +145,7 @@ const createGroups = {
     Members.destroy({
       where: {
         groupId: req.params.groupId,
-        userId: req.body.userId
+        userId: req.params.userId
       }
     })
       .then(() => {
@@ -170,9 +171,9 @@ const createGroups = {
       }
     }).then((group) => {
       if (!group) {
-        return res.status(405).json({
+        return res.status(404).json({
           success: false,
-          message: 'You are not athorize to update the info of this group'
+          message: 'Group not found. Group deleted or does not exist'
         });
       }
       if (group.creator === req.currentUser.currentUser.username) {
@@ -184,8 +185,8 @@ const createGroups = {
             id: group.id
           }
         }).then(() => {
-          res.status(201).json({
-            success: false,
+          res.status(200).json({
+            success: true,
             message: 'group info updated successfully'
           });
         });

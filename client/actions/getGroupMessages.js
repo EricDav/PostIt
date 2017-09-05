@@ -3,6 +3,8 @@ import axios from 'axios';
 import { SET_CURRENT_GROUP_MESSAGES, SET_CURRENT_GROUP_MEMBERS,
   SET_LAST_SEEN_MESSAGE, SET_OLD_SEEN_LAST } from './types';
 
+/* global Materialize*/
+
 /**
  * @description set messages of the current group
  * 
@@ -32,7 +34,7 @@ export function setCurrentGroupMembers(members) {
 /**
  * @description set the initial seenLast value 
  * 
- * @param  {integer} setOldSeenLast
+ * @param  {integer} setoldSeenLast
  * @return {object} returns object
  */
 export function setOldSeenLast(setoldSeenLast) {
@@ -62,13 +64,16 @@ export function setSeenLast(groupMessageSeenLast) {
  * @return {object} returns object
  */
 export function getGroupMembers(groupId) {
-  return dispatch => {
-    return axios.get(`/api/v1/group/${groupId}/members`).then(res => {
+  return dispatch =>
+    axios.get(`/api/v1/group/${groupId}/members`).then((res) => {
       const members = res.data;
       dispatch(setCurrentGroupMembers(members));
-    });
-  };
+    })
+      .catch(() => {
+        Materialize.toast('An error occured while loading members!', 2000, 'purple');
+      });
 }
+
 /**
  * @description get all the messages and its viewers in a group by making a get request
  * 
@@ -76,14 +81,14 @@ export function getGroupMembers(groupId) {
  * @return {object} returns object
  */
 export function getGroupMessages(groupId) {
-  return dispatch => {
-    return axios.get(`/api/v1/group/${groupId}/message/viewers`).then(res => {
+  return dispatch =>
+    axios.get(`/api/v1/group/${groupId}/message/viewers`).then((res) => {
       const messages = res.data;
       dispatch(setCurrentGroupMessages(messages.data));
       dispatch(setSeenLast(messages.seenLast));
     });
-  };
 }
+
 /**
  * @description update all the messages that have been seen by a user
  * 
@@ -92,9 +97,8 @@ export function getGroupMessages(groupId) {
  * @return {object} returns object
  */
 export function updateSeenMessages(groupId, data) {
-  return dispatch => {
-    return axios.put(`/api/v1/group/${groupId}/updateSeenMessages`, data).then(res => {
+  return dispatch =>
+    axios.put(`/api/v1/group/${groupId}/updateSeenMessages`, data).then(() => {
       dispatch(setSeenLast(data.seenLast));
     });
-  };
 }

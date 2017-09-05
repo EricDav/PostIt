@@ -7,7 +7,7 @@ const isDigit = (str) => {
   if (str.length === 0) {
     return false;
   }
-  for (let i = 0; i < str.length; i +=1) {
+  for (let i = 0; i < str.length; i += 1) {
     if (/[0-9]/.test(str[i]) === false) {
       return false;
     }

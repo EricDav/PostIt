@@ -7,15 +7,7 @@ class Drop extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
     onClick(event) {
-        this.props.logout().then(
-            () => {
-              browserHistory.push('/');
-              window.location.reload();
-            },
-            () => {
-
-            }
-        )
+        this.props.logout();
     }
     render() {
         const firstName = this.props.user.fullname.split(' ')[0];

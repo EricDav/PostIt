@@ -1,10 +1,11 @@
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+
 import db from '../models';
 import isValidField from '../helpers/isValidField';
 import removePassword from '../helpers/removePassword';
 import getNewMessages from '../helpers/getNewMessages';
+import genToken from '../helpers/genToken';
 
 dotenv.load();
 const secret = process.env.secretKey;
@@ -37,17 +38,14 @@ const user = {
           active: true
         })
         .then((createdUser) => {
-          const currentUser = { username: user.username,
+          const currentUser = {
+            username: createdUser.username,
             fullname: createdUser.fullname,
             id: createdUser.id,
             email: createdUser.email,
             phoneNumber: createdUser.phoneNumber,
           };
-          const token = jwt.sign(
-            { currentUser,
-              exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
-            }, secret
-          );
+          const token = genToken(currentUser, secret);
           return res.status(201).json({
             success: true,
             message: 'Token generated successfully',
@@ -82,24 +80,24 @@ const user = {
    */
 
   updateUserInfo(req, res) {
-    const user = {
+    const updatedUser = {
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       fullname: req.body.fullname
     };
     if (!req.body.email) {
-      user.email = req.currentUser.currentUser.email;
+      updatedUser.email = req.currentUser.currentUser.email;
     }
     if (!req.body.fullname) {
-      user.fullname = req.currentUser.currentUser.fullname;
+      updatedUser.fullname = req.currentUser.currentUser.fullname;
     }
     if (!req.body.phoneNumber) {
-      user.phoneNumber = req.currentUser.currentUser.phoneNumber;
+      updatedUser.phoneNumber = req.currentUser.currentUser.phoneNumber;
     }
     User.update({
-      email: user.email,
-      fullname: user.fullname,
-      phoneNumber: user.phoneNumber
+      email: updatedUser.email,
+      fullname: updatedUser.fullname,
+      phoneNumber: updatedUser.phoneNumber
     }, {
       where: {
         id: req.currentUser.currentUser.id
@@ -127,8 +125,8 @@ const user = {
       where: {
         id: req.currentUser.currentUser.id
       }
-    }).then((user) => {
-      bcrypt.compare(oldPassword, user.password, (error, response) => {
+    }).then((resetUser) => {
+      bcrypt.compare(oldPassword, resetUser.password, (error, response) => {
         if (response) {
           if (isValidField(newPassword)) {
             return res.status(400).json({
@@ -156,14 +154,15 @@ const user = {
               password: hash
             }, {
               where: {
-                id: user.id
+                id: req.currentUser.currentUser.id
               }
-            }).then(() => {
-              res.status(201).json({
-                success: true,
-                message: 'Password has been reset'
-              });
             })
+              .then(() => {
+                res.status(201).json({
+                  success: true,
+                  message: 'Password has been reset'
+                });
+              })
               .catch(err => res.status(500).send(err));
           });
         } else {
@@ -354,52 +353,43 @@ const user = {
                   });
                   return res.status(200).send(newMessages);
                 })
-                .catch(error => res.status(405).send(error));
+                .catch(error => res.status(500).send(error));
             })
-            .catch(error => res.status(405).send(error));
+            .catch(error => res.status(500).send(error));
         })
-          .catch(error => res.status(405).send(error));
+          .catch(error => res.status(500).send(error));
       })
-      .catch(error => res.status(405).send(error));
+      .catch(error => res.status(500).send(error));
   },
 
-  /**
-   * @description get current user information
-   * 
-   * @param  {object} req
-   * @param  {object} res
-   * @return {object} current user information
-   */
-  getUser(req, res) {
+  googleSignin(req, res) {
     User.findOne({
       where: {
-        id: req.currentUser.currentUser.id
+        email: req.body.email
       }
     })
-      .then((currentUser) => {
-        if (!currentUser) {
-          return res.status(404).json({
-            success: false,
-            message: 'User does not exist'
-          });
-        } else if (Number(user.id) !== Number(req.currentUser.currentUser.id)) {
-          return res.status(400).json({
-            success: false,
-            message: 'You are not Authorize for this operation'
+      .then((googleUser) => {
+        if (!googleUser) {
+          return res.status(200).json({
+            success: true,
+            message: 'New user'
           });
         }
-        const userInfo = {
-          id: currentUser.id,
-          username: currentUser.username,
-          email: currentUser.email,
-          phoneNumber: currentUser.phoneNumber,
-          fullname: currentUser.fullname
+        const currentUser = {
+          id: googleUser.id,
+          fullname: googleUser.fullname,
+          email: googleUser.email,
+          username: googleUser.username,
+          phoneNumber: googleUser.phoneNumber
         };
-        return res.status(200).json({
+        const token = genToken(currentUser, secret);
+        res.status(200).json({
           success: true,
-          user: userInfo
+          message: 'signup with google successfully',
+          token
         });
-      });
+      })
+      .catch(error => res.status(500).send(error));
   }
 };
 

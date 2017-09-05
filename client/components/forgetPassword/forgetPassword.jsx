@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../NavBar';
+import NavBar from '../navbar';
 import Details from './details';
 import Confirm from './confirm';
 import PropTypes from 'prop-types';

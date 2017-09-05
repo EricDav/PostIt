@@ -13,7 +13,7 @@ const newMessages = (groupId, messages, seenLasts) => {
   const numNewMessage = {};
   messages.forEach((message) => {
     if (message.groupId === groupId) {
-      numGroupMessages +=1;
+      numGroupMessages += 1;
     }
   });
   seenLasts.forEach((seenLast) => {

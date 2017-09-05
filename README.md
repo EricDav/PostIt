@@ -4,24 +4,43 @@
 ## Introduction
 * https://post-it1.herokuapp.com
 *  **`PostIt`** is a software that allows friends and colleagues create groups for  notification.
-*  It has the following features;
-  *  Login with username and Password
-  *  Allows users to:
-    *  create group
-    *  add members to group they belong
-    *  Post messages to group they belong
-    *  Recieve messages
 
-## Dependencies
+###### PostIt Application
+*   Create an account from Apllication
+*   Create an account with Google+ 
+*   Login with your credentials
+*   Login with Google+
+*   Create a group
+*   Group owner can edit Group
+*   Group owner can delete his/her group
+*   Group member can leave group
+*   Search for other users in the application
+*   Add members to group
+*   Post message to group with piority level such as `normal`, `urgent` and  `critical`
+*   Recieve app notification for `normal` messages
+*   Recieve app and email notification for `urgent` messages 
+*   Recieve app, email and sms notification `critical` messages
+*   Edit your profile
+*   View online and offline users in a group
+*   View members that have read a particular message
+*   Reset password
+*   change password
+*   View groups
+*   Group owner can delete any message in his/her group  - Upcoming
+*   Group members can delete his/her message - Upcoming
+*   Update messages sent out - Upcoming
+*   Categorize group into puplic and private - Upcoming
+*   Join public groups - Upcoming
+*   send direct messages to members in a group - Upcoming
+*   Logout
 
-### Back End Dependencies
-*  This app's functionality depends on some Node packages including;
-  *  **Express Js** - This framework helps is essential in the creation of  object relational models and it also handles routing on the back end.
-  
-## Front End Dependencies
-*  **materialize** - The app's grid layout have been styled using this CSS framework
-
-## Usage
+## Technologies Used
+- **[JavaScript ES6](http://es6-features.org/)** - Codes were written in javascript to enhance HTML pages.
+- **[ReactJS](https://facebook.github.io/react/)** - React is an open-source JavaScript library for building user interfaces.
+- **[NodeJS](https://nodejs.org/)** - Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.
+- **[ExpressJS](https://expressjs.com/)** - Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications. I used this framework for routing.
+- **[PostgreSQL](https://www.postgresql.org/)** - Postgres is an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards compliance.
+- **[Sequelize](http://docs.sequelizejs.com/)** - Sequelize is a promise-based ORM for Node.js which supports the dialects of PostgreSQL and features solid transaction support, relations, read replication and more.
 
 #### Routes
 * POST `/api/user/signup` Use this route to create an account. The following fields are required:
@@ -53,6 +72,17 @@
 
 * DELETE `/api/group/:groupId/delete` Use this route to delete a group with its groupId
 
+### How to Contribute
+Contributors are welcome to further enhance the features of this API by contributing to its development. The following guidelines should guide you in contributing to this project:
+
+1. Fork the repository.
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request describing the feature(s) you have added
+6. Include a `feature.md` readme file with a detailed description of the feature(s) you have added, along with clear instructions of how to use the features(s) you have added. This readme file will be reviewed and included in the original readme if feature is approved.
+
+Ensure your codes follow the [AirBnB Javascript Styles Guide](https://github.com/airbnb/javascript)
 
 
 ## Installation and setup
@@ -86,5 +116,5 @@
     [nodemon] to restart at any time, enter `rs`
     [nodemon] watching: C:\Users\DAVID\Desktop\PostIt\server/**/*
     [nodemon] starting `babel-node app.js`
-    info: server started on 8000
+    info: server started on 9000
   ```

@@ -14,8 +14,9 @@ class SignUp extends React.Component {
         email: '',
         password: '',
         Password: '',
-        errors: {}
-
+        errors: {},
+        textContent: 'REGISTER NOW',
+        status: false
       }
       this.onChange = this.onChange.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
@@ -54,13 +55,21 @@ class SignUp extends React.Component {
            error[name] = 'Password does not match';
            this.setState({errors: error});
         } else {
+           this.setState({
+            textContent: 'Loading...',
+            status: true
+           });
            this.props.userSignupRequest(this.state).then(
            () => {
-             Materialize.toast('Sign Up Successfully', 1000, 'purple',
-            () => {
+             this.setState({
+              textContent: 'Loading...',
+              status: true
+           });
+             Materialize.toast('Sign Up Successfully', 1000, 'purple');
                 browserHistory.push('dashboard');
                 window.location.reload();
-            });
+                this.props.getGroupsRequest();
+                this.props.getAllUsersRequest();
            },
           ( data ) => {
             this.setState({errors: data.response.data.error});
@@ -70,12 +79,12 @@ class SignUp extends React.Component {
       }
     render() {
       const { errors } = this.state;
-        return (<div id="signup-page" className="col s12 z-depth-4 card-panel">
+        return (<div id="signup-page" className="col s6 z-depth-4 card-panel reset">
                 <form  onSubmit={this.onSubmit} className="login-form">
                   <div className="row">
                     <div className="input-field col s12 center">
                       <h4>Register</h4>
-                      <p className="center">Join to our community now !</p>
+                      <p className="center">Join our community now!</p>
                     </div>
                   </div>
                   <div className="row margin">
@@ -128,8 +137,8 @@ class SignUp extends React.Component {
                   </div>
                   <div className="row">
                     <a className="col s12">
-                      <button className="btn purple darken-1 waves-effect waves-light col s12">
-                      Register Now
+                      <button disabled={this.state.status} className="btn purple darken-1 waves-effect waves-light col s12">
+                      {this.state.textContent}
                     </button></a>
                   </div>
                 </form>
@@ -137,9 +146,4 @@ class SignUp extends React.Component {
     }
 }
 
- const SignUpPropTypes = {
-   userSignupRequest: PropTypes.func,
- }
-
-PropTypes.checkPropTypes(SignUpPropTypes, 'prop', 'SignUp');
 export default SignUp;

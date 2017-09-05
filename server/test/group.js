@@ -23,7 +23,6 @@ describe('Group Routes', () => {
       })
       .expect(200)
       .end((err, res) => {
-        //regUserData += res.body.Token;
         res.status.should.equal(201);
         res.body.success.should.equal(true);
         done();
@@ -191,10 +190,9 @@ describe('Group Routes', () => {
         name: 'love',
         description: 'Love is good'
       })
-      .expect(201)
+      .expect(200)
       .end((err, res) => {
-        console.log(res.body)
-        res.status.should.equal(201);
+        res.status.should.equal(200);
         res.body.message.should.equal('group info updated successfully');
         done();
       });
