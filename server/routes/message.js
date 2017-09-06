@@ -1,15 +1,16 @@
 import express from 'express';
 
-import groupMessagesController from '../controllers/groupMessages';
+import groupMessages from '../controllers/groupMessages';
 import auth from '../middlewares/auth';
-import sendEmail from '../helpers/email';
-import groupValidator from '../middlewares/groupValidation';
+import email from '../helpers/email';
+import groupValidation from '../middlewares/groupValidation';
 
-const app = express.Router();
+const message = express.Router();
 
-app.post('/api/v1/group/:groupId/message', auth, groupValidator.groupValidation,
-  sendEmail, groupMessagesController.createMessage);
-app.get('/api/v1/group/:groupId/messages', auth, groupValidator.groupValidation,
-  groupMessagesController.getMessages);
+message.post('/api/v1/groups/:groupId/message', auth, groupValidation.groupValidation,
+  email, groupMessages.createMessage);
 
-export default app;
+message.get('/api/v1/groups/:groupId/messages', auth, groupValidation.groupValidation,
+  groupMessages.getMessages);
+
+export default message;

@@ -25,7 +25,7 @@ export function addUser(user) {
  */
 export default function addUserToAGroup(userId, groupId) {
   return dispatch =>
-    axios.post(`/api/v1/group/${groupId}/user`, userId).then((res) => {
+    axios.post(`/api/v1/groups/${groupId}/user`, userId).then((res) => {
       dispatch(addUser(res.data.user));
     })
       .catch(() => {

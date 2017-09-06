@@ -1,13 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
-import HomePage from './components/homePage';
 import { Provider } from 'react-redux';
 import jwt from 'jsonwebtoken';
-import { setCurrentUser } from './actions/userActions';
-import Dashboard from './components/dashboard/dashboard';
 import { Router, browserHistory } from 'react-router';
-import routes from './routes';
+
+import { setCurrentUser } from './actions/userActions';
 import setAuthorizationToken from './utils/setAuthorizationToken';
+import routes from './routes';
 import { setCurrentUserGroups } from './actions/getGroupsAction';
 import configureStore from './store/configureStore';
 //import js from '../public/js/modal'

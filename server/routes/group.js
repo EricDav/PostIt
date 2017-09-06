@@ -1,30 +1,30 @@
 import express from 'express';
 
-import groupController from '../controllers/group';
+import groupInfo from '../controllers/groupInfo';
 import groupValidator from '../middlewares/groupValidation';
 import auth from '../middlewares/auth';
 
-const app = express.Router();
+const group = express.Router();
 
-app.delete('/api/v1/group/:groupId/delete', auth, groupValidator.deleteGroupValidation,
-  groupController.deleteGroup);
+group.delete('/api/v1/groups/:groupId/delete', auth, groupValidator.deleteGroupValidation,
+  groupInfo.deleteGroup);
 
-app.delete('/api/v1/groups/:groupId/users/:userId/delete', auth,
-  groupValidator.deleteUserFromGroupValidation, groupController.deleteUser);
+group.delete('/api/v1/groups/:groupId/users/:userId/delete', auth,
+  groupValidator.deleteUserFromGroupValidation, groupInfo.deleteUser);
 
-app.post('/api/v1/group/:groupId/user', auth,
-  groupValidator.groupValidation, groupValidator.userValidation, groupController.addUser);
+group.post('/api/v1/groups/:groupId/user', auth,
+  groupValidator.groupValidation, groupValidator.userValidation, groupInfo.addUser);
 
-app.post('/api/v1/group', auth, groupValidator.groupNullValidation, groupController.create);
+group.post('/api/v1/group', auth, groupValidator.groupNullValidation, groupInfo.create);
 
-app.post('/api/v1/group/:groupId/message', auth, groupValidator.groupValidation);
+group.post('/api/v1/groups/:groupId/message', auth, groupValidator.groupValidation);
 
-app.put('/api/v1/group/:groupId/update', auth, groupValidator.groupNullValidation,
-  groupController.updateGroupInfo);
+group.put('/api/v1/groups/:groupId/update', auth, groupValidator.groupNullValidation,
+  groupInfo.updateGroupInfo);
 
-app.get('/api/v1/group/:groupId/members', auth, groupValidator.groupValidation,
-  groupController.getGroupMembers);
+group.get('/api/v1/groups/:groupId/members', auth, groupValidator.groupValidation,
+  groupInfo.getGroupMembers);
 
-app.get('/api/v1/groups', auth, groupController.getGroups);
+group.get('/api/v1/groups', auth, groupInfo.getGroups);
 
-export default app;
+export default group;

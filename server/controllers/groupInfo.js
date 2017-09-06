@@ -1,9 +1,9 @@
-import db from '../models';
+import dataBase from '../models';
 import removePassword from '../helpers/removePassword';
 
-const Group = db.Group;
-const User = db.User;
-const Members = db.UserGroup;
+const Group = dataBase.Group;
+const User = dataBase.User;
+const Members = dataBase.UserGroup;
 
 /**
  * @description create a group with a name, the name of creator of the group and Description.
@@ -12,7 +12,7 @@ const Members = db.UserGroup;
  * @param  {object} res response to the client
  * @return {object} Group
  */
-const createGroups = {
+const groupInfo = {
   create(req, res) {
     Group
       .create({
@@ -169,35 +169,37 @@ const createGroups = {
       where: {
         id: req.params.groupId
       }
-    }).then((group) => {
-      if (!group) {
-        return res.status(404).json({
-          success: false,
-          message: 'Group not found. Group deleted or does not exist'
-        });
-      }
-      if (group.creator === req.currentUser.currentUser.username) {
-        Group.update({
-          name: req.body.name,
-          description: req.body.description
-        }, {
-          where: {
-            id: group.id
-          }
-        }).then(() => {
-          res.status(200).json({
-            success: true,
-            message: 'group info updated successfully'
+    })
+      .then((group) => {
+        if (!group) {
+          return res.status(404).json({
+            success: false,
+            message: 'Group not found. Group deleted or does not exist'
           });
-        });
-      } else {
-        return res.status(403).json({
-          success: false,
-          message: 'You are not athorize to update the info of this group'
-        });
-      }
-    });
+        }
+        if (group.creator === req.currentUser.currentUser.username) {
+          Group.update({
+            name: req.body.name,
+            description: req.body.description
+          }, {
+            where: {
+              id: group.id
+            }
+          })
+            .then(() => {
+              res.status(200).json({
+                success: true,
+                message: 'group info updated successfully'
+              });
+            });
+        } else {
+          return res.status(403).json({
+            success: false,
+            message: 'You are not athorize to update the info of this group'
+          });
+        }
+      });
   }
 };
 
-export default createGroups;
+export default groupInfo;

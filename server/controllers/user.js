@@ -102,12 +102,13 @@ const user = {
       where: {
         id: req.currentUser.currentUser.id
       }
-    }).then(() => {
-      res.status(201).json({
-        success: true,
-        message: 'User info has been updated'
-      });
     })
+      .then(() => {
+        res.status(201).json({
+          success: true,
+          message: 'User info has been updated'
+        });
+      })
       .catch(error => res.status(401).send(error));
   },
 

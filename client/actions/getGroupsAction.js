@@ -144,7 +144,7 @@ export function deleteUserFromGroup(data) {
  */
 export function deleteCurrentGroup(data) {
   return dispatch =>
-    axios.delete(`/api/v1/group/${data.groupId}/delete`).then(() => {
+    axios.delete(`/api/v1/groups/${data.groupId}/delete`).then(() => {
       dispatch(deleteGroup(data));
     })
       .catch(() => {
@@ -161,7 +161,7 @@ export function deleteCurrentGroup(data) {
  */
 export function updateCurrentGroup(userData, groupId) {
   return dispatch =>
-    axios.put(`/api/v1/group/${groupId}/update`, userData).then(() => {
+    axios.put(`/api/v1/groups/${groupId}/update`, userData).then(() => {
       dispatch(updateGroup(userData));
     });
 }

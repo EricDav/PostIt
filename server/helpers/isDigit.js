@@ -1,5 +1,6 @@
 /**
  * @description checks if the string pass in is a digit. Means all the charcters are digit
+ * 
  * @param  {string} str
  * @return {boolean} true or false
  */

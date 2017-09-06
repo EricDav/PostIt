@@ -6,6 +6,9 @@
  * Made By MaterializeCSS.com
  */
 
+
+
+
 .icon-block {
   padding: 0 15px;
 }
@@ -14,6 +17,14 @@
 }
 .image {
   background-image: url("../images/background-image.png");
+  min-height: 100vh;
+  /*background-size: cover;*/
+  /*background-repeat: no-repeat;*/
+}
+.not-found-image {
+    background-image: url("../images/404-Error-Page1.jpg");
+    background-repeat: no-repeat;
+    min-height: 80vh;
 }
 .space {
   margin-top: 20px;
@@ -326,7 +337,10 @@ body {
 }
 
 .footer {
-    margin-bottom: -100px;
+    position: fixed;
+    bottom: 0px;
+    width:100%;
+    height: 60px;
 }
 .reset {
     width: 50% !important;
@@ -356,9 +370,9 @@ resetUser {
     float: left;
 }
 .form {
-    padding-bottom:120px;
-    margin-top: 50px;
+    margin-top: 30px;
     position: center;
+    height: 30%;
 }
 
 .feed {
@@ -383,4 +397,7 @@ resetUser {
 
 .minimizeSeen {
     width: 40px;
+}
+.reduce {
+    font-size: 12px;
 }
