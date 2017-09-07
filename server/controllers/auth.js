@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 
-import db from '../models';
+import dataBase from '../models';
 import genToken from '../helpers/genToken';
 
 dotenv.load();
-const User = db.User;
+const User = dataBase.User;
 const secret = process.env.secretKey;
 
 /**

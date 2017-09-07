@@ -8,12 +8,8 @@
     "dialect": "postgres"
   },
   "test": {
-    "username": "postgres",
-    "password": "Iloveodunayo",
-    "database": "postItest",
-     "port": 5432,
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+   "use_env_variable": "DATABASE_TEST_URL",
+     "dialect": "postgres"
   },
   "production": {
     "use_env_variable": "DATABASE_URL",

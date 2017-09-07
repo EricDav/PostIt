@@ -113,7 +113,6 @@ export function logout() {
           }
         }));
       browserHistory.push('/');
-      //window.location.reload();
     })
       .catch(() => {
         Materialize.toast('Try again. An error occured!', 2000, 'purple');

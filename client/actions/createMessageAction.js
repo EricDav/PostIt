@@ -26,7 +26,7 @@ export function addMessage(message) {
  */
 export default function createMessage(messageData, groupId) {
   return dispatch =>
-    axios.post(`/api/v1/group/${groupId}/message`, messageData).then((res) => {
+    axios.post(`/api/v1/groups/${groupId}/message`, messageData).then((res) => {
       const message = {};
       message.message = res.data.message;
       message.viewers = [];

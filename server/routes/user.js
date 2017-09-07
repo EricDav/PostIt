@@ -1,23 +1,32 @@
 import express from 'express';
 
-import { logIn, logOut } from '../controllers/login';
+import { logIn, logOut } from '../controllers/auth';
 import userController from '../controllers/user';
-import userValidator from '../middlewares/userValidation';
+import userValidation from '../middlewares/userValidation';
 import auth from '../middlewares/auth';
-import userUpdateValidation from '../middlewares/update';
+import update from '../middlewares/update';
 
-const app = express.Router();
+const user = express.Router();
 
-app.get('/api/v1/allUsers', auth, userController.allUsers);
-app.post('/api/v1/user/signup', userValidator.basicValidation, userController.create);
-app.post('/api/v1/user/signin', logIn.logIn);
-app.put('/api/v1/user/signout', auth, logOut.logOut);
-app.get('/api/v1/group/:groupId/message/viewers', auth,
+user.get('/api/v1/allUsers', auth, userController.allUsers);
+
+user.post('/api/v1/user/signup', userValidation.basicValidation, userController.create);
+
+user.post('/api/v1/user/signin', logIn.logIn);
+
+user.put('/api/v1/user/signout', auth, logOut.logOut);
+
+user.get('/api/v1/groups/:groupId/message/viewers', auth,
   userController.getMessagesWithSeenUsers);
-app.put('/api/v1/resetpassword', auth, userController.resetPassword);
-app.get('/api/v1/newMessages', auth, userController.getMessages);
-app.put('/api/v1/group/:groupId/updateSeenMessages', auth, userController.updateSeenMessages);
-app.put('/api/v1/user/update', auth, userUpdateValidation, userController.updateUserInfo);
-app.post('/api/v1/user/googleSignin', userController.googleSignin);
 
-export default app;
+user.put('/api/v1/resetpassword', auth, userController.resetPassword);
+
+user.get('/api/v1/newMessages', auth, userController.getMessages);
+
+user.put('/api/v1/groups/:groupId/updateSeenMessages', auth, userController.updateSeenMessages);
+
+user.put('/api/v1/user/update', auth, update, userController.updateUserInfo);
+
+user.post('/api/v1/user/googleSignin', userController.googleSignin);
+
+export default user;

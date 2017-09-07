@@ -1,6 +1,6 @@
-import db from '../models';
+import dataBase from '../models';
 
-const Feedback = db.Feedback;
+const Feedback = dataBase.Feedback;
 
 /**
    * @description save user feedback in database

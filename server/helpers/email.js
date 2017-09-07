@@ -61,7 +61,7 @@ const sendEmail = (req, res, next) => {
            <span style="color: rgba(203, 109, 81, 0.9)">
            ${req.currentUser.currentUser.username}</span>,
             just posted a message to ${groupName}.<br><br>
-              <a href="${req.body.url}">
+              <a href=${process.env.url}>
                 <div style="text-align: center">
                    <button style="background-color: red;
                     border: none; color: white; padding: 15px 32px;

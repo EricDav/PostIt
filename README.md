@@ -72,18 +72,6 @@
 
 * DELETE `/api/group/:groupId/delete` Use this route to delete a group with its groupId
 
-### How to Contribute
-Contributors are welcome to further enhance the features of this API by contributing to its development. The following guidelines should guide you in contributing to this project:
-
-1. Fork the repository.
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request describing the feature(s) you have added
-6. Include a `feature.md` readme file with a detailed description of the feature(s) you have added, along with clear instructions of how to use the features(s) you have added. This readme file will be reviewed and included in the original readme if feature is approved.
-
-Ensure your codes follow the [AirBnB Javascript Styles Guide](https://github.com/airbnb/javascript)
-
 
 ## Installation and setup
 *  Navigate to a directory of choice on `terminal`.
@@ -118,3 +106,20 @@ Ensure your codes follow the [AirBnB Javascript Styles Guide](https://github.com
     [nodemon] starting `babel-node app.js`
     info: server started on 9000
   ```
+
+#### Limitations:
+The limitations to the **PostIt Application** are as follows:
+* Users can not get real time messages
+* Users cannot delete their messages
+
+### How to Contribute
+Contributors are welcome to further enhance the features of this API by contributing to its development. The following guidelines should guide you in contributing to this project:
+
+1. Fork the repository.
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request describing the feature(s) you have added
+6. Include a `feature.md` readme file with a detailed description of the feature(s) you have added, along with clear instructions of how to use the features(s) you have added. This readme file will be reviewed and included in the original readme if feature is approved.
+
+Ensure your codes follow the [AirBnB Javascript Styles Guide](https://github.com/airbnb/javascript)

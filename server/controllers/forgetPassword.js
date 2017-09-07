@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt';
-import db from '../models';
+import dataBase from '../models';
 import generateCode from '../helpers/generateCode';
 import mailSender from '../helpers/mailSender';
 import isValidField from '../helpers/isValidField';
 
-const User = db.User;
+const User = dataBase.User;
 
 /**
    * @description send secret code to users that has forgoten their password
