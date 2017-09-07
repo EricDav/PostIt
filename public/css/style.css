@@ -380,9 +380,11 @@ resetUser {
     margin-bottom: 20px;
 }
 .seen {
-    color:#35aeeb;
-    border: solid #35aeeb;
-    font-size: 15px;
+    color: #35aeeb;
+    border: solid 1px #35aeeb;
+    font-size: 10px;
+    padding: 2px;
+    border-radius: 5px;
 }
 .numSeen {
     color:black;

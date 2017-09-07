@@ -12,7 +12,7 @@ const config = {
   test: {
     username: 'postgres',
     password: 'Iloveodunayo',
-    database: 'postitest',
+    database: 'PostIt',
     host: '127.0.0.1',
     dialect: 'postgres'
   },

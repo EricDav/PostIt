@@ -5,14 +5,7 @@ export default (state = {}, action = {}) => {
     case SET_CURRENT_GROUP:
       return action.group;
     case UPDATE_GROUP_DATA:
-      return {
-        name: action.updatedGroupData.name,
-        description: action.updatedGroupData.description,
-        id: state.id,
-        creator: state.creator,
-        createdAt: state.createdAt,
-        updatedAt: state.updatedAt
-      };
+      return action.updatedGroupData;
     default: return state;
   }
 };

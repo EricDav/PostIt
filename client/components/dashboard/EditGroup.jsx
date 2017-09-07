@@ -49,13 +49,22 @@ class EditGroup extends React.Component {
         } else if (this.state.name === this.props.currentGroup.name) {
             Materialize.toast('You cant update only description', 2000, 'purple');
         } else {
-             this.props.updateCurrentGroup(this.state, this.props.currentGroup.id).then(
+            const updatedGroup = {
+                id: this.props.currentGroup.id,
+                name: this.state.name,
+                description: this.state.description,
+                creator: this.props.currentGroup.creator,
+                createdAt: this.props.currentGroup.createdAt,
+                updatedAt: this.props.currentGroup.updatedAt
+            }
+             this.props.updateCurrentGroup(updatedGroup, this.props.currentGroup.id).then(
             () => {
                 this.props.dashboardPage(this.props.showInitial, 1)
                 Materialize.toast('Group updated successfully', 1500, 'purple');
             },
 
             (data) => {
+                console.log(data)
                 this.setState({
                     error: data.response.data
                 });

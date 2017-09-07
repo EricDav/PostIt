@@ -70,7 +70,7 @@ class SignUp extends React.Component {
           ( data ) => {
 
             this.setState({
-              errors: data.response.data.error,
+              errors: data.response.data.error, 
               textContent: 'REGISTER NOW',
               status: false
             });

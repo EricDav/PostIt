@@ -158,7 +158,7 @@ describe('Group Routes', () => {
 
   it('allows a group admin to delete the group he owns', (done) => {
     server
-      .delete('/api/v1/group/4/delete')
+      .delete('/api/v1/groups/4/delete')
       .set('authorization', regUserData)
       .expect(200)
       .end((err, res) => {
@@ -170,7 +170,7 @@ describe('Group Routes', () => {
 
   it('prevents a user from deleting a group that does not exist', (done) => {
     server
-      .delete('/api/v1/group/8/delete')
+      .delete('/api/v1/groups/8/delete')
       .expect(404)
       .set('authorization', regUserData)
       .end((err, res) => {
@@ -181,7 +181,7 @@ describe('Group Routes', () => {
   });
   it('should update group details', (done) => {
     server
-      .put('/api/v1/group/1/update')
+      .put('/api/v1/groups/1/update')
       .set('Connection', 'keep alive')
       .set('authorization', regUserData)
       .set('Content-Type', 'application/json')

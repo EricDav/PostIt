@@ -32,7 +32,7 @@ describe('Group Routes', () => {
 describe('Group Routes', () => {
   it('should allows a logged in user adds member to a group he/she belongs', (done) => {
     server
-      .post('/api/v1/group/2/user')
+      .post('/api/v1/groups/2/user')
       .set('Connection', 'keep alive')
       .set('authorization', regUserData)
       .set('Content-Type', 'application/json')
@@ -50,7 +50,7 @@ describe('Group Routes', () => {
 
   it('should allows a logged in user adds member to a group he/she belongs', (done) => {
     server
-      .post('/api/v1/group/2/user')
+      .post('/api/v1/groups/2/user')
       .set('Connection', 'keep alive')
       .set('authorization', regUserData)
       .set('Content-Type', 'application/json')
@@ -69,7 +69,7 @@ describe('Group Routes', () => {
 
   it('should allows a logged in user to view all the members of a group he/she belongs to', (done) => {
     server
-      .get('/api/v1/group/2/members')
+      .get('/api/v1/groups/2/members')
       .set('Connection', 'keep alive')
       .set('authorization', regUserData)
       .set('Content-Type', 'application/json')

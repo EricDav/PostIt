@@ -32,7 +32,7 @@ describe('Group Routes', () => {
 describe('Group Routes', () => {
   it('allows a logged in user create post to a group he/she belongs', (done) => {
     server
-      .post('/api/v1/group/1/message')
+      .post('/api/v1/groups/1/message')
       .set('Connection', 'keep alive')
       .set('authorization', regUserData)
       .set('Content-Type', 'application/json')
@@ -51,7 +51,7 @@ describe('Group Routes', () => {
 
   it('allows a logged in user create post to a group he/she belongs', (done) => {
     server
-      .post('/api/v1/group/1/message')
+      .post('/api/v1/groups/1/message')
       .set('Connection', 'keep alive')
       .set('authorization', regUserData)
       .set('Content-Type', 'application/json')
@@ -69,7 +69,7 @@ describe('Group Routes', () => {
   });
   it('allows a logged in user create post to a group he/she belongs', (done) => {
     server
-      .post('/api/v1/group/1/message')
+      .post('/api/v1/groups/1/message')
       .set('Connection', 'keep alive')
       .set('authorization', regUserData)
       .set('Content-Type', 'application/json')
@@ -87,7 +87,7 @@ describe('Group Routes', () => {
   });
   it('allows a logged in user get all posts from the group he/she belongs', (done) => {
     server
-      .get('/api/v1/group/1/messages')
+      .get('/api/v1/groups/1/messages')
       .set('authorization', regUserData)
       .expect(201)
       .end((err, res) => {
@@ -99,7 +99,7 @@ describe('Group Routes', () => {
   it('allows a logged in user get all posts and their viewers from the group he/she belongs',
     (done) => {
       server
-        .get('/api/v1/group/1/message/viewers')
+        .get('/api/v1/groups/1/message/viewers')
         .set('authorization', regUserData)
         .expect(200)
         .end((err, res) => {
