@@ -8,7 +8,7 @@
     "start": "nodemon --watch server --exec babel-node -- app.js",
     "pre": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "test": "NODE_ENV=test npm run pre && mocha --timeout 40000 --compilers js:babel-core/register server/test",
-    "tests": "NODE_ENV=test npm run pre && mocha --timeout 40000 --compilers js:babel-core/register server/test",
+    "tests": "NODE_ENV=test mocha --timeout 40000 --compilers js:babel-core/register server/test",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "coverage": "./node_modules/.bin/nyc --reporter=html --reporter=text mocha --reporter spec --timeout 40000 --compilers js:babel-core/register server/test"
   },

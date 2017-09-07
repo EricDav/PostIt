@@ -3,7 +3,7 @@ import axios from 'axios';
 /* global Materialize */
 
 import { SET_CURRENT_USER_GROUPS, SET_NEW_GROUP_MESSAGES,
-  SET_INITIAL_NEW_MESSAGES, DELETE_GROUP, UPDATE_GROUP_DATA, TEXT_CONTENT } from './types';
+  SET_INITIAL_NEW_MESSAGES, DELETE_GROUP, UPDATE_GROUP_DATA, TEXT_CONTENT, UPDATE_CURRENT_GROUP } from './types';
 
 /**
  * @description set current groups a user belongs to
@@ -66,7 +66,7 @@ export function setInitialNewMessages(initialNewMessages) {
 }
 
 /**
- * @description set messages in store before viewing them
+ * @description update the current group
  * 
  * @param  {array} updatedGroupData
  * @return {object} returns object
@@ -75,6 +75,19 @@ export function updateGroup(updatedGroupData) {
   return {
     type: UPDATE_GROUP_DATA,
     updatedGroupData
+  };
+}
+
+/**
+ * @description update the current group
+ * 
+ * @param  {array} updatedGroupData
+ * @return {object} returns object
+ */
+export function updateGroupInCurrentUserGroups(updateGroupData) {
+  return {
+    type: UPDATE_CURRENT_GROUP,
+    updateGroupData
   };
 }
 
@@ -163,6 +176,7 @@ export function updateCurrentGroup(userData, groupId) {
   return dispatch =>
     axios.put(`/api/v1/groups/${groupId}/update`, userData).then(() => {
       dispatch(updateGroup(userData));
+      dispatch(updateGroupInCurrentUserGroups(userData));
     });
 }
 
