@@ -10,7 +10,8 @@ const user = express.Router();
 
 user.get('/api/v1/allUsers', auth, userController.allUsers);
 
-user.post('/api/v1/user/signup', userValidation.basicValidation, userController.create);
+user.post('/api/v1/user/signup',
+  userValidation.basicValidation, userController.create);
 
 user.post('/api/v1/user/signin', logIn.logIn);
 
@@ -23,7 +24,8 @@ user.put('/api/v1/resetpassword', auth, userController.resetPassword);
 
 user.get('/api/v1/newMessages', auth, userController.getMessages);
 
-user.put('/api/v1/groups/:groupId/updateSeenMessages', auth, userController.updateSeenMessages);
+user.put('/api/v1/groups/:groupId/updateSeenMessages',
+  auth, userController.updateSeenMessages);
 
 user.put('/api/v1/user/update', auth, update, userController.updateUserInfo);
 

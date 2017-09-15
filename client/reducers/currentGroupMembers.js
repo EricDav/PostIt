@@ -1,4 +1,4 @@
-import { SET_CURRENT_GROUP_MEMBERS, ADD_USER } from '../actions/types';
+import { SET_CURRENT_GROUP_MEMBERS, ADD_USER } from '../actions/ActionTypes';
 
 export default (state = [], action = {}) => {
   switch (action.type) {

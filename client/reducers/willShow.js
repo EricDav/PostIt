@@ -1,4 +1,4 @@
-import { WILL_SHOW } from '../actions/types';
+import { WILL_SHOW } from '../actions/ActionTypes';
 
 export default (state = false, action = {}) => {
   switch (action.type) {

@@ -1,6 +1,5 @@
 import db from '../models';
-import isText from '../helpers/isText';
-import isValidField from '../helpers/isValidField';
+import { isText, isInValidField } from '../helpers/index';
 
 const User = db.User;
 
@@ -25,11 +24,11 @@ class UpdateUser {
  * @return {array} returns an array of updated field
  */
   filterUserData(data) {
-    const { fullname, email, phoneNumber } = this.user;
+    const { fullName, email, phoneNumber } = this.user;
     const shouldUpdate = [];
 
-    if (fullname !== null && fullname !== undefined && fullname !== data.fullname) {
-      shouldUpdate.push([fullname, 1]);
+    if (fullName !== null && fullName !== undefined && fullName !== data.fullName) {
+      shouldUpdate.push([fullName, 1]);
     }
     if (email !== null && email !== undefined && email !== data.email) {
       shouldUpdate.push([email, 3]);
@@ -46,11 +45,11 @@ class UpdateUser {
  * @param  {string} fullname 
  * @return {string} return error message
  */
-  validateFullname(fullname) {
-    if (isValidField(fullname)) {
-      this.error.fullname = 'This field is required';
-    } else if (!isText(fullname) || fullname.length < 5) {
-      this.error.fullname = `Name should contain alphabet and space 
+  validateFullname(fullName) {
+    if (isInValidField(fullName)) {
+      this.error.fullName = 'This field is required';
+    } else if (!isText(fullName) || fullName.length < 5) {
+      this.error.fullName = `Name should contain alphabet and space 
       alone and should contain at least 5 characters`;
     }
   }
@@ -62,7 +61,7 @@ class UpdateUser {
  * @return {string} return error message
  */
   validateEmail(email) {
-    if (isValidField(email)) {
+    if (isInValidField(email)) {
       this.error.email = 'This field is required';
     } else if ((email.slice(email.length - 4, email.length)
      !== '.com' || !(/[@]/.test(email)))) {
@@ -77,7 +76,7 @@ class UpdateUser {
  * @return {string} return error message
  */
   validatePhoneNumber(phoneNumber) {
-    if (isValidField(phoneNumber)) {
+    if (isInValidField(phoneNumber)) {
       this.error.phoneNumber = 'This field is required';
     } else if (phoneNumber.length !== 11) {
       this.error.phoneNumber = 'Invalid phone number';
@@ -126,12 +125,12 @@ function validateUpdateUser(req, res, next) {
       }
     });
     const error = update.error;
-    if (uniqueUpdates.length === 2 && error.fullname) {
+    if (uniqueUpdates.length === 2 && error.fullName) {
       return res.status(400).json({
         success: false,
         error
       });
-    } else if (uniqueUpdates.length === 2 && !error.fullname) {
+    } else if (uniqueUpdates.length === 2 && !error.fullName) {
       return next();
     }
     User
@@ -161,8 +160,8 @@ function validateUpdateUser(req, res, next) {
           });
         }
       })
-      .catch(err => res.status(500).send(err));
+      .catch(err => res.status(400).send(err));
   })
-    .catch(error => res.status(500).send(error));
+    .catch(error => res.status(401).send(error));
 }
 export default validateUpdateUser;

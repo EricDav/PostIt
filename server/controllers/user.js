@@ -2,10 +2,8 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 
 import db from '../models';
-import isValidField from '../helpers/isValidField';
-import removePassword from '../helpers/removePassword';
-import getNewMessages from '../helpers/getNewMessages';
-import genToken from '../helpers/genToken';
+import { isInValidField, removePassword, getNewMessages, genToken }
+  from '../helpers/index';
 
 dotenv.load();
 const secret = process.env.secretKey;
@@ -23,15 +21,15 @@ const user = {
   create(req, res) {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
-        return res.status(403).json({
+        return res.status(500).json({
           success: false,
           message: 'An error occured while encrypting password'
         });
       }
       return User
         .create({
-          fullname: req.body.fullname,
-          username: req.body.username,
+          fullName: req.body.fullName,
+          userName: req.body.userName,
           password: hash,
           email: req.body.email,
           phoneNumber: req.body.phoneNumber,
@@ -39,8 +37,8 @@ const user = {
         })
         .then((createdUser) => {
           const currentUser = {
-            username: createdUser.username,
-            fullname: createdUser.fullname,
+            userName: createdUser.userName,
+            fullName: createdUser.fullName,
             id: createdUser.id,
             email: createdUser.email,
             phoneNumber: createdUser.phoneNumber,
@@ -52,7 +50,20 @@ const user = {
             Token: token
           });
         })
-        .catch(error => res.status(500).send(error));
+        .catch((error) => {
+          if (error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(400).json({
+              success: false,
+              error: {
+                message: error.errors[0].message,
+              }
+            });
+          }
+          res.status(500).json({
+            success: false,
+            message: 'Server error'
+          });
+        });
     });
   },
 
@@ -61,6 +72,7 @@ const user = {
    *
    * @param  {object} req
    * @param  {object} res
+   * 
    * @return {array} all users in an array
    */
   allUsers(req, res) {
@@ -69,11 +81,15 @@ const user = {
       .then((users) => {
         res.status(200).send(removePassword(users));
       })
-      .catch(error => res.status(500).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
-   *@description update user uptable details like fullname, email and phone number
+   *@description update user uptable details like 
+   fullname, email and phone number
    *
    * @param  {object} req
    * @param  {object} res
@@ -83,20 +99,20 @@ const user = {
     const updatedUser = {
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
-      fullname: req.body.fullname
+      fullName: req.body.fullName
     };
     if (!req.body.email) {
       updatedUser.email = req.currentUser.currentUser.email;
     }
-    if (!req.body.fullname) {
-      updatedUser.fullname = req.currentUser.currentUser.fullname;
+    if (!req.body.fullName) {
+      updatedUser.fullName = req.currentUser.currentUser.fullName;
     }
     if (!req.body.phoneNumber) {
       updatedUser.phoneNumber = req.currentUser.currentUser.phoneNumber;
     }
     User.update({
       email: updatedUser.email,
-      fullname: updatedUser.fullname,
+      fullName: updatedUser.fullName,
       phoneNumber: updatedUser.phoneNumber
     }, {
       where: {
@@ -109,11 +125,16 @@ const user = {
           message: 'User info has been updated'
         });
       })
-      .catch(error => res.status(401).send(error));
+      .catch((error) => res.status(500).json({
+        error,
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
-   * @description reset users password given the user provide the initial password
+   * @description reset users password given the 
+   * user provide the initial password
    * 
    * @param  {object} req request object
    * @param  {object} res response object
@@ -129,7 +150,7 @@ const user = {
     }).then((resetUser) => {
       bcrypt.compare(oldPassword, resetUser.password, (error, response) => {
         if (response) {
-          if (isValidField(newPassword)) {
+          if (isInValidField(newPassword)) {
             return res.status(400).json({
               success: false,
               message: 'This field is required'
@@ -174,7 +195,10 @@ const user = {
         }
       });
     })
-      .catch(error => res.status(500).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
@@ -192,7 +216,7 @@ const user = {
     const viewerData = [];
     seenLast.findOne({
       where: {
-        seenUsername: req.currentUser.currentUser.username,
+        seenUsername: req.currentUser.currentUser.userName,
         groupId: req.params.groupId
       }
     })
@@ -200,7 +224,7 @@ const user = {
         if (viewer === null) {
           viewer = { seenLast: 0 };
           seenLast.create({
-            seenUsername: req.currentUser.currentUser.username,
+            seenUsername: req.currentUser.currentUser.userName,
             groupId: req.params.groupId,
             seenLast: 0
           })
@@ -252,13 +276,13 @@ const user = {
   updateSeenMessages(req, res) {
     viewMessages.findOne({
       where: {
-        viewerUsername: req.currentUser.currentUser.username
+        viewerUsername: req.currentUser.currentUser.userName
       }
     })
       .then((viewer) => {
         if (!viewer) {
           viewMessages.create({
-            viewerUsername: req.currentUser.currentUser.username,
+            viewerUsername: req.currentUser.currentUser.userName,
             seenMessageIds: req.body.seenMessageIds,
           })
             .then((view) => {
@@ -266,7 +290,7 @@ const user = {
                 seenLast: req.body.seenLast
               }, {
                 where: {
-                  seenUsername: req.currentUser.currentUser.username,
+                  seenUsername: req.currentUser.currentUser.userName,
                   groupId: req.params.groupId
                 }
               })
@@ -284,7 +308,7 @@ const user = {
             seenMessageIds: req.body.seenMessageIds
           }, {
             where: {
-              viewerUsername: req.currentUser.currentUser.username
+              viewerUsername: req.currentUser.currentUser.userName
             }
           })
             .then(() => {
@@ -292,7 +316,7 @@ const user = {
                 seenLast: req.body.seenLast,
               }, {
                 where: {
-                  seenUsername: req.currentUser.currentUser.username,
+                  seenUsername: req.currentUser.currentUser.userName,
                   groupId: req.params.groupId
                 }
               })
@@ -345,7 +369,7 @@ const user = {
                   const newMessages = [];
                   const userSeenLast = [];
                   seenLasts.forEach((seenlast) => {
-                    if (seenlast.seenUsername === req.currentUser.currentUser.username) {
+                    if (seenlast.seenUsername === req.currentUser.currentUser.userName) {
                       userSeenLast.push(seenlast);
                     }
                   });
@@ -378,9 +402,9 @@ const user = {
         }
         const currentUser = {
           id: googleUser.id,
-          fullname: googleUser.fullname,
+          fullName: googleUser.fullName,
           email: googleUser.email,
-          username: googleUser.username,
+          userName: googleUser.userName,
           phoneNumber: googleUser.phoneNumber
         };
         const token = genToken(currentUser, secret);
@@ -390,7 +414,10 @@ const user = {
           token
         });
       })
-      .catch(error => res.status(500).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   }
 };
 

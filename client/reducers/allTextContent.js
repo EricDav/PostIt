@@ -1,4 +1,4 @@
-import { TEXT_CONTENT } from '../actions/types';
+import { TEXT_CONTENT } from '../actions/ActionTypes';
 
 export default (state = '', action = {}) => {
   switch (action.type) {

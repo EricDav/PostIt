@@ -1,4 +1,4 @@
-import { SET_INITIAL_NEW_MESSAGES } from '../actions/types';
+import { SET_INITIAL_NEW_MESSAGES } from '../actions/ActionTypes';
 
 export default (state = [], action = {}) => {
   switch (action.type) {

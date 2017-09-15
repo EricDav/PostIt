@@ -4,10 +4,9 @@ import { Provider } from 'react-redux';
 import jwt from 'jsonwebtoken';
 import { Router, browserHistory } from 'react-router';
 
-import { setCurrentUser } from './actions/userActions';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import routes from './routes';
-import { setCurrentUserGroups } from './actions/getGroupsAction';
+import { setCurrentUser } from './actions/UserAction';
 import configureStore from './store/configureStore';
 //import js from '../public/js/modal'
 
@@ -23,7 +22,7 @@ const store = configureStore();
  if (localStorage.jwtToken) {
   setAuthorizationToken(localStorage.jwtToken);
   store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
-  //store.dispatch(setCurrentUserGroups())
+  //store.dispatch(setCurrentUserGroups())`
 }
 render(
     <Provider store={store}>

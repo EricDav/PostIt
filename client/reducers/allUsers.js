@@ -1,4 +1,4 @@
-import { SET_ALL_USERS } from '../actions/types';
+import { SET_ALL_USERS } from '../actions/ActionTypes';
 
 export default (state = [], action = {}) => {
   switch (action.type) {

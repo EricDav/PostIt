@@ -5,7 +5,7 @@ import NavBar from '../Navbar';
 import Details from './Details';
 import Confirm from './Confirm';
 import PropTypes from 'prop-types';
-import { sendSecretCode, VerifyCodeAndUpdatePassword } from '../../actions/resetPassword';
+import { sendSecretCode, VerifyCodeAndUpdatePassword } from '../../actions/UserAction';
 
 const ForgetPassword = (props) => {
       return (

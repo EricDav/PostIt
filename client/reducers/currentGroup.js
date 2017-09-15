@@ -1,4 +1,4 @@
-import { SET_CURRENT_GROUP, UPDATE_GROUP_DATA } from '../actions/types';
+import { SET_CURRENT_GROUP, UPDATE_GROUP_DATA } from '../actions/ActionTypes';
 
 export default (state = {}, action = {}) => {
   switch (action.type) {

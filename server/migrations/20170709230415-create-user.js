@@ -17,12 +17,12 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      fullname: {
+      fullName: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: false
       },
-      username: {
+      userName: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,

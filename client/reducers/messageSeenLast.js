@@ -1,4 +1,4 @@
-import { SET_LAST_SEEN_MESSAGE } from '../actions/types';
+import { SET_LAST_SEEN_MESSAGE } from '../actions/ActionTypes';
 
 export default (state = 0, action = {}) => {
   switch (action.type) {

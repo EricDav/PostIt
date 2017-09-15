@@ -1,8 +1,6 @@
 import bcrypt from 'bcrypt';
 import dataBase from '../models';
-import generateCode from '../helpers/generateCode';
-import mailSender from '../helpers/mailSender';
-import isValidField from '../helpers/isValidField';
+import { generateCode, mailSender, isInValidField } from '../helpers/index';
 
 const User = dataBase.User;
 
@@ -11,7 +9,9 @@ const User = dataBase.User;
    * 
    * @param  {object} req
    * @param  {object} res
-   * @return {string} an object with key: group, value: number of new messages in the group
+   * 
+   * @return {string} an object with key: group, value:
+   *  number of new messages in the group
    */
 export const sendSecretCode = (req, res) => {
   User.findOne({
@@ -37,7 +37,8 @@ export const sendSecretCode = (req, res) => {
             userEmail: req.body.email,
           });
         }
-        mailSender(req, res, message, 'A code has been sent to your mail', hashSecret, email);
+        mailSender(req, res, message, 'A code has been sent to your mail',
+          hashSecret, email);
       });
     });
 };
@@ -52,7 +53,7 @@ export const sendSecretCode = (req, res) => {
 export const VerifyCodeAndUpdatePassword = (request, response) => {
   bcrypt.compare(request.body.response, request.body.hash, (err, res) => {
     if (res) {
-      if (isValidField(request.body.password)) {
+      if (isInValidField(request.body.password)) {
         return res.status(403).json({
           success: false,
           message: 'This field is required'
@@ -79,7 +80,10 @@ export const VerifyCodeAndUpdatePassword = (request, response) => {
               message: 'Your password has been reset successfully'
             });
           })
-          .catch(error => response.status(404).send(error));
+          .catch(() => response.status(500).json({
+            success: false,
+            message: 'Server error'
+          }));
       });
     } else {
       return response.status(400).json({

@@ -1,4 +1,5 @@
-import { SET_CURRENT_USER_GROUPS, ADD_GROUP, DELETE_GROUP, UPDATE_CURRENT_GROUP } from '../actions/types';
+import { SET_CURRENT_USER_GROUPS, ADD_GROUP, DELETE_GROUP,
+  UPDATE_CURRENT_GROUP } from '../actions/ActionTypes';
 import deleteGroup from '../helpers/deleteGroup';
 import updateGroup from '../helpers/updateGroup';
 

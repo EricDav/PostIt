@@ -1,4 +1,4 @@
-import { SET_NAVBAR_RIGHT_VIEW } from '../actions/types';
+import { SET_NAVBAR_RIGHT_VIEW } from '../actions/ActionTypes';
 
 export default (state = 1, action = {}) => {
   switch (action.type) {

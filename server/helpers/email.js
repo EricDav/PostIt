@@ -3,8 +3,7 @@ import dotenv from 'dotenv';
 import winston from 'winston';
 
 import db from '../models';
-import getEmailsAndPhoneNumbers from './getEmailsAndPhoneNumber';
-import smsSender from './smsSender';
+import { getEmailsAndPhoneNumbers, smsSender } from './index';
 
 dotenv.config();
 
@@ -50,7 +49,8 @@ const sendEmail = (req, res, next) => {
               }
             });
             const mailOptions = {
-              from: `${sender} from ${groupName} <alienyidavid4christ@gmail.com>`,
+              from: `${sender} from ${groupName}
+              <alienyidavid4christ@gmail.com>`,
               to: recieverEmails,
               subject: `PostIt: ${groupName}`,
               html: `

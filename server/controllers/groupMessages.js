@@ -15,7 +15,7 @@ const Messages = {
         content: req.body.content,
         groupId: req.params.groupId,
         senderId: req.currentUser.currentUser.id,
-        senderUsername: req.currentUser.currentUser.username,
+        senderUsername: req.currentUser.currentUser.userName,
         priority: req.body.priority
       })
       .then((createdMessage) => {
@@ -24,7 +24,10 @@ const Messages = {
           message: createdMessage
         });
       })
-      .catch(error => res.status(400).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
@@ -48,7 +51,10 @@ const Messages = {
           res.status(200).send(messages);
         }
       })
-      .catch(error => res.status(404).send(error));
+      .catch(() => res.status(404).json({
+        success: false,
+        message: 'Server error'
+      }));
   }
 };
 

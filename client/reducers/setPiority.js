@@ -1,4 +1,4 @@
-import { SET_PIORITY_LEVEL } from '../actions/types';
+import { SET_PIORITY_LEVEL } from '../actions/ActionTypes';
 
 export default (state = '', action = {}) => {
   switch (action.type) {

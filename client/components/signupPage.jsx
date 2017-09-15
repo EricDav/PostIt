@@ -2,24 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import NavBar from './Navbar';
-import Signup from './Signup';
-import { userSignupRequest } from '../actions/signupActions';
+import NavBar from './Navbar.jsx';
+import Signup from './Signup.jsx';
+import { userSignupRequest } from '../actions/AuthAction';
 
-const SignupPage = (props) => {
-        return (
-          <div className="body-container"   className="image">
-            <NavBar/>
-                <center>
-                        <Signup userSignupRequest={props.userSignupRequest}/>
-             </center>
-        </div> 
-        )
-}
+const SignupPage = props =>
+  (
+  <div className="body-container image">
+    <NavBar/>
+    <center>
+      <Signup userSignupRequest={props.userSignupRequest}/>
+    </center>
+  </div>
+  );
 const SignUpPagePropTypes = {
-   userSignupRequest: PropTypes.func,
- }
+  userSignupRequest: PropTypes.func,
+};
 
- PropTypes.checkPropTypes(SignUpPagePropTypes, 'prop', 'SignUpPage');
+PropTypes.checkPropTypes(SignUpPagePropTypes, 'prop', 'SignUpPage');
 
-export default connect(null, {userSignupRequest})(SignupPage);
+export default connect(null, { userSignupRequest })(SignupPage);

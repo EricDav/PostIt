@@ -1,4 +1,4 @@
-import { SET_NEW_GROUP_MESSAGES } from '../actions/types';
+import { SET_NEW_GROUP_MESSAGES } from '../actions/ActionTypes';
 
 export default (state = [], action = {}) => {
   switch (action.type) {

@@ -9,8 +9,8 @@ const secret = process.env.secretKey;
  * 
  * @param  {object} req request object
  * @param  {object} res response object
- * @param  {} next 
- * @return {object} success or failure message. success if user has a valid token,
+ * @param  {} next callback
+ * @return {object} success or failure message. success if user has a valid token
  * failure if user do not have a token or a valid token.
  */
 

@@ -1,4 +1,4 @@
-import { RESET_PASSWORD_USER } from '../actions/types';
+import { RESET_PASSWORD_USER } from '../actions/ActionTypes';
 
 export default (state = {}, action = {}) => {
   switch (action.type) {

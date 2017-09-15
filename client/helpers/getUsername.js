@@ -8,7 +8,7 @@
 const getUsername = (listOfUsers) => {
   const usernames = [];
   listOfUsers.forEach((user) => {
-    usernames.push(user.username);
+    usernames.push(user.userName);
   });
   return usernames;
 };

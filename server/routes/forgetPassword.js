@@ -1,6 +1,7 @@
 import express from 'express';
 
-import { sendSecretCode, VerifyCodeAndUpdatePassword } from '../controllers/forgetPassword';
+import { sendSecretCode, VerifyCodeAndUpdatePassword }
+  from '../controllers/forgetPassword';
 
 const app = express.Router();
 

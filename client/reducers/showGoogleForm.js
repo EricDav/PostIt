@@ -1,7 +1,7 @@
-import { SET_GOOGLE_FORM } from '../actions/types';
+import { SET_GOOGLE_FORM } from '../actions/ActionTypes';
 
 const initialState = {
-  fullname: '',
+  fullName: '',
   email: '',
   showForm: true
 };

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 
 import dataBase from '../models';
-import genToken from '../helpers/genToken';
+import { genToken } from '../helpers/index';
 
 dotenv.load();
 const User = dataBase.User;
@@ -20,7 +20,7 @@ export const logIn = {
     return User
       .findOne({
         where: {
-          username: request.body.username
+          userName: request.body.userName
         }
       })
       .then((user) => {
@@ -32,9 +32,9 @@ export const logIn = {
         }
         bcrypt.compare(request.body.password, user.password, (err, res) => {
           if (res) {
-            const currentUser = { username: user.username,
+            const currentUser = { userName: user.userName,
               id: user.id,
-              fullname: user.fullname,
+              fullName: user.fullName,
               email: user.email,
               phoneNumber: user.phoneNumber,
             };
@@ -81,7 +81,7 @@ export const logOut = {
       active: false
     }, {
       where: {
-        username: req.currentUser.currentUser.username
+        userName: req.currentUser.currentUser.userName
       }
     }).then(() => {
       res.status(200).json({

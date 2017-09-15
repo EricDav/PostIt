@@ -1,5 +1,5 @@
 import db from '../models';
-import isValidField from '../helpers/isValidField';
+import { isInValidField } from '../helpers/index';
 
 const Groups = db.Group;
 const User = db.User;
@@ -99,10 +99,10 @@ const group = {
  */
   groupNullValidation(req, res, next) {
     const nullValues = { name: '', description: '' };
-    if (isValidField(req.body.name)) {
+    if (isInValidField(req.body.name)) {
       nullValues.name = 'This field is required';
     }
-    if (isValidField(req.body.description) || nullValues.description === null
+    if (isInValidField(req.body.description) || nullValues.description === null
     || nullValues.description === undefined) {
       nullValues.description = 'This field is required';
     }
@@ -155,7 +155,7 @@ const group = {
             success: false,
             message: 'Group not found. Group does not exist or has been deleted'
           });
-        } else if (Group.creator === req.currentUser.currentUser.username) {
+        } else if (Group.creator === req.currentUser.currentUser.userName) {
           next();
         } else {
           res.status(401).json({
@@ -199,8 +199,9 @@ const group = {
                   success: false,
                   message: 'User does not exist'
                 });
-              } else if (req.currentUser.currentUser.username === group.creator ||
-                 req.currentUser.currentUser.username === user.username) {
+              } else if (req.currentUser.currentUser.userName
+                === group.creator ||
+                 req.currentUser.currentUser.userName === user.userName) {
                 next();
               } else {
                 res.status(401).json({
@@ -209,7 +210,10 @@ const group = {
                 });
               }
             })
-            .catch(error => res.status(404).send(error));
+            .catch(() => res.status(500).json({
+              success: false,
+              message: 'Server error'
+            }));
         }
       })
       .catch(error => res.status(404).send(error));

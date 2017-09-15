@@ -10,7 +10,7 @@ class LogIn extends React.Component {
     super(props);
     this.state = {
       success: false,
-      username: '',
+      userName: '',
       password: '',
       isLoading: false,
       error: ''
@@ -37,7 +37,7 @@ class LogIn extends React.Component {
   onSubmit(event) {
     this.setState({error: {}, isLoading: true});
     event.preventDefault();
-    this.props.userSigninRequest({password:this.state.password, username: this.state.username}).then(
+    this.props.userSigninRequest({password:this.state.password, userName: this.state.userName}).then(
       () => {
         Materialize.toast('Logged In Successfully', 1500, 'purple',
       () => {
@@ -46,7 +46,7 @@ class LogIn extends React.Component {
       });
       },
       ( data ) => {
-        this.setState({error: data.response.data, username: '', password: '', isLoading: false, success: true}, );
+        this.setState({error: data.response.data, userName: '', password: '', isLoading: false, success: true}, );
       }
     )
   }
@@ -54,7 +54,7 @@ class LogIn extends React.Component {
     this.setState({success: false});
   }
   render() {
-    const { error, username, password, isLoading, success, value } = this.state;
+    const { error, userName, password, isLoading, success, value } = this.state;
     return (<div id="login-page" className="col s12 z-depth-4 card-panel">
                 <form id="login" className="login-form" onSubmit={this.onSubmit}>
                   <div className="row">
@@ -66,7 +66,7 @@ class LogIn extends React.Component {
                   <div className="row margin">
                     <div className="input-field col s12">
                       <i className="mdi-social-person-outline prefix" />
-                      <input id="username" type="text" onChange={this.onChange} name="username" onFocus={this.onFocus} value={username} required="true"/>
+                      <input id="username" type="text" onChange={this.onChange} name="userName" onFocus={this.onFocus} value={userName} required="true"/>
                       <label htmlFor="username" className="center-align">Username</label>
                     </div>
                   </div>

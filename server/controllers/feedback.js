@@ -21,10 +21,9 @@ const feedback = (req, res) => {
         success: true,
         message: 'Response saved successfully'
       })
-        .catch(error => res.status(400).send({
+        .catch(() => res.status(500).json({
           success: false,
           message: 'Response was not saved',
-          error
         }));
     });
 };

@@ -1,4 +1,5 @@
-import { SET_NAVBAR_RIGHT_VIEW, SHOW_DASHBOARD_PAGE, SHOW_INITIAL_DASHBOARD_PAGE } from './types';
+import { SET_NAVBAR_RIGHT_VIEW, SHOW_DASHBOARD_PAGE,
+  SHOW_INITIAL_DASHBOARD_PAGE } from './ActionTypes';
 
 /**
  * @description set view number action

@@ -1,5 +1,5 @@
 import dataBase from '../models';
-import removePassword from '../helpers/removePassword';
+import { removePassword } from '../helpers/index';
 
 const Group = dataBase.Group;
 const User = dataBase.User;
@@ -18,7 +18,7 @@ const groupInfo = {
       .create({
         name: req.body.name,
         description: req.body.description,
-        creator: req.currentUser.currentUser.username
+        creator: req.currentUser.currentUser.userName
       })
       .then((group) => {
         group.addUser(req.currentUser.currentUser.id);
@@ -27,7 +27,10 @@ const groupInfo = {
           group
         });
       })
-      .catch(error => res.status(500).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   addUser(req, res) {
@@ -50,7 +53,10 @@ const groupInfo = {
             });
         });
       })
-      .catch(error => res.status(400).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
@@ -80,7 +86,10 @@ const groupInfo = {
           }
         });
       })
-      .catch(error => res.status(400).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
@@ -98,7 +107,10 @@ const groupInfo = {
       .then((group) => {
         group.getUsers()
           .then(groupMembers => res.status(200).send(removePassword(groupMembers)))
-          .catch(error => res.status(400).send(error));
+          .catch(() => res.status(400).json({
+            success: false,
+            message: 'Server error'
+          }));
       });
   },
 
@@ -130,7 +142,10 @@ const groupInfo = {
           })
           .catch(error => res.status(400).send(error));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
@@ -154,7 +169,10 @@ const groupInfo = {
           message: 'user deleted from group successfully'
         });
       })
-      .catch(error => res.status(400).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
@@ -177,7 +195,7 @@ const groupInfo = {
             message: 'Group not found. Group deleted or does not exist'
           });
         }
-        if (group.creator === req.currentUser.currentUser.username) {
+        if (group.creator === req.currentUser.currentUser.userName) {
           Group.update({
             name: req.body.name,
             description: req.body.description
@@ -193,7 +211,7 @@ const groupInfo = {
               });
             });
         } else {
-          return res.status(403).json({
+          return res.status(401).json({
             success: false,
             message: 'You are not athorize to update the info of this group'
           });

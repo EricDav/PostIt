@@ -1,13 +1,11 @@
 import React from 'react';
-import Navbar from './Navbar';
-import Signup from './Signup';
+import Navbar from './Navbar.jsx';
 
-const NotFound = () => {
-    return (
-      <div className="not-found-image">
-        <Navbar/>
-    </div>
-    );
-}
+const NotFound = () =>
+  (
+  <div className="not-found-image">
+    <Navbar/>
+  </div>
+  );
 
-export default NotFound
+export default NotFound;

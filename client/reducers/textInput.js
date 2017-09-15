@@ -1,4 +1,4 @@
-import { SET_TEXT_INPUT } from '../actions/types';
+import { SET_TEXT_INPUT } from '../actions/ActionTypes';
 
 export default (state = '', action = {}) => {
   switch (action.type) {

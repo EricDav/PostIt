@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/EricDav/PostIt/badge.svg?branch=development)](https://coveralls.io/github/EricDav/PostIt?branch=development)  [![Build Status](https://travis-ci.org/EricDav/PostIt.svg?branch=development)](https://travis-ci.org/EricDav/PostIt)[![Code Climate](https://codeclimate.com/github/EricDav/PostIt/badges/gpa.svg)](https://codeclimate.com/github/EricDav/PostIt)
 ## Introduction
 * https://post-it1.herokuapp.com
-*  **`PostIt`** is a software that allows friends and colleagues create groups for  notification.
+*  **`PostIt`** is a web application that allows friends and colleagues create groups for  notification.
 
 ###### PostIt Application
 *   Create an account from Apllication
@@ -78,7 +78,7 @@
 *  Clone this repository on that directory.
   *  Using SSH;
 
-    >`git clone git@github.com:EricDav/PostIt.git`
+    > git clone git@github.com:EricDav/PostIt.git
 
   *  Using HTTP;
 
