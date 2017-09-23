@@ -62,7 +62,6 @@ class CreateGroupModal extends React.Component {
         { name: this.state.name, description: '' }).then(
         () => {},
         (data) => {
-          console.log(data.response.data);
           this.setState({
             nameError: data.response.data.error.name
           });

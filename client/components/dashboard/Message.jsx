@@ -8,7 +8,11 @@ const Message = (props) => {
   let numOfSeen = 0;
   props.viewers.forEach((viewer) => {
     if (viewer !== props.user.userName && viewer !== props.name) {
-      viewers = `${viewers} + ' @' + ${viewer}`;
+      if (viewers === '') {
+        viewers = `@${viewer}`;
+      } else {
+        viewers = `${viewers} @${viewer}`;
+      }
       numOfSeen += 1;
     }
   });
@@ -21,8 +25,8 @@ const Message = (props) => {
         <center className="firstName">{props.name[0]}
         </center></span>
       <span className="email-title"><a href="">{props.name}</a></span>
-      <span className="ultra-small grey-text time-text">
-        {new Date(props.date).toLocaleString()}
+      <span className="right ultra-small grey-text time-text">
+        {`${new Date(props.date).toLocaleString()}  ${props.priority} `}
       </span>
       <span className="truncate auto">{props.content}</span>
       { hidden && <p className="minimizeSeen" data-tip={viewers}>

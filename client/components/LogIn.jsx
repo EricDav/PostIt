@@ -60,7 +60,7 @@ class LogIn extends React.Component {
                   <div className="row">
                     <div className="input-field col s12 center">
                       <h5 className="center login-form-text">Welcome, Login to get started</h5><br/>
-                      {success && <div className="errorMessage">{error.message}</div>}
+                      {success && <div className="mes"><i><b>{error.message}</b></i></div>}
                     </div>
                   </div>
                   <div className="row margin">

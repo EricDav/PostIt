@@ -30,6 +30,8 @@ class Search extends React.Component {
   onChange(event) {
     if (!isInValidField(event.target.value)) {
       this.props.searchUsers(event.target.value);
+    } else {
+      this.props.searchUsers([]);
     }
   }
   /**
@@ -84,7 +86,7 @@ function mapStateToProps(state) {
     group: state.group,
     currentUser: state.auth.user.currentUser.userName,
     members: state.members,
-    users: state.searchedUsers.mathchedUsers
+    users: state.searchedUsers
   };
 }
 

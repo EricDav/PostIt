@@ -16,7 +16,6 @@ const Members = dataBase.UserGroup;
  */
 const group = {
   create(req, res) {
-      console.log(req.body.name, req.body.description, '+==============');
     Group
       .create({
         name: req.body.name,

@@ -82,7 +82,7 @@ class Details extends React.Component {
           <div className="input-field col s12 center">
             <h5 className="center login-form-text">Reset Password</h5><br/>
             {this.state.failure &&
-            <div className="errorMessage"><b>
+            <div className="mes"><b>
               <i>{this.state.error}</i></b></div>}
           </div>
         </div>

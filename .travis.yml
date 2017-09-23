@@ -1,16 +1,17 @@
 language: node_js
 node_js:
-  - node
+   - "6"
+services:
+  - postgresql
 script:
   - npm install
   - npm run tests
 before_script:
-  - psql -c 'create database travis;' -U postgres
-  - npm install sequelize -g -cli
+    - psql -c 'create database PostIt;' -U postgres
+    - npm install -g mocha
+    - npm install -g sequelize-cli
 after success:
   - psql -c 'drop database travis;' -U postgres
-services:
-  - postgres sql
 exclude_paths:
   - coverage/
-  - dist/**/*  
+  - dist/**/* 

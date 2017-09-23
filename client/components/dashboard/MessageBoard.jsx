@@ -59,7 +59,8 @@ class MessageBoard extends React.Component {
             key={message.message.id}
             content={message.message.content}
             viewers={message.viewers}
-            date={message.message.createdAt}/>
+            date={message.message.createdAt}
+            priority ={message.message.priority}/>
         );
       }
     });

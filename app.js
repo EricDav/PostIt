@@ -1,6 +1,5 @@
 import express from 'express';
 import logger from 'morgan';
-import winston from 'winston';
 import bodyParser from 'body-parser';
 import path from 'path';
 import webpack from 'webpack';
@@ -28,6 +27,6 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
-  winston.info(`server started on ${port}`);
+  console.log(`server started on ${port}`);
 });
 export default app;

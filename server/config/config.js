@@ -10,10 +10,7 @@ const config = {
     dialect: 'postgres'
   },
   test: {
-    username: 'postgres',
-    password: 'Iloveodunayo',
-    database: 'PostIt',
-    host: '127.0.0.1',
+    use_env_variable: 'DATABASE_TEST_URL',
     dialect: 'postgres'
   },
   production: {

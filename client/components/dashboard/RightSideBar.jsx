@@ -39,7 +39,10 @@ class RightSideBar extends React.Component {
    */
   render() {
     const members = this.getMembers();
-    const search = <Search searchUsers={this.props.searchUsers}/>;
+    const search = <Search
+      searchUsers={this.props.searchUsers}
+      users={this.props.users}
+    />;
     const groupMember = <GroupMember/>;
     return (
       <div id="email-list" className="col s12 m3 l3 card-panel">
@@ -68,6 +71,8 @@ function mapStateToProps(state) {
   return {
     viewNumber: state.viewNumber,
     showDashboardPage: state.showDashboardForm,
+    users: state.searchedUsers
+
   };
 }
 

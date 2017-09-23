@@ -147,14 +147,12 @@ export function createGroupRequest(userData) {
 export function getGroupsRequest() {
   return dispatch =>
     axios.get('/api/v1/groups').then((res) => {
-      console.log('I got here ooooooooooo');
       const groups = res.data.groups;
-      console.log(groups);
       dispatch(setCurrentUserGroups(groups));
     })
       .catch((err) => {
-        console.log(err, '==================');
-        Materialize.toast('An error occured while craeting groups!', 1500, 'purple');
+        Materialize.toast('An error occured while craeting groups!',
+          1500, 'purple');
       });
 }
 

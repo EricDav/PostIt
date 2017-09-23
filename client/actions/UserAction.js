@@ -215,13 +215,18 @@ export function updateUserProfile(userData) {
  * @return {object} returns object
  */
 export function searchUsers(searchKey) {
+  if (typeof (searchKey) !== 'string') {
+    return (dispatch) => {
+      dispatch(setSearchedUser([]));
+    };
+  }
   return dispatch =>
     axios.get(`/api/v1/users/${searchKey}/search`).then((res) => {
-      dispatch(setSearchedUser(res.data));
+      dispatch(setSearchedUser(res.data.searchedUsers));
     })
       .catch(() => {
         Materialize.toast('An error occured! could not leave group',
-          1500, 'purple');
+          1500, 'red');
       });
 }
 

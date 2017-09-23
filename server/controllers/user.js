@@ -2,7 +2,8 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 
 import database from '../models';
-import { isInValidField, removePassword, getNewMessages, generateToken }
+import { removeCurrentUserFromSearchResult,
+  isInValidField, removePassword, getNewMessages, generateToken }
   from '../helpers/index';
 
 dotenv.load();
@@ -101,14 +102,17 @@ const user = {
   searchUsers(req, res) {
     User.findAll({
       where: {
-        fullName: {
+        userName: {
           $iLike: `%${req.params.searchKey}%`
         }
       }
-    }).then((mathchedUsers) => {
+    }).then((searchedUsers) => {
       res.status(200).json({
         success: true,
-        mathchedUsers: removePassword(mathchedUsers)
+        searchedUsers: removePassword(
+          removeCurrentUserFromSearchResult(
+            req.currentUser.currentUser.userName,
+            searchedUsers))
       });
     })
       .catch(() => res.status(500).json({

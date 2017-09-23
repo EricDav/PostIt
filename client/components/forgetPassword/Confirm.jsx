@@ -18,7 +18,9 @@ class Confirm extends React.Component {
       password: '',
       confirmPassword: '',
       error: '',
-      failure: false
+      status: 'Confirm',
+      failure: false,
+      isLoading: false
     };
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -42,8 +44,14 @@ class Confirm extends React.Component {
      */
   onClick(event) {
     event.preventDefault();
+    this.setState({
+      status: 'Loading...',
+      isLoading: true
+    });
     if (this.state.password !== this.state.confirmPassword) {
       this.setState({
+        status: 'Confirm',
+        isLoading: false,
         failure: true,
         error: 'Password does not match'
       });
@@ -65,6 +73,8 @@ class Confirm extends React.Component {
         },
         (data) => {
           this.setState({
+            status: 'Confirm',
+            isLoading: false,
             failure: true,
             error: data.response.data.message
           });
@@ -121,8 +131,9 @@ class Confirm extends React.Component {
         <div className="row">
           <div className="input-field col s12">
             <button onClick={this.onClick}
-              className="btn purple darken-1 waves-effect waves-light col s12">
-              Confirm
+              className="btn purple darken-1 waves-effect waves-light col s12"
+              disabled={this.isLoading}>
+              {this.state.status}
             </button>
           </div>
         </div>

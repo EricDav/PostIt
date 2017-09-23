@@ -35,6 +35,16 @@ export const generateCode = () => {
   return secretCode;
 };
 
+export const removeCurrentUserFromSearchResult =
+ (currentUser, searchedResult) => {
+   const result = [];
+   searchedResult.forEach((user) => {
+     if (user.userName !== currentUser) {
+       result.push(user);
+     }
+   });
+   return result;
+ };
 
 export const isText = (str) => {
   if (str.length === 0) {
@@ -180,7 +190,7 @@ export const sendSms = (phoneNumber, message) => {
 
   jusibeSDk.sendMessage(params)
     .then(result =>
-      console.log(result, '+++++++++++++++++++++++++++')
+      result
     )
     .catch(() => ({
       success: false,

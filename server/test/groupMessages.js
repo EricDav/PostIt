@@ -71,7 +71,6 @@ describe('Group Routes', () => {
           }
         })
           .then((message) => {
-            console.log(message);
             message.priority.should.equal('normal');
             message.senderUsername.should.equal('Pythagoras');
             message.content.should.equal('I am here');
