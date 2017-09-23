@@ -10,6 +10,7 @@ const User = db.User;
  * @param  {object} req
  * @param  {object} res
  * @param  {type} next call back function
+ * 
  * @return {object}
  */
 const group = {
@@ -56,6 +57,7 @@ const group = {
     * @param  {object} req
     * @param  {object} res
     * @param  {type} next call back function
+    *
     * @return {null} no return
  */
   groupValidation(req, res, next) {
@@ -95,39 +97,62 @@ const group = {
     * @param  {object} req
     * @param  {object} res
     * @param  {type} next call back function
+    *
     * @return {voud} no returns
  */
   groupNullValidation(req, res, next) {
-    const nullValues = { name: '', description: '' };
+    const error = {};
     if (isInValidField(req.body.name)) {
-      nullValues.name = 'This field is required';
+      error.name = 'This field is required';
     }
-    if (isInValidField(req.body.description) || nullValues.description === null
-    || nullValues.description === undefined) {
-      nullValues.description = 'This field is required';
+    if (isInValidField(req.body.description)) {
+      error.description = 'This field is required';
     }
-    if (nullValues.description !== '' && req.body.description !== null
-     && req.body.description !== undefined) {
+    if (!error.description) {
       if (req.body.description.length < 20) {
-        nullValues.description = 'You need to have up to 20 charecters';
+        error.description = 'You need to have up to 20 charecters';
       }
     }
-    Groups.findOne({
-      where: {
-        name: req.body.name
+    if (!error.name) {
+      if (req.body.name.length > 20) {
+        error.name = 'Group name can not be more than 20 characters';
+      } else if (req.body.name.length < 2) {
+        error.name = 'Group name should contain at least 2 characters';
       }
-    }).then((groups) => {
-      if (groups) {
-        if (nullValues.name === '') {
-          nullValues.name = 'Group title already exist';
+    }
+    if (Object.keys(error).length === 2) {
+      return res.status(400).json({
+        success: false,
+        error
+      });
+    }
+    if (!error.name) {
+      Groups.findOne({
+        where: {
+          name: req.body.name
         }
-        return res.status(409).send(nullValues);
-      } else if (nullValues.name === '' && nullValues.description === '') {
-        next();
-      } else {
-        return res.status(405).send(nullValues);
-      }
-    });
+      }).then((groups) => {
+        if (groups) {
+          error.name = 'Group title already exist';
+          return res.status(409).json({
+            success: false,
+            error
+          });
+        } else if (Object.keys(error).length === 0) {
+          next();
+        } else {
+          return res.status(400).json({
+            success: false,
+            error
+          });
+        }
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        error
+      });
+    }
   },
 
   /**

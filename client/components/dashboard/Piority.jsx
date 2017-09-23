@@ -4,15 +4,33 @@ import { connect } from 'react-redux';
 
 import { setPiority } from '../../actions/MessageAction';
 
+/** @class Piority
+ * @classdesc component for piority level
+ */
 class Piority extends React.Component {
+  /**
+   * constructor - contains the constructor
+   * @param  {object} props the properties of the class component
+   * @return {void} no return or void
+   */
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
   }
+  /**
+     * @description - handles the onclick event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onClick(event) {
     const piority = event.target.value;
     this.props.setPiority(piority);
   }
+  /**
+   *@description render - renders the class component
+   * @return {object} returns an object
+   */
   render() {
     return (
       <form action="#" id="pform">
@@ -38,7 +56,7 @@ class Piority extends React.Component {
 
 const setPiorityPropTypes = {
   setPiority: PropTypes.func,
-}
+};
 
 PropTypes.checkPropTypes(setPiorityPropTypes, 'prop', 'Piority');
 

@@ -4,6 +4,10 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import Jusibe from 'node-jusibe';
 
+import dataBase from '../models/';
+
+const Group = dataBase.Group;
+
 dotenv.load();
 
 /**
@@ -108,7 +112,7 @@ export const removePassword = (users) => {
    * @param  {string} secret a secret key to be used to encrypt user details
 */
 
-export const genToken = (currentUser, secret) => {
+export const generateToken = (currentUser, secret) => {
   const token = jwt.sign(
     {
       currentUser,
@@ -162,6 +166,7 @@ export const mailSender = (req, res, message,
  * 
  * @param  {string} phoneNumber
  * @param  {string} message
+ * 
  * @return {boolean} true or false
  */
 export const sendSms = (phoneNumber, message) => {
@@ -175,9 +180,12 @@ export const sendSms = (phoneNumber, message) => {
 
   jusibeSDk.sendMessage(params)
     .then(result =>
-      result
+      console.log(result, '+++++++++++++++++++++++++++')
     )
-    .catch(err => err
+    .catch(() => ({
+      success: false,
+      message: 'An error occured'
+    })
     );
 };
 
@@ -187,6 +195,7 @@ export const sendSms = (phoneNumber, message) => {
  * @param  {integer} groupId 
  * @param  {array} messages 
  * @param  {integer} seenLasts the message seenLast
+ * 
  * @return {object} numNewMessages number of new messages
  */
 export const getNewMessages = (groupId, messages, seenLasts) => {
@@ -211,15 +220,107 @@ export const getNewMessages = (groupId, messages, seenLasts) => {
 /**
  * @description get the emails and phone numbers from a user object
  * 
- * @param  {array} users 
+ * @param  {array} users
+ * 
  * @return {void} no returns
  */
-export const getEmailsAndPhoneNumber = (users) => {
+export const getEmailsAndPhoneNumbers = (users) => {
   let emails = '';
   const phoneNumbers = [];
   users.forEach((user) => {
-    emails = `${user.email}`;
+    emails = `${emails},${user.email}`;
     phoneNumbers.push(user.phoneNumber);
   });
   return [emails, phoneNumbers];
+};
+
+/**
+ * @description sends email and sms notification based on the message type
+ * 
+ * @param  {string} req request object
+ * @param  {string} res response object
+ * @param  {string} createdMessage user message
+ * @return {void} does not return anything
+ */
+export const sendEmailAndSms = (req, res, createdMessage) => {
+  let recieverEmails;
+  let receiverPhoneNumbers;
+  const sender = req.currentUser.currentUser.userName;
+  let groupName;
+  Group
+    .findOne({
+      where: {
+        id: Number(req.params.groupId)
+      }
+    }).then((group) => {
+      const message = `${req.currentUser.currentUser.userName}
+         just posted a message to ${group.name} group`;
+      groupName = group.name;
+      group.getUsers()
+        .then((users) => {
+          recieverEmails = getEmailsAndPhoneNumbers(users)[0];
+          if (req.body.priority === 'critical') {
+            receiverPhoneNumbers = getEmailsAndPhoneNumbers(users)[1];
+            receiverPhoneNumbers.forEach((phoneNumber) => {
+              sendSms(phoneNumber, message);
+            });
+          }
+          const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+              user: process.env.EMAIL,
+              pass: process.env.GMAIL_PASSWORD
+            }
+          });
+          const mailOptions = {
+            from: `${sender} from ${groupName}
+              <alienyidavid4christ@gmail.com>`,
+            to: recieverEmails,
+            subject: `PostIt: ${groupName}`,
+            html: `
+          <a href="http://localhost">
+          </a>
+           <h3 style="margin-top: 40px; text-align: center">
+           A member of PostIt
+           <span style="color: rgba(203, 109, 81, 0.9)">
+           ${req.currentUser.currentUser.userName}</span>,
+            just posted a message to ${groupName}.<br><br>
+              <a href=${process.env.url}>
+                <div style="text-align: center">
+                   <button style="background-color: red;
+                    border: none; color: white; padding: 15px 32px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px; border-radius: 15px;">
+                    CLICK HERE TO SEE THE MESSAGE
+                   </button>
+                 </div>
+             </a> <br>
+           </h2>
+           `
+          };
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              winston.info(info);
+              return res.status(500).json({
+                success: false,
+                message: 'Could not send email'
+              });
+            }
+            return res.status(201).json({
+              success: true,
+              message: createdMessage
+            });
+          });
+        })
+        .catch(() => res.status(400).send({
+          success: false,
+          message: 'server error'
+        }));
+    })
+    .catch(() => res.status(401).send({
+      success: false,
+      message: 'Server error'
+    }));
 };

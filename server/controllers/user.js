@@ -1,21 +1,24 @@
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 
-import db from '../models';
-import { isInValidField, removePassword, getNewMessages, genToken }
+import database from '../models';
+import { isInValidField, removePassword, getNewMessages, generateToken }
   from '../helpers/index';
 
 dotenv.load();
 const secret = process.env.secretKey;
-const User = db.User;
-const message = db.Message;
-const viewMessages = db.messageViewer;
-const seenLast = db.SeenLast;
+const User = database.User;
+const message = database.Message;
+const viewMessages = database.messageViewer;
+const seenLast = database.SeenLast;
 /**
- *  @description create a user with name, username, email, phone number and password.
+ *  @description create a user with name, username,
+ *  email, phone number and password.
  * 
- * @param  {object} req
- * @param  {object} res
+ * @param  {object} req request object
+ * @param  {object} res response object
+ * 
+ * @return {object} created user object
  */
 const user = {
   create(req, res) {
@@ -43,10 +46,10 @@ const user = {
             email: createdUser.email,
             phoneNumber: createdUser.phoneNumber,
           };
-          const token = genToken(currentUser, secret);
+          const token = generateToken(currentUser, secret);
           return res.status(201).json({
             success: true,
-            message: 'Token generated successfully',
+            message: 'User signed up successfully',
             Token: token
           });
         })
@@ -81,6 +84,33 @@ const user = {
       .then((users) => {
         res.status(200).send(removePassword(users));
       })
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
+  },
+
+  /**
+   * @description fetch all the users from database
+   *
+   * @param  {object} req request object
+   * @param  {object} res response object
+   * 
+   * @return {array} matched users
+   */
+  searchUsers(req, res) {
+    User.findAll({
+      where: {
+        fullName: {
+          $iLike: `%${req.params.searchKey}%`
+        }
+      }
+    }).then((mathchedUsers) => {
+      res.status(200).json({
+        success: true,
+        mathchedUsers: removePassword(mathchedUsers)
+      });
+    })
       .catch(() => res.status(500).json({
         success: false,
         message: 'Server error'
@@ -125,7 +155,7 @@ const user = {
           message: 'User info has been updated'
         });
       })
-      .catch((error) => res.status(500).json({
+      .catch(error => res.status(500).json({
         error,
         success: false,
         message: 'Server error'
@@ -133,11 +163,13 @@ const user = {
   },
 
   /**
-   * @description reset users password given the 
+   * @description reset users password given the
    * user provide the initial password
    * 
    * @param  {object} req request object
    * @param  {object} res response object
+   * 
+   * @return return void
    */
 
   resetPassword(req, res) {
@@ -185,7 +217,10 @@ const user = {
                   message: 'Password has been reset'
                 });
               })
-              .catch(err => res.status(500).send(err));
+              .catch(() => res.status(500).send({
+                success: false,
+                message: 'Server error'
+              }));
           });
         } else {
           return res.status(400).json({
@@ -207,6 +242,7 @@ const user = {
    * 
    * @param  {object} request object
    * @param  {object} response object
+   * 
    * @return {array} all messages and viewers in an array
    */
 
@@ -297,7 +333,8 @@ const user = {
                 .then(() => {
                   res.status(201).json({
                     success: true,
-                    message: `created view messages for ${view.viewerUsername} successfully`
+                    message: `created view messages for 
+                    ${view.viewerUsername} successfully`
                   });
                 })
                 .catch(error => res.status(500).send(error));
@@ -326,7 +363,10 @@ const user = {
                     message: 'seen messages updated successfully'
                   });
                 })
-                .catch(error => res.status(500).send(error));
+                .catch(() => res.status(500).send({
+                  success: false,
+                  message: 'Server error'
+                }));
             })
             .catch(error => res.status(500).send(error));
         }
@@ -335,11 +375,13 @@ const user = {
   },
 
   /**
-   *  @description It gets all the numbers of new messages in all the groups a user belongs to
+   *  @description It gets all the numbers of
+   * new messages in all the groups a user belongs to
    * 
    * @param  {object} req
    * @param  {object} res
-   * @return {object} an object with key: group, value: number of new messages in the group
+   * @return {object} an object with key: group, value:
+   * number of new messages in the group
    */
   getMessages(req, res) {
     User.findOne({
@@ -369,12 +411,14 @@ const user = {
                   const newMessages = [];
                   const userSeenLast = [];
                   seenLasts.forEach((seenlast) => {
-                    if (seenlast.seenUsername === req.currentUser.currentUser.userName) {
+                    if (seenlast.seenUsername ===
+                    req.currentUser.currentUser.userName) {
                       userSeenLast.push(seenlast);
                     }
                   });
                   groupIds.forEach((groupId) => {
-                    newMessages.push(getNewMessages(groupId, messages, userSeenLast));
+                    newMessages
+                      .push(getNewMessages(groupId, messages, userSeenLast));
                   });
                   return res.status(200).send(newMessages);
                 })
@@ -407,10 +451,10 @@ const user = {
           userName: googleUser.userName,
           phoneNumber: googleUser.phoneNumber
         };
-        const token = genToken(currentUser, secret);
-        res.status(200).json({
+        const token = generateToken(currentUser, secret);
+        return res.status(200).json({
           success: true,
-          message: 'signup with google successfully',
+          message: 'signin with google successfully',
           token
         });
       })

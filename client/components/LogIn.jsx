@@ -39,7 +39,7 @@ class LogIn extends React.Component {
     event.preventDefault();
     this.props.userSigninRequest({password:this.state.password, userName: this.state.userName}).then(
       () => {
-        Materialize.toast('Logged In Successfully', 1500, 'purple',
+        Materialize.toast('Logged In Successfully', 1500, 'green',
       () => {
         browserHistory.push('dashboard');
         window.location.reload();

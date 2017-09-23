@@ -5,8 +5,8 @@ const Feedback = dataBase.Feedback;
 /**
    * @description save user feedback in database
    * 
-   * @param  {object} req
-   * @param  {object} res
+   * @param  {object} req request object
+   * @param  {object} res response object
    * @return {none} no return
    */
 const feedback = (req, res) => {

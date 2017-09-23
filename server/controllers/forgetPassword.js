@@ -54,13 +54,14 @@ export const VerifyCodeAndUpdatePassword = (request, response) => {
   bcrypt.compare(request.body.response, request.body.hash, (err, res) => {
     if (res) {
       if (isInValidField(request.body.password)) {
-        return res.status(403).json({
+        return res.status(400).json({
           success: false,
           message: 'This field is required'
         });
       } else if (request.body.password.length < 9 || !(/[0-9]/
-        .test(request.body.password) && /[a-z A-Z]/.test(request.body.password))) {
-        return response.status(403).json({
+        .test(request.body.password) && /[a-z A-Z]/
+          .test(request.body.password))) {
+        return response.status(400).json({
           success: false,
           message: `Weak password. Password should contain at least 8 
           characters including at least one number and alphabet`

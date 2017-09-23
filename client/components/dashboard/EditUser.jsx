@@ -1,6 +1,14 @@
 import React from 'react';
 
+/** @class EditUser
+ * @classdesc component for Editing user profile
+ */
 class EditUser extends React.Component {
+  /**
+   * constructor - contains the constructor
+   * @param  {object} props the properties of the class component
+   * @return {void} no return or void
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -14,20 +22,28 @@ class EditUser extends React.Component {
       phoneNumber: this.props.user.phoneNumber,
       displayButton: false,
       errors: {}
-    }
+    };
     this.onChange = this.onChange.bind(this);
-    this.onSubmit= this.onSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onClick = this.onClick.bind(this);
   }
+  /**
+     * @description - handles the onchange event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
     setTimeout(() => {
-      const {userName, fullName, email, phoneNumber} = this.state;
-      if (this.state.user.fullName !== fullName || this.state.user.userName !== this.state.userName ||
-        this.state.user.email !== email || this.state.user.phoneNumber !== phoneNumber) {
+      const { fullName, email, phoneNumber } = this.state;
+      if (this.state.user.fullName !== fullName ||
+      this.state.user.userName !== this.state.userName ||
+        this.state.user.email !== email ||
+        this.state.user.phoneNumber !== phoneNumber) {
         this.setState({
           displayButton: true
         });
@@ -36,8 +52,14 @@ class EditUser extends React.Component {
           displayButton: false
         });
       }
-    }, 500)
+    }, 500);
   }
+  /**
+     * @description - handles the onsubmit event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onSubmit(event) {
     event.preventDefault();
     if (!this.state.displayButton) {
@@ -53,10 +75,10 @@ class EditUser extends React.Component {
             email: this.state.email,
             phoneNumber: this.state.phoneNumber,
             userName: this.props.currentUser.userName
-          }}
+          } };
           this.props.setUpdatedUser(updatedUser);
         },
-        ( data ) => {
+        (data) => {
           this.setState({
             errors: data.response.data.error,
           });
@@ -64,20 +86,36 @@ class EditUser extends React.Component {
       );
     }
   }
-onClick(event) {
+  /**
+     * @description - handles the onclick event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
+  onClick() {
     this.props.showUpdateUserPage(3, this.props.showDashboardPage);
   }
+  /**
+     * @description - handles the onfocus event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onFocus(event) {
     this.setState({
       [event.target.className]: true,
       errors: {}
     });
   }
+  /**
+   *@description render - renders the class component
+   * @return {object} returns an object
+   */
   render() {
     const { errors, fullName, userName, phoneNumber, email, showLabelFullname,
       showLabelEmail, showLabelPhoneNumber, showLabelUsername } = this.state;
     return (<div id="email-details"
-      className="col s12 m8 l8 card-panel my Message">
+      className="col  s12 m6 l6 card-panel">
       <form onSubmit={this.onSubmit} className="login-form">
         <div className="row">
           <div className="input-field col s12 center">
@@ -87,7 +125,7 @@ onClick(event) {
         <div className="row margin">
           <div className="input-field col s12">
             <i className="mdi-social-person-outline prefix" />
-            <input className="showLabelFullname" 
+            <input className="showLabelFullname"
               onFocus={this.onFocus} onChange={this.onChange}
               name= "fullName" value={fullName}
               id="fullname" type="text"

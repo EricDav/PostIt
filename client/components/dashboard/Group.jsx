@@ -2,46 +2,65 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getGroupMessages, updateSeenMessages, 
-  deleteUserFromGroup, getNewGroupMessages } from '../../actions/MessageAction';
-import { getGroupMembers, setGroup } from  '../../actions/GroupAction';
+import { getGroupMessages, updateSeenMessages,
+  getNewGroupMessages } from '../../actions/MessageAction';
+import { getGroupMembers, setGroup } from '../../actions/GroupAction';
 import { getAllUsersRequest } from '../../actions/UserAction';
 import { dashboardPage } from '../../actions/DashboardViewAction';
-import getMessageViewers from '../../helpers/getMessageViewers';
-import getMessageIds from '../../helpers/getMessageIds';
+import { getMessageIds } from '../../helpers';
 
+
+/** @class Group
+ * @classdesc component for a single group
+ */
 class Group extends React.Component {
+  /**
+   * constructor - contains the constructor
+   * @param  {object} props the properties of the class component
+   * @return {void} no return or void
+   */
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
   }
+  /**
+     * @description - handles the onclick event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onClick(event) {
-    if (event.target.id != this.props.currentGroup.id) {
-      const groupId = event.target.id
+    if (event.target.id !== this.props.currentGroup.id) {
+      const groupId = event.target.id;
       this.props.getGroupMembers(groupId.toString());
       this.props.getGroupMessages(groupId.toString()).then(
         () => {
           const seenMessageIds = getMessageIds(this.props.messages);
-          const updateSeenMessagesData = {seenMessageIds,
-            seenLast: seenMessageIds.length}
-          this.props.updateSeenMessages(groupId.toString(), updateSeenMessagesData).then(
+          const updateSeenMessagesData = { seenMessageIds,
+            seenLast: seenMessageIds.length };
+          this.props.updateSeenMessages(groupId.toString(),
+            updateSeenMessagesData).then(
             () => {
               this.props.getNewGroupMessages().then(
                 () => {
                   this.props.dashboardPage(1, this.props.showDashboardPage);
                 }
-              )
+              );
             }
           );
         }
-      )
+      );
       this.props.groups.forEach((group) => {
         if (group.id.toString() === event.target.id) {
           this.props.setGroup(group);
         }
       });
-    }    
+    }
   }
+  /**
+   *@description render - renders the class component
+   * @return {object} returns an object
+   */
   render() {
     return (
       <li className="collection-item avatar email-unread group-channel group">
@@ -66,10 +85,17 @@ const dashboardPropTypes = {
   updateSeenMessages: PropTypes.func,
   getNewGroupMessages: PropTypes.func,
   dashboardPage: PropTypes.func,
-}
+};
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Group');
+/**
+ * @description mapStateToProps - maps state value to props
+ * 
+ * @param  {object} state the store state
+ * 
+ * @return {Object} returns an object
+ */
 function mapStateToProps(state) {
-  return{
+  return {
     groups: state.groups,
     messages: state.messages,
     currentGroup: state.group,

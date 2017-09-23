@@ -8,29 +8,27 @@ import { userSigninRequest, userSignupRequest } from '../actions/AuthAction';
 import { setPage } from '../actions/UserAction';
 import GoogleSignup from './GoogleLoginForm.jsx';
 
-const HomePage = (props) => {
-  const { userSignupRequest, userSigninRequest, setPage } = props;
-  return (
-    <div className="body-container image">
-      <NavBar/>
-      { props.showGoogleForm.showForm && <div className="row" >
-        <div className="col s6 offset-s3 valign">
-          <div className="row">
-            <Login setPage={setPage}
-              userSigninRequest={userSigninRequest}
-              googleData={props.showGoogleForm}
-            />
-          </div>
+const HomePage = props =>
+  (
+  <div className="body-container image">
+    <NavBar/>
+    { props.showGoogleForm.showForm && <div className="row" >
+      <div className="col m6 l6 offset-l3 offset-m3 s12 valign">
+        <div className="row">
+          <Login setPage={setPage}
+            userSigninRequest={props.userSigninRequest}
+            googleData={props.showGoogleForm}
+          />
         </div>
-      </div> }
-      {!props.showGoogleForm.showForm &&
+      </div>
+    </div> }
+    {!props.showGoogleForm.showForm &&
       <GoogleSignup
-        userSignupRequest={userSignupRequest}
+        userSignupRequest={props.userSignupRequest}
         googleData={props.showGoogleForm}
       /> }
-    </div>
+  </div>
   );
-};
 
 const HomePagePropTypes = {
   userSigninRequest: PropTypes.func,
@@ -38,6 +36,13 @@ const HomePagePropTypes = {
   showGoogleForm: PropTypes.object
 };
 
+/**
+ * @description mapStateToProps - maps state value to props
+ * 
+ * @param  {object} state the store state
+ * 
+ * @return {Object} returns an object
+ */
 function mapStateToProps(state) {
   return {
     showGoogleForm: state.showGoogleForm,

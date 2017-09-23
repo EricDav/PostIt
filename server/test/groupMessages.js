@@ -2,8 +2,11 @@ import supertest from 'supertest';
 import 'mocha';
 import 'chai';
 import should from 'should';
+
+import dataBase from '../models';
 import app from './../../app';
 
+const Message = dataBase.Message;
 const server = supertest.agent(app);
 let regUserData = 'bearer ';
 
@@ -15,7 +18,7 @@ describe('Group Routes', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Pythagoras',
+        userName: 'Pythagoras',
         password: 'David19632'
       })
       .expect(200)
@@ -62,6 +65,17 @@ describe('Group Routes', () => {
       })
       .expect(201)
       .end((err, res) => {
+        Message.findOne({
+          where: {
+            content: 'I am here'
+          }
+        })
+          .then((message) => {
+            console.log(message);
+            message.priority.should.equal('normal');
+            message.senderUsername.should.equal('Pythagoras');
+            message.content.should.equal('I am here');
+          });
         res.status.should.equal(201);
         res.body.message.senderUsername.should.equal('Pythagoras');
         done();
@@ -80,6 +94,16 @@ describe('Group Routes', () => {
       })
       .expect(201)
       .end((err, res) => {
+        Message.findOne({
+          where: {
+            content: 'I am the winner'
+          }
+        })
+          .then((message) => {
+            message.priority.should.equal('normal');
+            message.senderUsername.should.equal('Pythagoras');
+            message.groupId.should.equal(1);
+          });
         res.status.should.equal(201);
         res.body.message.content.should.equal('I am the winner');
         done();
@@ -96,13 +120,16 @@ describe('Group Routes', () => {
         done();
       });
   });
-  it('allows a logged in user get all posts and their viewers from the group he/she belongs',
+  it(`allows a logged in user get all posts and their
+    viewers from the group he/she belongs`,
     (done) => {
       server
         .get('/api/v1/groups/1/message/viewers')
         .set('authorization', regUserData)
         .expect(200)
         .end((err, res) => {
+          res.body.data[0].message.content.should.equal('I love mathematics');
+          res.body.data[1].message.id.should.equal(4);
           res.status.should.equal(200);
           res.body.success.should.equal(true);
           done();

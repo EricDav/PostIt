@@ -1,5 +1,5 @@
 import { SET_NAVBAR_RIGHT_VIEW, SHOW_DASHBOARD_PAGE,
-  SHOW_INITIAL_DASHBOARD_PAGE } from './ActionTypes';
+  SHOW_INITIAL_DASHBOARD_PAGE, SCREEN_SIZE } from './ActionTypes';
 
 /**
  * @description set view number action
@@ -11,6 +11,13 @@ export function setView(viewNumber) {
   return {
     type: SET_NAVBAR_RIGHT_VIEW,
     viewNumber
+  };
+}
+
+export function isSmallScreenSize(screenSize) {
+  return {
+    type: SCREEN_SIZE,
+    screenSize
   };
 }
 
@@ -63,5 +70,11 @@ export function dashboardPage(currentForm, oldForm) {
 export function setRightNavBarView(viewNumber) {
   return (dispatch) => {
     dispatch(setView(viewNumber));
+  };
+}
+
+export function smallScreenSize(screenSize) {
+  return (dispatch) => {
+    dispatch(isSmallScreenSize(screenSize));
   };
 }

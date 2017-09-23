@@ -1,23 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 
 const Message = (props) => {
   let viewers = '';
-  let seen = '';
   let hidden = true;
   let numOfSeen = 0;
   props.viewers.forEach((viewer) => {
     if (viewer !== props.user.userName && viewer !== props.name) {
-      viewers = viewers + ' @' + viewer;
-      numOfSeen +=1;
+      viewers = `${viewers} + ' @' + ${viewer}`;
+      numOfSeen += 1;
     }
   });
   if (numOfSeen === 0) {
     hidden = false;
   }
   return (
-    <li className="collection-item avatar">
+    <li className="collection-item avatar listMessage">
       <span className="circle indigo darken-1">
         <center className="firstName">{props.name[0]}
         </center></span>
@@ -33,7 +32,13 @@ const Message = (props) => {
     </li>
   );
 };
-
+/**
+ * @description mapStateToProps - maps state value to props
+ * 
+ * @param  {object} state the store state
+ * 
+ * @return {Object} returns an object
+ */
 function mapStateToProps(state) {
   return {
     user: state.auth.user.currentUser,

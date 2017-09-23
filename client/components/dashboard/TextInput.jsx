@@ -2,27 +2,48 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { createMessage, getNewGroupMessages, getInitialNewMessages, getGroupMessages, updateSeenMessages } from  '../../actions/MessageAction';
-import getMessageIds from '../../helpers/getMessageIds';
+import { createMessage, getNewGroupMessages, getInitialNewMessages,
+  getGroupMessages, updateSeenMessages }
+  from '../../actions/MessageAction';
+import { getMessageIds } from '../../helpers';
 
+/** @class TextInput
+ * @classdesc component for TextInput
+ */
 class TextInput extends React.Component {
+  /**
+   * constructor - contains the constructor
+   * @param  {object} props the properties of the class component
+   * @return {void} no return or void
+   */
   constructor(props) {
     super(props);
     this.state = {
       content: '',
       priority: ''
-    }
+    };
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onChange = this.onChange.bind(this);
   }
+  /**
+     * @description - handles the onchange event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
-}
-
+  }
+  /**
+     * @description - handles the onclick event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onKeyDown(event) {
-    if (event.which == 13) {
+    if (event.which === 13) {
       event.preventDefault();
       if (this.props.piority === '') {
         Materialize.toast('You need to select a mesage type!', 2000, 'purple');
@@ -30,37 +51,41 @@ class TextInput extends React.Component {
         const data = {
           content: this.state.content,
           priority: this.props.piority
-        }
+        };
         this.setState({
           content: '',
         });
         this.props.createMessage(data,
           this.props.currentGroup.id.toString()).then(
-          () => {   
+          () => {
             const seenMessageIds = getMessageIds(this.props.messages);
             const updateSeenMessagesData = {
               seenMessageIds,
               seenLast: seenMessageIds.length
-            }
+            };
             this.props.updateSeenMessages(this.props.currentGroupId.toString(),
               updateSeenMessagesData);
             this.props.getInitialNewMessages(this.props.newMessages);
           }
-        )
+        );
       }
     }
-}
+  }
 
-render() {
+  /**
+   *@description render - renders the class component
+   * @return {object} returns an object
+   */
+  render() {
     const { content } = this.state;
     return (
       <div className="input-field row" >
         <textarea value={content} onKeyDown={this.onKeyDown}
           onChange={this.onChange} className="materialize-textarea col s10"
           id= "text-area"
-          placeholder="write message..." name="content"></textarea>
+          placeholder="write message..." name="content"/>
       </div>
-    )
+    );
   }
 }
 const textInputPropTypes = {
@@ -73,6 +98,13 @@ const textInputPropTypes = {
 
 PropTypes.checkPropTypes(textInputPropTypes, 'prop', 'TextInput');
 
+/**
+ * @description mapStateToProps - maps state value to props
+ * 
+ * @param  {object} state the store state
+ * 
+ * @return {Object} returns an object
+ */
 function mapStateToProps(state) {
   return {
     piority: state.setPiority,

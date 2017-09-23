@@ -1,9 +1,12 @@
 import supertest from 'supertest';
 import 'mocha';
 import 'chai';
+
+import dataBase from '../models';
 import should from 'should';
 import app from './../../app';
 
+const UserGroup = dataBase.UserGroup;
 const server = supertest.agent(app);
 let regUserData = 'bearer ';
 
@@ -15,7 +18,7 @@ describe('Group Routes', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Python',
+        userName: 'Python',
         password: 'David19632'
       })
       .expect(200)
@@ -42,6 +45,14 @@ describe('Group Routes', () => {
       })
       .expect(201)
       .end((err, res) => {
+        UserGroup.findOne({
+          where: {
+            userId: 1
+          }
+        })
+          .then((userGroup) => {
+            userGroup.userId.should.equal(1);
+          });
         res.status.should.equal(201);
         //res.body.memberId.should.equal(3);
         done();
@@ -60,9 +71,17 @@ describe('Group Routes', () => {
       })
       .expect(201)
       .end((err, res) => {
+        UserGroup.findOne({
+          where: {
+            userId: 3
+          }
+        })
+          .then((userGroup) => {
+            userGroup.userId.should.equal(3);
+          });
         res.status.should.equal(201);
         res.body.success.should.equal(true);
-        res.body.user.username.should.equal('Pythagoras1');
+        res.body.user.userName.should.equal('Pythagoras1');
         done();
       });
   });
@@ -76,7 +95,7 @@ describe('Group Routes', () => {
       .type('form')
       .expect(200)
       .end((err, res) => {
-        res.body[0].username.should.equal('Python');
+        res.body[0].userName.should.equal('Python');
         res.status.should.equal(200);
         done();
       });

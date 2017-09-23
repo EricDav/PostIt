@@ -6,10 +6,10 @@ import path from 'path';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackConfig from './webpack.config.dev';
-import group from './server/routes/group';
-import user from './server/routes/user';
-import message from './server/routes/message';
-import forgetPassword from './server/routes/forgetPassword';
+import group from './server/routes/groupRoutes';
+import user from './server/routes/userRoutes';
+import message from './server/routes/messageRoutes';
+import forgetPassword from './server/routes/forgetPasswordRoutes';
 
 const port = process.env.PORT || 9000;
 const app = express();

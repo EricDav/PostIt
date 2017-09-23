@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { SET_ALL_USERS, SET_CURRENT_USER, SET_RESET_PASSWORD_USER_PAGE,
+import { SET_SEARCHED_USERS, SET_CURRENT_USER, SET_RESET_PASSWORD_USER_PAGE,
   SET_SHOW_UPDATE_USER_PAGE, ADD_USER, RESET_PASSWORD_USER, SET_CURRENT_PAGE,
   WILL_SHOW } from './ActionTypes';
 
@@ -12,13 +12,19 @@ import { SET_ALL_USERS, SET_CURRENT_USER, SET_RESET_PASSWORD_USER_PAGE,
  * @param  {array} allUsers
  * @return {object} returns object
  */
-export function setAllUser(allUsers) {
+export function setSearchedUser(searchedUsers) {
   return {
-    type: SET_ALL_USERS,
-    allUsers
+    type: SET_SEARCHED_USERS,
+    searchedUsers
   };
 }
 
+/**
+ * @description set all users to state
+ * 
+ * @param  {number} page number
+ * @return {object} returns object
+ */
 export function setCurrentPage(pageNumber) {
   return {
     type: SET_CURRENT_PAGE,
@@ -116,6 +122,11 @@ export function VerifyCodeAndUpdatePassword(userData) {
   };
 }
 
+export function setResetPasswordPage(show) {
+  return dispatch =>
+    dispatch(willShowResetPasswordPage(show));
+}
+
 /**
  * @description sends code for verification
  * 
@@ -203,10 +214,10 @@ export function updateUserProfile(userData) {
  * @param  {array} allUsers
  * @return {object} returns object
  */
-export function getAllUsersRequest() {
+export function searchUsers(searchKey) {
   return dispatch =>
-    axios.get('/api/v1/allUsers').then((res) => {
-      dispatch(setAllUser(res.data));
+    axios.get(`/api/v1/users/${searchKey}/search`).then((res) => {
+      dispatch(setSearchedUser(res.data));
     })
       .catch(() => {
         Materialize.toast('An error occured! could not leave group',
@@ -217,7 +228,7 @@ export function getAllUsersRequest() {
 /**
  * @description set a user Information when updated
  * 
- * @param {object}user
+ * @param {object} user
  * @return {object} returns object
  */
 export function setUpdatedUser(user) {

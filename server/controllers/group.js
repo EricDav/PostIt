@@ -6,25 +6,28 @@ const User = dataBase.User;
 const Members = dataBase.UserGroup;
 
 /**
- * @description create a group with a name, the name of creator of the group and Description.
+ * @description create a group with a name, the name of 
+ * creator of the group and Description.
  * 
  * @param  {object} req request coming from the client
  * @param  {object} res response to the client
+ * 
  * @return {object} Group
  */
-const groupInfo = {
+const group = {
   create(req, res) {
+      console.log(req.body.name, req.body.description, '+==============');
     Group
       .create({
         name: req.body.name,
         description: req.body.description,
         creator: req.currentUser.currentUser.userName
       })
-      .then((group) => {
-        group.addUser(req.currentUser.currentUser.id);
+      .then((createdGroup) => {
+        createdGroup.addUser(req.currentUser.currentUser.id);
         res.status(201).json({
           success: true,
-          group
+          group: createdGroup
         });
       })
       .catch(() => res.status(500).json({
@@ -38,8 +41,8 @@ const groupInfo = {
       .findOne({ where: {
         id: req.params.groupId
       } })
-      .then((group) => {
-        group.addUser(req.body.userId).then(() => {
+      .then((userGroup) => {
+        userGroup.addUser(req.body.userId).then(() => {
           User.findOne({
             where: {
               id: req.body.userId
@@ -60,11 +63,14 @@ const groupInfo = {
   },
 
   /**
-   *@description It gets all the numbers of new messages in all the groups a user belongs to
+   *@description It gets all the numbers of new 
+   messages in all the groups a user belongs to
    *
    * @param  {object} req
    * @param  {object} res
-   * @return {array} an object with key: group, value: number of new messages in the group
+   * 
+   * @return {array} an object with key: group, value: 
+   * number of new messages in the group
    */
 
   getGroups(req, res) {
@@ -97,6 +103,7 @@ const groupInfo = {
    * 
    * @param  {object} req
    * @param  {object} res
+   * 
    * @return {array} array of object
    */
   getGroupMembers(req, res) {
@@ -104,10 +111,11 @@ const groupInfo = {
       .findOne({ where: {
         id: req.params.groupId
       } })
-      .then((group) => {
-        group.getUsers()
-          .then(groupMembers => res.status(200).send(removePassword(groupMembers)))
-          .catch(() => res.status(400).json({
+      .then((userGroup) => {
+        userGroup.getUsers()
+          .then(groupMembers => res.status(200)
+            .send(removePassword(groupMembers)))
+          .catch(() => res.status(500).json({
             success: false,
             message: 'Server error'
           }));
@@ -140,7 +148,10 @@ const groupInfo = {
               message: 'group deleted successfully'
             });
           })
-          .catch(error => res.status(400).send(error));
+          .catch(() => res.status(500).send({
+            success: false,
+            message: 'Server error'
+          }));
       })
       .catch(() => res.status(500).json({
         success: false,
@@ -188,20 +199,20 @@ const groupInfo = {
         id: req.params.groupId
       }
     })
-      .then((group) => {
-        if (!group) {
+      .then((groupToUpdate) => {
+        if (!groupToUpdate) {
           return res.status(404).json({
             success: false,
             message: 'Group not found. Group deleted or does not exist'
           });
         }
-        if (group.creator === req.currentUser.currentUser.userName) {
+        if (groupToUpdate.creator === req.currentUser.currentUser.userName) {
           Group.update({
             name: req.body.name,
             description: req.body.description
           }, {
             where: {
-              id: group.id
+              id: groupToUpdate.id
             }
           })
             .then(() => {
@@ -216,8 +227,12 @@ const groupInfo = {
             message: 'You are not athorize to update the info of this group'
           });
         }
-      });
+      })
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   }
 };
 
-export default groupInfo;
+export default group;

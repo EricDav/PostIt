@@ -2,7 +2,12 @@ import supertest from 'supertest';
 import 'mocha';
 import 'chai';
 import should from 'should';
+import jwt from 'jsonwebtoken';
+
 import app from '../../app';
+import dataBase from '../models';
+
+const User = dataBase.User;
 
 const server = supertest.agent(app);
 let regUserData = 'bearer ';
@@ -15,16 +20,18 @@ describe('User Registration', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Amin123',
+        userName: 'Amin123',
         password: 'david1996',
         email: 'david5789@gmail.com',
-        fullname: 'Alienyi Daniel',
+        fullName: 'Alienyi Daniel',
         phoneNumber: '08069400000',
       })
       .expect(201)
       .end((err, res) => {
+        const user = jwt.decode(res.body.Token);
         res.status.should.equal(201);
         res.body.success.should.equal(true);
+        user.currentUser.userName.should.equal('Amin123');
         done();
       });
   });
@@ -35,13 +42,13 @@ describe('User Registration', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        email: 'david5789@gmail.com',
+        email: 'NewGooglUser@gmail.com',
       })
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.success.should.equal(true);
-        res.body.message.should.equal('signup with google successfully');
+        res.body.message.should.equal('New user');
         done();
       });
   });
@@ -52,13 +59,15 @@ describe('User Registration', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        email: 'googleUser@gmail.com',
+        email: 'david5789@gmail.com',
       })
       .expect(201)
       .end((err, res) => {
+        const user = jwt.decode(res.body.token);
         res.status.should.equal(200);
         res.body.success.should.equal(true);
-        res.body.message.should.equal('New user');
+        user.currentUser.email.should.equal('david5789@gmail.com');
+        res.body.message.should.equal('signin with google successfully');
         done();
       });
   });
@@ -69,15 +78,17 @@ describe('User Registration', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Foul1234',
+        userName: 'Foul1234',
         password: 'david1996',
         email: 'david56789@gmail.com',
-        fullname: 'Feyi Daniel',
+        fullName: 'Feyi Daniel',
         phoneNumber: '08069480086',
       })
       .expect(201)
       .end((err, res) => {
+        const user = jwt.decode(res.body.Token);
         res.status.should.equal(201);
+        user.currentUser.phoneNumber.should.equal('08069480086');
         res.body.success.should.equal(true);
         done();
       });
@@ -90,16 +101,16 @@ describe('User Registration', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: '89867',
+        userName: '89867',
         password: 'david1996',
         email: 'david59@gmail.com',
-        fullname: 'Alienyi Daniel',
+        fullName: 'Alienyi Daniel',
         phoneNumber: '08063087586',
       })
       .expect(201)
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.error.username.should
+        res.body.error.userName.should
           .equal(`Invalid username. username must
       contain an alphabet and must not begin with a number`);
         done();
@@ -113,10 +124,10 @@ describe('User Registration', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Path',
+        userName: 'Path',
         password: 'david1996',
         email: 'david56789@gmail.com',
-        fullname: 'Feyi Daniel',
+        fullName: 'Feyi Daniel',
         phoneNumber: '08060080086',
       })
       .expect(201)
@@ -133,10 +144,10 @@ describe('User Registration', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Path',
+        userName: 'Path',
         password: 'david1996',
         email: 'david56789',
-        fullname: 'Feyi Daniel',
+        fullName: 'Feyi Daniel',
         phoneNumber: '08060080086',
       })
       .expect(201)
@@ -155,10 +166,10 @@ describe('User Registration', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Foul',
+        userName: 'Foul',
         password: 'david19',
         email: 'david5@gmail.com',
-        fullname: 'Feyi Daniel',
+        fullName: 'Feyi Daniel',
         phoneNumber: '07069480086',
       })
       .expect(404)
@@ -175,10 +186,10 @@ describe('User Registration', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Foul123',
+        userName: 'Foul123',
         password: 'davidythhhjjj',
         email: 'david5@gmail.com',
-        fullname: 'Feyi Daniel',
+        fullName: 'Feyi Daniel',
         phoneNumber: '08069480011',
       })
       .expect(404)
@@ -196,16 +207,16 @@ describe('User Registration', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: '89',
+        userName: '89',
         password: 'david76j',
         email: 'davod5@gmail.com',
-        fullname: 'Feyi Daniel',
+        fullName: 'Feyi Daniel',
         phoneNumber: '08060080011',
       })
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.error.username.should.equal(`Invalid username. username must
+        res.body.error.userName.should.equal(`Invalid username. username must
       contain an alphabet and must not begin with a number`);
         done();
       });
@@ -219,13 +230,13 @@ describe('User Registration', () => {
       .send({
         password: 'david1996',
         email: 'david5@gmail.com',
-        fullname: 'Feyi Daniel',
+        fullName: 'Feyi Daniel',
         phoneNumber: '08069480086',
       })
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.error.username.should.equal('This field is required');
+        res.body.error.userName.should.equal('This field is required');
         res.body.success.should.equal(false);
         done();
       });
@@ -237,7 +248,7 @@ describe('User Registration', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Kayo',
+        userName: 'Kayo',
         password: 'david1996',
         email: 'david57@gmail.com',
         phoneNumber: '09069480086',
@@ -245,7 +256,7 @@ describe('User Registration', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.error.fullname.should.equal('This field is required');
+        res.body.error.fullName.should.equal('This field is required');
         done();
       });
   });
@@ -259,7 +270,7 @@ describe('Authentication', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'usydhfghwdh',
+        userName: 'usydhfghwdh',
         password: 'david1996'
       })
       .expect(401)
@@ -277,7 +288,7 @@ describe('Authentication', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Pythagoras',
+        userName: 'Pythagoras',
         password: '6456346gf'
       })
       .expect(401)
@@ -295,14 +306,14 @@ describe('Authentication', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Amin123',
+        userName: 'Amin123',
         password: 'david1996'
       })
       .expect(200)
       .end((err, res) => {
         regUserData += res.body.Token;
         res.status.should.equal(200);
-        res.body.message.should.equal('Token generated successfully');
+        res.body.message.should.equal('User sign in successfully');
         done();
       });
   });
@@ -315,6 +326,13 @@ describe('Authentication', () => {
       .type('form')
       .expect(200)
       .end((err, res) => {
+        User.findOne({
+          where: {
+            userName: 'Amin123'
+          }
+        }).then((user) => {
+          user.active.should.equal(false);
+        });
         res.status.should.equal(200);
         res.body.message.should.equal('logout successfully');
         done();
@@ -331,7 +349,7 @@ describe('Update user details', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        fullname: 'Akinde Odunayo',
+        fullName: 'Akinde Odunayo',
       })
       .expect(401)
       .end((err, res) => {
@@ -348,12 +366,12 @@ describe('Update user details', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        fullname: 'Ak3456',
+        fullName: 'Ak3456',
       })
       .expect(400)
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.error.fullname.should.equal(`Name should contain alphabet and space 
+        res.body.error.fullName.should.equal(`Name should contain alphabet and space 
       alone and should contain at least 5 characters`);
         done();
       });
@@ -366,12 +384,12 @@ describe('Update user details', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        fullname: 'Ak',
+        fullName: 'Ak',
       })
       .expect(400)
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.error.fullname.should.equal(`Name should contain alphabet and space 
+        res.body.error.fullName.should.equal(`Name should contain alphabet and space 
       alone and should contain at least 5 characters`);
         done();
       });
@@ -545,8 +563,8 @@ describe('Update user details', () => {
           res.status.should.equal(200);
           res.body.length.should.equal(6);
           res.body[0].email.should.equal('python@gmail.com');
-          res.body[1].username.should.equal('Bola');
-          res.body[3].fullname.should.equal('Alienyi David');
+          res.body[1].userName.should.equal('Bola');
+          res.body[3].fullName.should.equal('Alienyi David');
           done();
         });
     });

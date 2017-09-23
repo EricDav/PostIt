@@ -6,28 +6,28 @@ const hashedPassword = bcrypt.hashSync('David19632', salt);
 module.exports = {
   up(queryInterface) {
     return queryInterface.bulkInsert('Users', [{
-      username: 'Pythagoras',
+      userName: 'Pythagoras',
       password: hashedPassword,
       email: 'david@gmail.com',
-      fullname: 'Alienyi David',
+      fullName: 'Alienyi David',
       phoneNumber: '08099487586',
       active: false,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      username: 'Python',
+      userName: 'Python',
       password: hashedPassword,
       email: 'david5@gmail.com',
-      fullname: 'Alienyi David',
+      fullName: 'Alienyi David',
       phoneNumber: '08099487506',
       active: false,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      username: 'Pythagoras1',
+      userName: 'Pythagoras1',
       password: hashedPassword,
       email: 'python@gmail.com',
-      fullname: 'Alienyi David',
+      fullName: 'Alienyi David',
       phoneNumber: '08090087586',
       active: false,
       createdAt: new Date(),

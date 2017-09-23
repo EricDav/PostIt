@@ -4,7 +4,7 @@ import groups from './groups';
 import messages from './groupMessages';
 import group from './currentGroup';
 import members from './currentGroupMembers';
-import allUsers from './allUsers';
+import searchedUsers from './searchedUsers';
 import viewNumber from './setView';
 import seenLast from './messageSeenLast';
 import newMessages from './newMessages';
@@ -16,7 +16,7 @@ import setPiority from './setPiority';
 import showGoogleForm from './showGoogleForm';
 import showDashboardForm from './showDashboardForm';
 import initialDashboardPage from './initialDashboardPage';
-import allTextContent from './allTextContent';
+import screenSize from './screenSize';
 import setCurrentPage from './setCurrentPage';
 
 export default combineReducers({
@@ -25,7 +25,7 @@ export default combineReducers({
   messages,
   group,
   members,
-  allUsers,
+  searchedUsers,
   viewNumber,
   seenLast,
   newMessages,
@@ -37,6 +37,6 @@ export default combineReducers({
   showGoogleForm,
   showDashboardForm,
   initialDashboardPage,
-  allTextContent,
+  screenSize,
   setCurrentPage
 });

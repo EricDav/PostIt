@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 
 import dataBase from '../models';
-import { genToken } from '../helpers/index';
+import { generateToken } from '../helpers/index';
 
 dotenv.load();
 const User = dataBase.User;
@@ -13,6 +13,7 @@ const secret = process.env.secretKey;
  * 
  * @param  {object} req request object
  * @param  {object} res responsee object
+ * 
  * @return {object} user information
  */
 export const logIn = {
@@ -38,7 +39,7 @@ export const logIn = {
               email: user.email,
               phoneNumber: user.phoneNumber,
             };
-            const token = genToken(currentUser, secret);
+            const token = generateToken(currentUser, secret);
             User.update({
               active: true
             },
@@ -50,7 +51,7 @@ export const logIn = {
               .then(() => {
                 response.status(200).json({
                   success: true,
-                  message: 'Token generated successfully',
+                  message: 'User sign in successfully',
                   Token: token,
                 });
               })
@@ -72,6 +73,7 @@ export const logIn = {
    *
    * @param  {object} req  request object
    * @param  {object} res  response object
+   * 
    * @return {void} no returns
    */
 

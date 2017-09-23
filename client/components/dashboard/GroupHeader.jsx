@@ -1,7 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/** @class GroupHeader
+ * @classdesc component for group header
+ */
 class GroupHeader extends React.Component {
+  /**
+   * constructor - contains the constructor
+   * @param  {object} props the properties of the class component
+   * @return {void} no return or void
+   */
   constructor(props) {
     super(props);
     this.showAlert = this.showAlert.bind(this);
@@ -10,6 +18,11 @@ class GroupHeader extends React.Component {
       groupOption: ''
     };
   }
+  /**
+     * @description - show a pop up to confirm an action
+     * 
+     * @return {void} no return or void
+     */
   showAlert() {
     swal({
       title: 'Are you sure?',
@@ -24,7 +37,7 @@ class GroupHeader extends React.Component {
       const deleteUserData = {
         userId: this.props.user.id,
         groupId: this.props.group.id
-      }
+      };
       this.props.dashboardPage(0, 0);
       this.props.deleteUser(deleteUserData);
       this.props.setCurrentGroup({});
@@ -32,7 +45,12 @@ class GroupHeader extends React.Component {
         2000, 'purple');
     });
   }
-  onClick(event) {
+  /**
+     * @description - handles the onclick event
+     * 
+     * @return {void} no return or void
+     */
+  onClick() {
     if (this.props.user.userName !== this.props.group.creator) {
       this.showAlert();
     } else {
@@ -41,12 +59,16 @@ class GroupHeader extends React.Component {
       }
     }
   }
+  /**
+   *@description render - renders the class component
+   * @return {object} returns an object
+   */
   render() {
     let groupOption;
     let creatorName;
     if (this.props.group.creator === this.props.user.userName) {
-      groupOption = 'Edit Group Details'
-      creatorName = 'You'
+      groupOption = 'Edit Group Details';
+      creatorName = 'You';
     } else {
       groupOption = 'Leave Group';
       creatorName = this.props.group.creator;

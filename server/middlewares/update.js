@@ -27,13 +27,15 @@ class UpdateUser {
     const { fullName, email, phoneNumber } = this.user;
     const shouldUpdate = [];
 
-    if (fullName !== null && fullName !== undefined && fullName !== data.fullName) {
+    if (fullName !== null && fullName !== undefined &&
+    fullName !== data.fullName) {
       shouldUpdate.push([fullName, 1]);
     }
     if (email !== null && email !== undefined && email !== data.email) {
       shouldUpdate.push([email, 3]);
     }
-    if (phoneNumber !== null && phoneNumber !== undefined && phoneNumber !== data.phoneNumber) {
+    if (phoneNumber !== null && phoneNumber !== undefined &&
+    phoneNumber !== data.phoneNumber) {
       shouldUpdate.push([phoneNumber, 4]);
     }
     return shouldUpdate;
@@ -42,7 +44,7 @@ class UpdateUser {
   /** 
  * @description validate username field
  * 
- * @param  {string} fullname 
+ * @param  {string} fullName 
  * @return {string} return error message
  */
   validateFullname(fullName) {

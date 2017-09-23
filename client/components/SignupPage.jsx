@@ -9,10 +9,13 @@ import { userSignupRequest } from '../actions/AuthAction';
 const SignupPage = props =>
   (
   <div className="body-container image">
-    <NavBar/>
-    <center>
-      <Signup userSignupRequest={props.userSignupRequest}/>
-    </center>
+    <NavBar/> <div className="row" >
+      <div className="col l8 offset-l2 m10 offset-m1 s12 valign reset">
+        <div className="row">
+          <Signup userSignupRequest={props.userSignupRequest}/>
+        </div>
+      </div>
+    </div>
   </div>
   );
 const SignUpPagePropTypes = {

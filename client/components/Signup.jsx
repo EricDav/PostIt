@@ -1,7 +1,15 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
+/** @class GoogleSignup
+ * @classdesc component for Signup
+ */
 class SignUp extends React.Component {
+  /**
+   * constructor - contains the constructor
+   * @param  {object} props the properties of the class component
+   * @return {void} no return or void
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -20,37 +28,55 @@ class SignUp extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onBlur = this.onBlur.bind(this);
   }
+  /**
+     * @description - handles the onchange event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
+  /**
+     * @description - handles the onblur event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onBlur(event) {
     const name = event.target.name;
     const nameObject = {};
     const error = this.state.errors;
     nameObject[name] = this.state[name];
-    if (name === "Password" && this.state[name] !== '') {
+    if (name === 'Password' && this.state[name] !== '') {
       if (this.state.password !== this.state[name]) {
         error[name] = 'Password does not match';
-        this.setState({errors: error});
+        this.setState({ errors: error });
       }
     } else if (nameObject[name]) {
       this.props.userSignupRequest(nameObject).then(
         () => {},
         (data) => {
-          error[name] = data.response.data.error[name]
-          this.setState({errors: error});
+          error[name] = data.response.data.error[name];
+          this.setState({ errors: error });
         }
       );
     }
   }
+  /**
+     * @description - handles the onsubmit event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onSubmit(event) {
-    this.setState({error: {}});
+    this.setState({ error: {} });
     event.preventDefault();
     if (this.state.password !== this.state.Password) {
       error[name] = 'Password does not match';
-      this.setState({errors: error});
+      this.setState({ errors: error });
     } else {
       this.setState({
         textContent: 'Loading...',
@@ -58,7 +84,7 @@ class SignUp extends React.Component {
       });
       this.props.userSignupRequest(this.state).then(
         () => {
-          Materialize.toast('Sign Up Successfully', 1000, 'purple');
+          Materialize.toast('Sign Up Successfully', 1000, 'green');
           browserHistory.push('dashboard');
           window.location.reload();
         },
@@ -73,9 +99,13 @@ class SignUp extends React.Component {
       );
     }
   }
+  /**
+   *@description render - renders the Google Login component
+   * @return {object} returns an object
+   */
   render() {
     const { errors } = this.state;
-    return (<div id="signup-page" className="col s6 z-depth-4 card-panel reset">
+    return (<div id="login-page" className="col s12 z-depth-4 card-panel">
       <form onSubmit={this.onSubmit} className="login-form">
         <div className="row">
           <div className="input-field col s12 center">

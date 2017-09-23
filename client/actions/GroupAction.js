@@ -85,13 +85,6 @@ export function deleteGroup(groupData) {
   };
 }
 
-export function setGroupTextContent(textContents) {
-  return {
-    type: TEXT_CONTENT,
-    textContents
-  };
-}
-
 /**
  * @param  {object} group
  * @description current group action
@@ -154,20 +147,14 @@ export function createGroupRequest(userData) {
 export function getGroupsRequest() {
   return dispatch =>
     axios.get('/api/v1/groups').then((res) => {
+      console.log('I got here ooooooooooo');
       const groups = res.data.groups;
+      console.log(groups);
       dispatch(setCurrentUserGroups(groups));
-      const textGroups = [];
-      let textObj = {};
-      groups.forEach((group) => {
-        textObj.groupId = group.id;
-        textObj.textContent = '';
-        textGroups.push(textObj);
-        textObj = {};
-      });
-      dispatch(setGroupTextContent(textGroups));
     })
-      .catch(() => {
-        Materialize.toast('An error occured!', 1500, 'purple');
+      .catch((err) => {
+        console.log(err, '==================');
+        Materialize.toast('An error occured while craeting groups!', 1500, 'purple');
       });
 }
 

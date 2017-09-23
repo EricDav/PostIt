@@ -1,16 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 
 import { createGroupRequest } from '../../actions/GroupAction';
+
+/** @class CreateGroupModal
+ * @classdesc component for creating groups
+ */
 class CreateGroupModal extends React.Component {
+  /**
+   * constructor - contains the constructor
+   * @param  {object} props the properties of the class component
+   * @return {void} no return or void
+   */
   constructor(props) {
     super(props);
     this.state = {
       name: '',
       description: '',
       descriptionError: ' ',
+      nameError: ' ',
       modalClassName: 'email-type',
       status: 'Create',
       start: true,
@@ -19,11 +28,23 @@ class CreateGroupModal extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onBlur = this.onBlur.bind(this);
   }
+  /**
+     * @description - handles the onchange event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
+  /**
+     * @description - handles the onblur event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onBlur(event) {
     if (this.state.name && this.state.description) {
       this.setState({
@@ -41,8 +62,9 @@ class CreateGroupModal extends React.Component {
         { name: this.state.name, description: '' }).then(
         () => {},
         (data) => {
+          console.log(data.response.data);
           this.setState({
-            nameError: data.response.data.name
+            nameError: data.response.data.error.name
           });
         }
       );
@@ -52,36 +74,45 @@ class CreateGroupModal extends React.Component {
         () => {},
         (data) => {
           this.setState({
-            descriptionError: data.response.data.description
+            descriptionError: data.response.data.error.description
           });
         }
       );
     }
   }
- 
+  /**
+     * @description - handles the onclick event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onClick(event) {
     event.preventDefault();
     this.props.createGroupRequest({ name: this.state.name,
       description: this.state.description }).then(
       () => {
-        Materialize.toast('Group created succesfully', 1500, 'purple');
+        Materialize.toast('Group created succesfully', 1500, 'green');
         this.setState({
           name: '',
           description: ''
         });
       },
-      (data) => {
+      () => {
         Materialize.toast('Cant create Group invalid group details',
-          3000, 'purple');
+          3000, 'red');
         this.setState({
           name: '',
           description: ''
         });
       }
-    )
+    );
   }
+  /**
+   *@description render - renders the class component
+   * @return {object} returns an object
+   */
   render() {
-    const  { nameError, descriptionError } = this.state;
+    const { nameError, descriptionError } = this.state;
     return (
       <div id="modal1" className="modal">
         <div className="modal-content">

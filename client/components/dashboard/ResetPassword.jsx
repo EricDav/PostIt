@@ -1,6 +1,14 @@
 import React from 'react';
 
+/** @class ResetPassword
+ * @classdesc component for Reset password
+ */
 class ResetPassword extends React.Component {
+  /**
+   * constructor - contains the constructor
+   * @param  {object} props the properties of the class component
+   * @return {void} no return or void
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -11,15 +19,27 @@ class ResetPassword extends React.Component {
       buttonContent: 'Change Password',
       status: false
     };
-    this.onChange =this.onChange.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+  /**
+     * @description - handles the onclick event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
+  /**
+     * @description - handles the onclick event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onSubmit(event) {
     event.preventDefault();
     if (this.state.newPassword !== this.state.confirmPassword) {
@@ -35,9 +55,9 @@ class ResetPassword extends React.Component {
         () => {
           let initialPage;
           if (this.props.currentGroup.id) {
-            initialPage = 1
+            initialPage = 1;
           } else {
-            initialPage = 0
+            initialPage = 0;
           }
           this.props.showResetPassword(this.props.showInitial, initialPage);
           Materialize.toast('Your password has been reset', 1500, 'purple');
@@ -52,36 +72,54 @@ class ResetPassword extends React.Component {
       );
     }
   }
-  onClick(event) {
+  /**
+     * @description - handles the onclick event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
+  onClick() {
     let initialPage;
     if (this.props.currentGroup.id) {
-      initialPage = 1
+      initialPage = 1;
     } else {
-      initialPage = 0
+      initialPage = 0;
     }
     this.props.showResetPassword(2, initialPage);
   }
+  /**
+   *@description render - renders the class component
+   * @return {object} returns an object
+   */
   render() {
-    return (<div id="email-details" className="col s12 m8 l8 card-panel my Message">
+    return (<div id="email-details"
+      className="col s12 m6 l6 card-panel my">
       <form onSubmit={this.onSubmit} className="login-form">
         <div className="row">
           <div className="input-field col s12 center">
             <p className="center"><h5><b>Reset Password</b></h5></p>
-            {this.state.error && <div className="errorMessage center">{this.state.error}</div>}
+            {this.state.error &&
+            <div className="errorMessage center">{this.state.error}</div>}
           </div>
         </div>
         <div className="row margin">
           <div className="input-field col s12">
             <i className="mdi-action-lock-outline prefix" />
-            <input className="showLabelFullname" onChange={this.onChange} name= "oldPassword"  id="password" type="password" required="true"/>
-            <label htmlFor="fullname" className="center-align">Old Password</label>
+            <input className="showLabelFullname" onChange={this.onChange}
+              name= "oldPassword"
+              id="password" type="password" required="true"/>
+            <label htmlFor="fullname"
+              className="center-align">Old Password</label>
           </div>
         </div>
         <div className="row margin">
           <div className="input-field col s12">
             <i className="mdi-action-lock-outline prefix" />
-            <input className="showLabelUsername" onChange={this.onChange}  name= "newPassword"  id="password" type="password" required="true"/>
-            <label htmlFor="username" className="center-align">New Password</label>
+            <input className="showLabelUsername" onChange={this.onChange}
+              name= "newPassword"
+              id="password" type="password" required="true"/>
+            <label htmlFor="username"
+              className="center-align">New Password</label>
           </div>
         </div>
         <div className="row margin">

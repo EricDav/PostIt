@@ -2,7 +2,7 @@ import React from 'react';
 
 export default () =>
   (
-  <div id="email-details" className="col s12 m8 l8 card-panel my Imessage">
+  <div id="email-details" className="col s5 m9 l9 card-panel">
     <hr className="grey-text text-lighten-2"/>
     <div className="collection-item avatar">
       <p className="email-subject truncate">

@@ -1,11 +1,13 @@
-import db from '../models';
+import dataBase from '../models';
+import { sendEmailAndSms } from '../helpers/index';
 
-const Message = db.Message;
+const Message = dataBase.Message;
 /**
  *@description construct a message with the appriopriate field
  * 
  * @param  {object} req request coming from the client
  * @param  {object} res response to the client
+ * 
  * @return {void} no returns
  */
 const Messages = {
@@ -19,10 +21,14 @@ const Messages = {
         priority: req.body.priority
       })
       .then((createdMessage) => {
-        res.status(201).json({
-          success: true,
-          message: createdMessage
-        });
+        if (req.body.priority !== 'normal') {
+          sendEmailAndSms(req, res, createdMessage);
+        } else {
+          res.status(201).json({
+            success: true,
+            message: createdMessage
+          });
+        }
       })
       .catch(() => res.status(500).json({
         success: false,
@@ -35,6 +41,7 @@ const Messages = {
    * 
    * @param  {object} req  request object
    * @param  {object} res  response object
+   * 
    * @return {array} array of object
    */
   getMessages(req, res) {

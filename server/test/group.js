@@ -2,9 +2,12 @@ import supertest from 'supertest';
 import 'mocha';
 import 'chai';
 import should from 'should';
+
+import dataBase from '../models';
 import app from './../../app';
 
 const server = supertest.agent(app);
+const Group = dataBase.Group;
 let regUserData = 'bearer ';
 
 describe('Group Routes', () => {
@@ -15,8 +18,8 @@ describe('Group Routes', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        fullname: 'Ade Bola',
-        username: 'Bola',
+        fullName: 'Ade Bola',
+        userName: 'Bola',
         email: 'Bola@me.com',
         phoneNumber: '09066780653',
         password: 'david1996'
@@ -35,7 +38,7 @@ describe('Group Routes', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        username: 'Pythagoras',
+        userName: 'Pythagoras',
         password: 'David19632'
       })
       .expect(201)
@@ -60,6 +63,15 @@ describe('Group Routes', () => {
       })
       .expect(201)
       .end((err, res) => {
+        Group.findOne({
+          where: {
+            name: 'Cohort 8'
+          }
+        })
+          .then((group) => {
+            group.name.should.equal('Cohort 8');
+            group.description.should.equal('We are one');
+          });
         res.status.should.equal(201);
         res.body.success.should.equal(true);
         done();
@@ -79,6 +91,15 @@ describe('Group Routes', () => {
       })
       .expect(201)
       .end((err, res) => {
+        Group.findOne({
+          where: {
+            name: 'House'
+          }
+        })
+          .then((group) => {
+            group.name.should.equal('House');
+            group.description.should.equal('I am house renter');
+          });
         res.status.should.equal(201);
         res.body.success.should.equal(true);
         done();
@@ -192,6 +213,15 @@ describe('Group Routes', () => {
       })
       .expect(200)
       .end((err, res) => {
+        Group.findOne({
+          where: {
+            id: 1
+          }
+        })
+          .then((group) => {
+            group.name.should.equal('love');
+            group.description.should.equal('Love is good');
+          });
         res.status.should.equal(200);
         res.body.message.should.equal('group info updated successfully');
         done();
