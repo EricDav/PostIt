@@ -144,7 +144,7 @@ class EditGroup extends React.Component {
             <label htmlFor="Name">Enter Name...</label>}
           </div>
           {this.state.error.name &&
-          <div className="mes blue-text"><i>{this.state.error.name}</i></div>}
+          <div className="mes"><i>{this.state.error.name}</i></div>}
         </div>
         <div className="row">
           <div className="input-field col s12">
@@ -152,11 +152,11 @@ class EditGroup extends React.Component {
               id="description" className="materialize-textarea"
               value={this.state.description}
               name="description"></textarea>
-            {this.state.showLabelTextArea && 
+            {this.state.showLabelTextArea &&
             <label htmlFor="description">Enter description...</label> }
           </div>
           {this.state.error.description &&
-          <div className="mes blue-text">
+          <div className="mes">
             <i>{this.state.error.description}</i></div>}
         </div>
         <div className="row">

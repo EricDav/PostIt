@@ -90,19 +90,15 @@ class CreateGroupModal extends React.Component {
     this.props.createGroupRequest({ name: this.state.name,
       description: this.state.description }).then(
       () => {
-        Materialize.toast('Group created succesfully', 1500, 'green');
-        this.setState({
-          name: '',
-          description: ''
+        $('#modal1').modal('close');
+        Materialize.toast('Group created succesfully', 1500, 'green', () => {
+          this.setState({
+            name: '',
+            description: ''
+          });
         });
       },
       () => {
-        Materialize.toast('Cant create Group invalid group details',
-          3000, 'red');
-        this.setState({
-          name: '',
-          description: ''
-        });
       }
     );
   }
@@ -123,7 +119,7 @@ class CreateGroupModal extends React.Component {
                     <i className={`modal-action modal-close 
                     mdi-hardware-keyboard-backspace`}></i></a>
                   </li>
-                  <li ><a href="#!">Create a New Group</a>
+                  <li ><a>Create a New Group</a>
                   </li>
                 </ul>
               </div>
@@ -145,7 +141,7 @@ class CreateGroupModal extends React.Component {
                   <label htmlFor="group-title">Group Title</label>
                 </div>
                 { nameError &&
-                <div className="mes blue-text"><i>{nameError}</i></div>}
+                <div className="mes"><i>{nameError}</i></div>}
               </div>
               <div className="row">
                 <div className="input-field col s12">
@@ -156,12 +152,12 @@ class CreateGroupModal extends React.Component {
                   <label htmlFor="description">Enter description...</label>
                 </div>
                 {descriptionError &&
-                <div className="mes blue-text"><i>{descriptionError}</i></div>}
+                <div className="mes"><i>{descriptionError}</i></div>}
               </div>
               <div className="row">
                 <div className="input-field col s12">
                   <button onClick={this.onClick}
-                    className={`modal-action modal-close btn purple 
+                    className={`btn purple 
                     darken-1 waves-effect waves-light col s12`}>
                     {this.state.status}</button>
                 </div>

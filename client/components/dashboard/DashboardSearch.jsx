@@ -6,7 +6,7 @@ const Search = () =>
     <form>
       <input type="text" id="search"
         className="searchTerm"
-        placeholder="serch for groups"
+        placeholder="search for users"
         required name="search"/>
       <a className="searchButton">
         <i className="mdi-action-search for">

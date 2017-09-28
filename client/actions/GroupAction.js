@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { ADD_GROUP, SET_CURRENT_USER_GROUPS, DELETE_GROUP, UPDATE_GROUP_DATA,
-  TEXT_CONTENT, UPDATE_CURRENT_GROUP, SET_CURRENT_GROUP_MEMBERS,
+  UPDATE_CURRENT_GROUP, SET_CURRENT_GROUP_MEMBERS,
   SET_CURRENT_GROUP } from './ActionTypes';
 
 /* global Materialize */
@@ -120,7 +120,7 @@ export function deleteCurrentGroup(data) {
       dispatch(deleteGroup(data));
     })
       .catch(() => {
-        Materialize.toast(`An error occured! could not 
+        Materialize.toast(`An error occured! could not
         leave group', 1500, 'purple`);
       });
 }
@@ -150,7 +150,7 @@ export function getGroupsRequest() {
       const groups = res.data.groups;
       dispatch(setCurrentUserGroups(groups));
     })
-      .catch((err) => {
+      .catch(() => {
         Materialize.toast('An error occured while craeting groups!',
           1500, 'purple');
       });
@@ -179,11 +179,14 @@ export function updateCurrentGroup(userData, groupId) {
  */
 export function deleteUserFromGroup(data) {
   return dispatch =>
-    axios.delete(`/api/v1/groups/${data.groupId}/users/${data.userId}/delete`, data).then(() => {
-      dispatch(deleteGroup(data));
-    })
+    axios.delete(`/api/v1/groups/${data.groupId}/users/
+    ${data.userId}/delete`, data)
+      .then(() => {
+        dispatch(deleteGroup(data));
+      })
       .catch(() => {
-        Materialize.toast('An error occured! could not leave group', 1500, 'purple');
+        Materialize.toast(`An error occured! 
+        could not leave group`, 1500, 'purple');
       });
 }
 
@@ -200,6 +203,7 @@ export function getGroupMembers(groupId) {
       dispatch(setCurrentGroupMembers(members));
     })
       .catch(() => {
-        Materialize.toast('An error occured while loading members!', 2000, 'purple');
+        Materialize.toast(`An error occured while 
+        loading members!`, 2000, 'purple');
       });
 }

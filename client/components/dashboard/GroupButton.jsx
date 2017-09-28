@@ -9,7 +9,7 @@ import { setRightNavBarView, dashboardPage } from
  * @classdesc component for the button used to view
  * members or add members to a group
  */
-class GroupButton extends React.Component {
+export class GroupButton extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -42,7 +42,7 @@ class GroupButton extends React.Component {
   render() {
     return (
       <button onClick={this.onClick}
-        className=" btn waves-effect waves-light groupBut"
+        className="btn waves-effect waves-light groupBut"
         id={this.props.text} type="submit"
         name="action" >{this.props.text}
       </button>

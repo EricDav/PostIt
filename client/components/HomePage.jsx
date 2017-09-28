@@ -15,7 +15,7 @@ const HomePage = props =>
     { props.showGoogleForm.showForm && <div className="row" >
       <div className="col m6 l6 offset-l3 offset-m3 s12 valign">
         <div className="row">
-          <Login setPage={setPage}
+          <Login setPage={props.setPage}
             userSigninRequest={props.userSigninRequest}
             googleData={props.showGoogleForm}
           />

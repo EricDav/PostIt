@@ -7,9 +7,9 @@ import { SET_SEARCHED_USERS, SET_CURRENT_USER, SET_RESET_PASSWORD_USER_PAGE,
 /* global Materialize */
 
 /**
- * @description set all users to state
+ * @description set all searchedUsers to state
  * 
- * @param  {array} allUsers
+ * @param  {array} searchedUsers
  * @return {object} returns object
  */
 export function setSearchedUser(searchedUsers) {
@@ -54,19 +54,6 @@ export function setCurrentUser(user) {
 export function setResetPasswordUserPage(show) {
   return {
     type: SET_RESET_PASSWORD_USER_PAGE,
-    show
-  };
-}
-
-/**
- * @description set weather to show update user form
- * 
- * @param  {boolean} show
- * @return {object} returns object
- */
-export function setShowUpdateUserPage(show) {
-  return {
-    type: SET_SHOW_UPDATE_USER_PAGE,
     show
   };
 }
@@ -158,16 +145,6 @@ export function addUserToAGroup(userId, groupId) {
       });
 }
 
-/**
- * @description set weather to show update user page
- * 
- * @param  {boolean} shouldShow
- * @return {object} returns object
- */
-export function showUpdateUserPage(shouldShow) {
-  return dispatch =>
-    dispatch(setShowUpdateUserPage(shouldShow));
-}
 
 /**
  * @description set weather to show reset password user page
@@ -188,10 +165,7 @@ export function showResetPasswordUserPage(shouldShow) {
  * @return {object} returns object
  */
 export function resetPassword(userData) {
-  return dispatch =>
-    axios.put('/api/v1/resetPassword', userData).then(() => {
-      dispatch(setResetPasswordUserPage(false));
-    });
+  return axios.put('/api/v1/resetPassword', userData);
 }
 
 /**

@@ -64,7 +64,7 @@ export function dashboardPage(currentForm, oldForm) {
 /**
  * @description set view number 
  * 
- * @param  {number} viewNumber 
+ * @param  {number} viewNumber
  * @return {object} returns object
  */
 export function setRightNavBarView(viewNumber) {

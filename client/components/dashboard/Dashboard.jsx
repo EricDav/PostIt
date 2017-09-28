@@ -21,6 +21,7 @@ import { dashboardPage,
   setRightNavBarView, smallScreenSize } from
   '../../actions/DashboardViewAction';
 import { logout } from '../../actions/AuthAction';
+import { getNewGroupMessages } from '../../actions/MessageAction';
 
 
 /** @class Dashboard
@@ -33,6 +34,9 @@ class Dashboard extends React.Component {
    */
   componentWillMount() {
     this.props.getGroupsRequest();
+    $(document).ready(() => {
+      $('.modal').modal();
+    });
   }
   /**
    *@description render - renders the class component
@@ -208,7 +212,8 @@ const dashboardPropTypes = {
   setGroup: PropTypes.func,
   updateCurrentGroup: PropTypes.func,
   smallScreenSize: PropTypes.func,
-  logout: PropTypes.func
+  logout: PropTypes.func,
+  getNewGroupMessages: PropTypes.func
 };
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Dashboard');
 
@@ -246,4 +251,5 @@ export default connect(mapStateToProps, {
   updateUserProfile,
   setRightNavBarView,
   logout,
+  getNewGroupMessages,
   smallScreenSize })(Dashboard);

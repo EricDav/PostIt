@@ -8,7 +8,7 @@ import { logout } from '../../actions/AuthAction';
  * @classdesc component for dashboard header it hold different
  * data for different screen size
  */
-class DashboardHeader extends React.Component {
+export class DashboardHeader extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -79,10 +79,8 @@ PropTypes.checkPropTypes(dashboardHeaderPropTypes, 'prop', 'DashboardHeader');
  * 
  * @return {Object} returns an object
  */
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
-    user: state.auth.user.currentUser,
-    auth: state.auth,
     isSmallScreenSize: state.screenSize,
     currentPage: state.showDashboardForm
   };

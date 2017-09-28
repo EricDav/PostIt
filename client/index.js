@@ -10,9 +10,9 @@ import { setCurrentUser } from './actions/UserAction';
 import configureStore from './store/configureStore';
 //import js from '../public/js/modal'
 
-//import './assets/css/custom.scss';
-//import '../node_modules/materialize-css/dist/js/materialize.min';
-//import '../node_modules/materialize-css/dist/css/materialize.min.css';
+import './assets/css/custom.scss';
+import '../node_modules/materialize-css/dist/js/materialize.min';
+import '../node_modules/materialize-css/dist/css/materialize.min.css';
 //import '../node_modules/material-icons/css/material-icons.css';
 import '../node_modules/sweetalert/dist/sweetalert.min';
 import '../node_modules/sweetalert/dist/sweetalert.css';
@@ -25,7 +25,7 @@ const store = configureStore();
   //store.dispatch(setCurrentUserGroups())`
 }
 render(
-    <Provider store={store}>
-        <Router history={browserHistory} routes={routes} />
-    </Provider>,
-    document.getElementById('app'));
+  <Provider store={store}>
+    <Router history={browserHistory} routes={routes} />
+  </Provider>,
+  document.getElementById('app'));

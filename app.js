@@ -12,7 +12,7 @@ import forgetPassword from './server/routes/forgetPasswordRoutes';
 
 const port = process.env.PORT || 9000;
 const app = express();
-app.use(express.static('public'));
+app.use(express.static('client'));
 app.use(logger('dev'));
 app.use(webpackMiddleware(webpack(webpackConfig)));
 app.use(bodyParser.json());

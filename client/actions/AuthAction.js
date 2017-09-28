@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { browserHistory } from 'react-router';
 
 import setAuthorizationToken from '../utils/setAuthorizationToken';
-import { SET_CURRENT_USER, SET_GOOGLE_FORM, } from './ActionTypes';
+import { SET_CURRENT_USER, SET_GOOGLE_FORM, SHOW_DASHBOARD_PAGE } from './ActionTypes';
 
 /* global localStorage, window, Materialize */
 
@@ -20,6 +20,18 @@ export function setCurrentUser(user) {
   };
 }
 
+/**
+ * @description set view in the  dashboard page
+ * 
+ * @param  {number} showForm determines which form to show in the dashboard page
+ * @return {object} returns object
+ */
+export function setDashboardPage(showForm) {
+  return {
+    type: SHOW_DASHBOARD_PAGE,
+    showForm
+  };
+}
 
 /**
  * @description set weather to show update form
@@ -100,6 +112,7 @@ export function logout() {
     axios.put('/api/v1/user/signout').then(() => {
       localStorage.removeItem('jwtToken');
       setAuthorizationToken(false);
+      dispatch(setDashboardPage(0));
       dispatch(setCurrentUser(
         {
           currentUser: {
@@ -107,7 +120,7 @@ export function logout() {
             fullName: ''
           }
         }));
-      browserHistory.push('/');
+      //browserHistory.push('/');
     })
       .catch(() => {
         Materialize.toast('Try again. An error occured!', 2000, 'purple');

@@ -135,7 +135,7 @@ class EditUser extends React.Component {
               className="center-align">Full Name</label> }
           </div>
           {errors.fullName &&
-          <div className="mes blue-text"><i>{errors.fullName}</i></div>}
+          <div className="mes"><i>{errors.fullName}</i></div>}
         </div>
         <div className="row margin">
           <div className="input-field col s12">
@@ -161,7 +161,7 @@ class EditUser extends React.Component {
               className="center-align">Phone Number</label> }
           </div>
           {errors.phoneNumber &&
-          <div className="mes blue-text"><i>{errors.phoneNumber}</i></div>}
+          <div className="mes"><i>{errors.phoneNumber}</i></div>}
         </div>
         <div className="row margin">
           <div className="input-field col s12">
@@ -174,7 +174,7 @@ class EditUser extends React.Component {
             <label htmlFor="email" className="center-align">Email</label>}
           </div>
           {errors.email &&
-          <div className="mes blue-text"><i>{errors.email}</i></div>}
+          <div className="mes"><i>{errors.email}</i></div>}
         </div>
         { this.state.displayButton && <div className="row">
           <a className="col s12">

@@ -112,7 +112,7 @@ class SignUp extends React.Component {
             <h4>Register</h4>
             <p className="center">Join our community now!</p>
             { errors.message &&
-            <div className="mes reduce blue-text"><i>
+            <div className="mes reduce"><i>
               <h6>{errors.message}</h6>
             </i>
             </div>}
@@ -128,7 +128,7 @@ class SignUp extends React.Component {
               name="fullName" onBlur={this.onBlur} required="true"/>
             <label htmlFor="fullname" className="center-align">Full Name</label>
             {errors.fullName &&
-            <div className="mes reduce blue-text">
+            <div className="mes reduce">
               <i>{errors.fullName}</i></div>}
           </div>
           <div className="input-field col s6">
@@ -140,7 +140,7 @@ class SignUp extends React.Component {
             <label htmlFor="username" className="center-align">Username</label>
           </div>
           {errors.userName &&
-          <div className="mes blue-text"><i>{errors.userName}</i></div>}
+          <div className="mes"><i>{errors.userName}</i></div>}
         </div>
         <div className="row margin">
           <div className="input-field col s6">
@@ -151,7 +151,7 @@ class SignUp extends React.Component {
             <label htmlFor="phoneNumber"
               className="center-align">Phone Number</label>
             {errors.phoneNumber &&
-            <div className="mes blue-text"><i>{errors.phoneNumber}</i></div>}
+            <div className="mes"><i>{errors.phoneNumber}</i></div>}
           </div>
           <div className="input-field col s6">
             <i className="mdi-communication-email prefix" />
@@ -161,7 +161,7 @@ class SignUp extends React.Component {
             <label htmlFor="email" className="center-align">Email</label>
           </div>
           {errors.email &&
-          <div className="mes blue-text"><i>{errors.email}</i></div>}
+          <div className="mes"><i>{errors.email}</i></div>}
         </div>
         <div className="row margin">
           <div className="input-field col s6">
@@ -172,7 +172,7 @@ class SignUp extends React.Component {
               onBlur={this.onBlur} required="true"/>
             <label htmlFor="password">Password</label>
             {errors.password &&
-            <div className="mes blue-text"><i>{errors.password}</i></div>}
+            <div className="mes"><i>{errors.password}</i></div>}
           </div>
           <div className="input-field col s6">
             <i className="mdi-action-lock-outline prefix" />
@@ -183,7 +183,7 @@ class SignUp extends React.Component {
             <label htmlFor="password-again">Confirm Password</label>
           </div>
           <i>{errors.Password &&
-            <div className="mes blue-text">{errors.Password}</div>}</i>
+            <div className="mes">{errors.Password}</div>}</i>
         </div>
         <div className="row">
           <a className="col s12">

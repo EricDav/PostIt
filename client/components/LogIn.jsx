@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import Google from './GoogleSignin';
 
-class LogIn extends React.Component {
+export class LogIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,14 +24,15 @@ class LogIn extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     });
+    console.log(this.state);
   }
   onClick(event) {
     if (event.target.textContent === 'Forgot password ?') {
       browserHistory.push('forgotPassword');
       this.props.setPage(3);
-    } else if(event.target.textContent === ' Signup') {
+    } else if(event.target.textContent === 'Signup') {
       browserHistory.push('signup');
-      this.props.setPage(2)
+      this.props.setPage(2);
     }
   }
   onSubmit(event) {
@@ -42,7 +43,6 @@ class LogIn extends React.Component {
         Materialize.toast('Logged In Successfully', 1500, 'green',
       () => {
         browserHistory.push('dashboard');
-        window.location.reload();
       });
       },
       ( data ) => {

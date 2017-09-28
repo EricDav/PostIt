@@ -51,7 +51,8 @@ class Button extends React.Component {
     const hasAdded = this.state.hasAdded;
     return (
       <button onClick={ this.onClick}
-        className="btn waves-effect waves-light right but"
+        id="but"
+        className="right btn"
         type="submit"
         name="action"
         disabled={hasAdded}>Add Member

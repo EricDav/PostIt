@@ -41,11 +41,7 @@ class Group extends React.Component {
           this.props.updateSeenMessages(groupId.toString(),
             updateSeenMessagesData).then(
             () => {
-              this.props.getNewGroupMessages().then(
-                () => {
-                  this.props.dashboardPage(1, this.props.showDashboardPage);
-                }
-              );
+              this.props.dashboardPage(1, this.props.showDashboardPage);
             }
           );
         }

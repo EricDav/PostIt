@@ -3,7 +3,6 @@ import webpack from 'webpack';
 
 module.exports = {
   entry: [
-    // 'webpack-hot-middleware',
     './client/index.js'],
   output: {
     path: path.join(__dirname, 'client/dist/'),
@@ -24,8 +23,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Hammer: 'hammerjs/hammer'
+      'window.jQuery': 'jquery'
     })
   ],
   module: {
@@ -55,12 +53,11 @@ module.exports = {
         loader: 'url-loader?limit=100000'
       },
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-
         loader: 'url-loader?limit=100000&mimetype=application/octet-stream'
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: ['file-loader?name=/assets/img/[name].[ext]', {
+        loaders: ['file-loader?name=/assets/images/[name].[ext]', {
           loader: 'image-webpack-loader',
           query: {
             mozjpeg: {

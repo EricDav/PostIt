@@ -13,10 +13,10 @@ const ForgetPassword = props =>
   (
   <div className="body-container image">
     <NavBar/>
-    <div className="row">
+    <div id="reset" className="row">
       <div id="login-page"
         className={`col l6 offset-l3 m6 offset-m3 s12 
-        z-depth-4 card-panel reset`}>
+        z-depth-4 card-panel`}>
         {!props.willShow && <Details sendSecretCode={props.sendSecretCode}/>}
         {props.willShow && <Confirm user={props.resetPasswordUser}
           verifyCodeAndUpdate={props.VerifyCodeAndUpdatePassword}

@@ -11,7 +11,6 @@ import newMessages from './newMessages';
 import initialNewMessages from './initialNewMessages';
 import willShow from './willShow';
 import resetPasswordUser from './setResetPasswordUser';
-import error from './error';
 import setPiority from './setPiority';
 import showGoogleForm from './showGoogleForm';
 import showDashboardForm from './showDashboardForm';
@@ -32,7 +31,6 @@ export default combineReducers({
   initialNewMessages,
   willShow,
   resetPasswordUser,
-  error,
   setPiority,
   showGoogleForm,
   showDashboardForm,

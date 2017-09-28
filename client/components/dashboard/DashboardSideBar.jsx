@@ -7,7 +7,7 @@ import { getNewGroupMessages, getInitialNewMessages }
   from '../../actions/MessageAction';
 import { getNewMessage } from '../../helpers';
 import { showUpdateUserPage } from '../../actions/DashboardViewAction';
-
+console.log(getNewGroupMessages);
 /** @class DashboardSideBar
  * @classdesc component for signing up with google+
  */

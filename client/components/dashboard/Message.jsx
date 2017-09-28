@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 
-const Message = (props) => {
+export const Message = (props) => {
   let viewers = '';
   let hidden = true;
   let numOfSeen = 0;
   props.viewers.forEach((viewer) => {
-    if (viewer !== props.user.userName && viewer !== props.name) {
+    if (viewer !== props.user && viewer !== props.name) {
       if (viewers === '') {
         viewers = `@${viewer}`;
       } else {
@@ -26,7 +26,7 @@ const Message = (props) => {
         </center></span>
       <span className="email-title"><a href="">{props.name}</a></span>
       <span className="right ultra-small grey-text time-text">
-        {`${new Date(props.date).toLocaleString()}  ${props.priority} `}
+        {new Date(props.date).toLocaleString()}
       </span>
       <span className="truncate auto">{props.content}</span>
       { hidden && <p className="minimizeSeen" data-tip={viewers}>
@@ -43,9 +43,9 @@ const Message = (props) => {
  * 
  * @return {Object} returns an object
  */
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
-    user: state.auth.user.currentUser,
+    user: state.auth.user.currentUser.userName,
     group: state.group
   };
 }
