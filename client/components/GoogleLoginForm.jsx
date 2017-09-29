@@ -1,5 +1,4 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 
 /** @class GoogleSignup
  * @classdesc component for signing up with google+
@@ -18,7 +17,7 @@ class GoogleSignup extends React.Component {
       phoneNumber: '',
       userName: '',
       password: '',
-      Password: '',
+      confirmPssword: '',
       errors: {},
       buttonText: 'Submit',
       status: false
@@ -46,10 +45,11 @@ class GoogleSignup extends React.Component {
      * @return {void} no return or void
      */
   onSubmit(event) {
-    this.setState({ error: {} });
+    this.setState({ errors: {} });
     event.preventDefault();
-    if (this.state.password !== this.state.Password) {
-      error[name] = 'Password does not match';
+    if (this.state.password !== this.state.confirmPassword) {
+      const error = {};
+      error.confirmPassword = 'Password does not match';
       this.setState({ errors: error });
     } else {
       this.setState({
@@ -60,8 +60,7 @@ class GoogleSignup extends React.Component {
         () => {
           Materialize.toast('Sign Up Successfully', 1000, 'purple',
             () => {
-              browserHistory.push('dashboard');
-              window.reload();
+              window.location = 'dashboard';
             });
         },
         (data) => {
@@ -91,6 +90,11 @@ class GoogleSignup extends React.Component {
                 <div className="input-field col s12 center">
                   <h5 className="center">Kindly Complete Your Registration</h5>
                 </div>
+                { errors.message &&
+            <div className="mes reduce"><i>
+              <h6>{errors.message}</h6>
+            </i>
+            </div>}
               </div>
               <div className="row margin">
                 <div className="input-field col s12">
@@ -102,7 +106,7 @@ class GoogleSignup extends React.Component {
                     className="center-align">Phone Number</label>
                 </div>
                 {errors.phoneNumber &&
-              <div className="mes blue-text">{errors.phoneNumber}</div>}
+              <div className="mes"><i>{errors.phoneNumber}</i></div>}
               </div>
               <div className="row margin">
                 <div className="input-field col s12">
@@ -115,7 +119,7 @@ class GoogleSignup extends React.Component {
                   </label>
                 </div>
                 {errors.userName &&
-                <div className="mes blue-text">{errors.userName}</div>}
+                <div className="mes"><i>{errors.userName}</i></div>}
               </div>
               <div className="row margin">
                 <div className="input-field col s12">
@@ -126,19 +130,19 @@ class GoogleSignup extends React.Component {
                   <label htmlFor="password">Password</label>
                 </div>
                 {errors.password &&
-              <div className="mes blue-text">{errors.password}</div>}
+              <div className="mes">{errors.password}</div>}
               </div>
               <div className="row margin">
                 <div className="input-field col s12">
                   <i className="mdi-action-lock-outline prefix" />
                   <input id="password-again" type="password"
                     onChange={this.onChange}
-                    value={this.state.Password} name="Password"
+                    value={this.state.confirmPassword} name="confirmPassword"
                     onBlur={this.onBlur} required="true"/>
                   <label htmlFor="password-again">Confirm Password</label>
                 </div>
-                {errors.Password &&
-              <div className="mes blue-text">{errors.Password}</div>}
+                {errors.confirmPassword &&
+              <div className="mes"><i>{errors.confirmPassword}</i></div>}
               </div>
               <div className="row">
                 <a className="col s12">

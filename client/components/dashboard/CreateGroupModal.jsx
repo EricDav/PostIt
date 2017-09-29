@@ -20,11 +20,10 @@ class CreateGroupModal extends React.Component {
       description: '',
       descriptionError: ' ',
       nameError: ' ',
-      modalClassName: 'email-type',
       status: 'Create',
-      start: true,
+      disabled: false
     };
-    this.onClick = this.onClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onBlur = this.onBlur.bind(this);
   }
@@ -46,37 +45,26 @@ class CreateGroupModal extends React.Component {
      * @return {void} no return or void
      */
   onBlur(event) {
-    if (this.state.name && this.state.description) {
-      this.setState({
-        start: true
-      });
-    }
     if (event.target.name === 'name') {
       if (this.state.name.length > 20) {
         this.setState({
           nameError: 'Group name can not be more than 20 characters',
         });
-        return;
+      } else if (this.state.nameError) {
+        this.setState({
+          nameError: '',
+        });
       }
-      this.props.createGroupRequest(
-        { name: this.state.name, description: '' }).then(
-        () => {},
-        (data) => {
-          this.setState({
-            nameError: data.response.data.error.name
-          });
-        }
-      );
     } else if (event.target.name === 'description') {
-      this.props.createGroupRequest({ name: '',
-        description: this.state.description }).then(
-        () => {},
-        (data) => {
-          this.setState({
-            descriptionError: data.response.data.error.description
-          });
-        }
-      );
+      if (this.state.description.length < 20) {
+        this.setState({
+          descriptionError: 'You need to have up to 20 charecters'
+        });
+      } else if (this.state.descriptionError) {
+        this.setState({
+          descriptionError: '',
+        });
+      }
     }
   }
   /**
@@ -85,8 +73,12 @@ class CreateGroupModal extends React.Component {
      * @param  {object} event the event for the content field
      * @return {void} no return or void
      */
-  onClick(event) {
+  onSubmit(event) {
     event.preventDefault();
+    this.setState({
+      disabled: true,
+      status: 'Loading...'
+    });
     this.props.createGroupRequest({ name: this.state.name,
       description: this.state.description }).then(
       () => {
@@ -94,11 +86,19 @@ class CreateGroupModal extends React.Component {
         Materialize.toast('Group created succesfully', 1500, 'green', () => {
           this.setState({
             name: '',
-            description: ''
+            description: '',
+            disabled: false,
+            status: 'create'
           });
         });
       },
-      () => {
+      (data) => {
+        this.setState({
+          disabled: false,
+          status: 'Create',
+          nameError: data.response.data.error.name || '',
+          descriptionError: data.response.data.error.description || ''
+        });
       }
     );
   }
@@ -115,7 +115,7 @@ class CreateGroupModal extends React.Component {
             <div className="nav-wrapper">
               <div className="left col s12 m5 l5">
                 <ul>
-                  <li><a href="#!" className="email-menu">
+                  <li><a className="email-menu">
                     <i className={`modal-action modal-close 
                     mdi-hardware-keyboard-backspace`}></i></a>
                   </li>
@@ -132,12 +132,12 @@ class CreateGroupModal extends React.Component {
         </div>
         <div className="model-email-content">
           <div className="row">
-            <form className="col s12">
+            <form className="col s12" onSubmit={this.onSubmit}>
               <div className="row">
                 <div className="input-field col s12">
                   <input max="10" onBlur={this.onBlur} id="group-title"
                     type="text" className="validate" value={this.state.name}
-                    name = "name" onChange={this.onChange} required/>
+                    name = "name" onChange={this.onChange} required = "true"/>
                   <label htmlFor="group-title">Group Title</label>
                 </div>
                 { nameError &&
@@ -148,6 +148,7 @@ class CreateGroupModal extends React.Component {
                   <textarea onBlur={this.onBlur}
                     value={this.state.description} id="description"
                     className="materialize-textarea"
+                    required = "true"
                     onChange={this.onChange} name="description"></textarea>
                   <label htmlFor="description">Enter description...</label>
                 </div>
@@ -157,7 +158,8 @@ class CreateGroupModal extends React.Component {
               <div className="row">
                 <div className="input-field col s12">
                   <button onClick={this.onClick}
-                    className={`btn purple 
+                    disabled = {this.state.disabled}
+                    className={`btn purple
                     darken-1 waves-effect waves-light col s12`}>
                     {this.state.status}</button>
                 </div>

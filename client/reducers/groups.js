@@ -5,7 +5,10 @@ import { deleteGroup, updateGroup } from '../helpers';
 export default (state = [], action = {}) => {
   switch (action.type) {
     case SET_CURRENT_USER_GROUPS:
-      return action.groups;
+      return [
+        ...state,
+        ...action.groups
+      ];
     case ADD_GROUP:
       return [
         ...state,

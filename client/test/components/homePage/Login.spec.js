@@ -10,12 +10,18 @@ describe('Login Form', () => {
     const wrapper = shallow(<LogIn {...mockData.logIn.props }/>);
     const input = wrapper.find('#username');
     const pass = wrapper.find('#password');
-    const button = wrapper.find('button');
+    const form = wrapper.find('form');
+    const button = wrapper.find('#clickMe');
     const header = wrapper.find('h5');
     expect(header.node.props.className).toEqual('center login-form-text')
     button.simulate('click', {
       target: {
         textContent: 'Forgot password ?'
+      }
+    });
+    button.simulate('click', {
+      target: {
+        textContent: ' Signup'
       }
     });
     input.simulate('change',
@@ -34,8 +40,18 @@ describe('Login Form', () => {
         }
       }
     );
+    form.simulate('submit');
     expect(wrapper.node.props.id).toEqual('login-page');
     expect(wrapper.node.type).toEqual('div');
+   // expect(wrapper.props.userSigninRequest()).toBeTruthy();
     expect(wrapper.renderer._instance.state.userName).toBe('David');
+  });
+  it('it should alter the state', () => {
+    const wrapper = shallow(<LogIn {...mockData.logIn.props }/>);
+    const input = wrapper.find('#username');
+    input.simulate('focus', {
+      shouldClearError: true
+    });
+    expect(wrapper.renderer._instance.state.shouldClearError).toBe(false);
   });
 });

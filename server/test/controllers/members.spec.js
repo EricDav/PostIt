@@ -1,10 +1,10 @@
 import supertest from 'supertest';
 import 'mocha';
 import 'chai';
-
-import dataBase from '../models';
 import should from 'should';
-import app from './../../app';
+
+import dataBase from '../../models';
+import app from './../../../app';
 
 const UserGroup = dataBase.UserGroup;
 const server = supertest.agent(app);

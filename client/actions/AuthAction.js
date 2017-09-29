@@ -2,7 +2,7 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
 import setAuthorizationToken from '../utils/setAuthorizationToken';
-import { SET_CURRENT_USER, SET_GOOGLE_FORM, SHOW_DASHBOARD_PAGE, ERROR,  IS_LOADING } from './ActionTypes';
+import { SET_CURRENT_USER, SET_GOOGLE_FORM, SHOW_DASHBOARD_PAGE, ERROR, IS_LOADING } from './ActionTypes';
 
 /* global localStorage, window, Materialize */
 
@@ -19,6 +19,12 @@ export function setCurrentUser(user) {
   };
 }
 
+/**
+ * @description set form error value
+ * 
+ * @param  {array} error
+ * @return {object} returns object
+ */
 export function error(error) {
   return {
     type: ERROR,
@@ -26,6 +32,12 @@ export function error(error) {
   };
 }
 
+/**
+ * @description set form error value
+ * 
+ * @param  {array} isLoading
+ * @return {object} returns object
+ */
 export function Loading(isLoading) {
   return {
     type: IS_LOADING,
@@ -66,24 +78,31 @@ export function setGoogleForm(googledata) {
  * @param  {object} userData like user password and username
  * @return {object} returns object
  */
-export function userSigninRequest(userData) {
+export function userSigninRequest(userData, clearError = false) {
   return (dispatch) => {
-    dispatch(Loading(true));
-    return axios.post('/api/v1/user/signin', userData).then((res) => {
-      dispatch(Loading(false));
-      localStorage.setItem('jwtToken', res.data.Token);
-      setAuthorizationToken(res.data.Token);
-      Materialize.toast('Logged In Successfully', 1500, 'green');
-      window.location = 'dashboard';
-      dispatch(setCurrentUser(jwt.decode(res.data.Token)));
-    })
-      .catch(({ response }) => {
+    if (clearError) {
+      dispatch(error({
+        errorType: 'signin',
+        errorMessage: ''
+      }));
+    } else {
+      dispatch(Loading(true));
+      return axios.post('/api/v1/user/signin', userData).then((res) => {
         dispatch(Loading(false));
-        dispatch(error({
-          errorType: 'signin',
-          errorMessage: response.data.message
-        }));
-      });
+        localStorage.setItem('jwtToken', res.data.Token);
+        setAuthorizationToken(res.data.Token);
+        Materialize.toast('Logged In Successfully', 1500, 'green');
+        window.location = 'dashboard';
+        dispatch(setCurrentUser(jwt.decode(res.data.Token)));
+      })
+        .catch(({ response }) => {
+          dispatch(Loading(false));
+          dispatch(error({
+            errorType: 'signin',
+            errorMessage: response.data.message
+          }));
+        });
+    }
   };
 }
 
@@ -103,7 +122,7 @@ export function googleSignin(userData) {
         localStorage.setItem('jwtToken', token);
         setAuthorizationToken(token);
         dispatch(setCurrentUser(jwt.decode(token)));
-        browserHistory.push('dashboard');
+        window.location = 'dashboard';
       }
     });
 }

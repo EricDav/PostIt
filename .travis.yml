@@ -1,17 +1,17 @@
 language: node_js
 node_js:
-   - "6"
+- 6.10.1
+before_script:
+- npm install -g jasmine
+- psql -c 'create database PostIt;' -U postgres
+script:
+- npm install
+- npm run tests
+after_script:
+    - npm run coverage
+after_success:
+    - npm install -g codeclimate-test-reporter
+    - codeclimate-test-reporter < coverage/lcov.info
+env:
 services:
   - postgresql
-script:
-  - npm install
-  - npm run tests
-before_script:
-    - psql -c 'create database PostIt;' -U postgres
-    - npm install -g mocha
-    - npm install -g sequelize-cli
-after success:
-  - psql -c 'drop database travis;' -U postgres
-exclude_paths:
-  - coverage/
-  - dist/**/* 

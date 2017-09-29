@@ -19,6 +19,7 @@ import screenSize from './screenSize';
 import setCurrentPage from './setCurrentPage';
 import error from './error';
 import isLoading from './isLoading';
+import offset from './offset';
 
 export default combineReducers({
   auth,
@@ -40,5 +41,6 @@ export default combineReducers({
   screenSize,
   setCurrentPage,
   error,
-  isLoading
+  isLoading,
+  offset
 });

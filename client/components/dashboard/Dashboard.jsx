@@ -33,7 +33,7 @@ class Dashboard extends React.Component {
    * @return {void} no return
    */
   componentWillMount() {
-    this.props.getGroupsRequest();
+    this.props.getGroupsRequest(this.props.offset, 10);
     $(document).ready(() => {
       $('.modal').modal();
     });
@@ -61,6 +61,7 @@ class Dashboard extends React.Component {
                     </div>
                     {this.props.showDashboardPage === 0 &&
                     <DashboardSideBar
+                      getGroups = {this.props.getGroupsRequest}
                       dashboardPage={this.props.dashboardPage}
                       allGroups={this.props.allGroups}
                       user={this.props.user}
@@ -125,7 +126,7 @@ class Dashboard extends React.Component {
       );
     }
     return (
-      <div onChange={this.onResize}>
+      <div>
         <DashboardHeader
           logout = {this.props.logout}
         />
@@ -138,6 +139,7 @@ class Dashboard extends React.Component {
                   </div>
                   <CreateGroupModal group={this.props.getGroupsRequest}/>
                   <DashboardSideBar
+                    getGroups = {this.props.getGroupsRequest}
                     dashboardPage={this.props.dashboardPage}
                     allGroups={this.props.allGroups}
                     user={this.props.user}
@@ -235,7 +237,8 @@ function mapStateToProps(state) {
     showDashboardPage: state.showDashboardForm,
     error: state.error,
     showEditGroupForm: state.showEditGroupForm,
-    initialDashboardPage: state.initialDashboardPage
+    initialDashboardPage: state.initialDashboardPage,
+    offset: state.offset.offset
   };
 }
 export default connect(mapStateToProps, {

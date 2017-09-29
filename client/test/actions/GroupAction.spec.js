@@ -35,7 +35,7 @@ describe('Group action', () => {
       });
   });
 
-  it(`should creates SET_CURRENT_USER_GROUPS 
+  it(`should creates SET_CURRENT_USER_GROUPS
   when a user request for all groups`, () => {
       const response = {
         data: { groups: [{
@@ -58,7 +58,10 @@ describe('Group action', () => {
         description: 'We drill ourselves on english grammer'
       }];
       axios.get = jest.fn(() => Promise.resolve(response));
-      const expectedActions = [{ type: SET_CURRENT_USER_GROUPS, groups }];
+      const expectedActions = [{ type: SET_CURRENT_USER_GROUPS, groups },
+        { offset: { isMoreGroups: false,
+          offset: undefined },
+        type: 'OFF_SET' }];
       const store = mockStore({ groups: [] });
 
       return store.dispatch(GroupAction.getGroupsRequest())

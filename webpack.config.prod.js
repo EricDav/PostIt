@@ -1,30 +1,41 @@
 import path from 'path';
 import webpack from 'webpack';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+
+const GLOBALS = {
+  'process.env.NODE_ENV': JSON.stringify('production')
+};
 
 module.exports = {
   entry: './client/index.js',
   output: {
-    path: path.join(__dirname, 'client/dist/'),
+    path: path.join(__dirname, '/dist/'),
     publicPath: '/client/',
     filename: 'bundle.js'
   },
   devServer: {
-    contentBase: './client/dist',
-    hot: true
+    contentBase: './dist'
   },
-  externals: {
-    Materialize: 'Materialize'
-  },
+  target: 'web',
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin('style.css'),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      'window.jQuery': 'jquery'
+      'window.jQuery': 'jquery',
+      Hammer: 'hammerjs/hammer'
     })
   ],
+  devtool: 'cheap-source-map',
   module: {
     rules: [
       {
@@ -39,7 +50,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       { test: /(\.s?css)$/,
-        loader: ['style-loader', 'css-loader', 'sass-loader']
+        loader: ExtractTextPlugin.extract('css-loader?sourceMap')
       },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'file-loader'
@@ -52,12 +63,13 @@ module.exports = {
         loader: 'url-loader?limit=100000'
       },
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+
         loader: 'url-loader?limit=100000&mimetype=application/octet-stream'
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: ['file-loader?name=/assets/images/[name].[ext]', {
-          loader: 'image-webpack-loader',
+        loaders: ['file-loader?name=/assets/img/[name].[ext]', {
+          loader: 'image-webpack-loader'
         }],
         exclude: /node_modules/,
         include: __dirname,

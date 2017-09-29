@@ -8,21 +8,25 @@ import setAuthorizationToken from './utils/setAuthorizationToken';
 import routes from './routes';
 import { setCurrentUser } from './actions/UserAction';
 import configureStore from './store/configureStore';
-//import js from '../public/js/modal'
 
 import './assets/css/custom.scss';
 import '../node_modules/materialize-css/dist/js/materialize.min';
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
-//import '../node_modules/material-icons/css/material-icons.css';
 import '../node_modules/sweetalert/dist/sweetalert.min';
 import '../node_modules/sweetalert/dist/sweetalert.css';
 
 const store = configureStore();
 
- if (localStorage.jwtToken) {
-  setAuthorizationToken(localStorage.jwtToken);
-  store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
-  //store.dispatch(setCurrentUserGroups())`
+if (localStorage.jwtToken) {
+  if (jwt.decode(localStorage.jwtToken) === null) {
+    Materialize.toast('could not authenticate User signin again', 3000, 'green', () => {
+      localStorage.removeItem('jwtToken');
+      window.location = '/';
+    });
+  } else {
+    setAuthorizationToken(localStorage.jwtToken);
+    store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
+  }
 }
 render(
   <Provider store={store}>

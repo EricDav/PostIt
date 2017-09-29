@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ADD_GROUP, SET_CURRENT_USER_GROUPS, DELETE_GROUP, UPDATE_GROUP_DATA,
   UPDATE_CURRENT_GROUP, SET_CURRENT_GROUP_MEMBERS,
-  SET_CURRENT_GROUP } from './ActionTypes';
+  SET_CURRENT_GROUP, OFF_SET } from './ActionTypes';
 
 /* global Materialize */
 
@@ -16,6 +16,19 @@ export function addGroup(addedGroup) {
   return {
     type: ADD_GROUP,
     addedGroup
+  };
+}
+
+/**
+ * @description set the latest offset value
+ * 
+ * @param  {number} offset
+ * @return {object} returns object
+ */
+export function Offset(offset) {
+  return {
+    type: OFF_SET,
+    offset
   };
 }
 
@@ -144,15 +157,32 @@ export function createGroupRequest(userData) {
  * 
  * @return {object} returns object
  */
-export function getGroupsRequest() {
+export function getGroupsRequest(offset, limit) {
   return dispatch =>
-    axios.get('/api/v1/groups').then((res) => {
+    axios.get(`/api/v1/groups?offset=${offset}&limit=${limit}`).then((res) => {
       const groups = res.data.groups;
       dispatch(setCurrentUserGroups(groups));
+      if (groups.length < 10) {
+        dispatch(Offset({
+          offset,
+          isMoreGroups: false
+        }));
+      } else {
+        dispatch(Offset({
+          offset,
+          isMoreGroups: true
+        }));
+      }
     })
-      .catch(() => {
-        Materialize.toast('An error occured while craeting groups!',
-          1500, 'purple');
+      .catch(({ response }) => {
+        if (response.data.message === 'Failed to authenticate token.') {
+          Materialize.toast('Your session has expired', 2000, 'purple', () => {
+            localStorage.removeItem('jwtToken');
+            window.location = '/';
+          });
+        } else {
+          Materialize.toast('Try again. An error occured!', 2000, 'purple');
+        }
       });
 }
 
@@ -184,9 +214,16 @@ export function deleteUserFromGroup(data) {
       .then(() => {
         dispatch(deleteGroup(data));
       })
-      .catch(() => {
-        Materialize.toast(`An error occured! 
+      .catch(({ response }) => {
+        if (response.data.message === 'Failed to authenticate token.') {
+          Materialize.toast('Your session has expired', 2000, 'purple', () => {
+            localStorage.removeItem('jwtToken');
+            window.location = '/';
+          });
+        } else {
+          Materialize.toast(`An error occured! 
         could not leave group`, 1500, 'purple');
+        }
       });
 }
 
@@ -202,8 +239,15 @@ export function getGroupMembers(groupId) {
       const members = res.data;
       dispatch(setCurrentGroupMembers(members));
     })
-      .catch(() => {
-        Materialize.toast(`An error occured while 
-        loading members!`, 2000, 'purple');
+      .catch(({ response }) => {
+        if (response.data.message === 'Failed to authenticate token.') {
+          Materialize.toast('Your session has expired', 2000, 'purple', () => {
+            localStorage.removeItem('jwtToken');
+            window.location = '/';
+          });
+        } else {
+          Materialize.toast(`An error occured 
+          while loading members!`, 2000, 'red');
+        }
       });
 }

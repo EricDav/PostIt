@@ -3,8 +3,8 @@ import 'mocha';
 import 'chai';
 import should from 'should';
 
-import dataBase from '../models';
-import app from './../../app';
+import dataBase from '../../models';
+import app from './../../../app';
 
 const server = supertest.agent(app);
 const Group = dataBase.Group;
@@ -59,7 +59,7 @@ describe('Group Routes', () => {
       .type('form')
       .send({
         name: 'Cohort 8',
-        description: 'We are one'
+        description: 'We are the great cohort 28 man'
       })
       .expect(201)
       .end((err, res) => {
@@ -70,7 +70,7 @@ describe('Group Routes', () => {
         })
           .then((group) => {
             group.name.should.equal('Cohort 8');
-            group.description.should.equal('We are one');
+            group.description.should.equal('We are the great cohort 28 man');
           });
         res.status.should.equal(201);
         res.body.success.should.equal(true);
@@ -87,7 +87,7 @@ describe('Group Routes', () => {
       .type('form')
       .send({
         name: 'House',
-        description: 'I am house renter'
+        description: 'This group is meant for those who are need of house'
       })
       .expect(201)
       .end((err, res) => {
@@ -98,42 +98,22 @@ describe('Group Routes', () => {
         })
           .then((group) => {
             group.name.should.equal('House');
-            group.description.should.equal('I am house renter');
+            group.description.should.equal('This group is meant for those who are need of house');
           });
         res.status.should.equal(201);
         res.body.success.should.equal(true);
         done();
       });
   });
-
-  it('disallows a logged in user to create a group with an existing name', (done) => {
-    server
-      .post('/api/v1/group')
-      .set('Connection', 'keep alive')
-      .set('authorization', regUserData)
-      .set('Content-Type', 'application/json')
-      .type('form')
-      .send({
-        name: 'Learn Python',
-        description: 'Where we learn pyhton'
-      })
-      .expect(409)
-      .end((err, res) => {
-        res.status.should.equal(409);
-        res.body.name.should.equal('Group title already exist');
-        done();
-      });
-  });
-
   it('allows a logged in user to get all the groups he/she belongs to', (done) => {
     server
-      .get('/api/v1/groups')
+      .get('/api/v1/groups?offset=0&limit=10')
       .set('authorization', regUserData)
       .expect(200)
       .end((err, res) => {
         res.status.should.equal(200);
         res.body.groups.length.should.equal(3);
-        res.body.groups[0].description.should.equal('This is where Maths lives');
+        res.body.groups[0].description.should.equal('This group is meant for those who are need of house');
         res.body.groups[1].name.should.equal('Cohort 8');
         done();
       });
@@ -209,7 +189,7 @@ describe('Group Routes', () => {
       .type('form')
       .send({
         name: 'love',
-        description: 'Love is good'
+        description: 'Love is good because God is love'
       })
       .expect(200)
       .end((err, res) => {
@@ -220,7 +200,7 @@ describe('Group Routes', () => {
         })
           .then((group) => {
             group.name.should.equal('love');
-            group.description.should.equal('Love is good');
+            group.description.should.equal('Love is good because God is love');
           });
         res.status.should.equal(200);
         res.body.message.should.equal('group info updated successfully');

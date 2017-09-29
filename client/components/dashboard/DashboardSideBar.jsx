@@ -21,12 +21,16 @@ class DashboardSideBar extends React.Component {
     super(props);
     this.getGroups = this.getGroups.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.handleViewMoreGroups = this.handleViewMoreGroups.bind(this);
   }
   /**
    * componentWillMount - componentWillMount function
    * @return {void} no return
    */
   componentWillMount() {
+    $(document).ready(() => {
+      $('.modal').modal();
+    });
     this.props.getNewGroupMessages().then(
       () => {
         this.props.getInitialNewMessages(this.props.newMessages);
@@ -43,6 +47,16 @@ class DashboardSideBar extends React.Component {
     if (this.props.showDashboardPage !== 2) {
       this.props.dashboardPage(2, this.props.showDashboardPage);
     }
+  }
+
+  /**
+     * @description - make api call to fetch the next ten groups
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
+  handleViewMoreGroups() {
+    this.props.getGroups(this.props.offset + 10, 10);
   }
   /**
      * @description - get current user groups
@@ -90,6 +104,8 @@ class DashboardSideBar extends React.Component {
               href="#modal1"><span className="new bad"> + </span></a>
           </li>
           {groups}
+          { this.props.isMoreGroups && <a onClick={this.handleViewMoreGroups} href="#!"><span id='color'
+          ><center>View more groups</center></span></a> }
         </ul>
       </div>
 
@@ -115,6 +131,8 @@ PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'sideBar');
 function mapStateToProps(state) {
   return {
     newMessages: state.newMessages,
+    offset: state.offset.offset,
+    isMoreGroups: state.offset.isMoreGroups
   };
 }
 

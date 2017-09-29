@@ -144,3 +144,24 @@ export const updateGroup = (groups, updatedGroup) => {
   });
   return updatedGroups;
 };
+
+/**
+ * @description checks if the string pass in is a digit. 
+ * Means all the charcters are digit
+ * 
+ * @param  {string} str
+ * @return {boolean} true or false
+ */
+
+export const isDigit = (str) => {
+  const num = str.toString();
+  if (num.length === 0) {
+    return false;
+  }
+  for (let i = 0; i < num.length; i += 1) {
+    if (/[0-9]/.test(num[i]) === false) {
+      return false;
+    }
+  }
+  return true;
+};

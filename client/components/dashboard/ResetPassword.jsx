@@ -97,9 +97,9 @@ class ResetPassword extends React.Component {
       <form onSubmit={this.onSubmit} className="login-form">
         <div className="row">
           <div className="input-field col s12 center">
-            <p className="center"><h5><b>Reset Password</b></h5></p>
+            <h5 className="center"><b>Reset Password</b></h5>
             {this.state.error &&
-            <div className="errorMessage center">{this.state.error}</div>}
+            <div className="mes center"><i>{this.state.error}</i></div>}
           </div>
         </div>
         <div className="row margin">

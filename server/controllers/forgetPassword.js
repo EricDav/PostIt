@@ -14,6 +14,13 @@ const User = dataBase.User;
    *  number of new messages in the group
    */
 export const sendSecretCode = (req, res) => {
+  if ((req.body.email.slice(req.body.email.length - 4, req.body.email.length)
+     !== '.com' || !(/[@]/.test(req.body.email)))) {
+    return res.status(400).json({
+      message: 'Invalid email',
+      success: false
+    });
+  }
   User.findOne({
     where: {
       email: req.body.email

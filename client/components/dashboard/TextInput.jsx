@@ -56,17 +56,7 @@ class TextInput extends React.Component {
           content: '',
         });
         this.props.createMessage(data,
-          this.props.currentGroup.id.toString()).then(
-          () => {
-            const seenMessageIds = getMessageIds(this.props.messages);
-            const updateSeenMessagesData = {
-              seenMessageIds,
-              seenLast: seenMessageIds.length
-            };
-            this.props.updateSeenMessages(this.props.currentGroupId.toString(),
-              updateSeenMessagesData);
-            this.props.getInitialNewMessages(this.props.newMessages);
-          }
+          this.props.currentGroup.id.toString()
         );
       }
     }
@@ -98,7 +88,7 @@ const textInputPropTypes = {
 
 PropTypes.checkPropTypes(textInputPropTypes, 'prop', 'TextInput');
 
-/**
+/*
  * @description mapStateToProps - maps state value to props
  * 
  * @param  {object} state the store state

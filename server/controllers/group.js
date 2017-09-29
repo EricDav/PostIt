@@ -1,5 +1,5 @@
 import dataBase from '../models';
-import { removePassword } from '../helpers/index';
+import { removePassword, isDigit } from '../helpers/index';
 
 const Group = dataBase.Group;
 const User = dataBase.User;
@@ -36,6 +36,12 @@ const group = {
   },
 
   addUser(req, res) {
+    if (!isDigit(req.params.groupId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid groupId'
+      });
+    }
     return Group
       .findOne({ where: {
         id: req.params.groupId
@@ -73,12 +79,22 @@ const group = {
    */
 
   getGroups(req, res) {
+    if (typeof Number(req.query.offset) !== 'number'
+     && typeof Number(req.query.limit) !== 'number') {
+      return res.status(400).json({
+        success: false,
+        message: 'Offset or limit must be an integer'
+      });
+    }
     User
       .findOne({ where: {
         id: req.currentUser.currentUser.id
       } })
       .then((user) => {
-        user.getGroups().then((groups) => {
+        const offset = req.query.offset || 0;
+        const limit = req.query.limit || 10;
+        const order = [['createdAt', 'DESC']];
+        user.getGroups({ offset, limit, order }).then((groups) => {
           if (groups.length === 0) {
             res.status(200).json({
               groups: [],
@@ -106,6 +122,12 @@ const group = {
    * @return {array} array of object
    */
   getGroupMembers(req, res) {
+    if (!isDigit(req.params.groupId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid groupId'
+      });
+    }
     return Group
       .findOne({ where: {
         id: req.params.groupId
@@ -129,6 +151,12 @@ const group = {
    * @return {void} no returns
    */
   deleteGroup(req, res) {
+    if (!isDigit(req.params.groupId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid groupId'
+      });
+    }
     Group.destroy({
       where: {
         id: req.params.groupId
@@ -167,6 +195,12 @@ const group = {
    */
 
   deleteUser(req, res) {
+    if (!isDigit(req.params.groupId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid groupId'
+      });
+    }
     Members.destroy({
       where: {
         groupId: req.params.groupId,
@@ -193,6 +227,12 @@ const group = {
    * @return {void} no returns
    */
   updateGroupInfo(req, res) {
+    if (!isDigit(req.params.groupId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid groupId'
+      });
+    }
     Group.findOne({
       where: {
         id: req.params.groupId

@@ -1,5 +1,5 @@
 import dataBase from '../models';
-import { sendEmailAndSms } from '../helpers/index';
+import { sendEmailAndSms, isDigit } from '../helpers/index';
 
 const Message = dataBase.Message;
 /**
@@ -12,6 +12,12 @@ const Message = dataBase.Message;
  */
 const Messages = {
   createMessage(req, res) {
+    if (!isDigit(req.params.groupId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid groupId'
+      });
+    }
     return Message
       .create({
         content: req.body.content,
@@ -45,6 +51,12 @@ const Messages = {
    * @return {array} array of object
    */
   getMessages(req, res) {
+    if (!isDigit(req.params.groupId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid groupId'
+      });
+    }
     return Message
       .findAll({ where: {
         groupId: req.params.groupId

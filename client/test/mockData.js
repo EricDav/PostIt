@@ -168,6 +168,8 @@ const mockData = {
   },
   logIn: {
     props: {
+      userSigninRequest: jest.fn(),
+      setPage: jest.fn(),
       error: {
         errorType: 'Login',
         errorMessage: 'Invalid details'
@@ -378,6 +380,23 @@ const mockData = {
       dashboardPage: jest.fn()
     },
     showAlert: jest.fn()
+  },
+  EditUser: {
+    props: {
+      showUpdateUserPage: jest.fn(),
+      updateUserProfile: jest.fn(),
+      showInitial: 3,
+      showDashboardPage: 1,
+      user: {
+        fullName: 'Akon sad',
+        userName: 'Pent',
+        email: 'das@me.com',
+        phoneNumber: '09033445334'
+      },
+      currentUser: {
+        userName: 'Python'
+      }
+    }
   }
 };
 

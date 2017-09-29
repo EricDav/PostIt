@@ -14,6 +14,12 @@ export function setView(viewNumber) {
   };
 }
 
+/**
+ * @description set the size of a current screen
+ * 
+ * @param  {number} screenSize
+ * @return {object} returns object
+ */
 export function isSmallScreenSize(screenSize) {
   return {
     type: SCREEN_SIZE,
@@ -73,6 +79,12 @@ export function setRightNavBarView(viewNumber) {
   };
 }
 
+/**
+ * @description checks for small screen size 
+ * 
+ * @param  {number} screenSize
+ * @return {object} returns object
+ */
 export function smallScreenSize(screenSize) {
   return (dispatch) => {
     dispatch(isSmallScreenSize(screenSize));

@@ -12,9 +12,12 @@ import forgetPassword from './server/routes/forgetPasswordRoutes';
 
 const port = process.env.PORT || 9000;
 const app = express();
-app.use(express.static('client'));
+app.use(express.static(path.join(__dirname, './dist')));
+
 app.use(logger('dev'));
-app.use(webpackMiddleware(webpack(webpackConfig)));
+if (process.env.NODE_ENV === 'development') {
+  app.use(webpackMiddleware(webpack(webpackConfig)));
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(group);
@@ -23,7 +26,7 @@ app.use(message);
 app.use(forgetPassword);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './client/index.html'));
+  res.sendFile(path.join(__dirname, './dist/index.html'));
 });
 
 app.listen(port, () => {

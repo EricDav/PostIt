@@ -33,19 +33,22 @@ export class Group extends React.Component {
      * @return {void} no return or void
      */
   onClick(event) {
+    let groupId;
     if (event.target.id !== this.props.currentGroupId) {
+      groupId = event.target.id;
       this.setState({
         groupId: event.target.id
       });
-      this.props.getGroupMembers(this.state.groupId.toString());
-      this.props.getGroupMessages(this.state.groupId.toString()).then(
+      this.props.getGroupMembers(groupId.toString());
+      this.props.getGroupMessages(groupId.toString()).then(
         () => {
           const seenMessageIds = getMessageIds(this.props.messages);
           const updateSeenMessagesData = { seenMessageIds,
             seenLast: seenMessageIds.length };
-          this.props.updateSeenMessages(this.state.groupId.toString(),
+          this.props.updateSeenMessages(groupId.toString(),
             updateSeenMessagesData);
           this.props.dashboardPage(1, this.props.showDashboardPage);
+          this.props.getNewGroupMessages();
         }
       );
       this.props.groups.forEach((group) => {

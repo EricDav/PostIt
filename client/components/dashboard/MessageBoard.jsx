@@ -28,7 +28,12 @@ class MessageBoard extends React.Component {
      * @return {void} no return or void
      */
   getMessages() {
-    let initialSeenLast;
+    let lastMessageId;
+    if (this.props.messages.length !== 0) {
+      lastMessageId = this.props.messages[this.props.messages.length - 1]
+        .message.senderId;
+    }
+    let initialSeenLast = 0;
     let isNewMessage = true;
     this.props.initialNewMessages.forEach((initialNewMessage) => {
       if (initialNewMessage.groupId === this.props.currentGroup.id) {
@@ -45,7 +50,8 @@ class MessageBoard extends React.Component {
         === message.message.id) {
         return (
           <div key={message.message.id}>
-            <Line key={message.message.id}/>
+            {lastMessageId !== this.props.userId &&
+            <Line key={message.message.id}/>}
             <Messages name={message.message.senderUsername}
               key={message.message.id + 1}
               content={message.message.content}
@@ -126,7 +132,8 @@ function mapStateToProps(state) {
     currentGroup: state.group,
     seenLast: state.seenLast,
     initialNewMessages: state.initialNewMessages,
-    isSmallScreenSize: state.screenSize
+    isSmallScreenSize: state.screenSize,
+    userId: state.auth.user.currentUser.id
   };
 }
 

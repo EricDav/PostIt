@@ -67,11 +67,12 @@ export const isText = (str) => {
  */
 
 export const isDigit = (str) => {
-  if (str.length === 0) {
+  const num = str.toString();
+  if (num.length === 0) {
     return false;
   }
-  for (let i = 0; i < str.length; i += 1) {
-    if (/[0-9]/.test(str[i]) === false) {
+  for (let i = 0; i < num.length; i += 1) {
+    if (/[0-9]/.test(num[i]) === false) {
       return false;
     }
   }
@@ -208,13 +209,14 @@ export const sendSms = (phoneNumber, message) => {
  * 
  * @return {object} numNewMessages number of new messages
  */
-export const getNewMessages = (groupId, messages, seenLasts) => {
+export const getNewMessages = (groupId, messages, seenLasts, userId) => {
   let numGroupMessages = 0;
   let numGroupSeenLast = 0;
   const numNewMessage = {};
+  const groupMessages = [];
   messages.forEach((message) => {
     if (message.groupId === groupId) {
-      numGroupMessages += 1;
+      groupMessages.push(message);
     }
   });
   seenLasts.forEach((seenLast) => {
@@ -222,8 +224,15 @@ export const getNewMessages = (groupId, messages, seenLasts) => {
       numGroupSeenLast = seenLast.seenLast;
     }
   });
+  const newMessages = groupMessages
+    .slice(numGroupSeenLast, messages.length - 1);
+  newMessages.forEach((message) => {
+    if (message.senderId !== userId) {
+      numGroupMessages += 1;
+    }
+  });
   numNewMessage.groupId = groupId;
-  numNewMessage.newMessage = numGroupMessages - numGroupSeenLast;
+  numNewMessage.newMessage = numGroupMessages;
   return numNewMessage;
 };
 

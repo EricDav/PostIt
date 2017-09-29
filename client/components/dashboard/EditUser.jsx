@@ -60,28 +60,35 @@ class EditUser extends React.Component {
      * @param  {object} event the event for the content field
      * @return {void} no return or void
      */
-  onSubmit(event) {
-    event.preventDefault();
+  onSubmit() {
+    //event.preventDefault();
     if (!this.state.displayButton) {
       this.props.showUpdateUserPage(this.props.showInitial,
         this.props.showDashboardPage);
     } else {
-      this.props.updateUserProfile(this.state).then(
+      const updatedUser = { currentUser: {
+        fullName: this.state.fullName,
+        email: this.state.email,
+        phoneNumber: this.state.phoneNumber,
+        userName: this.props.currentUser.userName
+      } };
+      this.props.updateUserProfile(this.state, updatedUser).then(
         () => {
           this.props.showUpdateUserPage(this.props.showInitial, 1);
-          Materialize.toast('Your prifile has been updated', 1500, 'purple');
-          const updatedUser = {currentUser: {
-            fullName: this.state.fullName,
-            email: this.state.email,
-            phoneNumber: this.state.phoneNumber,
-            userName: this.props.currentUser.userName
-          } };
-          this.props.setUpdatedUser(updatedUser);
+          Materialize.toast('Your prifile has been updated', 1500, 'green');
         },
         (data) => {
-          this.setState({
-            errors: data.response.data.error,
-          });
+          if (data.response.data.message === 'Failed to authenticate token.') {
+            Materialize.toast('Can not edit user details. Your session has expired',
+              2000, 'red', () => {
+                localStorage.removeItem('jwtToken');
+                window.location = '/';
+              });
+          } else {
+            this.setState({
+              errors: data.response.data.error,
+            });
+          }
         }
       );
     }
@@ -192,7 +199,7 @@ class EditUser extends React.Component {
         </div>}
         <div className="col s12 resetUser">
           <p className="margin center medium-small sign-up">
-            <a onClick={this.onClick} href="#!">
+            <a id="clickMe" onClick={this.onClick} href="#!">
               Change Password
             </a>
           </p>

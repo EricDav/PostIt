@@ -6,7 +6,6 @@ import Login from './LogIn.jsx';
 import NavBar from './Navbar.jsx';
 import { userSigninRequest, userSignupRequest } from '../actions/AuthAction';
 import { setPage } from '../actions/UserAction';
-import { clearError } from '../actions/ErrorAction';
 import GoogleSignup from './GoogleLoginForm.jsx';
 
 const HomePage = props =>
@@ -60,4 +59,4 @@ function mapStateToProps(state) {
 PropTypes.checkPropTypes(HomePagePropTypes, 'prop', 'HomePage');
 
 export default connect(mapStateToProps,
-  { userSigninRequest, userSignupRequest, setPage, clearError })(HomePage);
+  { userSigninRequest, userSignupRequest, setPage })(HomePage);

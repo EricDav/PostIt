@@ -66,7 +66,6 @@ class EditGroup extends React.Component {
      * @return {void} no return or void
      */
   onClick(event) {
-    event.preventDefault();
     if (event.target.textContent === 'Update Now') {
       if (this.state.name === this.props.currentGroup.name
         && this.state.description === this.props.currentGroup.description) {
@@ -90,9 +89,17 @@ class EditGroup extends React.Component {
             },
 
             (data) => {
-              this.setState({
-                error: data.response.data.error
-              });
+              if (data.response.data.message === 'Failed to authenticate token.') {
+                Materialize.toast('Can not edit group details. Your session has expired',
+                  2000, 'red', () => {
+                    localStorage.removeItem('jwtToken');
+                    window.location = '/';
+                  });
+              } else {
+                this.setState({
+                  error: data.response.data.error
+                });
+              }
             }
           );
       }

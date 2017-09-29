@@ -1,15 +1,22 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 
-import Google from './GoogleSignin';
+import GoogleSignin from './GoogleSignin.jsx';
 
+/** @class LogIn
+ * @classdesc component for LogIn
+ */
 export class LogIn extends React.Component {
+  /**
+   * constructor - contains the constructor
+   * @param  {object} props the properties of the class component
+   * @return {void} no return or void
+   */
   constructor(props) {
     super(props);
     this.state = {
-      clearError: false,
+      shouldClearError: false,
       userName: '',
       password: '',
       buttonStatus: 'Login',
@@ -19,88 +26,133 @@ export class LogIn extends React.Component {
     this.onFocus = this.onFocus.bind(this);
     this.onClick = this.onClick.bind(this);
   }
+  componentWillUnmount() {
+    this.props.userSigninRequest({}, true);
+  }
+  /**
+     * @description - handles the onchange event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
+  /**
+     * @description - handles the onclick event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
   onClick(event) {
+    console.log('I am called here ooooooooooooooooooooooooooo')
     if (event.target.textContent === 'Forgot password ?') {
-      this.props.clearSigninError();
-      browserHistory.push('forgotPassword');
+      //browserHistory.push('forgotPassword');
+      window.locatiuon = 'forgotPassword';
       this.props.setPage(3);
-    } else if(event.target.textContent === ' Signup') {
-      this.props.clearSigninError();
-      browserHistory.push('signup');
+    } else if (event.target.textContent === ' Signup') {
+      //browserHistory.push('signup');
+      window.location = 'signup';
       this.props.setPage(2);
     }
   }
-  onSubmit(event) {
+  /**
+     * @description - handles the onsubmit event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
+  onSubmit() {
     this.setState({
-      isLoading: true,
-      clearError: false
+      shouldClearError: true
     });
-    event.preventDefault();
-    this.props.userSigninRequest({password:this.state.password, userName: this.state.userName});
+    //event.preventDefault();
+    this.props.userSigninRequest({ password: this.state.password,
+      userName: this.state.userName });
   }
-  onFocus(event) {
-    if (this.props.error.errorType) {
-       this.setState({clearError: true});
+  /**
+     * @description - handles the onfocus event
+     * 
+     * @param  {object} event the event for the content field
+     * @return {void} no return or void
+     */
+  onFocus() {
+    console.log('I am called here oooooooooo')
+    if (this.state.shouldClearError) {
+      this.props.userSigninRequest({}, true);
     }
+    this.setState({
+      shouldClearError: false
+    });
   }
+  /**
+   *@description render - renders the Google Login component
+   * @return {object} returns an object
+   */
   render() {
-    const { userName, password, buttonStatus, success, value, clearError } = this.state;
+    const { userName, password, clearError } = this.state;
     return (<div id="login-page" className="col s12 z-depth-4 card-panel">
-                <form id="login" className="login-form" onSubmit={this.onSubmit}>
-                  <div className="row">
-                    <div className="input-field col s12 center">
-                      <h5 className="center login-form-text">Welcome, Login to get started</h5><br/>
-                      {this.props.error.errorType && !clearError && <div className="mes"><i><b>{this.props.error.errorMessage}</b></i></div>}
-                    </div>
-                  </div>
-                  <div className="row margin">
-                    <div className="input-field col s12">
-                      <i className="mdi-social-person-outline prefix" />
-                      <input id="username" type="text" onChange={this.onChange} name="userName" onFocus={this.onFocus} value={userName} required="true"/>
-                      <label htmlFor="username" className="center-align">Username</label>
-                    </div>
-                  </div>
-                  <div className="row margin">
-                    <div className="input-field col s12">
-                      <i className="mdi-action-lock-outline prefix" />
-                      <input id="password" type="password" onChange={this.onChange} name="password" onFocus={this.onFocus} value={password} required="true"/>
-                      <label htmlFor="password">Password</label>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="input-field col s12 m12 l12  login-text">
-                      <input type="checkbox" id="remember-me"/>
-                      <label htmlFor="remember-me">Remember me</label>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="input-field col s12">
-                      <button className="btn purple darken-1 waves-effect waves-light col s12"
-                      disabled={this.props.isLoading}>Login</button>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="input-field col s12">
-                      <center>
-                            <Google/>
-                          </center>
-                      <p className="margin center medium-small sign-up">
-                        <a onClick={this.onClick} href="#!">Forgot password ?</a>
-                        </p>
-                         <p className="margin center medium-small sign-up">
-                        <i>No account?</i>
-                        <a onClick={this.onClick} href="#!"> Signup</a>
-                        </p>
-                    </div>
-                  </div>
-                </form>
-              </div>);
-      }
+      <form id="login" className="login-form" onSubmit={this.onSubmit}>
+        <div className="row">
+          <div className="input-field col s12 center">
+            <h5
+              className="center login-form-text">
+              Welcome, Login to get started</h5><br/>
+            {this.props.error.errorType && !clearError &&
+            <div className="mes"><i>
+              <b>{this.props.error.errorMessage}</b></i></div>}
+          </div>
+        </div>
+        <div className="row margin">
+          <div className="input-field col s12">
+            <i className="mdi-social-person-outline prefix"/>
+            <input id="username" type="text"
+              onChange={this.onChange} name="userName" onFocus={this.onFocus}
+              value={userName} required="true"/>
+            <label htmlFor="username" className="center-align">Username</label>
+          </div>
+        </div>
+        <div className="row margin">
+          <div className="input-field col s12">
+            <i className="mdi-action-lock-outline prefix" />
+            <input id="password" type="password"
+              onChange={this.onChange} name="password"
+              onFocus={this.onFocus} value={password} required="true"/>
+            <label htmlFor="password">Password</label>
+          </div>
+        </div>
+        <div className="row">
+          <div className="input-field col s12 m12 l12  login-text">
+            <input type="checkbox" id="remember-me"/>
+            <label htmlFor="remember-me">Remember me</label>
+          </div>
+        </div>
+        <div className="row">
+          <div className="input-field col s12">
+            <button
+              className="btn purple darken-1 waves-effect waves-light col s12"
+              disabled={this.props.isLoading}>Login</button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="input-field col s12">
+            <center>
+              <GoogleSignin/>
+            </center>
+            <p className="margin center medium-small sign-up">
+              <a onClick={this.onClick} href="#!">Forgot password ?</a>
+            </p>
+            <p className="margin center medium-small sign-up">
+              <i>No account?</i>
+              <a id="clickMe" onClick={this.onClick} href="#!"> Signup</a>
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>);
+  }
 }
 
 export default LogIn;

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 import { SET_SEARCHED_USERS, SET_CURRENT_USER, SET_RESET_PASSWORD_USER_PAGE,
-  SET_SHOW_UPDATE_USER_PAGE, ADD_USER, RESET_PASSWORD_USER, SET_CURRENT_PAGE,
-  WILL_SHOW } from './ActionTypes';
+  ADD_USER, RESET_PASSWORD_USER, SET_CURRENT_PAGE,
+  WILL_SHOW, OFF_SET } from './ActionTypes';
 
 /* global Materialize */
 
@@ -20,7 +20,19 @@ export function setSearchedUser(searchedUsers) {
 }
 
 /**
- * @description set all users to state
+ * @description set the offset
+ * 
+ * @param  {array} searchedUsers
+ * @return {object} returns object
+ */
+export function setOffset(offset) {
+  return {
+    type: OFF_SET,
+    offset
+  };
+}
+/**
+ * @description set the current page
  * 
  * @param  {number} page number
  * @return {object} returns object
@@ -104,11 +116,15 @@ export function setResetPasswordUser(resetPasswordUser) {
  * @return {object} returns object
  */
 export function VerifyCodeAndUpdatePassword(userData) {
-  return () => {
-    return axios.post('/api/v1/resetPassword', userData);
-  };
+  return () => axios.post('/api/v1/resetPassword', userData);
 }
 
+/**
+ * @description set the user requesting for reset password
+ * 
+ * @param  {array} userData
+ * @return {object} returns object
+ */
 export function setResetPasswordPage(show) {
   return dispatch =>
     dispatch(willShowResetPasswordPage(show));
@@ -165,7 +181,8 @@ export function showResetPasswordUserPage(shouldShow) {
  * @return {object} returns object
  */
 export function resetPassword(userData) {
-  return axios.put('/api/v1/resetPassword', userData);
+  return () =>
+    axios.put('/api/v1/resetPassword', userData);
 }
 
 /**
@@ -174,10 +191,10 @@ export function resetPassword(userData) {
  * @param  {object} userData
  * @return {object} returns object
  */
-export function updateUserProfile(userData) {
+export function updateUserProfile(userData, updatedUser) {
   return dispatch =>
     axios.put('/api/v1/user/update', userData).then(() => {
-      dispatch(setShowUpdateUserPage(false));
+      dispatch(setCurrentUser(updatedUser));
     });
 }
 
@@ -185,7 +202,7 @@ export function updateUserProfile(userData) {
 /**
  * @description make a get request to fetch all users
  * 
- * @param  {array} allUsers
+ * @param  {string} searchKey
  * @return {object} returns object
  */
 export function searchUsers(searchKey) {
@@ -216,6 +233,12 @@ export function setUpdatedUser(user) {
   };
 }
 
+/**
+ * @description set a user I
+ * 
+ * @param {object} pageNumber
+ * @return {object} returns object
+ */
 export function setPage(pageNumber) {
   return (dispatch) => {
     dispatch(setCurrentPage(pageNumber));

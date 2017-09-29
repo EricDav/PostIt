@@ -4,8 +4,8 @@ import 'chai';
 import should from 'should';
 import jwt from 'jsonwebtoken';
 
-import app from '../../app';
-import dataBase from '../models';
+import app from '../../../app';
+import dataBase from '../../models';
 
 const User = dataBase.User;
 

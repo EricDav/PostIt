@@ -122,7 +122,7 @@ const user = {
   },
 
   /**
-   *@description update user uptable details like 
+   *@description update user updatable details like 
    fullname, email and phone number
    *
    * @param  {object} req
@@ -422,7 +422,8 @@ const user = {
                   });
                   groupIds.forEach((groupId) => {
                     newMessages
-                      .push(getNewMessages(groupId, messages, userSeenLast));
+                      .push(getNewMessages(groupId, messages, userSeenLast,
+                        req.currentUser.currentUser.id));
                   });
                   return res.status(200).send(newMessages);
                 })
@@ -436,6 +437,13 @@ const user = {
   },
 
   googleSignin(req, res) {
+    if ((req.body.email.slice(req.body.email.length - 4, req.body.email.length)
+     !== '.com' || !(/[@]/.test(req.body.email)))) {
+      return res.status(400).json({
+        message: 'Invalid email',
+        success: false
+      });
+    }
     User.findOne({
       where: {
         email: req.body.email

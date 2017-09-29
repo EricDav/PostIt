@@ -4,7 +4,6 @@ import expect from 'expect';
 
 import SearchedUser from '../../../components/dashboard/SearchedUser.jsx';
 import mockData from '../../mockData';
-console.log(mockData);
 
 describe('SearchUser Component', () => {
   it('should render SearchUser component', () => {

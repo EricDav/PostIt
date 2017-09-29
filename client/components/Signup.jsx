@@ -1,7 +1,7 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
+import { isDigit } from '../helpers';
 
-/** @class GoogleSignup
+/** @class Signup
  * @classdesc component for Signup
  */
 class SignUp extends React.Component {
@@ -55,14 +55,11 @@ class SignUp extends React.Component {
         error[name] = 'Password does not match';
         this.setState({ errors: error });
       }
-    } else if (nameObject[name]) {
-      this.props.userSignupRequest(nameObject).then(
-        () => {},
-        (data) => {
-          error[name] = data.response.data.error[name];
-          this.setState({ errors: error });
-        }
-      );
+    } else if (name === 'phoneNumber') {
+      if (this.state.phoneNumber.length < 11 ||
+      !isDigit(this.state.phoneNumber.length)) {
+        error[name] = 'Invalid phone number';
+      }
     }
   }
   /**
@@ -72,7 +69,7 @@ class SignUp extends React.Component {
      * @return {void} no return or void
      */
   onSubmit(event) {
-    this.setState({ error: {} });
+    this.setState({ errors: {} });
     event.preventDefault();
     if (this.state.password !== this.state.Password) {
       error[name] = 'Password does not match';
@@ -85,7 +82,7 @@ class SignUp extends React.Component {
       this.props.userSignupRequest(this.state).then(
         () => {
           Materialize.toast('Sign Up Successfully', 1000, 'green');
-          browserHistory.push('dashboard');
+          window.location = 'dashboard';
         },
         (data) => {
           this.setState({

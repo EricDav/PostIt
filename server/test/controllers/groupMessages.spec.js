@@ -3,8 +3,8 @@ import 'mocha';
 import 'chai';
 import should from 'should';
 
-import dataBase from '../models';
-import app from './../../app';
+import dataBase from '../../models';
+import app from './../../../app';
 
 const Message = dataBase.Message;
 const server = supertest.agent(app);
