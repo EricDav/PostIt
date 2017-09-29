@@ -2,9 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
 
-import { DashboardHeader } from '../../../components/dashboard/DashboardHeader.jsx';
-import { mapStateToProps } from '../../../components/dashboard/DashboardHeader.jsx';
-import { mockData } from '../../mockData';
+import { DashboardHeader, mapStateToProps } from
+  '../../../components/dashboard/DashboardHeader.jsx';
+import mockData from '../../mockData';
 
 describe(' DashboardHeader Component', () => {
   beforeEach(() => {
@@ -14,7 +14,8 @@ describe(' DashboardHeader Component', () => {
     const state = setup();
   });
   it('should render  DashboardHeader component', () => {
-    const wrapper = shallow(<DashboardHeader { ...mockData.dashboardHeader.props }/>);
+    const wrapper =
+    shallow(<DashboardHeader {...mockData.dashboardHeader.props}/>);
     expect(wrapper.node.props.className).toEqual('purple darken-1');
     expect(wrapper.node.props.role).toEqual('navigation');
   });

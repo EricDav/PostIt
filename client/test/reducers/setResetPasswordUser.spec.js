@@ -2,8 +2,8 @@ import expect from 'expect';
 import * as UserAction from '../../actions/UserAction';
 import setResetPasswordUser from '../../reducers/setResetPasswordUser';
 
-describe('initialDashboard page Reducer', () => {
-  it('should set the initialdashboard page', () => {
+describe('Reset password Reducer', () => {
+  it('should set reset password user info', () => {
     const initialState = {};
     const user = {
       email: 'alienyi@me.com',
@@ -13,7 +13,7 @@ describe('initialDashboard page Reducer', () => {
     const newState = setResetPasswordUser(initialState, action);
     expect(newState.email).toEqual('alienyi@me.com');
   });
-   it('should return initial state for invalid type', () => {
+  it('should return initial state for invalid type', () => {
     const initialState = {};
     const user = {
       email: 'alienyi@me.com',

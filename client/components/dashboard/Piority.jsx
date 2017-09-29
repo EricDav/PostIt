@@ -7,7 +7,7 @@ import { setPiority } from '../../actions/MessageAction';
 /** @class Piority
  * @classdesc component for piority level
  */
-class Piority extends React.Component {
+export class Piority extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component

@@ -2,8 +2,8 @@ import expect from 'expect';
 import * as DashboardViewAction from '../../actions/DashboardViewAction';
 import screenSize from '../../reducers/screenSize';
 
-describe('initialDashboard page Reducer', () => {
-  it('should set the initialdashboard page', () => {
+describe('screen size Reducer', () => {
+  it('should set the screen size', () => {
     const initialState = false;
     const action = DashboardViewAction.isSmallScreenSize(true);
     const newState = screenSize(initialState, action);
@@ -15,7 +15,7 @@ describe('initialDashboard page Reducer', () => {
     const action = {
       type: 'WRONG',
       show
-    }
+    };
     const newState = screenSize(initialState, action);
     expect(newState).toEqual(false);
   });

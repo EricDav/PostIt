@@ -9,13 +9,13 @@ describe('initialDashboard page Reducer', () => {
     const newState = initialDashboardPage(initialState, action);
     expect(newState).toEqual(2);
   });
-   it('should return initial state for invalid type', () => {
-     const initialState = 0;
-     const pageNumber = 2;
+  it('should return initial state for invalid type', () => {
+    const initialState = 0;
+    const pageNumber = 2;
     const action = {
       type: 'WRONG',
       pageNumber
-    }
+    };
     const newState = initialDashboardPage(initialState, action);
     expect(newState).toEqual(0);
   });

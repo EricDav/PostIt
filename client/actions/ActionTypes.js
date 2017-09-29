@@ -27,3 +27,6 @@ export const TEXT_CONTENT = 'TEXT_CONTENT';
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 export const UPDATE_CURRENT_GROUP = 'UPDATE_CURRENT_GROUP';
 export const SCREEN_SIZE = 'SCREEN_SIZE';
+export const ERROR = 'ERROR';
+export const CLEAR_ERROR  = 'CLEAR_ERROR';
+export const IS_LOADING = 'IS_LOADING';

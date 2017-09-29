@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 /** @class GroupHeader
  * @classdesc component for group header
  */
-class GroupHeader extends React.Component {
+export class GroupHeader extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -24,6 +24,8 @@ class GroupHeader extends React.Component {
      * @return {void} no return or void
      */
   showAlert() {
+    console.log('================================================')
+    console.log('=========', this.props.user.userName, this.props.group.creator);
     swal({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -51,6 +53,8 @@ class GroupHeader extends React.Component {
      * @return {void} no return or void
      */
   onClick() {
+    console.log('================================================')
+    console.log('=========',this.props.user.userName, this.props.group.creator);
     if (this.props.user.userName !== this.props.group.creator) {
       this.showAlert();
     } else {

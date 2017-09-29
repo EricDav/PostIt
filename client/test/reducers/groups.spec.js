@@ -2,7 +2,7 @@ import expect from 'expect';
 import * as GroupAction from '../../actions/GroupAction';
 import groups from '../../reducers/groups';
 
-describe('Groups Reducer', () => {
+describe('Group Reducer', () => {
   it('should set all the groups of the user', () => {
     const initialState = [];
     const userGroups = [{
@@ -19,7 +19,8 @@ describe('Groups Reducer', () => {
     expect(newState[0].id).toEqual(1);
     expect(newState[0].name).toEqual('Mathematics world');
     expect(newState[1].id).toEqual(2);
-    expect(newState[1].description).toEqual('We drill ourselves on english grammer');
+    expect(newState[1].description)
+      .toEqual('We drill ourselves on english grammer');
     expect(newState.length).toEqual(2);
   });
   it('should create a group', () => {

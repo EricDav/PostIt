@@ -17,6 +17,8 @@ import showDashboardForm from './showDashboardForm';
 import initialDashboardPage from './initialDashboardPage';
 import screenSize from './screenSize';
 import setCurrentPage from './setCurrentPage';
+import error from './error';
+import isLoading from './isLoading';
 
 export default combineReducers({
   auth,
@@ -36,5 +38,7 @@ export default combineReducers({
   showDashboardForm,
   initialDashboardPage,
   screenSize,
-  setCurrentPage
+  setCurrentPage,
+  error,
+  isLoading
 });

@@ -29,9 +29,9 @@ describe('Search Reducer', () => {
     expect(newState[1].userName).toEqual('Python');
     expect(newState.length).toEqual(2);
   });
-    it('should return initial state for invalid type', () => {
+  it('should return initial state for invalid type', () => {
     const initialState = [];
-   const users = [
+    const users = [
       {
         id: 1,
         fullName: 'Alienyi David',
@@ -50,7 +50,7 @@ describe('Search Reducer', () => {
     const action = {
       type: 'WRONG',
       users
-    }
+    };
     const newState = searchedUsers(initialState, action);
     expect(newState.length).toEqual(0);
   });

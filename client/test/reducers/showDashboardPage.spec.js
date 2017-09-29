@@ -9,10 +9,10 @@ describe('Dashboard page Reducer', () => {
     const newState = showDashboardForm(initialState, action);
     expect(newState).toEqual(2);
   });
-   it('should return initial state for invalid type', () => {
+  it('should return initial state for invalid type', () => {
     const initialState = 0;
-    const dashboardPage = 2
-     const action = {
+    const dashboardPage = 2;
+    const action = {
       type: 'WRONG',
       dashboardPage
     };

@@ -8,7 +8,7 @@ import { getGroupMembers } from '../../actions/GroupAction';
 /** @class Button
  * @classdesc component for Button
  */
-class Button extends React.Component {
+export class Button extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -63,7 +63,8 @@ class Button extends React.Component {
 
 const ButtonPropTypes = {
   addUserToAGroup: PropTypes.func,
-  getGroupMembers: PropTypes.func
+  getGroupMembers: PropTypes.func,
+  fullName: PropTypes.String
 };
 PropTypes.checkPropTypes(ButtonPropTypes, 'prop', 'Button');
 

@@ -2,8 +2,8 @@ import expect from 'expect';
 import * as AuthAction from '../../actions/AuthAction';
 import showGoogledForm from '../../reducers/showGoogleForm';
 
-describe('initialDashboard page Reducer', () => {
-  it('should set the initialdashboard page', () => {
+describe('Google form Reducer', () => {
+  it('should should set google form', () => {
     const initialState = {
       fullName: '',
       email: '',
@@ -19,7 +19,7 @@ describe('initialDashboard page Reducer', () => {
     expect(newState.email).toEqual('alienyidavid@andela.com');
     expect(newState.fullName).toEqual('Alienyi David');
   });
-   it('should return initial state for invalid type', () => {
+  it('should return initial state for invalid type', () => {
     const initialState = {
       fullName: '',
       email: '',
@@ -30,7 +30,7 @@ describe('initialDashboard page Reducer', () => {
       email: 'alienyidavid@andela.com',
       showForm: true
     };
-     const action = {
+    const action = {
       type: 'WRONG',
       googleUser
     };

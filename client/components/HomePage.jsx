@@ -6,6 +6,7 @@ import Login from './LogIn.jsx';
 import NavBar from './Navbar.jsx';
 import { userSigninRequest, userSignupRequest } from '../actions/AuthAction';
 import { setPage } from '../actions/UserAction';
+import { clearError } from '../actions/ErrorAction';
 import GoogleSignup from './GoogleLoginForm.jsx';
 
 const HomePage = props =>
@@ -15,9 +16,13 @@ const HomePage = props =>
     { props.showGoogleForm.showForm && <div className="row" >
       <div className="col m6 l6 offset-l3 offset-m3 s12 valign">
         <div className="row">
-          <Login setPage={props.setPage}
+          <Login
+            setPage={props.setPage}
             userSigninRequest={props.userSigninRequest}
             googleData={props.showGoogleForm}
+            error = {props.error}
+            clearSigninError = {props.clearError}
+            isLoading = {props.isLoading}
           />
         </div>
       </div>
@@ -46,11 +51,13 @@ const HomePagePropTypes = {
 function mapStateToProps(state) {
   return {
     showGoogleForm: state.showGoogleForm,
-    currentPage: state.setCurrentPage
+    currentPage: state.setCurrentPage,
+    error: state.error,
+    isLoading: state.isLoading
   };
 }
 
 PropTypes.checkPropTypes(HomePagePropTypes, 'prop', 'HomePage');
 
 export default connect(mapStateToProps,
-  { userSigninRequest, userSignupRequest, setPage })(HomePage);
+  { userSigninRequest, userSignupRequest, setPage, clearError })(HomePage);

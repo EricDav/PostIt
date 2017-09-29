@@ -27,8 +27,8 @@ describe('InitialMessages Reducer', () => {
     expect(newState.length).toEqual(2);
   });
   it('should return initial state for invalid type', () => {
-     const initialState = [];
-     const messages = [{
+    const initialState = [];
+    const messages = [{
       id: 1,
       content: 'I love mathematics',
       groupId: 1,
@@ -44,7 +44,7 @@ describe('InitialMessages Reducer', () => {
     const action = {
       type: 'WRONG',
       messages
-    }
+    };
     const newState = initialNewMessages(initialState, action);
     expect(newState.length).toEqual(0);
   });

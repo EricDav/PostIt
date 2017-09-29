@@ -4,7 +4,8 @@ import thunk from 'redux-thunk';
 import axios from 'axios';
 
 import * as MessageAction from '../../actions/MessageAction';
-import { ADD_MESSAGE, SET_LAST_SEEN_MESSAGE, SET_CURRENT_GROUP_MESSAGES, SET_PIORITY_LEVEL }
+import { ADD_MESSAGE, SET_LAST_SEEN_MESSAGE,
+  SET_CURRENT_GROUP_MESSAGES, SET_PIORITY_LEVEL }
   from '../../actions/ActionTypes';
 
 const middlewares = [thunk];
@@ -29,7 +30,8 @@ describe('Message action', () => {
       senderUsername: 'Pythagoras'
     };
     axios.post = jest.fn(() => Promise.resolve(response));
-    const expectedActions = [{ type: ADD_MESSAGE, message: { message, viewers: [] } }];
+    const expectedActions = [{ type: ADD_MESSAGE,
+      message: { message, viewers: [] } }];
     const store = mockStore({ messages: {} });
 
     return store.dispatch(MessageAction.createMessage(message))
@@ -42,7 +44,8 @@ describe('Message action', () => {
       seenLast: 1
     };
     axios.put = jest.fn(() => Promise.resolve());
-    const expectedActions = [{ type: SET_LAST_SEEN_MESSAGE, groupMessageSeenLast: 1 }];
+    const expectedActions =
+    [{ type: SET_LAST_SEEN_MESSAGE, groupMessageSeenLast: 1 }];
     const store = mockStore({ messages: {} });
 
     return store.dispatch(MessageAction.updateSeenMessages(1, data))
@@ -69,7 +72,9 @@ describe('Message action', () => {
       },
       seenLast: 1 };
     axios.get = jest.fn(() => Promise.resolve(response));
-    const expectedActions = [{ type: SET_CURRENT_GROUP_MESSAGES, messages: response.data.data }, { groupMessageSeenLast: 1, type: 'SET_LAST_SEEN_MESSAGE' }];
+    const expectedActions =
+    [{ type: SET_CURRENT_GROUP_MESSAGES, messages: response.data.data },
+      { groupMessageSeenLast: 1, type: 'SET_LAST_SEEN_MESSAGE' }];
     const store = mockStore({ messages: {} });
 
     return store.dispatch(MessageAction.getGroupMessages())
@@ -77,9 +82,10 @@ describe('Message action', () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
-  it('creates SET_PIORITY_LEVEL,  when a message is posted with piority', () => {
-    const expectedActions = { type: SET_PIORITY_LEVEL,
-      piority: 'normal' };
-    expect(MessageAction.setPiority('normal')).toEqual(expectedActions);
-  });
+  it(`creates SET_PIORITY_LEVEL,  when 
+  a message is posted with piority`, () => {
+      const expectedActions = { type: SET_PIORITY_LEVEL,
+        piority: 'normal' };
+      expect(MessageAction.setPiority('normal')).toEqual(expectedActions);
+    });
 });

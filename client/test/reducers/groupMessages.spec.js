@@ -2,7 +2,7 @@ import expect from 'expect';
 import * as MessageAction from '../../actions/MessageAction';
 import groupMessages from '../../reducers/groupMessages';
 
-describe('currentGroup Reducer', () => {
+describe('groupMessage Reducer', () => {
   it('should set the currrent group messages', () => {
     const initialState = [];
     const messages = [{
@@ -56,7 +56,7 @@ describe('currentGroup Reducer', () => {
     expect(newState[2].groupId).toEqual(2);
   });
   it('should return initial state for invalid type', () => {
-     const initialState = [];
+    const initialState = [];
     const newMessage = {
       id: 3,
       content: "I don't joke with food",
@@ -67,7 +67,7 @@ describe('currentGroup Reducer', () => {
     const action = {
       type: 'WRONG',
       newMessage
-    }
+    };
     const newState = groupMessages(initialState, action);
     expect(newState.length).toEqual(0);
   });

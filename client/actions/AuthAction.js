@@ -1,9 +1,8 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { browserHistory } from 'react-router';
 
 import setAuthorizationToken from '../utils/setAuthorizationToken';
-import { SET_CURRENT_USER, SET_GOOGLE_FORM, SHOW_DASHBOARD_PAGE } from './ActionTypes';
+import { SET_CURRENT_USER, SET_GOOGLE_FORM, SHOW_DASHBOARD_PAGE, ERROR,  IS_LOADING } from './ActionTypes';
 
 /* global localStorage, window, Materialize */
 
@@ -17,6 +16,20 @@ export function setCurrentUser(user) {
   return {
     type: SET_CURRENT_USER,
     user
+  };
+}
+
+export function error(error) {
+  return {
+    type: ERROR,
+    error
+  };
+}
+
+export function Loading(isLoading) {
+  return {
+    type: IS_LOADING,
+    isLoading
   };
 }
 
@@ -54,13 +67,24 @@ export function setGoogleForm(googledata) {
  * @return {object} returns object
  */
 export function userSigninRequest(userData) {
-  return dispatch =>
-    axios.post('/api/v1/user/signin', userData).then((res) => {
-      const token = res.data.Token;
-      localStorage.setItem('jwtToken', token);
-      setAuthorizationToken(token);
-      dispatch(setCurrentUser(jwt.decode(token)));
-    });
+  return (dispatch) => {
+    dispatch(Loading(true));
+    return axios.post('/api/v1/user/signin', userData).then((res) => {
+      dispatch(Loading(false));
+      localStorage.setItem('jwtToken', res.data.Token);
+      setAuthorizationToken(res.data.Token);
+      Materialize.toast('Logged In Successfully', 1500, 'green');
+      window.location = 'dashboard';
+      dispatch(setCurrentUser(jwt.decode(res.data.Token)));
+    })
+      .catch(({ response }) => {
+        dispatch(Loading(false));
+        dispatch(error({
+          errorType: 'signin',
+          errorMessage: response.data.message
+        }));
+      });
+  };
 }
 
 /**
@@ -80,7 +104,6 @@ export function googleSignin(userData) {
         setAuthorizationToken(token);
         dispatch(setCurrentUser(jwt.decode(token)));
         browserHistory.push('dashboard');
-        window.location.reload();
       }
     });
 }
@@ -113,14 +136,13 @@ export function logout() {
       localStorage.removeItem('jwtToken');
       setAuthorizationToken(false);
       dispatch(setDashboardPage(0));
-      dispatch(setCurrentUser(
-        {
-          currentUser: {
-            userName: '',
-            fullName: ''
-          }
-        }));
-      //browserHistory.push('/');
+      dispatch(setCurrentUser({
+        currentUser: {
+          userName: '',
+          fullName: ''
+        }
+      }));
+      window.location = '/';
     })
       .catch(() => {
         Materialize.toast('Try again. An error occured!', 2000, 'purple');

@@ -3,7 +3,7 @@ import * as GroupAction from '../../actions/GroupAction';
 import { addUser } from '../../actions/UserAction';
 import currentGroupMembers from '../../reducers/currentGroupMembers';
 
-describe('currentGroup Reducer', () => {
+describe('currentGroupMembers Reducer', () => {
   it('should set the currrent group members', () => {
     const initialState = [];
     const members = [
@@ -60,8 +60,8 @@ describe('currentGroup Reducer', () => {
     expect(newState[2].fullName).toEqual('Bayo Daniel');
     expect(newState[2].userName).toEqual('Python23');
   });
-   it('should return initial state for invalid type', () => {
-     const initialState = [];
+  it('should return initial state for invalid type', () => {
+    const initialState = [];
     const newUser = {
       id: 3,
       fullName: 'Bayo Daniel',
@@ -72,7 +72,7 @@ describe('currentGroup Reducer', () => {
     const action = {
       type: 'WRONG',
       newUser
-    }
+    };
     const newState = currentGroupMembers(initialState, action);
     expect(newState.length).toEqual(0);
   });

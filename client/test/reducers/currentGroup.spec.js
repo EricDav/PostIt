@@ -28,7 +28,7 @@ describe('currentGroup Reducer', () => {
     expect(newState.name).toEqual('English world');
   });
   it('should return initial state for invalid type', () => {
-     const initialState = {};
+    const initialState = {};
     const group = {
       id: 1,
       name: 'Mathematics world',
@@ -37,9 +37,8 @@ describe('currentGroup Reducer', () => {
     const action = {
       type: 'WRONG',
       group
-    }
+    };
     const newState = currentGroup(initialState, action);
     expect(Object.keys(newState).length).toEqual(0);
-    //expect(newState.user.currentUser.email).toEqual('');
   });
 });

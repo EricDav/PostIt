@@ -7,7 +7,7 @@ import SearchedUser from './SearchedUser.jsx';
 /** @class Search
  * @classdesc component for Searching user
  */
-class Search extends React.Component {
+export class Search extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -80,9 +80,8 @@ class Search extends React.Component {
  * 
  * @return {Object} returns an object
  */
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
-    allUsers: state.allUsers,
     group: state.group,
     currentUser: state.auth.user.currentUser.userName,
     members: state.members,

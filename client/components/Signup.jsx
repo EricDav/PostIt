@@ -86,7 +86,6 @@ class SignUp extends React.Component {
         () => {
           Materialize.toast('Sign Up Successfully', 1000, 'green');
           browserHistory.push('dashboard');
-          window.location.reload();
         },
         (data) => {
           this.setState({

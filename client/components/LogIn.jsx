@@ -9,12 +9,11 @@ export class LogIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      success: false,
+      clearError: false,
       userName: '',
       password: '',
-      isLoading: false,
-      error: ''
-    }
+      buttonStatus: 'Login',
+    };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -24,43 +23,39 @@ export class LogIn extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     });
-    console.log(this.state);
   }
   onClick(event) {
     if (event.target.textContent === 'Forgot password ?') {
+      this.props.clearSigninError();
       browserHistory.push('forgotPassword');
       this.props.setPage(3);
-    } else if(event.target.textContent === 'Signup') {
+    } else if(event.target.textContent === ' Signup') {
+      this.props.clearSigninError();
       browserHistory.push('signup');
       this.props.setPage(2);
     }
   }
   onSubmit(event) {
-    this.setState({error: {}, isLoading: true});
+    this.setState({
+      isLoading: true,
+      clearError: false
+    });
     event.preventDefault();
-    this.props.userSigninRequest({password:this.state.password, userName: this.state.userName}).then(
-      () => {
-        Materialize.toast('Logged In Successfully', 1500, 'green',
-      () => {
-        browserHistory.push('dashboard');
-      });
-      },
-      ( data ) => {
-        this.setState({error: data.response.data, userName: '', password: '', isLoading: false, success: true}, );
-      }
-    )
+    this.props.userSigninRequest({password:this.state.password, userName: this.state.userName});
   }
   onFocus(event) {
-    this.setState({success: false});
+    if (this.props.error.errorType) {
+       this.setState({clearError: true});
+    }
   }
   render() {
-    const { error, userName, password, isLoading, success, value } = this.state;
+    const { userName, password, buttonStatus, success, value, clearError } = this.state;
     return (<div id="login-page" className="col s12 z-depth-4 card-panel">
                 <form id="login" className="login-form" onSubmit={this.onSubmit}>
                   <div className="row">
                     <div className="input-field col s12 center">
                       <h5 className="center login-form-text">Welcome, Login to get started</h5><br/>
-                      {success && <div className="mes"><i><b>{error.message}</b></i></div>}
+                      {this.props.error.errorType && !clearError && <div className="mes"><i><b>{this.props.error.errorMessage}</b></i></div>}
                     </div>
                   </div>
                   <div className="row margin">
@@ -85,7 +80,8 @@ export class LogIn extends React.Component {
                   </div>
                   <div className="row">
                     <div className="input-field col s12">
-                      <button className="btn purple darken-1 waves-effect waves-light col s12" disabled={isLoading}>Login</button>
+                      <button className="btn purple darken-1 waves-effect waves-light col s12"
+                      disabled={this.props.isLoading}>Login</button>
                     </div>
                   </div>
                   <div className="row">
@@ -107,5 +103,5 @@ export class LogIn extends React.Component {
       }
 }
 
-export default LogIn
+export default LogIn;
 

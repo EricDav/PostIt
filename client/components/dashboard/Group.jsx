@@ -13,7 +13,7 @@ import { getMessageIds } from '../../helpers';
 /** @class Group
  * @classdesc component for a single group
  */
-class Group extends React.Component {
+export class Group extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -22,6 +22,9 @@ class Group extends React.Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
+    this.state = {
+      groupId: 0,
+    };
   }
   /**
      * @description - handles the onclick event
@@ -30,20 +33,19 @@ class Group extends React.Component {
      * @return {void} no return or void
      */
   onClick(event) {
-    if (event.target.id !== this.props.currentGroup.id) {
-      const groupId = event.target.id;
-      this.props.getGroupMembers(groupId.toString());
-      this.props.getGroupMessages(groupId.toString()).then(
+    if (event.target.id !== this.props.currentGroupId) {
+      this.setState({
+        groupId: event.target.id
+      });
+      this.props.getGroupMembers(this.state.groupId.toString());
+      this.props.getGroupMessages(this.state.groupId.toString()).then(
         () => {
           const seenMessageIds = getMessageIds(this.props.messages);
           const updateSeenMessagesData = { seenMessageIds,
             seenLast: seenMessageIds.length };
-          this.props.updateSeenMessages(groupId.toString(),
-            updateSeenMessagesData).then(
-            () => {
-              this.props.dashboardPage(1, this.props.showDashboardPage);
-            }
-          );
+          this.props.updateSeenMessages(this.state.groupId.toString(),
+            updateSeenMessagesData);
+          this.props.dashboardPage(1, this.props.showDashboardPage);
         }
       );
       this.props.groups.forEach((group) => {
@@ -90,11 +92,11 @@ PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Group');
  * 
  * @return {Object} returns an object
  */
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     groups: state.groups,
     messages: state.messages,
-    currentGroup: state.group,
+    currentGroupId: state.group.id,
     showDashboardPage: state.showDashboardForm
   };
 }

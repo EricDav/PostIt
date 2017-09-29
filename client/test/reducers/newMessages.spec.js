@@ -2,7 +2,7 @@ import expect from 'expect';
 import * as MessageAction from '../../actions/MessageAction';
 import newMessages from '../../reducers/newMessages';
 
-describe('currentGroup Reducer', () => {
+describe('New messages Reducer', () => {
   it('should set the initial new messages', () => {
     const initialState = [];
     const numNewMessages = [{
@@ -20,7 +20,7 @@ describe('currentGroup Reducer', () => {
     expect(newState[1].newMessage).toEqual(1);
     expect(newState.length).toEqual(2);
   });
-   it('should return initial state for invalid type', () => {
+  it('should return initial state for invalid type', () => {
     const initialState = [];
     const numNewMessages = [{
       groupId: 1,

@@ -3,7 +3,7 @@ import * as AuthAction from '../../actions/AuthAction';
 import auth from '../../reducers/auth';
 
 describe('Auth Reducer', () => {
-  it('should set the current user when passed with ', () => {
+  it('should set the current user when passed with SET_CURRENT_USER', () => {
     const initialState = {
       isAuthenticated: false,
       user: { currentUser: { userName: '',
@@ -22,7 +22,7 @@ describe('Auth Reducer', () => {
     expect(newState.user.currentUser.userName).toEqual('Pythagoras');
     expect(newState.user.currentUser.email).toEqual('alienyidavid@gmail.com');
   });
-   it('should return initial state for invalid type', () => {
+  it('should return initial state for invalid type', () => {
     const initialState = {
       isAuthenticated: false,
       user: { currentUser: { userName: '',
@@ -38,10 +38,9 @@ describe('Auth Reducer', () => {
     const action = {
       type: 'WRONG',
       user
-    }
+    };
     const newState = auth(initialState, action);
     expect(newState.isAuthenticated).toEqual(false);
     expect(newState.user.currentUser.userName).toEqual('');
-    //expect(newState.user.currentUser.email).toEqual('');
   });
 });

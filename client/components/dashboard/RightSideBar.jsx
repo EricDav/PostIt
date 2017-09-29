@@ -10,7 +10,7 @@ import { searchUsers } from '../../actions/UserAction';
 /** @class RightSideBar
  * @classdesc component for the right side bar
  */
-class RightSideBar extends React.Component {
+export class RightSideBar extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -67,7 +67,7 @@ class RightSideBar extends React.Component {
  * 
  * @return {Object} returns an object
  */
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     viewNumber: state.viewNumber,
     showDashboardPage: state.showDashboardForm,
