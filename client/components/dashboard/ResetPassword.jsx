@@ -143,7 +143,7 @@ class ResetPassword extends React.Component {
         </div>
         <div className="col s12 resetUser">
           <p className="margin center medium-small sign-up">
-            <a onClick={this.onClick} href="#!">Edit Profile</a>
+            <a id="clickMe" onClick={this.onClick} href="#!">Edit Profile</a>
           </p>
         </div>
       </form>

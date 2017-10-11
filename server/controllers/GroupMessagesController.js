@@ -2,7 +2,8 @@ import dataBase from '../models';
 import { sendEmailAndSms, isDigit } from '../helpers/index';
 
 const Message = dataBase.Message;
-/**
+const GroupMessagesController = {
+  /**
  *@description construct a message with the appriopriate field
  * 
  * @param  {object} req request coming from the client
@@ -10,7 +11,6 @@ const Message = dataBase.Message;
  * 
  * @return {void} no returns
  */
-const Messages = {
   createMessage(req, res) {
     if (!isDigit(req.params.groupId)) {
       return res.status(400).json({
@@ -77,4 +77,4 @@ const Messages = {
   }
 };
 
-export default Messages;
+export default GroupMessagesController;

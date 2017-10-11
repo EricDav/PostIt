@@ -1,32 +1,34 @@
 import express from 'express';
 
-import group from '../controllers/group';
-import groupValidator from '../middlewares/groupValidation';
-import auth from '../middlewares/auth';
+import GroupController from '../controllers/GroupController';
+import GroupValidator from '../middlewares/GroupValidator';
+import authorization from '../middlewares/authorization';
 
 const groupRoutes = express.Router();
 
 groupRoutes.delete('/api/v1/groups/:groupId/delete',
-  auth, groupValidator.deleteGroupValidation, group.deleteGroup);
+  authorization, GroupValidator.deleteGroupValidator,
+  GroupController.deleteGroup);
 
-groupRoutes.delete('/api/v1/groups/:groupId/users/:userId/delete', auth,
-  groupValidator.deleteUserFromGroupValidation, group.deleteUser);
+groupRoutes.delete('/api/v1/groups/:groupId/users/:userId/delete',
+  authorization,
+  GroupValidator.deleteUserFromGroupValidator, GroupController.deleteUser);
 
-groupRoutes.post('/api/v1/groups/:groupId/user', auth,
-  groupValidator.groupValidation,
-  groupValidator.userValidation, group.addUser);
+groupRoutes.post('/api/v1/groups/:groupId/user', authorization,
+  GroupValidator.getGroupValidator,
+  GroupValidator.addUserValidator, GroupController.addUser);
 
-groupRoutes.post('/api/v1/group', auth,
-  groupValidator.groupNullValidation, group.create);
+groupRoutes.post('/api/v1/group', authorization,
+  GroupValidator.createGroupValidator, GroupController.create);
 
 groupRoutes.put('/api/v1/groups/:groupId/update',
-  auth, groupValidator.groupNullValidation,
-  group.updateGroupInfo);
+  authorization, GroupValidator.createGroupValidator,
+  GroupController.updateGroupInfo);
 
 groupRoutes.get('/api/v1/groups/:groupId/members',
-  auth, groupValidator.groupValidation,
-  group.getGroupMembers);
+  authorization, GroupValidator.getGroupValidator,
+  GroupController.getGroupMembers);
 
-groupRoutes.get('/api/v1/groups', auth, group.getGroups);
+groupRoutes.get('/api/v1/groups', authorization, GroupController.getGroups);
 
 export default groupRoutes;

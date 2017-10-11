@@ -7,7 +7,7 @@ import { createGroupRequest } from '../../actions/GroupAction';
 /** @class CreateGroupModal
  * @classdesc component for creating groups
  */
-class CreateGroupModal extends React.Component {
+export class CreateGroupModal extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component

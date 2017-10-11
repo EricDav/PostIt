@@ -17,7 +17,7 @@ const secret = process.env.secretKey;
  * failure if user do not have a token or a valid token.
  */
 
-const auth = (req, res, next) => {
+const authorization = (req, res, next) => {
   let token = req.body.token || req.headers.authorization;
   if (token) {
     token = token.split(' ')[1];
@@ -37,4 +37,4 @@ const auth = (req, res, next) => {
     });
   }
 };
-export default auth;
+export default authorization;

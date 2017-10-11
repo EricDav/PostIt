@@ -143,14 +143,14 @@ export const generateToken = (currentUser, secret) => {
 export const mailSender = (req, res, message,
   successMessage, secretCode, email) => {
   const transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    service: process.env.SERVICE,
     auth: {
-      user: 'alienyidavid4christ@gmail.com',
+      user: process,
       pass: process.env.GMAIL_PASSWORD
     }
   });
   const mailOptions = {
-    from: 'PostIt <alienyidavid4christ@gmail.com>',
+    from: `PostIt <${process.env.EMAIL}`,
     to: req.body.email,
     subject: 'PostIt',
     text: message
@@ -293,12 +293,10 @@ export const sendEmailAndSms = (req, res, createdMessage) => {
           });
           const mailOptions = {
             from: `${sender} from ${groupName}
-              <alienyidavid4christ@gmail.com>`,
+              <${process.env.EMAIL}>`,
             to: recieverEmails,
             subject: `PostIt: ${groupName}`,
             html: `
-          <a href="http://localhost">
-          </a>
            <h3 style="margin-top: 40px; text-align: center">
            A member of PostIt
            <span style="color: rgba(203, 109, 81, 0.9)">
@@ -316,7 +314,7 @@ export const sendEmailAndSms = (req, res, createdMessage) => {
                    </button>
                  </div>
              </a> <br>
-           </h2>
+           </h3>
            `
           };
           transporter.sendMail(mailOptions, (error, info) => {
@@ -333,12 +331,12 @@ export const sendEmailAndSms = (req, res, createdMessage) => {
             });
           });
         })
-        .catch(() => res.status(400).send({
+        .catch(() => res.status(500).send({
           success: false,
           message: 'server error'
         }));
     })
-    .catch(() => res.status(401).send({
+    .catch(() => res.status(500).send({
       success: false,
       message: 'Server error'
     }));

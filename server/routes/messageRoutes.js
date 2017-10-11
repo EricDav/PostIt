@@ -1,17 +1,17 @@
 import express from 'express';
 
-import groupMessages from '../controllers/groupMessages';
-import auth from '../middlewares/auth';
-import groupValidation from '../middlewares/groupValidation';
+import GroupMessagesController from '../controllers/GroupMessagesController';
+import authorization from '../middlewares/authorization';
+import GroupValidator from '../middlewares/GroupValidator';
 
 const messageRoutes = express.Router();
 
 messageRoutes.post('/api/v1/groups/:groupId/message',
-  auth, groupValidation.groupValidation,
-  groupMessages.createMessage);
+  authorization, GroupValidator.getGroupValidator,
+  GroupMessagesController.createMessage);
 
 messageRoutes.get('/api/v1/groups/:groupId/messages',
-  auth, groupValidation.groupValidation,
-  groupMessages.getMessages);
+  authorization, GroupValidator.getGroupValidator,
+  GroupMessagesController.getMessages);
 
 export default messageRoutes;

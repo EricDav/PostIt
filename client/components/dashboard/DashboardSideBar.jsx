@@ -11,7 +11,7 @@ import { showUpdateUserPage } from '../../actions/DashboardViewAction';
 /** @class DashboardSideBar
  * @classdesc component for signing up with google+
  */
-class DashboardSideBar extends React.Component {
+export class DashboardSideBar extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -44,6 +44,7 @@ class DashboardSideBar extends React.Component {
      * @return {void} no return or void
      */
   onClick() {
+    console.log('I got here oooooooooooooooo')
     if (this.props.showDashboardPage !== 2) {
       this.props.dashboardPage(2, this.props.showDashboardPage);
     }
@@ -56,6 +57,7 @@ class DashboardSideBar extends React.Component {
      * @return {void} no return or void
      */
   handleViewMoreGroups() {
+    console.log('I love mathmatics')
     this.props.getGroups(this.props.offset + 10, 10);
   }
   /**
@@ -94,7 +96,7 @@ class DashboardSideBar extends React.Component {
               {this.props.user.email}
             </p>
             <p className="grey-text ultra-small">
-              <a onClick={this.onClick} href="#!">Edit profile</a></p>
+              <a id="edit-profile" onClick={this.onClick} href="#!">Edit profile</a></p>
           </li>
           <li
             className={`collection-item avatar email-unread 
@@ -104,8 +106,10 @@ class DashboardSideBar extends React.Component {
               href="#modal1"><span className="new bad"> + </span></a>
           </li>
           {groups}
-          { this.props.isMoreGroups && <a onClick={this.handleViewMoreGroups} href="#!"><span id='color'
-          ><center>View more groups</center></span></a> }
+          { this.props.isMoreGroups &&
+          <a id= "clickMe" onClick={this.handleViewMoreGroups}
+            href="#!"><span id="color"
+            ><center>View more groups</center></span></a> }
         </ul>
       </div>
 
@@ -128,7 +132,7 @@ PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'sideBar');
  * 
  * @return {Object} returns an object
  */
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     newMessages: state.newMessages,
     offset: state.offset.offset,

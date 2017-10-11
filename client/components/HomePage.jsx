@@ -8,7 +8,7 @@ import { userSigninRequest, userSignupRequest } from '../actions/AuthAction';
 import { setPage } from '../actions/UserAction';
 import GoogleSignup from './GoogleLoginForm.jsx';
 
-const HomePage = props =>
+export const HomePage = props =>
   (
   <div className="body-container image">
     <NavBar/>
@@ -47,7 +47,7 @@ const HomePagePropTypes = {
  * 
  * @return {Object} returns an object
  */
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     showGoogleForm: state.showGoogleForm,
     currentPage: state.setCurrentPage,

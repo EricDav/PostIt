@@ -4,6 +4,8 @@ import { isInValidField } from '../helpers/index';
 const Groups = db.Group;
 const User = db.User;
 
+
+const GroupValidator = {
 /**
  * @description group validation. validate for adding members to group
  * 
@@ -13,8 +15,7 @@ const User = db.User;
  * 
  * @return {object}
  */
-const group = {
-  userValidation(req, res, next) {
+  addUserValidator(req, res, next) {
     let check = true;
     Groups
       .findOne({
@@ -60,7 +61,7 @@ const group = {
     *
     * @return {null} no return
  */
-  groupValidation(req, res, next) {
+  getGroupValidator(req, res, next) {
     let check = false;
     return Groups
       .findOne({ where: { id: req.params.groupId } })
@@ -92,7 +93,7 @@ const group = {
   },
 
   /**
-    * @description validate for creating a group
+    * @description validation for creating a group
     *
     * @param  {object} req
     * @param  {object} res
@@ -100,7 +101,7 @@ const group = {
     *
     * @return {voud} no returns
  */
-  groupNullValidation(req, res, next) {
+  createGroupValidator(req, res, next) {
     const error = {};
     if (isInValidField(req.body.name)) {
       error.name = 'This field is required';
@@ -164,7 +165,7 @@ const group = {
  * @param  {type} next call back function
  * @return {void}
  */
-  deleteGroupValidation(req, res, next) {
+  deleteGroupValidator(req, res, next) {
     if (req.params.groupId === null || req.params.groupId === undefined ||
     req.params.groupId === 'undefined') {
       return res.status(400).json({
@@ -200,7 +201,7 @@ const group = {
  * @param  {type} next call back function
  * @return {void}
  */
-  deleteUserFromGroupValidation(req, res, next) {
+  deleteUserFromGroupValidator(req, res, next) {
     Groups.findOne({
       where: {
         id: req.params.groupId,
@@ -244,4 +245,4 @@ const group = {
       .catch(error => res.status(404).send(error));
   },
 };
-export default group;
+export default GroupValidator;

@@ -8,15 +8,16 @@ dotenv.load();
 const User = dataBase.User;
 const secret = process.env.secretKey;
 
-/**
+
+const Authorization = {
+  /**
  *@description Auntheticate user.
  * 
- * @param  {object} req request object
- * @param  {object} res responsee object
+ * @param  {object} request request object
+ * @param  {object} response responsee object
  * 
  * @return {object} user information
  */
-export const logIn = {
   logIn(request, response) {
     return User
       .findOne({
@@ -65,10 +66,9 @@ export const logIn = {
         });
       })
       .catch(error => response.status(500).send(error));
-  }
-};
+  },
 
-/**
+  /**
    *@description sign a user out and deactive a user
    *
    * @param  {object} req  request object
@@ -77,7 +77,6 @@ export const logIn = {
    * @return {void} no returns
    */
 
-export const logOut = {
   logOut(req, res) {
     User.update({
       active: false
@@ -92,5 +91,47 @@ export const logOut = {
       });
     })
       .catch(error => res.status(500).send(error));
+  },
+
+  googleSignin(req, res) {
+    if ((req.body.email.slice(req.body.email.length - 4, req.body.email.length)
+     !== '.com' || !(/[@]/.test(req.body.email)))) {
+      return res.status(400).json({
+        message: 'Invalid email',
+        success: false
+      });
+    }
+    User.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
+      .then((googleUser) => {
+        if (!googleUser) {
+          return res.status(200).json({
+            success: true,
+            message: 'New user'
+          });
+        }
+        const currentUser = {
+          id: googleUser.id,
+          fullName: googleUser.fullName,
+          email: googleUser.email,
+          userName: googleUser.userName,
+          phoneNumber: googleUser.phoneNumber
+        };
+        const token = generateToken(currentUser, secret);
+        return res.status(200).json({
+          success: true,
+          message: 'signin with google successfully',
+          token
+        });
+      })
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   }
 };
+
+export default Authorization;

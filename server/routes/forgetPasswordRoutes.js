@@ -1,11 +1,11 @@
 import express from 'express';
 
-import { sendSecretCode, VerifyCodeAndUpdatePassword }
-  from '../controllers/forgetPassword';
+import ForgetPasswordController from '../controllers/ForgetPasswordController';
 
 const app = express.Router();
 
-app.post('/api/v1/sendSecretCode', sendSecretCode);
-app.post('/api/v1/resetPassword', VerifyCodeAndUpdatePassword);
+app.post('/api/v1/sendSecretCode', ForgetPasswordController.sendSecretCode);
+app.post('/api/v1/resetPassword',
+  ForgetPasswordController.VerifyCodeAndUpdatePassword);
 
 export default app;

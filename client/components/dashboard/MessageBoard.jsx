@@ -10,7 +10,7 @@ import Piority from './Piority.jsx';
 /** @class MessageBoard
  * @classdesc component for Message board
  */
-class MessageBoard extends React.Component {
+export class MessageBoard extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -127,7 +127,7 @@ class MessageBoard extends React.Component {
  * 
  * @return {Object} returns an object
  */
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     currentGroup: state.group,
     seenLast: state.seenLast,

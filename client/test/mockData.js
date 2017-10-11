@@ -397,6 +397,173 @@ const mockData = {
         userName: 'Python'
       }
     }
+  },
+  EditGroup: {
+    props: {
+      updateCurrentGroup: jest.fn(),
+      dashboardPage: jest.fn(),
+      currentGroup: {
+        name: 'Mathematics World',
+        description: 'I am going home'
+      }
+    }
+  },
+  MessageBoard: {
+    props: {
+      messages: [{ viewers: [],
+        message: {
+          id: 2,
+          content: 'I love coding',
+          senderId: 2,
+          senderUsername: 'Pyhton',
+          groupId: 2
+        } }],
+      initialNewMessages: [{
+        id: 2,
+        content: 'I love coding',
+        senderId: 2,
+        senderUsername: 'Pyhton',
+        groupId: 2
+      }],
+      isSmallScreenSize: false,
+      setRightNavBarView: 2,
+      currentGroup: {
+        id: 3,
+        name: 'Fola',
+
+      }
+    },
+    state: {
+      seenLast: 1,
+      auth: {
+        user: {
+          currentUser: {
+            userName: 'SuperFuck',
+            id: 6
+          }
+        }
+      },
+      screenSize: 2,
+      initialNewMessages: [{
+        id: 2,
+        content: 'I love coding',
+        senderId: 2,
+        senderUsername: 'Pyhton',
+        groupId: 2
+      }],
+      group: {
+        name: 'English',
+        description: 'I love english'
+      }
+    }
+  },
+  TextInput: {
+    props: {
+      createMessage: jest.fn(),
+      currentGroup: {
+        id: 3
+      }
+    },
+    state: {
+      piority: 'normal',
+      group: {
+        id: 2,
+        name: 'Maths World',
+        description: `This a mathematics group a group where we solve
+         a lot of maths`,
+        messages: [{ viewers: [],
+          message: {
+            id: 2,
+            content: 'I love coding',
+            senderId: 2,
+            senderUsername: 'Pyhton',
+            groupId: 2
+          } }],
+        newMessages: [{
+          groupId: 2,
+          newMessages: 1
+        }],
+      }
+    }
+  },
+  CreateGroupModal: {
+    props: {
+      createGroupRequest: jest.fn(() => Promise.resolve({})),
+    }
+  },
+  DashboardSideBar: {
+    state: {
+      newMessages: [{
+        groupId: 2,
+        newMessages: 1
+      }],
+      offset: {
+        offset: 10,
+        isMoreGroups: false
+      }
+    },
+    props: {
+      offset: 3,
+      allGroups: [
+        {
+          id: 2,
+          name: 'Maths',
+          description: 'Where we are solve maths for fun'
+        },
+        {
+          id: 3,
+          name: 'Maths world',
+          description: 'Where we are solve maths for fun'
+        },
+      ],
+      dashboardPage: jest.fn()
+    }
+  },
+  ResetPassword: {
+    props: {
+      currentGroup: {
+        id: 3,
+        name: 'Maths world',
+        description: 'Where we are solve maths for fun'
+      },
+      showResetPassword: jest.fn(),
+      resetPassword: jest.fn(() => Promise.resolve({})),
+    }
+  },
+  GoogleLoginForm: {
+    props: {
+      userSigninRequest: jest.fn(),
+      googleData: {
+        fullName: 'Alienyi David',
+        email: 'dan@me.com'
+      }
+    }
+  },
+  HomePage: {
+    props: {
+      setPage: 2,
+      userSigninRequest: jest.fn(),
+      clearError: true,
+      error: 'Bad request',
+      showGoogleForm: true,
+    },
+    state: {
+      showGoogleForm: true,
+      setCurrentPage: 2,
+      error: 'not found',
+      isLoading: false
+    }
+  },
+  NavBar: {
+    props: {
+      currentPage: 1,
+      setPage: jest.fn()
+
+    },
+
+    state: {
+      setCurrentPage: 2
+    }
   }
 };
 

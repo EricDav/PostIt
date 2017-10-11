@@ -11,6 +11,7 @@ class EditGroup extends React.Component {
    */
   constructor(props) {
     super(props);
+    console.log(this.props.currentGroup.name, '================');
     this.onFocus = this.onFocus.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -66,6 +67,7 @@ class EditGroup extends React.Component {
      * @return {void} no return or void
      */
   onClick(event) {
+    event.preventDefault();
     if (event.target.textContent === 'Update Now') {
       if (this.state.name === this.props.currentGroup.name
         && this.state.description === this.props.currentGroup.description) {

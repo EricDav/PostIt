@@ -12,7 +12,9 @@ const User = database.User;
 const message = database.Message;
 const viewMessages = database.messageViewer;
 const seenLast = database.SeenLast;
-/**
+
+const UserController = {
+  /**
  *  @description create a user with name, username,
  *  email, phone number and password.
  * 
@@ -21,7 +23,6 @@ const seenLast = database.SeenLast;
  * 
  * @return {object} created user object
  */
-const user = {
   create(req, res) {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
@@ -69,26 +70,6 @@ const user = {
           });
         });
     });
-  },
-
-  /**
-   * @description fetch all the users from database
-   *
-   * @param  {object} req
-   * @param  {object} res
-   * 
-   * @return {array} all users in an array
-   */
-  allUsers(req, res) {
-    return User
-      .all()
-      .then((users) => {
-        res.status(200).send(removePassword(users));
-      })
-      .catch(() => res.status(500).json({
-        success: false,
-        message: 'Server error'
-      }));
   },
 
   /**
@@ -435,46 +416,6 @@ const user = {
       })
       .catch(error => res.status(500).send(error));
   },
-
-  googleSignin(req, res) {
-    if ((req.body.email.slice(req.body.email.length - 4, req.body.email.length)
-     !== '.com' || !(/[@]/.test(req.body.email)))) {
-      return res.status(400).json({
-        message: 'Invalid email',
-        success: false
-      });
-    }
-    User.findOne({
-      where: {
-        email: req.body.email
-      }
-    })
-      .then((googleUser) => {
-        if (!googleUser) {
-          return res.status(200).json({
-            success: true,
-            message: 'New user'
-          });
-        }
-        const currentUser = {
-          id: googleUser.id,
-          fullName: googleUser.fullName,
-          email: googleUser.email,
-          userName: googleUser.userName,
-          phoneNumber: googleUser.phoneNumber
-        };
-        const token = generateToken(currentUser, secret);
-        return res.status(200).json({
-          success: true,
-          message: 'signin with google successfully',
-          token
-        });
-      })
-      .catch(() => res.status(500).json({
-        success: false,
-        message: 'Server error'
-      }));
-  }
 };
 
-export default user;
+export default UserController;

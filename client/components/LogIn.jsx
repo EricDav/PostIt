@@ -47,7 +47,6 @@ export class LogIn extends React.Component {
      * @return {void} no return or void
      */
   onClick(event) {
-    console.log('I am called here ooooooooooooooooooooooooooo')
     if (event.target.textContent === 'Forgot password ?') {
       //browserHistory.push('forgotPassword');
       window.locatiuon = 'forgotPassword';
@@ -64,11 +63,11 @@ export class LogIn extends React.Component {
      * @param  {object} event the event for the content field
      * @return {void} no return or void
      */
-  onSubmit() {
+  onSubmit(event) {
+    event.preventDefault();
     this.setState({
       shouldClearError: true
     });
-    //event.preventDefault();
     this.props.userSigninRequest({ password: this.state.password,
       userName: this.state.userName });
   }
@@ -79,7 +78,6 @@ export class LogIn extends React.Component {
      * @return {void} no return or void
      */
   onFocus() {
-    console.log('I am called here oooooooooo')
     if (this.state.shouldClearError) {
       this.props.userSigninRequest({}, true);
     }

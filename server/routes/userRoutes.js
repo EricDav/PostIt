@@ -1,37 +1,37 @@
 import express from 'express';
 
-import { logIn, logOut } from '../controllers/auth';
-import userController from '../controllers/user';
-import userValidation from '../middlewares/userValidation';
-import auth from '../middlewares/auth';
-import update from '../middlewares/update';
+import Authorization from '../controllers/Authorization';
+import UserController from '../controllers/UserController';
+import userValidation from '../middlewares/userValidator';
+import authorization from '../middlewares/authorization';
+import update from '../middlewares/validateUpdatedUser';
 
 const userRoutes = express.Router();
 
-userRoutes.get('/api/v1/allUsers', auth, userController.allUsers);
-
 userRoutes.post('/api/v1/user/signup',
-  userValidation.basicValidation, userController.create);
+  userValidation, UserController.create);
 
-userRoutes.post('/api/v1/user/signin', logIn.logIn);
+userRoutes.post('/api/v1/user/signin', Authorization.logIn);
 
-userRoutes.put('/api/v1/user/signout', auth, logOut.logOut);
+userRoutes.put('/api/v1/user/signout', authorization, Authorization.logOut);
 
-userRoutes.get('/api/v1/groups/:groupId/message/viewers', auth,
-  userController.getMessagesWithSeenUsers);
-userRoutes.get('/api/v1/users/:searchKey/search', auth,
-  userController.searchUsers);
+userRoutes.get('/api/v1/groups/:groupId/message/viewers', authorization,
+  UserController.getMessagesWithSeenUsers);
+userRoutes.get('/api/v1/users/:searchKey/search', authorization,
+  UserController.searchUsers);
 
-userRoutes.put('/api/v1/resetpassword', auth, userController.resetPassword);
+userRoutes.put('/api/v1/resetpassword',
+  authorization, UserController.resetPassword);
 
-userRoutes.get('/api/v1/newMessages', auth, userController.getMessages);
+userRoutes.get('/api/v1/newMessages', authorization,
+  UserController.getMessages);
 
 userRoutes.put('/api/v1/groups/:groupId/updateSeenMessages',
-  auth, userController.updateSeenMessages);
+  authorization, UserController.updateSeenMessages);
 
-userRoutes.put('/api/v1/user/update', auth,
-  update, userController.updateUserInfo);
+userRoutes.put('/api/v1/user/update', authorization,
+  update, UserController.updateUserInfo);
 
-userRoutes.post('/api/v1/user/googleSignin', userController.googleSignin);  
+userRoutes.post('/api/v1/user/googleSignin', Authorization.googleSignin);
 
 export default userRoutes;

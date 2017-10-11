@@ -2,7 +2,8 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
 import setAuthorizationToken from '../utils/setAuthorizationToken';
-import { SET_CURRENT_USER, SET_GOOGLE_FORM, SHOW_DASHBOARD_PAGE, ERROR, IS_LOADING } from './ActionTypes';
+import { SET_CURRENT_USER, SET_GOOGLE_FORM,
+  SHOW_DASHBOARD_PAGE, ERROR, IS_LOADING } from './ActionTypes';
 
 /* global localStorage, window, Materialize */
 

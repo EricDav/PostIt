@@ -5,7 +5,9 @@ const Group = dataBase.Group;
 const User = dataBase.User;
 const Members = dataBase.UserGroup;
 
-/**
+
+const GroupController = {
+  /**
  * @description create a group with a name, the name of 
  * creator of the group and Description.
  * 
@@ -14,7 +16,6 @@ const Members = dataBase.UserGroup;
  * 
  * @return {object} Group
  */
-const group = {
   create(req, res) {
     Group
       .create({
@@ -274,4 +275,4 @@ const group = {
   }
 };
 
-export default group;
+export default GroupController;

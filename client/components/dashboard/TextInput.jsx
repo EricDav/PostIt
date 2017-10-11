@@ -10,7 +10,7 @@ import { getMessageIds } from '../../helpers';
 /** @class TextInput
  * @classdesc component for TextInput
  */
-class TextInput extends React.Component {
+export class TextInput extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -95,7 +95,7 @@ PropTypes.checkPropTypes(textInputPropTypes, 'prop', 'TextInput');
  * 
  * @return {Object} returns an object
  */
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     piority: state.setPiority,
     currentGroup: state.group,

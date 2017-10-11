@@ -8,7 +8,7 @@ import { setPage } from '../actions/UserAction';
 /** @class NavBar
  * @classdesc component for Nav bar
  */
-class NavBar extends React.Component {
+export class NavBar extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -26,13 +26,13 @@ class NavBar extends React.Component {
      */
   onClick() {
     if (this.props.currentPage === 1) {
-      browserHistory.push('signup');
+      //browserHistory.push('signup');
       this.props.setPage(2);
     } else if (this.props.currentPage === 2) {
       browserHistory.push('/');
       this.props.setPage(1);
     } else {
-      browserHistory.push('/');
+     // browserHistory.push('/');
       this.props.setPage(1);
     }
   }
@@ -53,7 +53,7 @@ class NavBar extends React.Component {
       <div className="nav-wrapper container"><a id="logo-container"
         href="#" className="brand-logo">PostIt</a>
       <ul className="right">
-        <li onClick={this.onClick}>
+        <li id="clickMe" onClick={this.onClick}>
           <a href="#!"><b>{currentPageText}</b>
           </a></li>
       </ul>
@@ -80,7 +80,7 @@ const NavBarPropTypes = {
  * 
  * @return {Object} returns an object
  */
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     currentPage: state.setCurrentPage
   };

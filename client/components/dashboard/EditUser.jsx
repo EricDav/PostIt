@@ -61,7 +61,7 @@ class EditUser extends React.Component {
      * @return {void} no return or void
      */
   onSubmit() {
-    //event.preventDefault();
+    event.preventDefault();
     if (!this.state.displayButton) {
       this.props.showUpdateUserPage(this.props.showInitial,
         this.props.showDashboardPage);
