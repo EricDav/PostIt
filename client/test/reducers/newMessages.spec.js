@@ -32,7 +32,7 @@ describe('New messages Reducer', () => {
     const action = {
       type: 'WRONG',
       numNewMessages
-    }
+    };
     const newState = newMessages(initialState, action);
     expect(newState.length).toEqual(0);
   });

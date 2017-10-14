@@ -43,7 +43,6 @@ describe('Login Form', () => {
     form.simulate('submit');
     expect(wrapper.node.props.id).toEqual('login-page');
     expect(wrapper.node.type).toEqual('div');
-   // expect(wrapper.props.userSigninRequest()).toBeTruthy();
     expect(wrapper.renderer._instance.state.userName).toBe('David');
   });
   it('it should alter the state', () => {

@@ -6,14 +6,15 @@ import jwt from 'jsonwebtoken';
 
 import app from '../../../app';
 import dataBase from '../../models';
+import errorMessages from '../helpers';
 
 const User = dataBase.User;
 
 const server = supertest.agent(app);
 let regUserData = 'bearer ';
 
-describe('User Registration', () => {
-  it('allows a new user to register', (done) => {
+describe('User Routes', () => {
+  it('should allows a new user to signup successfully', (done) => {
     server
       .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
@@ -35,7 +36,7 @@ describe('User Registration', () => {
         done();
       });
   });
-  it('allows a new user to register with Google+', (done) => {
+  it('should allow a new user to signup with Google+', (done) => {
     server
       .post('/api/v1/user/googleSignin')
       .set('Connection', 'keep alive')
@@ -52,7 +53,7 @@ describe('User Registration', () => {
         done();
       });
   });
-  it('allows a new user to signin with Google+', (done) => {
+  it('should allow a new user to signin with Google+', (done) => {
     server
       .post('/api/v1/user/googleSignin')
       .set('Connection', 'keep alive')
@@ -71,7 +72,7 @@ describe('User Registration', () => {
         done();
       });
   });
-  it('allows a new user to register', (done) => {
+  it('should allows a new user to register', (done) => {
     server
       .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
@@ -111,32 +112,32 @@ describe('User Registration', () => {
       .end((err, res) => {
         res.status.should.equal(400);
         res.body.error.userName.should
-          .equal(`Invalid username. username must
-      contain an alphabet and must not begin with a number`);
+          .equal(errorMessages.inValidUserNameError);
         done();
       });
   });
 
-  it('should throw error if the email has been used by another user', (done) => {
-    server
-      .post('/api/v1/user/signup')
-      .set('Connection', 'keep alive')
-      .set('Content-Type', 'application/json')
-      .type('form')
-      .send({
-        userName: 'Path',
-        password: 'david1996',
-        email: 'david56789@gmail.com',
-        fullName: 'Feyi Daniel',
-        phoneNumber: '08060080086',
-      })
-      .expect(201)
-      .end((err, res) => {
-        res.status.should.equal(400);
-        res.body.success.should.equal(false);
-        done();
-      });
-  });
+  it(`should throw error if the email has
+  been used by another user`, (done) => {
+      server
+        .post('/api/v1/user/signup')
+        .set('Connection', 'keep alive')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .send({
+          userName: 'Path',
+          password: 'david1996',
+          email: 'david56789@gmail.com',
+          fullName: 'Feyi Daniel',
+          phoneNumber: '08060080086',
+        })
+        .expect(201)
+        .end((err, res) => {
+          res.status.should.equal(400);
+          res.body.success.should.equal(false);
+          done();
+        });
+    });
   it('should throw error if the email is invalid', (done) => {
     server
       .post('/api/v1/user/signup')
@@ -159,48 +160,50 @@ describe('User Registration', () => {
       });
   });
 
-  it('disallows a new user to register if password is not up to eight characters', (done) => {
-    server
-      .post('/api/v1/user/signup')
-      .set('Connection', 'keep alive')
-      .set('Content-Type', 'application/json')
-      .type('form')
-      .send({
-        userName: 'Foul',
-        password: 'david19',
-        email: 'david5@gmail.com',
-        fullName: 'Feyi Daniel',
-        phoneNumber: '07069480086',
-      })
-      .expect(404)
-      .end((err, res) => {
-        res.status.should.equal(400);
-        res.body.success.should.equal(false);
-        done();
-      });
-  });
-  it('disallows a new user to register if password does not contains at least a digit', (done) => {
-    server
-      .post('/api/v1/user/signup')
-      .set('Connection', 'keep alive')
-      .set('Content-Type', 'application/json')
-      .type('form')
-      .send({
-        userName: 'Foul123',
-        password: 'davidythhhjjj',
-        email: 'david5@gmail.com',
-        fullName: 'Feyi Daniel',
-        phoneNumber: '08069480011',
-      })
-      .expect(404)
-      .end((err, res) => {
-        res.status.should.equal(400);
-        res.body.success.should.equal(false);
-        done();
-      });
-  });
+  it(`should disallows a new user to register if
+  password is not up to eight characters`, (done) => {
+      server
+        .post('/api/v1/user/signup')
+        .set('Connection', 'keep alive')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .send({
+          userName: 'Foul',
+          password: 'david19',
+          email: 'david5@gmail.com',
+          fullName: 'Feyi Daniel',
+          phoneNumber: '07069480086',
+        })
+        .expect(404)
+        .end((err, res) => {
+          res.status.should.equal(400);
+          res.body.success.should.equal(false);
+          done();
+        });
+    });
+  it(`disallows a new user to register
+  if password does not contains at least a digit`, (done) => {
+      server
+        .post('/api/v1/user/signup')
+        .set('Connection', 'keep alive')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .send({
+          userName: 'Foul123',
+          password: 'davidythhhjjj',
+          email: 'david5@gmail.com',
+          fullName: 'Feyi Daniel',
+          phoneNumber: '08069480011',
+        })
+        .expect(404)
+        .end((err, res) => {
+          res.status.should.equal(400);
+          res.body.success.should.equal(false);
+          done();
+        });
+    });
 
-  it('should disallows a new user to register with an Invalid username', (done) => {
+  it('should throw error for invalid username', (done) => {
     server
       .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
@@ -216,8 +219,8 @@ describe('User Registration', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.error.userName.should.equal(`Invalid username. username must
-      contain an alphabet and must not begin with a number`);
+        res.body.error.userName.should
+          .equal(errorMessages.inValidUserNameError);
         done();
       });
   });
@@ -276,7 +279,7 @@ describe('Authentication', () => {
       .expect(401)
       .end((err, res) => {
         res.status.should.equal(401);
-        res.body.message.should.equal('Authentication failed. wrong username or password.');
+        res.body.message.should.equal(errorMessages.authenticationError);
         done();
       });
   });
@@ -294,7 +297,7 @@ describe('Authentication', () => {
       .expect(401)
       .end((err, res) => {
         res.status.should.equal(401);
-        res.body.message.should.equal('Authentication failed. wrong username or password.');
+        res.body.message.should.equal(errorMessages.authenticationError);
         done();
       });
   });
@@ -371,8 +374,7 @@ describe('Update user details', () => {
       .expect(400)
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.error.fullName.should.equal(`Name should contain alphabet and space 
-      alone and should contain at least 5 characters`);
+        res.body.error.fullName.should.equal(errorMessages.inValidNameError);
         done();
       });
   });
@@ -389,13 +391,12 @@ describe('Update user details', () => {
       .expect(400)
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.error.fullName.should.equal(`Name should contain alphabet and space 
-      alone and should contain at least 5 characters`);
+        res.body.error.fullName.should.equal(errorMessages.inValidNameError);
         done();
       });
   });
 
-  it('should update user email address', (done) => {
+  it('should update user email address successfully', (done) => {
     server
       .put('/api/v1/user/update')
       .set('Connection', 'keep alive')
@@ -447,7 +448,7 @@ describe('Update user details', () => {
         done();
       });
   });
-  it('should throw error if phone number is not eleven digit', (done) => {
+  it('should throw error if phone number is not up to eleven digit', (done) => {
     server
       .put('/api/v1/user/update')
       .set('Connection', 'keep alive')
@@ -464,7 +465,7 @@ describe('Update user details', () => {
         done();
       });
   });
-  it('should reset user password', (done) => {
+  it('should reset user password successfully', (done) => {
     server
       .put('/api/v1/resetpassword')
       .set('Connection', 'keep alive')
@@ -500,24 +501,26 @@ describe('Update user details', () => {
         done();
       });
   });
-  it('should throw error if new password is not up to eight characters', (done) => {
-    server
-      .put('/api/v1/resetpassword')
-      .set('Connection', 'keep alive')
-      .set('Content-Type', 'application/json')
-      .set('authorization', regUserData)
-      .type('form')
-      .send({
-        oldPassword: 'david1963',
-        newPassword: '1963'
-      })
-      .expect(400)
-      .end((err, res) => {
-        res.status.should.equal(400);
-        res.body.message.should.equal('Password should contain at least 8 characters');
-        done();
-      });
-  });
+  it(`should throw error if new password is not up
+  to eight characters`, (done) => {
+      server
+        .put('/api/v1/resetpassword')
+        .set('Connection', 'keep alive')
+        .set('Content-Type', 'application/json')
+        .set('authorization', regUserData)
+        .type('form')
+        .send({
+          oldPassword: 'david1963',
+          newPassword: '1963'
+        })
+        .expect(400)
+        .end((err, res) => {
+          res.status.should.equal(400);
+          res.body.message.should.equal(errorMessages.weakPasswordError
+            .lengthError);
+          done();
+        });
+    });
   it('should throw error if old password is incorrect', (done) => {
     server
       .put('/api/v1/resetpassword')
@@ -532,41 +535,22 @@ describe('Update user details', () => {
         done();
       });
   });
-  it('should throw error if wrong user email request for forgot password', (done) => {
-    server
-      .post('/api/v1/sendSecretCode')
-      .set('Connection', 'keep alive')
-      .set('Content-Type', 'application/json')
-      .set('authorization', regUserData)
-      .type('form')
-      .send({
-        name: 'English',
-        description: 'Where we studey English'
-      })
-      .expect(201)
-      .end((err, res) => {
-        res.status.should.equal(404);
-        res.body.message.should.equal('User does not exist');
-        done();
-      });
-  });
-  describe('All Users', () => {
-    it('should all users', (done) => {
+  it(`should throw error if wrong user email
+  request for forgot password`, (done) => {
       server
-        .get('/api/v1/allUsers')
+        .post('/api/v1/sendSecretCode')
         .set('Connection', 'keep alive')
-        .set('authorization', regUserData)
         .set('Content-Type', 'application/json')
+        .set('authorization', regUserData)
         .type('form')
-        .expect(200)
+        .send({
+          email: 'dapo@we.com',
+        })
+        .expect(201)
         .end((err, res) => {
-          res.status.should.equal(200);
-          res.body.length.should.equal(6);
-          res.body[0].email.should.equal('python@gmail.com');
-          res.body[1].userName.should.equal('Bola');
-          res.body[3].fullName.should.equal('Alienyi David');
+          res.status.should.equal(404);
+          res.body.message.should.equal('User does not exist');
           done();
         });
     });
-  });
 });

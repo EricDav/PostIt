@@ -8,13 +8,12 @@ const Members = dataBase.UserGroup;
 
 const GroupController = {
   /**
- * @description create a group with a name, the name of 
- * creator of the group and Description.
+ * @description creates a group through the route POST: api/v1/group
  * 
- * @param  {object} req request coming from the client
- * @param  {object} res response to the client
+ * @param  {object} req request request object
+ * @param  {object} res response response object
  * 
- * @return {object} Group
+ * @return {object} response containing the created group
  */
   create(req, res) {
     Group
@@ -37,12 +36,6 @@ const GroupController = {
   },
 
   addUser(req, res) {
-    if (!isDigit(req.params.groupId)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid groupId'
-      });
-    }
     return Group
       .findOne({ where: {
         id: req.params.groupId
@@ -69,14 +62,12 @@ const GroupController = {
   },
 
   /**
-   *@description It gets all the numbers of new 
-   messages in all the groups a user belongs to
+   *@description fetches all the group through the route GET: api/v1/groups
    *
-   * @param  {object} req
-   * @param  {object} res
+   * @param  {object} request object 
+   * @param  {object} response object
    * 
-   * @return {array} an object with key: group, value: 
-   * number of new messages in the group
+   * @return {object} response containing the retrieved groups
    */
 
   getGroups(req, res) {
@@ -115,12 +106,13 @@ const GroupController = {
   },
 
   /**
-   *@description get all the members of a particular group
+   * @description retrieve all the members through the route
+   * GET: /api/v1/groups/:groupId/members
    * 
-   * @param  {object} req
-   * @param  {object} res
+   * @param  {object} req request object
+   * @param  {object} res response object
    * 
-   * @return {array} array of object
+   * @return {object} response containing the retrieved group members
    */
   getGroupMembers(req, res) {
     if (!isDigit(req.params.groupId)) {
@@ -145,11 +137,13 @@ const GroupController = {
   },
 
   /**
-   * @description delete  a particular group given its Id
+   * @description delete a member of a group through the route
+   * DELETE: /api/v1/groups/:groupId/delete
    * 
    * @param  {object} req  request object
    * @param  {object} res  response object
-   * @return {void} no returns
+   * 
+   * @return {object} rsponse containing the status of the action
    */
   deleteGroup(req, res) {
     if (!isDigit(req.params.groupId)) {
@@ -188,11 +182,13 @@ const GroupController = {
   },
 
   /**
-   * @description delete a member of a group
+   * @description delete a member of a group through the route
+   * DELETE: /api/v1/groups/:groupId/users/:userId/delete
    * 
    * @param  {object} req  request object
    * @param  {object} res  response object
-   * @return {void} no returns
+   * 
+   * @return {object} rsponse containing the status of the action
    */
 
   deleteUser(req, res) {
@@ -200,6 +196,11 @@ const GroupController = {
       return res.status(400).json({
         success: false,
         message: 'Invalid groupId'
+      });
+    } else if (!isDigit(req.params.userId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid userId'
       });
     }
     Members.destroy({
@@ -221,11 +222,13 @@ const GroupController = {
   },
 
   /**
-   * @description update group details
+   * @description update group details through the route
+   *  PUT: /api/v1/groups/:groupId/update
    * 
    * @param  {object} req  request object
    * @param  {object} res  response object
-   * @return {void} no returns
+   * 
+   * @return {object} rsponse containing the status of the action
    */
   updateGroupInfo(req, res) {
     if (!isDigit(req.params.groupId)) {

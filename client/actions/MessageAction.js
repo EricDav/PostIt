@@ -116,7 +116,8 @@ export function createMessage(messageData, groupId) {
 }
 
 /**
- * @description get all the messages and its viewers in a group by making a get request
+ * @description get all the messages and
+ * its viewers in a group by making a get request
  * 
  * @param  {integer} groupId
  * @return {object} returns object

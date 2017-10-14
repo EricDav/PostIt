@@ -15,19 +15,11 @@ userRoutes.post('/api/v1/user/signin', Authorization.logIn);
 
 userRoutes.put('/api/v1/user/signout', authorization, Authorization.logOut);
 
-userRoutes.get('/api/v1/groups/:groupId/message/viewers', authorization,
-  UserController.getMessagesWithSeenUsers);
 userRoutes.get('/api/v1/users/:searchKey/search', authorization,
   UserController.searchUsers);
 
 userRoutes.put('/api/v1/resetpassword',
   authorization, UserController.resetPassword);
-
-userRoutes.get('/api/v1/newMessages', authorization,
-  UserController.getMessages);
-
-userRoutes.put('/api/v1/groups/:groupId/updateSeenMessages',
-  authorization, UserController.updateSeenMessages);
 
 userRoutes.put('/api/v1/user/update', authorization,
   update, UserController.updateUserInfo);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { WindowResizeListener } from 'react-window-resize-listener';
 
 import DashboardHeader from './DashboardHeader.jsx';
 import DashboardSideBar from './DashboardSideBar.jsx';
@@ -47,6 +48,26 @@ class Dashboard extends React.Component {
       this.props.smallScreenSize(true);
       return (
         <div>
+          <WindowResizeListener onResize={windowSize => {
+            if (windowSize.windowWidth < 600) {
+              this.props.smallScreenSize(true);
+              this.render();
+            } else {
+              let currentDashboardPage = this.props.showDashboardPage;
+              let initialDashboardPage = this.props.initialDashboardPage;
+              if (currentDashboardPage > 1) {
+                initialDashboardPage = 1;
+              }
+              if (currentDashboardPage === 5) {
+                currentDashboardPage = 1;
+              }
+              this.props.smallScreenSize(false);
+              this.render();
+              this.props.dashboardPage(0, 0);
+              this.props.dashboardPage(currentDashboardPage,
+                initialDashboardPage);
+            }
+          }}/>
           <DashboardHeader
             dashboardPage={this.props.dashboardPage}
             showDashboardForm={this.props.showDashboardForm}
@@ -57,8 +78,6 @@ class Dashboard extends React.Component {
               <section id="content">
                 <div className="container">
                   <div className="row">
-                    <div className="col s12">
-                    </div>
                     {this.props.showDashboardPage === 0 &&
                     <DashboardSideBar
                       getGroups = {this.props.getGroupsRequest}
@@ -70,8 +89,9 @@ class Dashboard extends React.Component {
 
                     {this.props.showDashboardPage === 1 &&
                   < MessageBoard
+                    dashboardPage={this.props.dashboardPage}
+                    setRightNavBarView={this.props.setRightNavBarView}
                     messages={this.props.messages}
-                    setRightNavBarView={setRightNavBarView}
                   />}
 
                     {this.props.showDashboardPage === 2 &&
@@ -110,7 +130,8 @@ class Dashboard extends React.Component {
                       setCurrentGroup={this.props.setGroup}
                       user={this.props.user}
                       members={this.props.members}
-                      group={this.props.group}deleteUser =
+                      group={this.props.group}
+                      deleteUser =
                         {this.props.deleteUserFromGroup}
                       dashboardPage={this.props.dashboardPage} />}
 
@@ -125,8 +146,29 @@ class Dashboard extends React.Component {
         </div>
       );
     }
+    console.log('I am big man');
     return (
       <div>
+        <WindowResizeListener onResize={windowSize => {
+          if (windowSize.windowWidth < 600) {
+            this.props.smallScreenSize(true);
+            this.render();
+            let currentDashboardPage = this.props.showDashboardPage;
+            let initialDashboardPage = this.props.initialDashboardPage;
+            if (currentDashboardPage > 1) {
+              initialDashboardPage = 1;
+            }
+            if (currentDashboardPage === 5) {
+              currentDashboardPage = 1;
+            }
+            this.props.dashboardPage(0, 0);
+            this.props.dashboardPage(currentDashboardPage,
+              initialDashboardPage);
+          } else {
+            this.props.smallScreenSize(false);
+            this.render();
+          }
+        }}/>
         <DashboardHeader
           logout = {this.props.logout}
         />
@@ -135,8 +177,6 @@ class Dashboard extends React.Component {
             <section id="content">
               <div className="container">
                 <div className="row">
-                  <div className="col s12">
-                  </div>
                   <CreateGroupModal group={this.props.getGroupsRequest}/>
                   <DashboardSideBar
                     getGroups = {this.props.getGroupsRequest}
@@ -147,8 +187,9 @@ class Dashboard extends React.Component {
                   />
                   {this.props.showDashboardPage === 1 &&
                   < MessageBoard
+                    dashboardPage={this.props.dashboardPage}
                     messages={this.props.messages}
-                    setRightNavBarView={setRightNavBarView}
+                    setRightNavBarView={this.props.setRightNavBarView}
                   />}
 
                   {this.props.showDashboardPage === 2 &&
@@ -186,7 +227,8 @@ class Dashboard extends React.Component {
                       setCurrentGroup={this.props.setGroup}
                       user={this.props.user}
                       members={this.props.members}
-                      group={this.props.group}deleteUser =
+                      group={this.props.group}
+                      deleteUser =
                         {this.props.deleteUserFromGroup}
                       dashboardPage={this.props.dashboardPage} />}
                   {this.props.showDashboardPage === 0 && !this.props.group.id &&

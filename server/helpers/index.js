@@ -62,7 +62,8 @@ export const isText = (str) => {
  * @description checks if the string pass in is a digit. 
  * Means all the charcters are digit
  * 
- * @param  {string} str
+ * @param  {string} str the string to be checked
+ * 
  * @return {boolean} true or false
  */
 
@@ -82,7 +83,8 @@ export const isDigit = (str) => {
 /**
  *@description checks if a field is null, undefined or empty
  * 
- * @param  {type} fieldData
+ * @param  {type} fieldData the value to be checked if it is invalid
+ * 
  * @return {boolean} true or false
  */
 
@@ -106,6 +108,7 @@ export const isInValidField = (fieldData) => {
  * @description removes password from user information
  * 
  * @param  {array} users array of users oject
+ * 
  * @return {object} return array of users object without their password
  */
 
@@ -121,6 +124,8 @@ export const removePassword = (users) => {
    * 
    * @param  {object} currentUser userdetails to be encrypted
    * @param  {string} secret a secret key to be used to encrypt user details
+   * 
+   * @return {string} token generated from user details
 */
 
 export const generateToken = (currentUser, secret) => {
@@ -134,9 +139,17 @@ export const generateToken = (currentUser, secret) => {
 };
 
 /**
- * @description checks if the string pass in is a digit. Means all the charcters are digit
+ * @description send a mail that contains the secret to reset a user password
  * 
- * @param  {string} str
+ * @param  {object} req request object
+ * @param {object} res response object
+ * @param {string} mesage the message that contains the secret code to
+ * be sent to users mail
+ * @param {string} successMessage success message
+ * @param {string} secretCode the secret code to be sent as part of the
+ * response
+ * @param {string} email the email of the user to recieve the message
+ * 
  * @return {boolean} true or false
  */
 
@@ -201,11 +214,13 @@ export const sendSms = (phoneNumber, message) => {
 };
 
 /**
- * @description gets the number of new messages in a particular group
+ * @description gets the number of new messages in all the groups
+ * a user belongs to
  * 
- * @param  {integer} groupId 
- * @param  {array} messages 
+ * @param  {integer} groupId id of the group
+ * @param  {array} messages list of the messages
  * @param  {integer} seenLasts the message seenLast
+ * @param {integer} userId id of the user
  * 
  * @return {object} numNewMessages number of new messages
  */
@@ -239,7 +254,8 @@ export const getNewMessages = (groupId, messages, seenLasts, userId) => {
 /**
  * @description get the emails and phone numbers from a user object
  * 
- * @param  {array} users
+ * @param  {array} users array of users to extract their phone number
+ * and emails
  * 
  * @return {void} no returns
  */
@@ -259,7 +275,8 @@ export const getEmailsAndPhoneNumbers = (users) => {
  * @param  {string} req request object
  * @param  {string} res response object
  * @param  {string} createdMessage user message
- * @return {void} does not return anything
+ * 
+ * @return {object} response status
  */
 export const sendEmailAndSms = (req, res, createdMessage) => {
   let recieverEmails;

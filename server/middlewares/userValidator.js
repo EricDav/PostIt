@@ -7,7 +7,7 @@ import { isDigit, isText, isInValidField } from '../helpers/index';
    * @param  {object} res respond object
    * @param  {} next a call back function
    * 
-   * @return {object}
+   * @return {object} response object
    */
 const userValidator = (req, res, next) => {
   const error = {};
@@ -59,8 +59,8 @@ const userValidator = (req, res, next) => {
   if (canVerify.fullName && (!isText(req.body.fullName)
      || req.body.fullName.length < 2)) {
     if (isInValidField(error.fullName)) {
-      error.fullName = `Name should contain alphabet and space
-        alone and should contain at least 2 characters`;
+      error.fullName = `Name should contain alphabet and space 
+      alone and should contain at least 5 characters`;
     }
     if (Object.keys(error).length === 5) {
       return res.status(400).json({

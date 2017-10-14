@@ -3,6 +3,7 @@
  * 
  * @param  {array} groups list of groups
  * @param  {number} groupId id of the group to be deleted
+ * 
  * @return {array} new list of groups excluding the deleted one
  */
 
@@ -20,6 +21,7 @@ export const deleteGroup = (groups, groupId) => {
  * @description get ids of all the messages
  * 
  * @param  {array} messages list of groups
+ * 
  * @return {array} list of messages ids
  */
 

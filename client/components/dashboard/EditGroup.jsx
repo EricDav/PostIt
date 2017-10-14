@@ -11,7 +11,6 @@ class EditGroup extends React.Component {
    */
   constructor(props) {
     super(props);
-    console.log(this.props.currentGroup.name, '================');
     this.onFocus = this.onFocus.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -91,12 +90,14 @@ class EditGroup extends React.Component {
             },
 
             (data) => {
-              if (data.response.data.message === 'Failed to authenticate token.') {
-                Materialize.toast('Can not edit group details. Your session has expired',
-                  2000, 'red', () => {
-                    localStorage.removeItem('jwtToken');
-                    window.location = '/';
-                  });
+              if (data.response.data.message ===
+              'Failed to authenticate token.') {
+                Materialize
+                  .toast('Can not edit group details. Your session has expired',
+                    2000, 'red', () => {
+                      localStorage.removeItem('jwtToken');
+                      window.location = '/';
+                    });
               } else {
                 this.setState({
                   error: data.response.data.error
@@ -135,7 +136,7 @@ class EditGroup extends React.Component {
    */
   render() {
     return (<div id="email-details"
-      className="col s12 m6 l6 card-panel">
+      className="col s12 m6 l6 offset-l3 offset-m3 card-panel">
       <form onSubmit={this.onSubmit} className="login-form">
         <div className="row">
           <div className="input-field col s12 center">

@@ -54,7 +54,7 @@ export class GroupHeader extends React.Component {
     if (this.props.user.userName !== this.props.group.creator) {
       this.showAlert();
     } else {
-      if (this.props.showDashboardPage !== 4) {
+      if(this.props.showDashboardPage !== 4) {
         this.props.dashboardPage(4, this.props.showDashboardPage);
       }
     }

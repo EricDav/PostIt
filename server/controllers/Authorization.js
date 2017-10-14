@@ -5,21 +5,22 @@ import dataBase from '../models';
 import { generateToken } from '../helpers/index';
 
 dotenv.load();
-const User = dataBase.User;
+const userModel = dataBase.User;
 const secret = process.env.secretKey;
 
 
 const Authorization = {
   /**
- *@description Auntheticate user.
+ *@description controls users login through the route
+ * POST: /api/v1/user/signin
  * 
  * @param  {object} request request object
  * @param  {object} response responsee object
  * 
- * @return {object} user information
+ * @return {object} response containing the user token
  */
   logIn(request, response) {
-    return User
+    return userModel
       .findOne({
         where: {
           userName: request.body.userName
@@ -41,7 +42,7 @@ const Authorization = {
               phoneNumber: user.phoneNumber,
             };
             const token = generateToken(currentUser, secret);
-            User.update({
+            userModel.update({
               active: true
             },
             {
@@ -56,7 +57,10 @@ const Authorization = {
                   Token: token,
                 });
               })
-              .catch(error => response.status(400).send(error));
+              .catch(() => response.status(500).json({
+                success: false,
+                message: 'Server error'
+              }));
           } else {
             return response.status(401).json(
               { success: false,
@@ -65,20 +69,24 @@ const Authorization = {
           }
         });
       })
-      .catch(error => response.status(500).send(error));
+      .catch(() => response.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
-   *@description sign a user out and deactive a user
+   *@description controls a user registration through the route
+   * POST: /api/v1/user/signup
    *
    * @param  {object} req  request object
    * @param  {object} res  response object
    * 
-   * @return {void} no returns
+   * @return {object} response containing the user token
    */
 
   logOut(req, res) {
-    User.update({
+    userModel.update({
       active: false
     }, {
       where: {
@@ -90,8 +98,21 @@ const Authorization = {
         message: 'logout successfully'
       });
     })
-      .catch(error => res.status(500).send(error));
+      .catch(() => response.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
+
+  /**
+   *@description controls a user google signup through the route
+   * POST: /api/v1/user/googleSignin
+   *
+   * @param  {object} req  request object
+   * @param  {object} res  response object
+   * 
+   * @return {object} response containing the user token or action status
+   */
 
   googleSignin(req, res) {
     if ((req.body.email.slice(req.body.email.length - 4, req.body.email.length)
@@ -101,7 +122,7 @@ const Authorization = {
         success: false
       });
     }
-    User.findOne({
+    userModel.findOne({
       where: {
         email: req.body.email
       }

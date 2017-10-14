@@ -49,4 +49,7 @@ function mapStateToProps(state) {
 PropTypes.checkPropTypes(ResetPasswordPropTypes, 'prop', 'ForgotPassword');
 
 export default connect(mapStateToProps,
-  { sendSecretCode, VerifyCodeAndUpdatePassword, setResetPasswordPage })(ForgetPassword);
+  { sendSecretCode,
+    VerifyCodeAndUpdatePassword,
+    setResetPasswordPage
+  })(ForgetPassword);

@@ -34,7 +34,7 @@ export function setOffset(offset) {
 /**
  * @description set the current page
  * 
- * @param  {number} page number
+ * @param  {number} pageNumber number
  * @return {object} returns object
  */
 export function setCurrentPage(pageNumber) {

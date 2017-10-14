@@ -21,9 +21,7 @@ export default function(ComposedComponent) {
   }
 
   PropTypes.checkPropTypes(authenticatePropTypes, 'prop', 'Authenticate');
-
-
-
+  
   function mapStateToProps(state) {
     return {
       isAuthenticated: state.auth.isAuthenticated

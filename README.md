@@ -1,6 +1,6 @@
 # PostIt
 
-[![Coverage Status](https://coveralls.io/repos/github/EricDav/PostIt/badge.svg?branch=development)](https://coveralls.io/github/EricDav/PostIt?branch=development)  [![Build Status](https://travis-ci.org/EricDav/PostIt.svg?branch=development)](https://travis-ci.org/EricDav/PostIt)[![Code Climate](https://codeclimate.com/github/EricDav/PostIt/badges/gpa.svg)](https://codeclimate.com/github/EricDav/PostIt)
+[![Coverage Status](https://coveralls.io/repos/github/EricDav/PostIt/badge.svg?branch=implement-second-feedback)](https://coveralls.io/github/EricDav/PostIt?branch=implement-second-feedback) [![Build Status](https://travis-ci.org/EricDav/PostIt.svg?branch=implement-second-feedback)](https://travis-ci.org/EricDav/PostIt) [![Code Climate](https://codeclimate.com/github/EricDav/PostIt/badges/gpa.svg)](https://codeclimate.com/github/EricDav/PostIt)
 ## Introduction
 * https://post-it1.herokuapp.com
 *  **`PostIt`** is a web application that allows friends and colleagues create groups for  notification.

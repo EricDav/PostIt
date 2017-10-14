@@ -2,17 +2,18 @@ import bcrypt from 'bcrypt';
 import dataBase from '../models';
 import { generateCode, mailSender, isInValidField } from '../helpers/index';
 
-const User = dataBase.User;
+const userModel = dataBase.User;
 
 const ForgetPasswordController = {
 /**
    * @description send secret code to users that has forgoten their password
+   * through POST: /api/v1/sendSecretCode
    * 
-   * @param  {object} req
-   * @param  {object} res
    * 
-   * @return {string} an object with key: group, value:
-   *  number of new messages in the group
+   * @param  {object} req request object
+   * @param  {object} res response object
+   * 
+   * @return {object} an object containing the status of the response
    */
   sendSecretCode(req, res) {
     if ((req.body.email.slice(req.body.email.length - 4, req.body.email.length)
@@ -22,7 +23,7 @@ const ForgetPasswordController = {
         success: false
       });
     }
-    User.findOne({
+    userModel.findOne({
       where: {
         email: req.body.email
       }
@@ -52,10 +53,12 @@ const ForgetPasswordController = {
   },
 
   /**
-   * @description Verify secrete code sent to users 
+   * @description Verify secrete code sent to users and reset their password
    * 
-   * @param  {object} req
-   * @param  {object} res
+   * @param  {object} req request object
+   * @param  {object} res response object
+   * 
+   * @return {object} response containing status of the action
    */
 
   VerifyCodeAndUpdatePassword(request, response) {
@@ -76,7 +79,7 @@ const ForgetPasswordController = {
           });
         }
         bcrypt.hash(request.body.password, 10, (err, hash) => {
-          User.update({
+          userModel.update({
             password: hash
           }, {
             where: {

@@ -93,7 +93,7 @@ class ResetPassword extends React.Component {
    */
   render() {
     return (<div id="email-details"
-      className="col s12 m6 l6 card-panel my">
+      className="col s12 m6 l6 offset-l3 offset-m3 card-panel my">
       <form onSubmit={this.onSubmit} className="login-form">
         <div className="row">
           <div className="input-field col s12 center">

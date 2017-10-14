@@ -8,7 +8,8 @@ import mockData from '../../mockData';
 describe('GroupHeader Component', () => {
   it('should render GroupButton component', () => {
     const wrapper = shallow(<GroupHeader { ...mockData.GroupHeader.props }/>);
-    expect(wrapper.node.props.className).toEqual('collection-item avatar email-unread');
+    expect(wrapper.node.props.className)
+      .toEqual('collection-item avatar email-unread');
     expect(wrapper.node.type).toEqual('li');
   });
 });

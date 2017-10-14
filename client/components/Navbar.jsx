@@ -26,13 +26,13 @@ export class NavBar extends React.Component {
      */
   onClick() {
     if (this.props.currentPage === 1) {
-      //browserHistory.push('signup');
+      window.location = 'signup';
       this.props.setPage(2);
     } else if (this.props.currentPage === 2) {
       browserHistory.push('/');
       this.props.setPage(1);
     } else {
-     // browserHistory.push('/');
+      window.location = '/';
       this.props.setPage(1);
     }
   }

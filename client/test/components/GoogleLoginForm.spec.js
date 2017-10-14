@@ -10,7 +10,8 @@ describe('EditGroup Form', () => {
     global.Materialize = { toast: () => {} };
   });
   it('should render form component', () => {
-    const wrapper = shallow(<GoogleLoginForm {...mockData.GoogleLoginForm.props}/>);
+    const wrapper =
+      shallow(<GoogleLoginForm {...mockData.GoogleLoginForm.props}/>);
     const input = wrapper.find('.showLabelFullname');
     const form = wrapper.find('form');
     form.simulate('submit', {

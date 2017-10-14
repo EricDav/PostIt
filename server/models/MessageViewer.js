@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const MessageViewer = sequelize.define('messageViewer', {
+  const MessageViewer = sequelize.define('MessageViewer', {
     viewerUsername: {
       type: DataTypes.STRING,
       allowNull: false,

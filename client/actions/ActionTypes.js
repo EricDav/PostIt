@@ -32,3 +32,4 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const IS_LOADING = 'IS_LOADING';
 export const OFF_SET = 'OFF_SET';
 export const WILL_SHOW = 'WILL_SHOW';
+export const SET_NAV_BARS = 'SET_NAV_BARS';

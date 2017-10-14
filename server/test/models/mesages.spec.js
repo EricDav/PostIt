@@ -18,36 +18,34 @@ describe('<Unit Test>', () => {
     done();
   });
   describe('Model Message:', () => {
-    describe('Method saveUser', () => {
-      it('should be able to save user details', (done) => {
-        Message.findOne({
-          where: {
-            groupId: 4
-          }
-        })
-          .then((message) => {
-            expect(message.content).toEqual('I love food so much');
-            expect(message.groupId).toEqual(4);
-          });
-        done();
-      });
-      it('should be able to create a message successfully', (done) => {
-        Message.create({
-          content: 'I am good guy stop molesting me',
-          priority: 'urgent',
-          groupId: 9,
-          senderId: 3,
-          senderUsername: 'Python'
-        })
-          .then((message) => {
-            expect(message.content).toEqual('I am good guy stop molesting me');
-            expect(message.groupId).toEqual(9);
-            expect(message.senderId).toEqual(3);
-            expect(message.priority).toEqual('urgent');
-            expect(message.senderUsername).toEqual('Python');
-          });
-        done();
-      });
+    it('should be able to save a message', (done) => {
+      Message.findOne({
+        where: {
+          groupId: 4
+        }
+      })
+        .then((message) => {
+          expect(message.content).toEqual('I love food so much');
+          expect(message.groupId).toEqual(4);
+        });
+      done();
+    });
+    it('should be able to create a message successfully', (done) => {
+      Message.create({
+        content: 'I am good guy stop molesting me',
+        priority: 'urgent',
+        groupId: 9,
+        senderId: 3,
+        senderUsername: 'Python'
+      })
+        .then((message) => {
+          expect(message.content).toEqual('I am good guy stop molesting me');
+          expect(message.groupId).toEqual(9);
+          expect(message.senderId).toEqual(3);
+          expect(message.priority).toEqual('urgent');
+          expect(message.senderUsername).toEqual('Python');
+        });
+      done();
     });
   });
 });

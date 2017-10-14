@@ -9,6 +9,7 @@ const User = db.User;
  * @param  {string} req request object
  * @param  {string} res response object
  * @param  {string} next call back
+ * 
  * @return {void} no returns
  */
 const validateUpdatedUser = (req, res, next) => {

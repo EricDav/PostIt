@@ -1,5 +1,5 @@
 import db from '../models';
-import { isInValidField } from '../helpers/index';
+import { isInValidField, isDigit } from '../helpers/index';
 
 const Groups = db.Group;
 const User = db.User;
@@ -7,15 +7,26 @@ const User = db.User;
 
 const GroupValidator = {
 /**
- * @description group validation. validate for adding members to group
+ * @description: validate goupId and userId before adding a member to a group
  * 
- * @param  {object} req
- * @param  {object} res
- * @param  {type} next call back function
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ * @param  {Function} next call back function
  * 
- * @return {object}
+ * @return {object} response status or next
  */
   addUserValidator(req, res, next) {
+    if (!isDigit(Number(req.params.groupId))) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid groupId'
+      });
+    } else if (!isDigit(Number(req.body.userId))) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid userId'
+      });
+    }
     let check = true;
     Groups
       .findOne({
@@ -49,19 +60,28 @@ const GroupValidator = {
           }
         });
       })
-      .catch(error => res.status(404).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
     * @description validate for obtaining a group information
     * 
-    * @param  {object} req
-    * @param  {object} res
-    * @param  {type} next call back function
+    * @param  {Object} req request object
+    * @param  {Object} res response object
+    * @param  {Function} next call back function
     *
-    * @return {null} no return
+    * @return {Object} response status or next
  */
   getGroupValidator(req, res, next) {
+    if (!isDigit(Number(req.params.groupId))) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid groupId'
+      });
+    }
     let check = false;
     return Groups
       .findOne({ where: { id: req.params.groupId } })
@@ -89,17 +109,20 @@ const GroupValidator = {
           });
         }
       })
-      .catch(error => res.status(404).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
     * @description validation for creating a group
     *
-    * @param  {object} req
-    * @param  {object} res
-    * @param  {type} next call back function
+    * @param  {Object} req request object
+    * @param  {Object} res response object
+    * @param  {Function} next call back function
     *
-    * @return {voud} no returns
+    * @return {object} response status or next
  */
   createGroupValidator(req, res, next) {
     const error = {};
@@ -157,20 +180,19 @@ const GroupValidator = {
   },
 
   /**
- * @description validate for group deletion. make sure that 
- * it is the correct user have the license to delete a group
+ * @description validate for group deletion.
  * 
- * @param  {object} req
- * @param  {object} res
- * @param  {type} next call back function
- * @return {void}
+ * @param  {Object} req request object
+ * @param  {Object} res response object
+ * @param  {Function} next call back function
+ * 
+ * @return {object} response status or next
  */
   deleteGroupValidator(req, res, next) {
-    if (req.params.groupId === null || req.params.groupId === undefined ||
-    req.params.groupId === 'undefined') {
+    if (!isDigit(Number(req.params.groupId))) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid group id'
+        message: 'Invalid groupId'
       });
     }
     Groups
@@ -190,18 +212,33 @@ const GroupValidator = {
           });
         }
       })
-      .catch(error => res.status(404).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 
   /**
  *@description validate for deleting a user from a group
  *
- * @param  {object} req
- * @param  {object} res
- * @param  {type} next call back function
- * @return {void}
+ * @param  {Object} req resuest object
+ * @param  {Object} res response object
+ * @param  {Function} next call back function
+ * 
+ * @return {object} response status or next
  */
   deleteUserFromGroupValidator(req, res, next) {
+    if (!isDigit(Number(req.params.groupId))) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid groupId'
+      });
+    } else if (!isDigit(Number(req.params.userId))) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid userId'
+      });
+    }
     Groups.findOne({
       where: {
         id: req.params.groupId,
@@ -242,7 +279,10 @@ const GroupValidator = {
             }));
         }
       })
-      .catch(error => res.status(404).send(error));
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Server error'
+      }));
   },
 };
 export default GroupValidator;

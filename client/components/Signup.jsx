@@ -43,6 +43,7 @@ class SignUp extends React.Component {
      * @description - handles the onblur event
      * 
      * @param  {object} event the event for the content field
+     * 
      * @return {void} no return or void
      */
   onBlur(event) {
@@ -96,7 +97,7 @@ class SignUp extends React.Component {
     }
   }
   /**
-   *@description render - renders the Google Login component
+   *@description render - renders the signup component
    * @return {object} returns an object
    */
   render() {

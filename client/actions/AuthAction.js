@@ -10,8 +10,9 @@ import { SET_CURRENT_USER, SET_GOOGLE_FORM,
 /**
  * @description action for user current user information in store
  * 
- * @param  {object} user
- * @return {object} returns object
+ * @param  {object} user current user
+ * 
+ * @return {object} dispatch object
  */
 export function setCurrentUser(user) {
   return {
@@ -23,8 +24,9 @@ export function setCurrentUser(user) {
 /**
  * @description set form error value
  * 
- * @param  {array} error
- * @return {object} returns object
+ * @param  {array} error 
+ * 
+ * @return {object} dispatch object
  */
 export function error(error) {
   return {
@@ -36,8 +38,9 @@ export function error(error) {
 /**
  * @description set form error value
  * 
- * @param  {array} isLoading
- * @return {object} returns object
+ * @param  {array} isLoading 
+ * 
+ * @return {object} dispatch object
  */
 export function Loading(isLoading) {
   return {

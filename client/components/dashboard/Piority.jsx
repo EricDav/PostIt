@@ -40,7 +40,7 @@ export class Piority extends React.Component {
           <label htmlFor="test1">Normal</label>
         </p>
         <p id="piority">
-          <input onClick={this.onClick} value="urgent" 
+          <input onClick={this.onClick} value="urgent"
             name="group1" type="radio" id="test2" />
           <label htmlFor="test2">Urgent</label>
         </p>

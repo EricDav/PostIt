@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 
 import Messages from './Message.jsx';
@@ -19,6 +20,25 @@ export class MessageBoard extends React.Component {
   constructor(props) {
     super(props);
     this.getMessages = this.getMessages.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  /**
+     * @description - handles the onclick event
+     * 
+     * @param  {object} event the event for the content field
+     * 
+     * @return {void} no return or void
+     */
+  onClick(event) {
+    if (this.props.isSmallScreenSize) {
+      this.props.dashboardPage(5, 0);
+    }
+    if (event.target.id === 'icon') {
+      this.props.setRightNavBarView(1);
+    } else if (event.target.id === 'add') {
+      this.props.setRightNavBarView(2);
+    }
   }
 
   /**
@@ -78,26 +98,31 @@ export class MessageBoard extends React.Component {
   render() {
     const messages = this.getMessages();
     return (
-      <div id="email-details" className="col  s12 m6 l6 card-panel">
-        <hr className="grey-text text-lighten-2"/>
-        <div className="collection-item avatar">
-          <p className="email-subject truncate">
-            <span className="email-tag grey lighten-3">
-              <b>#{this.props.currentGroup.name}</b>
-            </span> <span className="email-tag spa light-blue lighten-4">
-              {this.props.currentGroup.id &&
-              <GroupButton
-                text={'ADD MEMBERS'}
-                setRightNavBarView={this.props.setRightNavBarView}
-                isSmallScreenSize = {this.props.isSmallScreenSize}
-              />}
-              { this.props.currentGroup.id &&
-              <GroupButton text={'VIEW MEMBERS'}
-                setRightNavBarView={this.props.setRightNavBarView}
-                isSmallScreenSize = {this.props.isSmallScreenSize}
-              />}</span>
-          </p>
-        </div>
+      <div id="email-details"
+        className="col s12 m6 l6 offset-l3 offset-m3 card-panel">
+        <p className="email-subject">
+          <span className="">
+            {this.props.currentGroup.id &&
+              <span>
+                <a href="#!"><p data-tip="View members">
+                  <i onClick={this.onClick}
+                    id ="icon"
+                    className="material-icons right">group
+                  </i></p></a>
+                <ReactTooltip />
+              </span>
+            }
+            { this.props.currentGroup.id &&
+                 <span>
+                   <a href="#!"><p data-tip="Add members">
+                     <i onClick={this.onClick}
+                       id = "add" className="material-icons right">group_add
+                     </i></p></a>
+                   <ReactTooltip />
+                 </span>}
+            <b>#{this.props.currentGroup.name}</b>
+          </span>
+        </p>
         <div id="message-board" className="email-content-wrap">
           <ul className="collection listMessage">
             {messages}

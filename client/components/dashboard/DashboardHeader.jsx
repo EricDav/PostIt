@@ -43,7 +43,7 @@ export class DashboardHeader extends React.Component {
     if (this.props.currentPage < 4) {
       navigate = 'Groups';
     } else {
-      navigate = 'Message board';
+      navigate =  <i className="material-icons">arrow_back</i>;
     }
     return (
       <nav className="purple darken-1" role="navigation">

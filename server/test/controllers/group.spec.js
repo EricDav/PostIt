@@ -11,27 +11,7 @@ const Group = dataBase.Group;
 let regUserData = 'bearer ';
 
 describe('Group Routes', () => {
-  it('should allows a registered user to signup successfully', (done) => {
-    server
-      .post('/api/v1/user/signup')
-      .set('Connection', 'keep alive')
-      .set('Content-Type', 'application/json')
-      .type('form')
-      .send({
-        fullName: 'Ade Bola',
-        userName: 'Bola',
-        email: 'Bola@me.com',
-        phoneNumber: '09066780653',
-        password: 'david1996'
-      })
-      .expect(200)
-      .end((err, res) => {
-        res.status.should.equal(201);
-        res.body.success.should.equal(true);
-        done();
-      });
-  });
-  it('allows a registered user to log in successfully', (done) => {
+  before((done) => {
     server
       .post('/api/v1/user/signin')
       .set('Connection', 'keep alive')
@@ -41,16 +21,12 @@ describe('Group Routes', () => {
         userName: 'Pythagoras',
         password: 'David19632'
       })
-      .expect(201)
       .end((err, res) => {
         regUserData += res.body.Token;
-        res.status.should.equal(200);
-        res.body.success.should.equal(true);
         done();
       });
   });
-
-  it('allows a logged in user to create a new group', (done) => {
+  it('should allow a logged in user to create a new group', (done) => {
     server
       .post('/api/v1/group')
       .set('Connection', 'keep alive')
@@ -98,26 +74,29 @@ describe('Group Routes', () => {
         })
           .then((group) => {
             group.name.should.equal('House');
-            group.description.should.equal('This group is meant for those who are need of house');
+            group.description.should
+              .equal('This group is meant for those who are need of house');
           });
         res.status.should.equal(201);
         res.body.success.should.equal(true);
         done();
       });
   });
-  it('allows a logged in user to get all the groups he/she belongs to', (done) => {
-    server
-      .get('/api/v1/groups?offset=0&limit=10')
-      .set('authorization', regUserData)
-      .expect(200)
-      .end((err, res) => {
-        res.status.should.equal(200);
-        res.body.groups.length.should.equal(3);
-        res.body.groups[0].description.should.equal('This group is meant for those who are need of house');
-        res.body.groups[1].name.should.equal('Cohort 8');
-        done();
-      });
-  });
+  it('allows a logged in user to get all the groups he/she belongs to',
+    (done) => {
+      server
+        .get('/api/v1/groups?offset=0&limit=10')
+        .set('authorization', regUserData)
+        .expect(200)
+        .end((err, res) => {
+          res.status.should.equal(200);
+          res.body.groups.length.should.equal(3);
+          res.body.groups[0].description.should
+            .equal('This group is meant for those who are need of house');
+          res.body.groups[1].name.should.equal('Cohort 8');
+          done();
+        });
+    });
 
   it('disallows a user to create a new group without a token', (done) => {
     server
@@ -176,7 +155,8 @@ describe('Group Routes', () => {
       .set('authorization', regUserData)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.message.should.equal('Group not found. Group does not exist or has been deleted');
+        res.body.message.should
+          .equal('Group not found. Group does not exist or has been deleted');
         done();
       });
   });

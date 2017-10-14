@@ -1,5 +1,5 @@
 import { SET_NAVBAR_RIGHT_VIEW, SHOW_DASHBOARD_PAGE,
-  SHOW_INITIAL_DASHBOARD_PAGE, SCREEN_SIZE } from './ActionTypes';
+  SHOW_INITIAL_DASHBOARD_PAGE, SCREEN_SIZE, SET_NAV_BARS } from './ActionTypes';
 
 /**
  * @description set view number action
@@ -8,6 +8,7 @@ import { SET_NAVBAR_RIGHT_VIEW, SHOW_DASHBOARD_PAGE,
  * @return {object} returns object
  */
 export function setView(viewNumber) {
+  console.log('I am geting closer boy');
   return {
     type: SET_NAVBAR_RIGHT_VIEW,
     viewNumber

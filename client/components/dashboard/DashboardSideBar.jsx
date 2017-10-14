@@ -96,7 +96,8 @@ export class DashboardSideBar extends React.Component {
               {this.props.user.email}
             </p>
             <p className="grey-text ultra-small">
-              <a id="edit-profile" onClick={this.onClick} href="#!">Edit profile</a></p>
+              <a id="edit-profile" onClick={this.onClick}
+                href="#!">Edit profile</a></p>
           </li>
           <li
             className={`collection-item avatar email-unread 

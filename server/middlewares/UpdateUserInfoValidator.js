@@ -18,7 +18,8 @@ export default class UpdateUserInfoValidator {
  * @description checks for field that was updated
  * 
  * @param  {object} data user object
- * @return {array} returns an array of updated field
+ * 
+ * @return {void} returns void
  */
   filterUserData(data) {
     const { fullName, email, phoneNumber } = this.user;
@@ -42,7 +43,8 @@ export default class UpdateUserInfoValidator {
  * @description validate username field
  * 
  * @param  {string} fullName 
- * @return {string} return error message
+ * 
+ * @return {void} returns void
  */
   validateFullname(fullName) {
     if (isInValidField(fullName)) {
@@ -57,8 +59,9 @@ export default class UpdateUserInfoValidator {
  * @description validate email field
  * 
  * @param  {string} email
- * @return {string} return error message
- */
+ * 
+ * @return {void} no returns
+ */ 
   validateEmail(email) {
     if (isInValidField(email)) {
       this.error.email = 'This field is required';
@@ -71,8 +74,9 @@ export default class UpdateUserInfoValidator {
   /**
  * @description validate phone number field
  * 
- * @param  {string} phoneNumber 
- * @return {string} return error message
+ * @param  {String} phoneNumber user phone number
+ * 
+ * @return {void} no return
  */
   validatePhoneNumber(phoneNumber) {
     if (isInValidField(phoneNumber)) {

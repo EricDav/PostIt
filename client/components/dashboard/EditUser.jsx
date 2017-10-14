@@ -79,11 +79,12 @@ class EditUser extends React.Component {
         },
         (data) => {
           if (data.response.data.message === 'Failed to authenticate token.') {
-            Materialize.toast('Can not edit user details. Your session has expired',
-              2000, 'red', () => {
-                localStorage.removeItem('jwtToken');
-                window.location = '/';
-              });
+            Materialize
+              .toast('Can not edit user details. Your session has expired',
+                2000, 'red', () => {
+                  localStorage.removeItem('jwtToken');
+                  window.location = '/';
+                });
           } else {
             this.setState({
               errors: data.response.data.error,
@@ -122,7 +123,7 @@ class EditUser extends React.Component {
     const { errors, fullName, userName, phoneNumber, email, showLabelFullname,
       showLabelEmail, showLabelPhoneNumber, showLabelUsername } = this.state;
     return (<div id="email-details"
-      className="col  s12 m6 l6 card-panel">
+      className="col s12 m6 l6 offset-l3 offset-m3 card-panel">
       <form onSubmit={this.onSubmit} className="login-form">
         <div className="row">
           <div className="input-field col s12 center">

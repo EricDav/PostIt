@@ -30,6 +30,5 @@ describe('TextInput Component', () => {
       which: 13
     });
     expect(wrapper.node.props.className).toEqual('input-field row');
-    //expect(wrapper.node.props.role).toEqual('navigation');
   });
 });

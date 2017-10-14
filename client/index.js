@@ -19,10 +19,11 @@ const store = configureStore();
 
 if (localStorage.jwtToken) {
   if (jwt.decode(localStorage.jwtToken) === null) {
-    Materialize.toast('could not authenticate User signin again', 3000, 'green', () => {
-      localStorage.removeItem('jwtToken');
-      window.location = '/';
-    });
+    Materialize.toast('could not authenticate User signin again',
+      3000, 'green', () => {
+        localStorage.removeItem('jwtToken');
+        window.location = '/';
+      });
   } else {
     setAuthorizationToken(localStorage.jwtToken);
     store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));

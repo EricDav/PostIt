@@ -10,13 +10,13 @@ import user from './server/routes/userRoutes';
 import message from './server/routes/messageRoutes';
 import forgetPassword from './server/routes/forgetPasswordRoutes';
 
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 7000;
 const app = express();
 app.use(express.static(path.join(__dirname, './client')));
 
 app.use(logger('dev'));
 //if (process.env.NODE_ENV === 'development') {
-app.use(webpackMiddleware(webpack(webpackConfig)));
+  app.use(webpackMiddleware(webpack(webpackConfig)));
 //}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

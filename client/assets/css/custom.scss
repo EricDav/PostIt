@@ -184,9 +184,9 @@ body {
         top: 9px !important;
     }
     #email-list {
-        min-height: 590px;
-        max-height: 590px;
-        margin-bottom: -20px;
+        position: fixed;
+        min-height: 100%;
+        max-height: 100%;
         margin-top: 0px;
         overflow: scroll;
     }
@@ -194,14 +194,14 @@ body {
     padding: 24px;
 }
     #email-details {
-        min-height: 595px;
-        max-height: 595px;
         position: fixed;
+        min-height: 85%;
+        max-height: 85%;
         flex: 1;
+        margin-top: 0px;
         display: flex;
-        bottom: 0px;
+      
         flex-direction: column;
-        position: relative;
     }
     #message-board {
         overflow: auto;
@@ -313,7 +313,6 @@ body {
     padding: 0px !important;
     border: 5px white;
     background-color: white;
-    height: 100px !important;
 }
 .side1 {
     margin-top: -7px;
@@ -397,4 +396,7 @@ resetUser {
 }
 #color {
     color: purple;
+}
+#icon {
+    margin-right: 20px;
 }

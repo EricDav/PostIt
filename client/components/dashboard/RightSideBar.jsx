@@ -45,7 +45,7 @@ export class RightSideBar extends React.Component {
     />;
     const groupMember = <GroupMember/>;
     return (
-      <div id="email-list" className="col s12 m3 l3 card-panel">
+      <div id="email-list" className="col s12 m3 offset-m9 l3 offset-l9 card-panel">
         <ul className="collection">
           <GroupHeader showDashboardPage ={this.props.showDashboardPage}
             setCurrentGroup={this.props.setCurrentGroup}
