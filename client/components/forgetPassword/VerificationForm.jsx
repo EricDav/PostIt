@@ -3,7 +3,7 @@ import React from 'react';
 /** @class Details
  * @classdesc component to confirm secret code
  */
-class Details extends React.Component {
+class VerificationForm extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -62,6 +62,7 @@ class Details extends React.Component {
         Materialize.toast('A code has been sent to your mail', 2500, 'green');
       },
       (data) => {
+        console.log(data);
         this.setState({
           error: data.response.data.message,
           failure: true,
@@ -118,4 +119,4 @@ class Details extends React.Component {
 }
 
 
-export default Details;
+export default VerificationForm;

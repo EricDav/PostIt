@@ -10,7 +10,7 @@ import { SET_CURRENT_USER, SET_GOOGLE_FORM,
 /**
  * @description action for user current user information in store
  * 
- * @param  {object} user current user
+ * @param  {object} user current user object
  * 
  * @return {object} dispatch object
  */
@@ -24,7 +24,7 @@ export function setCurrentUser(user) {
 /**
  * @description set form error value
  * 
- * @param  {array} error 
+ * @param  {array} error login in error
  * 
  * @return {object} dispatch object
  */
@@ -38,7 +38,7 @@ export function error(error) {
 /**
  * @description set form error value
  * 
- * @param  {array} isLoading 
+ * @param  {array} isLoading status when an asycronoius call is in progress
  * 
  * @return {object} dispatch object
  */
@@ -53,7 +53,8 @@ export function Loading(isLoading) {
  * @description set view in the  dashboard page
  * 
  * @param  {number} showForm determines which form to show in the dashboard page
- * @return {object} returns object
+ * 
+ * @return {object} dispatch object
  */
 export function setDashboardPage(showForm) {
   return {
@@ -65,8 +66,9 @@ export function setDashboardPage(showForm) {
 /**
  * @description set weather to show update form
  * 
- * @param  {boolean} googledata
- * @return {object} returns object
+ * @param  {boolean} googledata the user details gotten from the google api
+ * 
+ * @return {object} dispatch object
  */
 export function setGoogleForm(googledata) {
   return {
@@ -77,10 +79,12 @@ export function setGoogleForm(googledata) {
 
 
 /**
- * @description sign a valid user in
+ * @description Request to the API to signin a user
  * 
- * @param  {object} userData like user password and username
- * @return {object} returns object
+ * @param  {object} userData the login details of the user
+ * @param {boolean} clearError the status of the login error
+ * 
+ * @return {object} dispatch object
  */
 export function userSigninRequest(userData, clearError = false) {
   return (dispatch) => {
@@ -111,9 +115,10 @@ export function userSigninRequest(userData, clearError = false) {
 }
 
 /**
- * @description sign user with google account in
+ * @description Request to the API to signin a user with google+
  * 
- * @param  {object} userData
+ * @param  {object} userData the details of the google user
+ * 
  * @return {object} returns object
  */
 export function googleSignin(userData) {
@@ -132,10 +137,11 @@ export function googleSignin(userData) {
 }
 
 /**
- * @description create action for user signin
+ * @description Request to the API to register a user
  * 
- * @param  {object} userData
- * @return {object} returns object
+ * @param  {object} userData the user deatils to be saved
+ * 
+ * @return {object} dispatch object
  */
 export function userSignupRequest(userData) {
   return dispatch =>
@@ -148,10 +154,9 @@ export function userSignupRequest(userData) {
 }
 
 /**
- * @description sign out action creator
- * 
- * @param  {boolean} show
- * @return {object} returns object
+ * @description Request to the API to signout a user
+ 
+ * @return {object} dispatch object
  */
 export function logout() {
   return dispatch =>

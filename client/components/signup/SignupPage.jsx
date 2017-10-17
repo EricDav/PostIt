@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import NavBar from './Navbar.jsx';
-import Signup from './Signup.jsx';
-import { userSignupRequest } from '../actions/AuthAction';
+import NavBar from './../common/Navbar.jsx';
+import Signup from './SignupForm.jsx';
+import { userSignupRequest } from '../../actions/AuthAction';
 
 const SignupPage = props =>
   (

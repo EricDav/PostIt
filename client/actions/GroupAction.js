@@ -9,8 +9,9 @@ import { ADD_GROUP, SET_CURRENT_USER_GROUPS, DELETE_GROUP, UPDATE_GROUP_DATA,
 /**
  * @description make a post request that creates a group
  * 
- * @param  {object} addedGroup
- * @return {object} returns object
+ * @param  {object} addedGroup the details of the created group
+ * 
+ * @return {object} dispatch object
  */
 export function addGroup(addedGroup) {
   return {
@@ -22,7 +23,8 @@ export function addGroup(addedGroup) {
 /**
  * @description set the latest offset value
  * 
- * @param  {number} offset
+ * @param  {number} offset the group offset
+ * 
  * @return {object} returns object
  */
 export function Offset(offset) {
@@ -36,7 +38,8 @@ export function Offset(offset) {
  * @description set current groups a user belongs to
  * 
  * @param  {array} groups
- * @return {object} returns object
+ * 
+ * @return {object} dispatch object
  */
 export function setCurrentUserGroups(groups) {
   return {
@@ -48,8 +51,9 @@ export function setCurrentUserGroups(groups) {
 /**
  * @description set the members of the current group
  * 
- * @param  {array} members
- * @return {object} returns object
+ * @param  {array} members group members
+ * 
+ * @return {object} dispatch object
  */
 export function setCurrentGroupMembers(members) {
   return {
@@ -61,7 +65,8 @@ export function setCurrentGroupMembers(members) {
 /**
  * @description update the current group
  * 
- * @param  {array} updateGroupData
+ * @param  {array} updateGroupData the details of the group to updated
+ * 
  * @return {object} returns object
  */
 export function updateGroupInCurrentUserGroups(updateGroupData) {
@@ -74,8 +79,9 @@ export function updateGroupInCurrentUserGroups(updateGroupData) {
 /**
  * @description update the current group
  * 
- * @param  {array} updatedGroupData
- * @return {object} returns object
+ * @param  {array} updatedGroupData details of the group to be updated
+ * 
+ * @return {object} dispatch object
  */
 export function updateGroup(updatedGroupData) {
   return {
@@ -89,6 +95,7 @@ export function updateGroup(updatedGroupData) {
  * @description remove a spcify group from the state
  * 
  * @param  {object} groupData data of the specify group to be deleted
+ * 
  * @return {object} returns object
  */
 export function deleteGroup(groupData) {
@@ -99,9 +106,11 @@ export function deleteGroup(groupData) {
 }
 
 /**
- * @param  {object} group
- * @description current group action
- * @return {object} returns object
+ * @description set the current group
+ * 
+ * @param  {object} group the current group data
+ * 
+ * @return {object} dispatch object
  */
 export function setCurrentGroup(group) {
   return {
@@ -113,7 +122,8 @@ export function setCurrentGroup(group) {
 /**
  * @description saction creator for setting current group
  * 
- * @param  {object} group
+ * @param  {object} group the current group data
+ * 
  * @return {object} returns object
  */
 export function setGroup(group) {
@@ -125,6 +135,7 @@ export function setGroup(group) {
  * @description delete a group
  * 
  * @param  {object} data details of the deleted group
+ * 
  * @return {object} returns object
  */
 export function deleteCurrentGroup(data) {
@@ -142,20 +153,24 @@ export function deleteCurrentGroup(data) {
 /**
  * @description make a post request that creates a group
  * 
- * @param  {object} userData
- * @return {object} returns object
+ * @param  {object} groupData the group to be created
+ * 
+ * @return {object} dispatch object
  */
-export function createGroupRequest(userData) {
+export function createGroupRequest(groupData) {
   return dispatch =>
-    axios.post('/api/v1/group', userData).then((res) => {
+    axios.post('/api/v1/group', groupData).then((res) => {
       dispatch(addGroup(res.data.group));
     });
 }
 
 /**
- * @description fetch groups
+ * @description Request to the API to fetch all groups
  * 
- * @return {object} returns object
+ * @param offset the offset of the group
+ * @param limit the group limit
+ * 
+ * @return {object} dispatch object
  */
 export function getGroupsRequest(offset, limit) {
   return dispatch =>
@@ -187,25 +202,27 @@ export function getGroupsRequest(offset, limit) {
 }
 
 /**
- * @description remove a user 
+ * @description Request to the API to update a group
  * 
- * @param  {object} userData details of the deleted user
+ * @param  {object} groupData details of the deleted user
  * @param  {integer} groupId the group id of the group to be updated
+ * 
  * @return {object} returns object
  */
-export function updateCurrentGroup(userData, groupId) {
+export function updateCurrentGroup(groupData, groupId) {
   return dispatch =>
-    axios.put(`/api/v1/groups/${groupId}/update`, userData).then(() => {
-      dispatch(updateGroup(userData));
-      dispatch(updateGroupInCurrentUserGroups(userData));
+    axios.put(`/api/v1/groups/${groupId}/update`, groupData).then(() => {
+      dispatch(updateGroup(groupData));
+      dispatch(updateGroupInCurrentUserGroups(groupData));
     });
 }
 
 /**
- * @description remove a user 
+ * @description Request to the API to delete a user of a group
  * 
  * @param  {object} data details of the deleted user
- * @return {object} returns object
+ * 
+ * @return {object} dispatch object
  */
 export function deleteUserFromGroup(data) {
   return dispatch =>
@@ -228,10 +245,11 @@ export function deleteUserFromGroup(data) {
 }
 
 /**
- * @description get all the members in a group by making a get request
+ * @description Request to the API to get all the group members of a group
  * 
- * @param  {integer} groupId
- * @return {object} returns object
+ * @param  {integer} groupId the group id
+ * 
+ * @return {object} dispatch object
  */
 export function getGroupMembers(groupId) {
   return dispatch =>

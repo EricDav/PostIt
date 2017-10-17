@@ -5,12 +5,11 @@ import PropTypes from 'prop-types';
 import { createMessage, getNewGroupMessages, getInitialNewMessages,
   getGroupMessages, updateSeenMessages }
   from '../../actions/MessageAction';
-import { getMessageIds } from '../../helpers';
 
 /** @class TextInput
  * @classdesc component for TextInput
  */
-export class TextInput extends React.Component {
+export class TextArea extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -29,6 +28,7 @@ export class TextInput extends React.Component {
      * @description - handles the onchange event
      * 
      * @param  {object} event the event for the content field
+     * 
      * @return {void} no return or void
      */
   onChange(event) {
@@ -40,6 +40,7 @@ export class TextInput extends React.Component {
      * @description - handles the onclick event
      * 
      * @param  {object} event the event for the content field
+     * 
      * @return {void} no return or void
      */
   onKeyDown(event) {
@@ -88,10 +89,10 @@ const textInputPropTypes = {
 
 PropTypes.checkPropTypes(textInputPropTypes, 'prop', 'TextInput');
 
-/*
+/**
  * @description mapStateToProps - maps state value to props
  * 
- * @param  {object} state the store state
+ * @param {object} state the store
  * 
  * @return {Object} returns an object
  */
@@ -112,4 +113,4 @@ export default connect(mapStateToProps,
     getNewGroupMessages,
     createMessage,
     getGroupMessages
-  })(TextInput);
+  })(TextArea);

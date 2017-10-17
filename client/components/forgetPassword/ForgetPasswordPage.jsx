@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import NavBar from '../Navbar.jsx';
-import Details from './Details.jsx';
-import Confirm from './Confirm.jsx';
+import NavBar from '../common/Navbar.jsx';
+import VerificationForm from './VerificationForm.jsx';
+import ConfirmationForm from './ConfirmationForm.jsx';
 import { sendSecretCode, VerifyCodeAndUpdatePassword,
-  setResetPasswordPage } from
+  resetPasswordPage } from
   '../../actions/UserAction';
 
-const ForgetPassword = props =>
+const ForgetPasswordPage = props =>
   (
   <div className="body-container image">
     <NavBar/>
@@ -17,10 +17,15 @@ const ForgetPassword = props =>
       <div id="login-page"
         className={`col l6 offset-l3 m6 offset-m3 s12 
         z-depth-4 card-panel`}>
-        {!props.willShow && <Details sendSecretCode={props.sendSecretCode}/>}
-        {props.willShow && <Confirm user={props.resetPasswordUser}
+        {!props.willShow &&
+        <VerificationForm sendSecretCode={props.sendSecretCode}/>
+        }
+        {props.willShow &&
+        <ConfirmationForm
+          user={props.resetPasswordUser}
           verifyCodeAndUpdate={props.VerifyCodeAndUpdatePassword}
-          setResetPasswordPage={props.setResetPasswordPage}/>}
+          setResetPasswordPage={props.resetPasswordPage}/>
+        }
       </div>
     </div>
   </div>
@@ -51,5 +56,5 @@ PropTypes.checkPropTypes(ResetPasswordPropTypes, 'prop', 'ForgotPassword');
 export default connect(mapStateToProps,
   { sendSecretCode,
     VerifyCodeAndUpdatePassword,
-    setResetPasswordPage
-  })(ForgetPassword);
+    resetPasswordPage
+  })(ForgetPasswordPage);

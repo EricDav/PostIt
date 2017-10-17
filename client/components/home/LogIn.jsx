@@ -1,8 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import PropTypes from 'prop-types';
 
-import GoogleSignin from './GoogleSignin.jsx';
+import GoogleLoginForm from './GoogleLoginForm.jsx';
 
 /** @class LogIn
  * @classdesc component for LogIn
@@ -11,6 +10,7 @@ export class LogIn extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
+   * 
    * @return {void} no return or void
    */
   constructor(props) {
@@ -26,6 +26,11 @@ export class LogIn extends React.Component {
     this.onFocus = this.onFocus.bind(this);
     this.onClick = this.onClick.bind(this);
   }
+  /**
+  * description: controls what happens after component get unrendered
+  *
+  * @return {void} void
+  */
   componentWillUnmount() {
     this.props.userSigninRequest({}, true);
   }
@@ -48,12 +53,10 @@ export class LogIn extends React.Component {
      */
   onClick(event) {
     if (event.target.textContent === 'Forgot password ?') {
-      //browserHistory.push('forgotPassword');
-      window.locatiuon = 'forgotPassword';
+      browserHistory.push('forgotPassword');
       this.props.setPage(3);
     } else if (event.target.textContent === ' Signup') {
-      //browserHistory.push('signup');
-      window.location = 'signup';
+      browserHistory.push('signup');
       this.props.setPage(2);
     }
   }
@@ -87,6 +90,7 @@ export class LogIn extends React.Component {
   }
   /**
    *@description render - renders the Google Login component
+   *
    * @return {object} returns an object
    */
   render() {
@@ -137,7 +141,7 @@ export class LogIn extends React.Component {
         <div className="row">
           <div className="input-field col s12">
             <center>
-              <GoogleSignin/>
+              <GoogleLoginForm/>
             </center>
             <p className="margin center medium-small sign-up">
               <a onClick={this.onClick} href="#!">Forgot password ?</a>

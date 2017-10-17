@@ -36,7 +36,7 @@ describe('User Routes', () => {
         done();
       });
   });
-  it('should allow a new user to signup with Google+', (done) => {
+  it('should allow a new user to signup with Google+ successfully', (done) => {
     server
       .post('/api/v1/user/googleSignin')
       .set('Connection', 'keep alive')
@@ -181,7 +181,7 @@ describe('User Routes', () => {
           done();
         });
     });
-  it(`disallows a new user to register
+  it(`should disallows a new user to register
   if password does not contains at least a digit`, (done) => {
       server
         .post('/api/v1/user/signup')
@@ -224,7 +224,7 @@ describe('User Routes', () => {
         done();
       });
   });
-  it('disallows a new user to register without a username', (done) => {
+  it('should disallows a new user to register without a username', (done) => {
     server
       .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')
@@ -244,7 +244,7 @@ describe('User Routes', () => {
         done();
       });
   });
-  it('disallows a new user to register without a fullname', (done) => {
+  it('should disallows a new user to register without a fullname', (done) => {
     server
       .post('/api/v1/user/signup')
       .set('Connection', 'keep alive')

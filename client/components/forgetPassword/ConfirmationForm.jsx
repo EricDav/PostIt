@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 /** @class Confirm
  * @classdesc component to confirm secret code
  */
-class Confirm extends React.Component {
+class ConfirmationForm extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -160,4 +160,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { Confirm })(Confirm);
+export default connect(mapStateToProps, { Confirm })(ConfirmationForm);

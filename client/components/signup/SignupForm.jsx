@@ -1,5 +1,5 @@
 import React from 'react';
-import { isDigit } from '../helpers';
+import { isDigit } from '../../helpers';
 
 /** @class Signup
  * @classdesc component for Signup

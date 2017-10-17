@@ -15,9 +15,9 @@ const app = express();
 app.use(express.static(path.join(__dirname, './client')));
 
 app.use(logger('dev'));
-//if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'test' || process.env.NODE_ENV !== 'production') {
   app.use(webpackMiddleware(webpack(webpackConfig)));
-//}
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(group);

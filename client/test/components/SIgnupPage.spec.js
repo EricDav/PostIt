@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
 
-import SignupPage from '../../components/SignupPage.jsx';
+import SignupPage from '../../components/signup/SignupPage.jsx';
 
 describe('GroupHeader Component', () => {
   it('should render GroupButton component', () => {

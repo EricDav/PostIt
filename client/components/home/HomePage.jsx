@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Login from './LogIn.jsx';
-import NavBar from './Navbar.jsx';
-import { userSigninRequest, userSignupRequest } from '../actions/AuthAction';
-import { setPage } from '../actions/UserAction';
+import NavBar from '../common/Navbar.jsx';
+import { userSigninRequest, userSignupRequest } from '../../actions/AuthAction';
+import { setPage } from '../../actions/UserAction';
 import GoogleSignup from './GoogleLoginForm.jsx';
 
 export const HomePage = props =>

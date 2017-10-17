@@ -3,8 +3,7 @@ import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 
 import Messages from './Message.jsx';
-import TextInput from './TextInput.jsx';
-import GroupButton from './GroupButton.jsx';
+import TextInput from './TextArea.jsx';
 import Line from './Line.jsx';
 import Piority from './Piority.jsx';
 

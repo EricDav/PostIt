@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getGroupMessages, updateSeenMessages,
-  getNewGroupMessages } from '../../actions/MessageAction';
+  getNumberOfNewMessages } from '../../actions/MessageAction';
 import { getGroupMembers, setGroup } from '../../actions/GroupAction';
 import { getAllUsersRequest } from '../../actions/UserAction';
 import { dashboardPage } from '../../actions/DashboardViewAction';
@@ -48,7 +48,7 @@ export class Group extends React.Component {
           this.props.updateSeenMessages(groupId.toString(),
             updateSeenMessagesData);
           this.props.dashboardPage(1, this.props.showDashboardPage);
-          this.props.getNewGroupMessages();
+          this.props.getNumberOfNewMessages();
         }
       );
       this.props.groups.forEach((group) => {
@@ -84,7 +84,7 @@ const dashboardPropTypes = {
   getGroupMembers: PropTypes.func,
   getAllUsersRequest: PropTypes.func,
   updateSeenMessages: PropTypes.func,
-  getNewGroupMessages: PropTypes.func,
+  getNumberOfNewMessages: PropTypes.func,
   dashboardPage: PropTypes.func,
 };
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Group');
@@ -107,7 +107,7 @@ export function mapStateToProps(state) {
 export default connect(mapStateToProps,
   {
     dashboardPage,
-    getNewGroupMessages,
+    getNumberOfNewMessages,
     updateSeenMessages,
     getGroupMessages,
     setGroup,

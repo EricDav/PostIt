@@ -3,7 +3,7 @@ import GoogleLogin from 'react-google-login';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { googleSignin } from '../actions/AuthAction';
+import { googleSignin } from '../../actions/AuthAction';
 
 /** @class GoogleLogIn
  * @classdesc component for Login with google+
@@ -45,7 +45,7 @@ const googleLoginPropTypes = {
  * 
  * @param  {object} state the store state
  * 
- * @return {Object} returns an object
+ * @return {Object} returns state object
  */
 function mapStateToProps(state) {
   return {

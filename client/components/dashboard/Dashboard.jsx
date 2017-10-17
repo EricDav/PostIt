@@ -22,7 +22,7 @@ import { dashboardPage,
   setRightNavBarView, smallScreenSize } from
   '../../actions/DashboardViewAction';
 import { logout } from '../../actions/AuthAction';
-import { getNewGroupMessages } from '../../actions/MessageAction';
+import { getNumberOfNewMessages } from '../../actions/MessageAction';
 
 
 /** @class Dashboard
@@ -257,7 +257,7 @@ const dashboardPropTypes = {
   updateCurrentGroup: PropTypes.func,
   smallScreenSize: PropTypes.func,
   logout: PropTypes.func,
-  getNewGroupMessages: PropTypes.func
+  getNumberOfNewMessages: PropTypes.func
 };
 PropTypes.checkPropTypes(dashboardPropTypes, 'prop', 'Dashboard');
 
@@ -296,5 +296,5 @@ export default connect(mapStateToProps, {
   updateUserProfile,
   setRightNavBarView,
   logout,
-  getNewGroupMessages,
+  getNumberOfNewMessages,
   smallScreenSize })(Dashboard);

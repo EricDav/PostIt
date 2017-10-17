@@ -26,8 +26,8 @@ describe('Message Routes', () => {
         done();
       });
   });
-  it(`allows a logged in user create post to
-   a group he/she belongs`, (done) => {
+  it(`should allows a logged in user create post to
+   a group he/she belongs to`, (done) => {
       server
         .post('/api/v1/groups/1/message')
         .set('Connection', 'keep alive')
@@ -46,7 +46,7 @@ describe('Message Routes', () => {
         });
     });
 
-  it(`allows a logged in user create post to a
+  it(`should allow a logged in user create post to a
    group he/she belongs`, (done) => {
       server
         .post('/api/v1/groups/1/message')
@@ -75,7 +75,7 @@ describe('Message Routes', () => {
           done();
         });
     });
-  it(`allows a logged in user create post
+  it(`should allows a logged in user create post
    to a group he/she belongs`, (done) => {
       server
         .post('/api/v1/groups/1/message')
@@ -104,8 +104,8 @@ describe('Message Routes', () => {
           done();
         });
     });
-  it(`allows a logged in user get all posts from
-   the group he/she belongs`, (done) => {
+  it(`should allows a logged in user get all posts from
+   the group he/she belongs to`, (done) => {
       server
         .get('/api/v1/groups/1/messages')
         .set('authorization', regUserData)
@@ -116,7 +116,7 @@ describe('Message Routes', () => {
           done();
         });
     });
-  it(`allows a logged in user get all posts and their
+  it(`should allows a logged in user get all posts and their
     viewers from the group he/she belongs`,
     (done) => {
       server

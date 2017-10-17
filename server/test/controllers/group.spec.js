@@ -54,7 +54,7 @@ describe('Group Routes', () => {
       });
   });
 
-  it('allows a logged in user to create a new group', (done) => {
+  it('should allow a logged in user to create a new group', (done) => {
     server
       .post('/api/v1/group')
       .set('Connection', 'keep alive')
@@ -82,7 +82,7 @@ describe('Group Routes', () => {
         done();
       });
   });
-  it('allows a logged in user to get all the groups he/she belongs to',
+  it('should allows a logged in user to get all the groups he/she belongs to',
     (done) => {
       server
         .get('/api/v1/groups?offset=0&limit=10')
@@ -98,45 +98,47 @@ describe('Group Routes', () => {
         });
     });
 
-  it('disallows a user to create a new group without a token', (done) => {
-    server
-      .post('/api/v1/group')
-      .set('Connection', 'keep alive')
-      .set('Content-Type', 'application/json')
-      .type('form')
-      .send({
-        name: 'fish',
-        description: 'where we train fish'
-      })
-      .expect(403)
-      .end((err, res) => {
-        res.status.should.equal(401);
-        res.body.message.should.equal('No token provided.');
-        done();
-      });
-  });
+  it('should disallows a user to create a new group without a token',
+    (done) => {
+      server
+        .post('/api/v1/group')
+        .set('Connection', 'keep alive')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .send({
+          name: 'fish',
+          description: 'where we train fish'
+        })
+        .expect(403)
+        .end((err, res) => {
+          res.status.should.equal(401);
+          res.body.message.should.equal('No token provided.');
+          done();
+        });
+    });
 
-  it('disallows a user to create a new group with a wrong token', (done) => {
-    server
-      .post('/api/v1/group')
-      .set('Connection', 'keep alive')
-      .set('authorization', 'tyrtyfgf67543')
-      .set('Content-Type', 'application/json')
-      .type('form')
-      .send({
-        name: 'love',
-        description: 'Love is good'
-      })
-      .expect(403)
-      .end((err, res) => {
-        res.status.should.equal(401);
-        res.body.message.should.equal('Failed to authenticate token.');
-        done();
-      });
-  });
+  it('should disallows a user to create a new group with a wrong token',
+    (done) => {
+      server
+        .post('/api/v1/group')
+        .set('Connection', 'keep alive')
+        .set('authorization', 'tyrtyfgf67543')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .send({
+          name: 'love',
+          description: 'Love is good'
+        })
+        .expect(403)
+        .end((err, res) => {
+          res.status.should.equal(401);
+          res.body.message.should.equal('Failed to authenticate token.');
+          done();
+        });
+    });
 
 
-  it('allows a group admin to delete the group he owns', (done) => {
+  it('should allows a group owner to delete the group he owns', (done) => {
     server
       .delete('/api/v1/groups/4/delete')
       .set('authorization', regUserData)
@@ -148,18 +150,20 @@ describe('Group Routes', () => {
       });
   });
 
-  it('prevents a user from deleting a group that does not exist', (done) => {
-    server
-      .delete('/api/v1/groups/8/delete')
-      .expect(404)
-      .set('authorization', regUserData)
-      .end((err, res) => {
-        res.status.should.equal(404);
-        res.body.message.should
-          .equal('Group not found. Group does not exist or has been deleted');
-        done();
-      });
-  });
+  it(`should throw error when a user wants to
+  delete a group that does not exist`,
+    (done) => {
+      server
+        .delete('/api/v1/groups/8/delete')
+        .expect(404)
+        .set('authorization', regUserData)
+        .end((err, res) => {
+          res.status.should.equal(404);
+          res.body.message.should
+            .equal('Group not found. Group does not exist or has been deleted');
+          done();
+        });
+    });
   it('should update group details', (done) => {
     server
       .put('/api/v1/groups/1/update')

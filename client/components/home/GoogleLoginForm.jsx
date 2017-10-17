@@ -3,10 +3,11 @@ import React from 'react';
 /** @class GoogleSignup
  * @classdesc component for signing up with google+
  */
-class GoogleSignup extends React.Component {
+class GoogleLoginForm extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
+   * 
    * @return {void} no return or void
    */
   constructor(props) {
@@ -30,6 +31,7 @@ class GoogleSignup extends React.Component {
      * @description - handles the onchange event
      * 
      * @param  {object} event the event for the content field
+     * 
      * @return {void} no return or void
      */
   onChange(event) {
@@ -42,6 +44,7 @@ class GoogleSignup extends React.Component {
      * @description - submit the state data
      * 
      * @param  {object} event the event for the content field
+     * 
      * @return {void} no return or void
      */
   onSubmit(event) {
@@ -75,6 +78,7 @@ class GoogleSignup extends React.Component {
   }
   /**
    *@description render - renders the class component
+   *
    * @return {object} returns an object
    */
   render() {
@@ -161,4 +165,4 @@ class GoogleSignup extends React.Component {
   }
 }
 
-export default GoogleSignup;
+export default GoogleLoginForm;

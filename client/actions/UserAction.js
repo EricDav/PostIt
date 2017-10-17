@@ -1,41 +1,32 @@
 import axios from 'axios';
 
-import { SET_SEARCHED_USERS, SET_CURRENT_USER, SET_RESET_PASSWORD_USER_PAGE,
+import { SET_SEARCHED_USERS, SET_CURRENT_USER, SET_PASSWORD_RESET_PAGE,
   ADD_USER, RESET_PASSWORD_USER, SET_CURRENT_PAGE,
-  WILL_SHOW, OFF_SET } from './ActionTypes';
+  WILL_SHOW } from './ActionTypes';
 
 /* global Materialize */
 
 /**
  * @description set all searchedUsers to state
  * 
- * @param  {array} searchedUsers
- * @return {object} returns object
+ * @param  {array} searchedUsers  list of searched users
+ * 
+ * @return {object} dispatch object
  */
-export function setSearchedUser(searchedUsers) {
+export function setSearchedUsers(searchedUsers) {
   return {
     type: SET_SEARCHED_USERS,
     searchedUsers
   };
 }
 
-/**
- * @description set the offset
- * 
- * @param  {array} searchedUsers
- * @return {object} returns object
- */
-export function setOffset(offset) {
-  return {
-    type: OFF_SET,
-    offset
-  };
-}
+
 /**
  * @description set the current page
  * 
- * @param  {number} pageNumber number
- * @return {object} returns object
+ * @param  {number} pageNumber the number of the page to show
+ * 
+ * @return {object} dispatch object
  */
 export function setCurrentPage(pageNumber) {
   return {
@@ -47,8 +38,9 @@ export function setCurrentPage(pageNumber) {
 /**
  * @description action for user current user information in store
  * 
- * @param  {object} user
- * @return {object} returns object
+ * @param  {object} user current user details
+ * 
+ * @return {object} dispatch object
  */
 export function setCurrentUser(user) {
   return {
@@ -60,12 +52,13 @@ export function setCurrentUser(user) {
 /**
  * @description set weather to show reset password user page
  * 
- * @param  {boolean} show
- * @return {object} returns object
+ * @param  {boolean} show the page to show
+ * 
+ * @return {object} dispatch object
  */
-export function setResetPasswordUserPage(show) {
+export function setPasswordResetPage(show) {
   return {
-    type: SET_RESET_PASSWORD_USER_PAGE,
+    type: SET_PASSWORD_RESET_PAGE,
     show
   };
 }
@@ -110,10 +103,11 @@ export function setResetPasswordUser(resetPasswordUser) {
 }
 
 /**
- * @description api call that checks if code is valid
+ * @description Request to the API to reset a user password
  * 
- * @param  {array} userData
- * @return {object} returns object
+ * @param  {array} userData the user payload
+ * 
+ * @return {object} dispatch object
  */
 export function VerifyCodeAndUpdatePassword(userData) {
   return () => axios.post('/api/v1/resetPassword', userData);
@@ -125,15 +119,15 @@ export function VerifyCodeAndUpdatePassword(userData) {
  * @param  {array} userData
  * @return {object} returns object
  */
-export function setResetPasswordPage(show) {
+export function resetPasswordPage(show) {
   return dispatch =>
     dispatch(willShowResetPasswordPage(show));
 }
 
 /**
- * @description sends code for verification
+ * @description Request to the API to send verification code
  * 
- * @param  {object}userData
+ * @param  {object} userData
  * @return {object} returns object
  */
 export function sendSecretCode(userData) {
@@ -147,9 +141,10 @@ export function sendSecretCode(userData) {
 /**
  * @description make a post request that add a user to a group
  * 
- * @param  {integer} userId
- * @param  {integer} groupId
- * @return {object} returns object
+ * @param  {integer} userId the id of the user to be added to  the group
+ * @param  {integer} groupId the group id
+ * 
+ * @return {object} dispatch object
  */
 export function addUserToAGroup(userId, groupId) {
   return dispatch =>
@@ -166,11 +161,12 @@ export function addUserToAGroup(userId, groupId) {
  * @description set weather to show reset password user page
  * 
  * @param  {boolean} shouldShow
- * @return {object} returns object
+ * 
+ * @return {object} dispatch object
  */
-export function showResetPasswordUserPage(shouldShow) {
+export function showResetPasswordPage(shouldShow) {
   return dispatch =>
-    dispatch(setResetPasswordUserPage(shouldShow));
+    dispatch(setPasswordResetPage(shouldShow));
 }
 
 
@@ -188,8 +184,10 @@ export function resetPassword(userData) {
 /**
  *  @description update user information action creator
  * 
- * @param  {object} userData
- * @return {object} returns object
+ * @param {object} userData user payload
+ * @param {object} updatedUser updated user payload
+ * 
+ * @return {object} dispatch object
  */
 export function updateUserProfile(userData, updatedUser) {
   return dispatch =>
@@ -200,20 +198,22 @@ export function updateUserProfile(userData, updatedUser) {
 
 
 /**
- * @description make a get request to fetch all users
+ * @description Request to the API to fetch all users that matches the
+ * search parameter
  * 
- * @param  {string} searchKey
- * @return {object} returns object
+ * @param  {string} searchKey the search parameter
+ * 
+ * @return {object} dispatch object
  */
 export function searchUsers(searchKey) {
   if (typeof (searchKey) !== 'string') {
     return (dispatch) => {
-      dispatch(setSearchedUser([]));
+      dispatch(setSearchedUsers([]));
     };
   }
   return dispatch =>
     axios.get(`/api/v1/users/${searchKey}/search`).then((res) => {
-      dispatch(setSearchedUser(res.data.searchedUsers));
+      dispatch(setSearchedUsers(res.data.searchedUsers));
     })
       .catch(() => {
         Materialize.toast('An error occured! could not leave group',
@@ -224,8 +224,9 @@ export function searchUsers(searchKey) {
 /**
  * @description set a user Information when updated
  * 
- * @param {object} user
- * @return {object} returns object
+ * @param {object} user user payload
+ * 
+ * @return {object} dispatch object
  */
 export function setUpdatedUser(user) {
   return (dispatch) => {
@@ -234,10 +235,12 @@ export function setUpdatedUser(user) {
 }
 
 /**
- * @description set a user I
+ * @description set a user 
  * 
- * @param {object} pageNumber
- * @return {object} returns object
+ * @param {object} pageNumber the number that determines which form to show
+ * in the home page
+ * 
+ * @return {object} dispatch object
  */
 export function setPage(pageNumber) {
   return (dispatch) => {

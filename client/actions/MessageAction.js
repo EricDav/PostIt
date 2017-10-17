@@ -1,16 +1,17 @@
 import axios from 'axios';
 
-import { ADD_MESSAGE, SET_NEW_GROUP_MESSAGES, SET_LAST_SEEN_MESSAGE,
+import { ADD_MESSAGE, SET_NEW_MESSAGES, SET_LAST_SEEN_MESSAGE,
   SET_INITIAL_NEW_MESSAGES, SET_CURRENT_GROUP_MESSAGES,
   SET_PIORITY_LEVEL } from './ActionTypes';
 
 /* global Materialize */
 
 /**
- * @description set messages of the current group
+ * @description add a message to the current messages
  * 
- * @param  {object} message
- * @return {object} returns object
+ * @param  {object} message the created message
+ * 
+ * @return {object} dispatch object
  */
 export function addMessage(message) {
   return {
@@ -22,12 +23,13 @@ export function addMessage(message) {
 /**
  * @description actions that set the new group messages
  * 
- * @param  {array} newGroupMessages
- * @return {object} returns object
+ * @param  {array} newMessages the new messages in all groups
+ * 
+ * @return {object} dispatch object
  */
-export function setNewGroupMessages(newGroupMessages) {
+export function setNumberOfNewMessages(newGroupMessages) {
   return {
-    type: SET_NEW_GROUP_MESSAGES,
+    type: SET_NEW_MESSAGES,
     newGroupMessages
   };
 }
@@ -35,8 +37,9 @@ export function setNewGroupMessages(newGroupMessages) {
 /**
  * @description set the current message seen last
  * 
- * @param  {integer} groupMessageSeenLast
- * @return {object} returns object
+ * @param  {integer} groupMessageSeenLast the message seen last
+ * 
+ * @return {object} dispatch object
  */
 export function setSeenLast(groupMessageSeenLast) {
   return {
@@ -48,8 +51,9 @@ export function setSeenLast(groupMessageSeenLast) {
 /**
  * @description set messages of the current group
  * 
- * @param  {array} messages
- * @return {object} returns object
+ * @param  {array} messages group messages
+ * 
+ * @return {object} dispatch object
  */
 export function setCurrentGroupMessages(messages) {
   return {
@@ -61,8 +65,9 @@ export function setCurrentGroupMessages(messages) {
 /**
  * @description set messages in store before viewing them
  * 
- * @param  {array} initialNewMessages
- * @return {object} returns object
+ * @param  {array} initialNewMessages the initial new messages
+ * 
+ * @return {object} dispatch object
  */
 export function setInitialNewMessages(initialNewMessages) {
   return {
@@ -75,7 +80,8 @@ export function setInitialNewMessages(initialNewMessages) {
  * @description saction creator for setting current group
  * 
  * @param  {array} piority
- * @return {object} returns object
+ * 
+ * @return {object} dispatch object
  */
 export function setPiority(piority) {
   return {
@@ -85,10 +91,11 @@ export function setPiority(piority) {
 }
 
 /**
- * @description set messages piority
+ * @description set message piority
  * 
- * @param  {array} piority
- * @return {object} returns object
+ * @param  {array} piority the piority level
+ * 
+ * @return {object} dispatch object
  */
 export function piorityLevel(piority) {
   return (dispatch) => {
@@ -98,9 +105,10 @@ export function piorityLevel(piority) {
 /**
  * @description make a post request that creates a message
  * 
- * @param  {object} messageData
- * @param  {integer} groupId
- * @return {object} returns object
+ * @param  {object} messageData the messsage data
+ * @param  {integer} groupId the id of the message to be created
+ * 
+ * @return {object} dispatch object
  */
 export function createMessage(messageData, groupId) {
   return dispatch =>
@@ -119,7 +127,8 @@ export function createMessage(messageData, groupId) {
  * @description get all the messages and
  * its viewers in a group by making a get request
  * 
- * @param  {integer} groupId
+ * @param  {integer} groupId the id of the group to be created
+ * 
  * @return {object} returns object
  */
 export function getGroupMessages(groupId) {
@@ -134,8 +143,9 @@ export function getGroupMessages(groupId) {
 /**
  * @description update all the messages that have been seen by a user
  * 
- * @param  {integer} groupId
+ * @param  {integer} groupId the id of the group
  * @param  {integer} data group data to be updated in data base
+ * 
  * @return {object} returns object
  */
 export function updateSeenMessages(groupId, data) {
@@ -148,13 +158,13 @@ export function updateSeenMessages(groupId, data) {
 /**
  * @description get new group messages
  * 
- * @return {object} returns object
+ * @return {object} dispatch object
  */
-export function getNewGroupMessages() {
+export function getNumberOfNewMessages() {
   return dispatch =>
     axios.get('/api/v1/newMessages').then((res) => {
-      const newGroupMessages = res.data;
-      dispatch(setNewGroupMessages(newGroupMessages));
+      const numNewMessages = res.data;
+      dispatch(setNumberOfNewMessages(numNewMessages));
     })
       .catch(() => {
         Materialize.toast('An error occured!', 1500, 'purple');
@@ -164,8 +174,9 @@ export function getNewGroupMessages() {
 /**
  * @description fetch all the initial new messages
  * 
- * @param  {array} initialNewMessages
- * @return {object} returns object
+ * @param  {array} initialNewMessages the initial new messages
+ * 
+ * @return {object} dispatch object
  */
 export function getInitialNewMessages(initialNewMessages) {
   return dispatch =>

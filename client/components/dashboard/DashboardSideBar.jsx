@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Group from './Group.jsx';
-import { getNewGroupMessages, getInitialNewMessages }
+import { getNumberOfNewMessages, getInitialNewMessages }
   from '../../actions/MessageAction';
 import { getNewMessage } from '../../helpers';
 import { showUpdateUserPage } from '../../actions/DashboardViewAction';
@@ -31,7 +31,7 @@ export class DashboardSideBar extends React.Component {
     $(document).ready(() => {
       $('.modal').modal();
     });
-    this.props.getNewGroupMessages().then(
+    this.props.getNumberOfNewMessages().then(
       () => {
         this.props.getInitialNewMessages(this.props.newMessages);
       }
@@ -44,7 +44,6 @@ export class DashboardSideBar extends React.Component {
      * @return {void} no return or void
      */
   onClick() {
-    console.log('I got here oooooooooooooooo')
     if (this.props.showDashboardPage !== 2) {
       this.props.dashboardPage(2, this.props.showDashboardPage);
     }
@@ -57,7 +56,6 @@ export class DashboardSideBar extends React.Component {
      * @return {void} no return or void
      */
   handleViewMoreGroups() {
-    console.log('I love mathmatics')
     this.props.getGroups(this.props.offset + 10, 10);
   }
   /**
@@ -119,7 +117,7 @@ export class DashboardSideBar extends React.Component {
 }
 
 const dashboardPropTypes = {
-  getNewGroupMessages: PropTypes.func,
+  getNumberOfNewMessages: PropTypes.func,
   getInitialNewMessages: PropTypes.func,
   showUpdateUserPage: PropTypes.func
 };
@@ -144,5 +142,5 @@ export function mapStateToProps(state) {
 export default connect(mapStateToProps, {
   showUpdateUserPage,
   getInitialNewMessages,
-  getNewGroupMessages
+  getNumberOfNewMessages
 })(DashboardSideBar);

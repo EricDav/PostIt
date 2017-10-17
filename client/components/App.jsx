@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Footer from './Footer.jsx';
+import Footer from './common/Footer.jsx';
 
 /* eslint-disable react/prefer-stateless-function */
 /**

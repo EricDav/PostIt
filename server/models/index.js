@@ -12,10 +12,9 @@ const db = {};
 console.log(config);
 let sequelize;
 if (config.use_env_variable) {
-  console.log('I got here oooooo');
   sequelize = new Sequelize(process.env[config.use_env_variable]);
-  //sequelize = new Sequelize('postgres://postgres@localhost/PostIt');
 } else {
+  console.log('I am here');
   sequelize = new Sequelize(config.database,
     config.username, config.password, config);
 }

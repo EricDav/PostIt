@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import { setPage } from '../actions/UserAction';
+import { setPage } from '../../actions/UserAction';
 
 /** @class NavBar
  * @classdesc component for Nav bar
  */
-export class NavBar extends React.Component {
+export class Navbar extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -22,17 +22,17 @@ export class NavBar extends React.Component {
      * @description - handles the onclick event
      * 
      * @param  {object} event the event for the content field
-     * @return {void} no return or void
+     * @return {void} void
      */
   onClick() {
     if (this.props.currentPage === 1) {
-      window.location = 'signup';
+      browserHistory.push('signup');
       this.props.setPage(2);
     } else if (this.props.currentPage === 2) {
       browserHistory.push('/');
       this.props.setPage(1);
     } else {
-      window.location = '/';
+      browserHistory.push('/');
       this.props.setPage(1);
     }
   }
@@ -86,6 +86,6 @@ export function mapStateToProps(state) {
   };
 }
 
-PropTypes.checkPropTypes(NavBarPropTypes, 'prop', 'NavBar');
+PropTypes.checkPropTypes(NavBarPropTypes, 'prop', 'Navbar');
 
-export default connect(mapStateToProps, { setPage })(NavBar);
+export default connect(mapStateToProps, { setPage })(Navbar);

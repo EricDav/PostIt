@@ -10,7 +10,7 @@ describe('Group Component', () => {
     global.Materialize = { toast: () => {} };
   });
   it('should render Button component', () => {
-    const wrapper = shallow(<Button { ...mockData.Button.props }/>);
+    const wrapper = shallow(<Button {...mockData.Button.props }/>);
     expect(wrapper.node.props.className).toEqual('right btn');
     expect(wrapper.node.type).toEqual('button');
   });
