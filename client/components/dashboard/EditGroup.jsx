@@ -16,7 +16,7 @@ class EditGroup extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.showAlert = this.showAlert.bind(this);
     this.state = {
-      name: this.props.currentGroup.name,
+      name: this.props.currentGroup.externalName,
       description: this.props.currentGroup.description,
       showLabelInput: false,
       showLabelTextArea: false,
@@ -73,8 +73,12 @@ class EditGroup extends React.Component {
         Materialize.toast('Cant update, No change observed', 2000, 'purple');
       } else if (this.state.name === this.props.currentGroup.name) {
         Materialize.toast('You cant update only description', 2000, 'red');
+      } else if (this.state.name.toLowerCase() ===
+      this.props.currentGroup.name.toLowerCase()) {
+        Materialize.toast('The group name still the same.', 2000, 'red');
       } else {
         const updatedGroup = {
+          externalName: this.state.name,
           id: this.props.currentGroup.id,
           name: this.state.name,
           description: this.state.description,
@@ -161,7 +165,7 @@ class EditGroup extends React.Component {
             <textarea onChange={this.onChange} onFocus={this.onFocus}
               id="description" className="materialize-textarea"
               value={this.state.description}
-              name="description"></textarea>
+              name="description" />
             {this.state.showLabelTextArea &&
             <label htmlFor="description">Enter description...</label> }
           </div>
@@ -176,7 +180,7 @@ class EditGroup extends React.Component {
                       Update Now
             </button></a>
           <a onClick={this.onClick} id="delete" className="col s6">
-            <button className={`btn red darken-1 waves-effect 
+            <button className={`btn red darken-1 waves-effect
             waves-light col s12`}>
                       Delete Group
             </button></a>

@@ -43,7 +43,7 @@ class VerificationForm extends React.Component {
     this.setState({
       error: '',
       failure: false
-    })
+    });
   }
   /**
      * @description - handles the onclick event
@@ -62,7 +62,6 @@ class VerificationForm extends React.Component {
         Materialize.toast('A code has been sent to your mail', 2500, 'green');
       },
       (data) => {
-        console.log(data);
         this.setState({
           error: data.response.data.message,
           failure: true,

@@ -158,7 +158,7 @@ export const mailSender = (req, res, message,
   const transporter = nodemailer.createTransport({
     service: process.env.SERVICE,
     auth: {
-      user: process,
+      user: process.env.EMAIL,
       pass: process.env.GMAIL_PASSWORD
     }
   });
@@ -350,11 +350,11 @@ export const sendEmailAndSms = (req, res, createdMessage) => {
         })
         .catch(() => res.status(500).send({
           success: false,
-          message: 'server error'
+          message: 'An error occured while sending mails'
         }));
     })
     .catch(() => res.status(500).send({
       success: false,
-      message: 'Server error'
+      message: 'An error occured while sending mails'
     }));
 };

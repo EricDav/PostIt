@@ -32,7 +32,7 @@ describe('User Routes', () => {
         const user = jwt.decode(res.body.Token);
         res.status.should.equal(201);
         res.body.success.should.equal(true);
-        user.currentUser.userName.should.equal('Amin123');
+        user.currentUser.userName.should.equal('amin123');
         done();
       });
   });
@@ -134,6 +134,7 @@ describe('User Routes', () => {
         .expect(201)
         .end((err, res) => {
           res.status.should.equal(400);
+          res.body.error.message.should.equal('Email already exists');
           res.body.success.should.equal(false);
           done();
         });
@@ -178,6 +179,7 @@ describe('User Routes', () => {
         .end((err, res) => {
           res.status.should.equal(400);
           res.body.success.should.equal(false);
+          res.body.error.password.should.equal(errorMessages.inValidPasswordError);
           done();
         });
     });

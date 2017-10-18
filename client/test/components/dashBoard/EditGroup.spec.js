@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import mockData from '../../mockData';
 
+import mockData from '../../mockData';
 import EditGroup from '../../../components/dashboard/EditGroup.jsx';
 
 describe('EditGroup Form', () => {

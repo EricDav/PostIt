@@ -12,7 +12,7 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 describe('Message action', () => {
-  it('creates ADD_MESSAGE  when a user create a message', () => {
+  it('should creates ADD_MESSAGE  when a user create a message', () => {
     const response = {
       data: { message: {
         id: 1,
@@ -39,7 +39,7 @@ describe('Message action', () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
-  it('creates SET_LAST_SEEN_MESSAGE,  when a message is updated', () => {
+  it('should creates SET_LAST_SEEN_MESSAGE,  when a message is updated', () => {
     const data = {
       seenLast: 1
     };
@@ -53,7 +53,7 @@ describe('Message action', () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
-  it('creates SET_CURRENT_GROUP_MESSAGES', () => {
+  it('should creates SET_CURRENT_GROUP_MESSAGES', () => {
     const response = {
       data: { data: [{
         id: 1,
@@ -82,7 +82,7 @@ describe('Message action', () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
-  it(`creates SET_PIORITY_LEVEL,  when 
+  it(`should creates SET_PIORITY_LEVEL,  when 
   a message is posted with piority`, () => {
       const expectedActions = { type: SET_PIORITY_LEVEL,
         piority: 'normal' };

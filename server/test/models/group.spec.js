@@ -10,8 +10,9 @@ const Group = dataBase.Group;
 describe('<Unit Test>', () => {
   before((done) => {
     Group.create({
-      creator: 'Pythagoras',
-      name: 'Gang',
+      externalName: 'gang',
+      creator: 'pythagoras',
+      name: 'gang',
       description: 'This a group for crazy guys'
     });
     done();
@@ -20,30 +21,32 @@ describe('<Unit Test>', () => {
     it('should be able to save group details', (done) => {
       Group.findOne({
         where: {
-          name: 'Gang'
+          name: 'gang'
         }
       })
         .then((group) => {
           expect(group.description).toEqual('This a group for crazy guys');
-          expect(group.name).toEqual('Gang');
+          expect(group.name).toEqual('gang');
         });
       done();
     });
     it('should be able to create a group', (done) => {
       Group.create({
-        creator: 'Python',
-        name: 'Dance All',
+        externalName: 'dance all',
+        creator: 'python',
+        name: 'dance All',
         description: 'We dance for the whole Africa'
       })
         .then((group) => {
           expect(group.description).toEqual('We dance for the whole Africa');
-          expect(group.name).toEqual('Dance All');
+          expect(group.name).toEqual('dance All');
         });
       done();
     });
     it('should throw error if group name is not unique', (done) => {
       Group.create({
-        creator: 'Python',
+        externalName: 'Dance All',
+        creator: 'python',
         name: 'Dance All',
         description: 'We dance for the whole Africa hurrah!!'
       })

@@ -1,7 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-import GoogleLoginForm from './GoogleLoginForm.jsx';
+import GoogleLogInButton from './GoogleLogInButton.jsx';
 
 /** @class LogIn
  * @classdesc component for LogIn
@@ -141,7 +141,7 @@ export class LogIn extends React.Component {
         <div className="row">
           <div className="input-field col s12">
             <center>
-              <GoogleLoginForm/>
+              <GoogleLogInButton/>
             </center>
             <p className="margin center medium-small sign-up">
               <a onClick={this.onClick} href="#!">Forgot password ?</a>

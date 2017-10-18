@@ -52,34 +52,6 @@ describe('UserGroup Routes', () => {
         });
     });
 
-  it(`should allows a logged in user add a member
-  to a group he/she belongs to`, (done) => {
-      server
-        .post('/api/v1/groups/2/user')
-        .set('Connection', 'keep alive')
-        .set('authorization', regUserData)
-        .set('Content-Type', 'application/json')
-        .type('form')
-        .send({
-          userId: 3
-        })
-        .expect(201)
-        .end((err, res) => {
-          UserGroup.findOne({
-            where: {
-              userId: 3
-            }
-          })
-            .then((userGroup) => {
-              userGroup.userId.should.equal(3);
-            });
-          res.status.should.equal(201);
-          res.body.success.should.equal(true);
-          res.body.user.userName.should.equal('Pythagoras1');
-          done();
-        });
-    });
-
   it(`should allows a logged in user to
   view all the members of a group he/she belongs to`, (done) => {
       server
@@ -90,7 +62,7 @@ describe('UserGroup Routes', () => {
         .type('form')
         .expect(200)
         .end((err, res) => {
-          res.body[0].userName.should.equal('Python');
+          res.body[0].userName.should.equal('python');
           res.status.should.equal(200);
           done();
         });

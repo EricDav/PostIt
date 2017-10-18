@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Navbar from '../common/Navbar.jsx';
 
 const NotFound = () =>

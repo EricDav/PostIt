@@ -60,7 +60,7 @@ class EditUser extends React.Component {
      * @param  {object} event the event for the content field
      * @return {void} no return or void
      */
-  onSubmit() {
+  onSubmit(event) {
     event.preventDefault();
     if (!this.state.displayButton) {
       this.props.showUpdateUserPage(this.props.showInitial,

@@ -146,7 +146,6 @@ class Dashboard extends React.Component {
         </div>
       );
     }
-    console.log('I am big man');
     return (
       <div>
         <WindowResizeListener onResize={windowSize => {

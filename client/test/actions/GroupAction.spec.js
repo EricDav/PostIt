@@ -11,7 +11,7 @@ import { SET_CURRENT_GROUP_MEMBERS,
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('Group action', () => {
+describe('Group actions', () => {
   it('should creates ADD_GROUP  when a user create a group', () => {
     const response = {
       data: { group: {
@@ -69,7 +69,7 @@ describe('Group action', () => {
           expect(store.getActions()).toEqual(expectedActions);
         });
     });
-  it(`creates SET_CURRENT_USER_GROUPS when a
+  it(`should creates SET_CURRENT_USER_GROUPS when a
   user request to see all members`, () => {
       const response = {
         data: [{
@@ -108,7 +108,7 @@ describe('Group action', () => {
           expect(store.getActions()).toEqual(expectedActions);
         });
     });
-  it('creates DELETE_GROUP  when a user DELETE a group', () => {
+  it('should creates DELETE_GROUP  when a user DELETE a group', () => {
     axios.delete = jest.fn(() => Promise.resolve(respnose));
     const response = {
       id: 1,
@@ -128,7 +128,7 @@ describe('Group action', () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
-  it(`creates UPDATE_GROUP_DATA,
+  it(`should creates UPDATE_GROUP_DATA,
     DELETE_CURRENT_GROUP_DATA  when a user update a group`, () => {
       axios.delete = jest.fn(() => Promise.resolve(respnose));
       const response = {
@@ -148,7 +148,7 @@ describe('Group action', () => {
           expect(store.getActions()).toEqual(expectedActions);
         });
     });
-  it(`creates UPDATE_GROUP_DATA,
+  it(`should creates UPDATE_GROUP_DATA,
   DELETE_CURRENT_GROUP_DATA  when a user update a group`, () => {
       axios.delete = jest.fn(() => Promise.resolve(respnose));
       const response = {

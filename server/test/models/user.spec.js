@@ -1,5 +1,6 @@
 import chai from 'chai';
 import expect from 'expect';
+
 import dataBase from '../../models';
 
 const bcrypt = require('bcryptjs');
@@ -15,7 +16,7 @@ describe('<Unit Test>', () => {
   before((done) => {
     User.create({
       fullName: 'Alienyi David',
-      userName: 'Pythagoras3456',
+      userName: 'pythagoras3456',
       email: 'dav@me.com',
       phoneNumber: '09022344356',
       password: hashedPassword,

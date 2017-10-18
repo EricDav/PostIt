@@ -187,10 +187,8 @@ const GroupMessagesController = {
                     message: `created view messages for 
                     ${view.viewerUsername} successfully`
                   });
-                })
-                .catch(error => res.status(500).send(error));
-            })
-            .catch(error => res.status(500).send(error));
+                });
+            });
         } else {
           viewMessagesModel.update({
             seenMessageIds: req.body.seenMessageIds

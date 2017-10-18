@@ -54,13 +54,14 @@ describe('Auth actions', () => {
   });
 });
 
-describe(' Login action', () => {
+describe('Login actions', () => {
   beforeEach(() => {
     global.Materialize = { toast: () => {} };
   });
   it('should creates SET_CURRENT_USER, when a user logs in', () => {
     const response = {
-      data: { Token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXJyZW50VXNlciI6eyJ1c2VyTmFtZSI6IlB5dGhhZ29yYXMiLCJpZCI6MSwiZnVsbE5hbWUiOiJBbGllbnlpIERhdmlkIiwiZW1haWwiOiJhbGllbnlpZGF2aWQ0Y2hyaXN0QGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDkwNjYzNTQyMzQifSwiZXhwIjoxNTA2NDMxNjU2LCJpYXQiOjE1MDYzNDUyNTZ9.Bg5HR63zv0RfKUBAULkwQL3tOKTZkxKe-D_zt1_wbi0'
+      data: {
+        Token: 'eyJhbGciOiJIUzI1NiIsInR5c'
       } };
     axios.post = jest.fn(() => Promise.resolve(response));
     const user = { userName: 'Pythagoras',

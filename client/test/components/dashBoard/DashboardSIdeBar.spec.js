@@ -1,9 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import mockData from '../../mockData';
 
-import { DashboardSideBar, mapStateToProps } from '../../../components/dashboard/DashboardSideBar.jsx';
+import mockData from '../../mockData';
+import { DashboardSideBar, mapStateToProps } from
+  '../../../components/dashboard/DashboardSideBar.jsx';
 
 describe('DashboardSideBar component', () => {
   beforeEach(() => {

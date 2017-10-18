@@ -160,4 +160,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { Confirm })(ConfirmationForm);
+export default connect(mapStateToProps, {})(ConfirmationForm);

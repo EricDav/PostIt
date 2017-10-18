@@ -18,7 +18,8 @@ const GroupController = {
   create(req, res) {
     Group
       .create({
-        name: req.body.name,
+        externalName: req.body.name,
+        name: req.body.name.toLowerCase(),
         description: req.body.description,
         creator: req.currentUser.currentUser.userName
       })
@@ -251,7 +252,8 @@ const GroupController = {
         }
         if (groupToUpdate.creator === req.currentUser.currentUser.userName) {
           Group.update({
-            name: req.body.name,
+            externalName: req.body.name,
+            name: req.body.name.toLowerCase(),
             description: req.body.description
           }, {
             where: {

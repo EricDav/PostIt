@@ -67,11 +67,11 @@ describe('Message Routes', () => {
           })
             .then((message) => {
               message.priority.should.equal('normal');
-              message.senderUsername.should.equal('Pythagoras');
+              message.senderUsername.should.equal('pythagoras');
               message.content.should.equal('I am here');
             });
           res.status.should.equal(201);
-          res.body.message.senderUsername.should.equal('Pythagoras');
+          res.body.message.senderUsername.should.equal('pythagoras');
           done();
         });
     });
@@ -96,7 +96,7 @@ describe('Message Routes', () => {
           })
             .then((message) => {
               message.priority.should.equal('normal');
-              message.senderUsername.should.equal('Pythagoras');
+              message.senderUsername.should.equal('pythagoras');
               message.groupId.should.equal(1);
             });
           res.status.should.equal(201);

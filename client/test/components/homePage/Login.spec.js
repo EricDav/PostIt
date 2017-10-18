@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import mockData from '../../mockData';
 
+import mockData from '../../mockData';
 import { LogIn } from '../../../components/LogIn.jsx';
 
 describe('Login Form', () => {

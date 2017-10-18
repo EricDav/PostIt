@@ -50,7 +50,7 @@ export class Button extends React.Component {
   render() {
     const hasAdded = this.state.hasAdded;
     return (
-      <button onClick={ this.onClick}
+      <button onClick={this.onClick}
         id="but"
         className="right btn"
         type="submit"

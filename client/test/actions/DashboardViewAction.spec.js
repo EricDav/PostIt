@@ -10,7 +10,7 @@ import { SHOW_INITIAL_DASHBOARD_PAGE, SCREEN_SIZE, SHOW_DASHBOARD_PAGE,
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('Dashboard view action', () => {
+describe('Dashboard view actions', () => {
   it('should creates SHOW_DASHBOARD_PAGE', () => {
     const expectedActions = {
       type: SHOW_DASHBOARD_PAGE,

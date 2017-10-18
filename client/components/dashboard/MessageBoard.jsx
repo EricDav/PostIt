@@ -78,16 +78,15 @@ export class MessageBoard extends React.Component {
               date={message.message.createdAt}/>
           </div>
         );
-      } else {
-        return (
-          <Messages name={message.message.senderUsername}
-            key={message.message.id}
-            content={message.message.content}
-            viewers={message.viewers}
-            date={message.message.createdAt}
-            priority ={message.message.priority}/>
-        );
       }
+      return (
+        <Messages name={message.message.senderUsername}
+          key={message.message.id}
+          content={message.message.content}
+          viewers={message.viewers}
+          date={message.message.createdAt}
+          priority ={message.message.priority}/>
+      );
     });
   }
   /**
@@ -119,7 +118,7 @@ export class MessageBoard extends React.Component {
                      </i></p></a>
                    <ReactTooltip />
                  </span>}
-            <b>#{this.props.currentGroup.name}</b>
+            <b>#{this.props.currentGroup.externalName}</b>
           </span>
         </p>
         <div id="message-board" className="email-content-wrap">

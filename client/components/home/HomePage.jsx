@@ -6,7 +6,7 @@ import Login from './LogIn.jsx';
 import NavBar from '../common/Navbar.jsx';
 import { userSigninRequest, userSignupRequest } from '../../actions/AuthAction';
 import { setPage } from '../../actions/UserAction';
-import GoogleSignup from './GoogleLoginForm.jsx';
+import GoogleLoginForm from './GoogleLoginForm.jsx';
 
 export const HomePage = props =>
   (
@@ -27,7 +27,7 @@ export const HomePage = props =>
       </div>
     </div> }
     {!props.showGoogleForm.showForm &&
-      <GoogleSignup
+      <GoogleLoginForm
         userSignupRequest={props.userSignupRequest}
         googleData={props.showGoogleForm}
       /> }

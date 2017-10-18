@@ -1,5 +1,6 @@
 import chai from 'chai';
 import expect from 'expect';
+
 import dataBase from '../../models';
 
 const should = chai.should();

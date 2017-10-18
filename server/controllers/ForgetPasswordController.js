@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+
 import dataBase from '../models';
 import { generateCode, mailSender, isInValidField } from '../helpers/index';
 

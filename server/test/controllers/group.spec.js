@@ -18,7 +18,7 @@ describe('Group Routes', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        userName: 'Pythagoras',
+        userName: 'pythagoras',
         password: 'David19632'
       })
       .end((err, res) => {
@@ -34,18 +34,19 @@ describe('Group Routes', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
-        name: 'Cohort 8',
+        externalName: 'cohort 8',
+        name: 'cohort 8',
         description: 'We are the great cohort 28 man'
       })
       .expect(201)
       .end((err, res) => {
         Group.findOne({
           where: {
-            name: 'Cohort 8'
+            name: 'cohort 8'
           }
         })
           .then((group) => {
-            group.name.should.equal('Cohort 8');
+            group.name.should.equal('cohort 8');
             group.description.should.equal('We are the great cohort 28 man');
           });
         res.status.should.equal(201);
@@ -62,6 +63,7 @@ describe('Group Routes', () => {
       .set('Content-Type', 'application/json')
       .type('form')
       .send({
+        externalName: 'House',
         name: 'House',
         description: 'This group is meant for those who are need of house'
       })
@@ -93,7 +95,7 @@ describe('Group Routes', () => {
           res.body.groups.length.should.equal(3);
           res.body.groups[0].description.should
             .equal('This group is meant for those who are need of house');
-          res.body.groups[1].name.should.equal('Cohort 8');
+          res.body.groups[1].name.should.equal('cohort 8');
           done();
         });
     });

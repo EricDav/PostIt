@@ -23,7 +23,7 @@ const Authorization = {
     return userModel
       .findOne({
         where: {
-          userName: request.body.userName
+          userName: request.body.userName.toLowerCase()
         }
       })
       .then((user) => {

@@ -4,7 +4,7 @@ module.exports = {
       senderId: 1,
       content: 'I love mathematics',
       groupId: 1,
-      senderUsername: 'Pythagoras',
+      senderUsername: 'pythagoras',
       createdAt: new Date(),
       updatedAt: new Date(),
       priority: 'normal'
@@ -12,7 +12,7 @@ module.exports = {
       senderId: 2,
       content: 'I love Python',
       groupId: 2,
-      senderUsername: 'Python',
+      senderUsername: 'python',
       createdAt: new Date(),
       updatedAt: new Date(),
       priority: 'urgent'
@@ -20,7 +20,7 @@ module.exports = {
       senderId: 3,
       content: 'I love English',
       groupId: 3,
-      senderUsername: 'Pythagoras1',
+      senderUsername: 'pythagoras1',
       createdAt: new Date(),
       updatedAt: new Date(),
       priority: 'critical'

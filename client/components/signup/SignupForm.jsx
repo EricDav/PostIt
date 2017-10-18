@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { isDigit } from '../../helpers';
 
 /** @class Signup

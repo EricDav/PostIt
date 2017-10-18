@@ -153,7 +153,7 @@ const GroupValidator = {
     if (!error.name) {
       Groups.findOne({
         where: {
-          name: req.body.name
+          name: req.body.name.toLowerCase()
         }
       }).then((groups) => {
         if (groups) {

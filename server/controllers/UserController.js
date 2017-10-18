@@ -30,9 +30,9 @@ const UserController = {
       return userModel
         .create({
           fullName: req.body.fullName,
-          userName: req.body.userName,
+          userName: req.body.userName.toLowerCase(),
           password: hash,
-          email: req.body.email,
+          email: req.body.email.toLowerCase(),
           phoneNumber: req.body.phoneNumber,
           active: true
         })

@@ -67,7 +67,7 @@ export class DashboardSideBar extends React.Component {
   getGroups() {
     return this.props.allGroups.map((group) => {
       return (
-        <Group name={group.name} key={group.id} id={group.id}
+        <Group name={group.externalName} key={group.id} id={group.id}
           groupInfo={{ name: group.name, owner: group.creator }}
           newMessage={getNewMessage(group.id, this.props.newMessages)}/>
       );

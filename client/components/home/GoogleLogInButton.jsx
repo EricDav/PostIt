@@ -1,5 +1,5 @@
 import React from 'react';
-import GoogleLogin from 'react-google-login';
+import ReactGoogleLogin from 'react-google-login';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -8,7 +8,7 @@ import { googleSignin } from '../../actions/AuthAction';
 /** @class GoogleLogIn
  * @classdesc component for Login with google+
  */
-class GoogleLogIn extends React.Component {
+class GoogleLogInButton extends React.Component {
   /**
    *@description render - renders the Google Login component
    * @return {object} returns an object
@@ -23,10 +23,8 @@ class GoogleLogIn extends React.Component {
       this.props.googleSignin(googleUser);
     };
     return (
-      <GoogleLogin
-        clientId=
-          {`937103779714-qv8o05o1s7tl27ntobgae0v44u3ofp15.
-          apps.googleusercontent.com`}
+      <ReactGoogleLogin
+        clientId={'937103779714-qv8o05o1s7tl27ntobgae0v44u3ofp15.apps.googleusercontent.com'}
         buttonText="Login with Google"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
@@ -52,9 +50,9 @@ function mapStateToProps(state) {
     googleData: state.showGoogleForm
   };
 }
-PropTypes.checkPropTypes(googleLoginPropTypes, 'prop', 'GoogleLogIn');
+PropTypes.checkPropTypes(googleLoginPropTypes, 'prop', 'GoogleLogInButton');
 
 
 export default connect(mapStateToProps,
-  { googleSignin })(GoogleLogIn);
+  { googleSignin })(GoogleLogInButton);
 
